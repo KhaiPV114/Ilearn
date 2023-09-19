@@ -11,5 +11,6 @@
     </head>
     <body>
         <h1>${message}</h1>
+        <h2>Add content</h2>
     </body>
 </html>
