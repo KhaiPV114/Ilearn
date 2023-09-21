@@ -3,8 +3,8 @@ package com.onlinelearning.Services;
 import com.onlinelearning.Models.Course;
 import java.util.List;
 
-
 public interface CourseService {
+
     Course getCourseById(Integer id);
 
     List<Course> getAllCourses();
@@ -14,4 +14,5 @@ public interface CourseService {
     Course updateCourse(Course course) throws Exception;
 
     Course deleteCourse(Course course) throws Exception;
+    
 }

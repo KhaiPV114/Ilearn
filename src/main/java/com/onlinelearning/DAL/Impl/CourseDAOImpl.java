@@ -1,9 +1,7 @@
 package com.onlinelearning.DAL.Impl;
 
-import com.onlinelearning.DAL.CategoryDAO;
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.DBContext;
-import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +12,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class CourseDAOImpl implements CourseDAO {
-    private final DBContext dbContext = new DBContextImpl();
 
+    private final DBContext dbContext = new DBContextImpl();
 
     @Override
     public Course getCourseById(Integer id) {
@@ -27,7 +24,7 @@ public class CourseDAOImpl implements CourseDAO {
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Course course = Course.builder()
-                            .id(rs.getInt("id"))
+                            .id(rs.getInt("course_id"))
                             .categoryId(rs.getInt("categoryID"))
                             .owner_id(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
@@ -47,11 +44,11 @@ public class CourseDAOImpl implements CourseDAO {
     public Course getCourseByName(String name) {
         String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(4, name);
+            ps.setString(1, name);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Course course = Course.builder()
-                            .id(rs.getInt("id"))
+                            .id(rs.getInt("course_id"))
                             .categoryId(rs.getInt("categoryID"))
                             .owner_id(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
@@ -74,13 +71,13 @@ public class CourseDAOImpl implements CourseDAO {
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
                 Course course = Course.builder()
-                        .id(rs.getInt("id"))
-                            .categoryId(rs.getInt("categoryID"))
-                            .owner_id(rs.getInt("owner_id"))
-                            .name(rs.getString("name"))
-                            .imageUrl(rs.getString("image_url"))
-                            .description(rs.getString("description"))
-                            .build();
+                        .id(rs.getInt("course_id"))
+                        .categoryId(rs.getInt("categoryID"))
+                        .owner_id(rs.getInt("owner_id"))
+                        .name(rs.getString("name"))
+                        .imageUrl(rs.getString("image_url"))
+                        .description(rs.getString("description"))
+                        .build();
                 courses.add(course);
             }
             return courses;
@@ -143,5 +140,5 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
- 
+
 }
