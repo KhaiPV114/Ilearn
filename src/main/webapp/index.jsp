@@ -10,23 +10,23 @@
     </head>
     <body>
         <h1>JSP layout:</h1>
-        <a href="${pageContext.request.contextPath}/dashboard/instructor/_draft.jsp">Instructor layout draft</a>  
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/_draft.jsp">Instructor layout draft</a>  
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/instructor/dashboard.jsp">Instructor dashboard</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/dashboard.jsp">Instructor dashboard</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/instructor/profile.jsp">Instructor profile</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/profile.jsp">Instructor profile</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/instructor/course.jsp">Instructor course</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/course.jsp">Instructor course</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/learner/_draft.jsp">Learner layout draft</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/_draft.jsp">Learner layout draft</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/learner/dashboard.jsp">Learner dashboard</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/dashboard.jsp">Learner dashboard</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/learner/profile.jsp">Learner profile</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/profile.jsp">Learner profile</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/learner/course.jsp">Learner course</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course.jsp">Learner course</a>        
         <br>
-        <a href="${pageContext.request.contextPath}/dashboard/learner/wishlist.jsp">Learner wishlist</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist.jsp">Learner wishlist</a>        
         <br>
 
     </body>
