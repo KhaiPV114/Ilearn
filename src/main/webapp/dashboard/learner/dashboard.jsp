@@ -8,18 +8,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="/layout/links.jsp"></jsp:include>
-        </head>
-        <body>
-        <jsp:include page="/layout/header.jsp"></jsp:include>
-        <jsp:include page="/layout/dashboard-header.jsp"></jsp:include>
+        <jsp:include page="/layout/links.jsp"/>
+    </head>
+    <body>
+        <jsp:include page="/layout/header.jsp"/>
+        <jsp:include page="/layout/cart-side-menu.jsp"/>
+        <jsp:include page="/layout/dashboard-header.jsp"/>
             <div class="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-learner-card.jsp"></jsp:include>
+                        <jsp:include page="/layout/dashboard-learner-card.jsp"/>
                             <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-learner-sidebar.jsp"></jsp:include>
+                            <jsp:include page="/layout/dashboard-learner-sidebar.jsp"/>
                                 <div class="col-lg-9">
                                     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
                                         <div class="content">
@@ -88,7 +89,7 @@
                     </div>
                 </div>
             </div>
-        <jsp:include page="/layout/footer.jsp"></jsp:include>
-        <jsp:include page="/layout/scripts.jsp"></jsp:include>
+        <jsp:include page="/layout/footer.jsp"/>
+        <jsp:include page="/layout/scripts.jsp"/>
     </body>
 </html>
