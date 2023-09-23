@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <footer class="rbt-footer footer-style-1 bg-color-white overflow-hidden">
     <div class="footer-top">
         <div class="container">
@@ -134,11 +135,13 @@
             </div>
         </div>
     </div>
+
     <div class="rbt-separator-mid">
         <div class="container">
             <hr class="rbt-separator m-0">
         </div>
     </div>
+
     <!-- Start Copyright Area  -->
     <div class="copyright-area copyright-style-1 ptb--20">
         <div class="container">
@@ -158,4 +161,11 @@
         </div>
     </div>
     <!-- End Copyright Area  -->
+
+    <!-- Back To Top -->
+    <div class="rbt-progress-parent">
+        <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
 </footer>
