@@ -3,6 +3,7 @@ package com.onlinelearning.Tests;
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.DAL.Impl.DBContextImpl;
 import com.onlinelearning.Utils.DotEnv;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
@@ -13,8 +14,7 @@ public class ConfigurationTest {
     @Order(1)
     @Test
     public void testDotEnv() {
-        DotEnv dotEnv = new DotEnv();
-        String envTestMessage = dotEnv.get("ENV_TEST");
+        String envTestMessage = DotEnv.get("ENV_TEST");
         Assertions.assertEquals("Hello World!", envTestMessage);
     }
     
