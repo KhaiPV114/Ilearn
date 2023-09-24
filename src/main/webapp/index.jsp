@@ -30,5 +30,7 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/category/add">Add course category</a>        
+        <br>
     </body>
 </html>
