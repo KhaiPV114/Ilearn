@@ -37,6 +37,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public String uploadImage(Part filePart) throws Exception {
+        if (filePart == null) {
+            throw new Exception("File part must not be null");
+        }
         //Get file name
         String fileName = filePart.getSubmittedFileName();
 
