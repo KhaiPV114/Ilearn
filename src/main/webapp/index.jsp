@@ -28,6 +28,7 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist.jsp">Learner wishlist</a>        
         <br>
-
+        <a target="_blank" href="${pageContext.request.contextPath}/cart">Cart</a>        
+        <br>
     </body>
 </html>
