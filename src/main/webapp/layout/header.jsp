@@ -1,10 +1,17 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <div class="rbt-header-sticky">
     <header class="rbt-header rbt-header-10">
-        <div class="rbt-sticky-placeholder" style="height: 0px;"></div>
-        <div class="rbt-header-wrapper  header-not-transparent header-sticky">
-            <div class="container">
+        <div class="rbt-sticky-placeholder"></div>
+
+        <div class="rbt-header-wrapper header-space-betwween header-sticky">
+            <div class="container-fluid">
                 <div class="mainbar-row rbt-navigation-center align-items-center">
+                    <!-- Left Header -->
                     <div class="header-left rbt-header-content">
+                        <!-- Logo -->
                         <div class="header-info">
                             <div class="logo">
                                 <a href="index.html">
@@ -12,10 +19,16 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                        <!-- Category Dropdown -->
+                        <div class="header-info">
+                            <jsp:include page="/layout/header/category-dropdown.jsp"/>
+                        </div>
+                    </div>    
+                    <!-- Main Navigation -->
                     <div class="rbt-main-navigation d-none d-xl-block">
                         <nav class="mainmenu-nav">
                             <ul class="mainmenu">
+                                <!-- Home Dropdown -->
                                 <li class="with-megamenu has-menu-child-item position-static menu-item-open">
                                     <a href="#">Home <i class="feather-chevron-down"></i></a>
                                     <!-- Start Mega Menu  -->
@@ -301,63 +314,9 @@
                                     </div>
                                     <!-- End Mega Menu  -->
                                 </li>
-
-                                <li class="with-megamenu has-menu-child-item">
-                                    <a href="#">Courses <i class="feather-chevron-down"></i></a>
-                                    <!-- Start Mega Menu  -->
-                                    <div class="rbt-megamenu grid-item-2">
-                                        <div class="wrapper">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="mega-top-banner">
-                                                        <div class="content">
-                                                            <h4 class="title">Developer hub</h4>
-                                                            <p class="description">Start building fast, with code samples, key resources and more.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row row--15">
-                                                <div class="col-lg-12 col-xl-6 col-xxl-6 single-mega-item">
-                                                    <h3 class="rbt-short-title">Course Layout</h3>
-                                                    <ul class="mega-menu-item">
-                                                        <li><a href="course-filter-one-toggle.html">Filter One Toggle</a></li>
-                                                        <li><a href="course-filter-one-open.html">Filter One Open</a></li>
-                                                        <li><a href="course-filter-two-toggle.html">Filter Two Toggle</a></li>
-                                                        <li><a href="course-filter-two-open.html">Filter Two Open</a></li>
-                                                        <li><a href="course-with-tab.html">Course With Tab</a></li>
-                                                        <li><a href="course-with-tab-two.html">Course With Tab Two</a></li>
-                                                        <li><a href="course-card-2.html">Course Card Two</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-12 col-xl-6 col-xxl-6 single-mega-item">
-                                                    <h3 class="rbt-short-title">Course Layout</h3>
-                                                    <ul class="mega-menu-item">
-                                                        <li><a href="course-card-3.html">Course Card Three</a></li>
-                                                        <li><a href="course-masonry.html">Course Masonry</a></li>
-                                                        <li><a href="course-with-sidebar.html">Course With Sidebar</a></li>
-                                                        <li><a href="course-details.html">Course Details</a></li>
-                                                        <li><a href="course-details-2.html">Course Details Two</a></li>
-                                                        <li><a href="lesson.html">Course Lesson <span class="rbt-badge-card">New</span></a></li>
-                                                        <li><a href="create-course.html">Create Course <span class="rbt-badge-card">New</span></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="nav-quick-access">
-                                                        <li><a href="#"><i class="feather-folder-minus"></i> Quick Start Guide</a></li>
-                                                        <li><a href="#"><i class="feather-folder-minus"></i> For Open Source</a></li>
-                                                        <li><a href="#"><i class="feather-folder-minus"></i> API Status</a></li>
-                                                        <li><a href="#"><i class="feather-folder-minus"></i> Support</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Mega Menu  -->
-                                </li>
-
+                                <!-- Course Dropdown -->
+                                <jsp:include page="/layout/header/course-dropdown.jsp"/>
+                                <!-- Dashboard Dropdown -->
                                 <li class="has-dropdown has-menu-child-item">
                                     <a href="#">Dashboard
                                         <i class="feather-chevron-down"></i>
@@ -393,7 +352,7 @@
                                         </li>
                                     </ul>
                                 </li>
-
+                                <!-- Pages Dropdown -->
                                 <li class="with-megamenu has-menu-child-item position-static">
                                     <a href="#">Pages <i class="feather-chevron-down"></i></a>
                                     <!-- Start Mega Menu  -->
@@ -509,7 +468,7 @@
                                     </div>
                                     <!-- End Mega Menu  -->
                                 </li>
-
+                                <!-- Elements Dropdown -->
                                 <li class="with-megamenu has-menu-child-item position-static">
                                     <a href="#">Elements <i class="feather-chevron-down"></i></a>
                                     <!-- Start Mega Menu  -->
@@ -574,69 +533,29 @@
                                     </div>
                                     <!-- End Mega Menu  -->
                                 </li>
-
-                                <li class="with-megamenu has-menu-child-item position-static">
-                                    <a href="#">Blog <i class="feather-chevron-down"></i></a>
-                                    <!-- Start Mega Menu  -->
-                                    <div class="rbt-megamenu grid-item-3">
-                                        <div class="wrapper">
-                                            <div class="row row--15">
-                                                <div class="col-lg-12 col-xl-4 col-xxl-4 single-mega-item">
-                                                    <h3 class="rbt-short-title">Blog Styles</h3>
-                                                    <ul class="mega-menu-item">
-                                                        <li><a href="blog-list.html">Blog List</a></li>
-                                                        <li><a href="blog.html">Blog Grid</a></li>
-                                                        <li><a href="blog-grid-minimal.html">Blog Grid Minimal</a></li>
-                                                        <li><a href="blog-with-sidebar.html">Blog With Sidebar</a></li>
-                                                        <li><a href="blog-details.html">Blog Details</a></li>
-                                                        <li><a href="post-format-standard.html">Post Format Standard</a></li>
-                                                        <li><a href="post-format-gallery.html">Post Format Gallery</a></li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="col-lg-12 col-xl-4 col-xxl-4 single-mega-item">
-                                                    <h3 class="rbt-short-title">Get Started</h3>
-                                                    <ul class="mega-menu-item">
-                                                        <li><a href="post-format-quote.html">Post Format Quote</a></li>
-                                                        <li><a href="post-format-audio.html">Post Format Audio</a></li>
-                                                        <li><a href="post-format-video.html">Post Format Video</a></li>
-                                                        <li><a href="#">Media Under Title <span class="rbt-badge-card">Coming</span></a></li>
-                                                        <li><a href="#">Sticky Sidebar <span class="rbt-badge-card">Coming</span></a></li>
-                                                        <li><a href="#">Auto Masonry <span class="rbt-badge-card">Coming</span></a></li>
-                                                        <li><a href="#">Meta Overlaid <span class="rbt-badge-card">Coming</span></a></li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="col-lg-12 col-xl-4 col-xxl-4 single-mega-item">
-                                                    <div class="rbt-ads-wrapper">
-                                                        <a class="d-block" href="#"><img src="${pageContext.request.contextPath}/assets/images/service/mobile-cat.jpg" alt="Education Images"></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Mega Menu  -->
-                                </li>
+                                <!-- Blog Dropdown -->
+                                <jsp:include page="/layout/header/blog-dropdown.jsp"/>
                             </ul>
                         </nav>
                     </div>
-
+                    <!-- Right Header -->
                     <div class="header-right">
                         <!-- Navbar Icons -->
                         <ul class="quick-access">
+                            <!-- Search -->
                             <li class="access-icon">
                                 <a class="search-trigger-active rbt-round-btn" href="#">
                                     <i class="feather-search"></i>
                                 </a>
                             </li>
-
+                            <!-- Cart -->
                             <li class="access-icon rbt-mini-cart">
                                 <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#">
                                     <i class="feather-shopping-cart"></i>
                                     <span class="rbt-cart-count">4</span>
                                 </a>
                             </li>
-
+                            <!-- User -->
                             <li class="account-access rbt-user-wrapper d-none d-xl-block">
                                 <a href="#"><i class="feather-user"></i>Admin</a>
                                 <div class="rbt-user-menu-list-wrapper">
@@ -840,162 +759,15 @@
                 </div>
             </div>
             <!-- Start Search Dropdown  -->
-            <div class="rbt-search-dropdown">
-                <div class="wrapper">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form action="#">
-                                <input type="text" placeholder="What are you looking for?">
-                                <div class="submit-btn">
-                                    <a class="rbt-btn btn-gradient btn-md" href="#">Search</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="rbt-separator-mid">
-                        <hr class="rbt-separator m-0">
-                    </div>
-
-                    <div class="row g-4 pt--30 pb--60">
-                        <div class="col-lg-12">
-                            <div class="section-title">
-                                <h5 class="rbt-title-style-2">Our Top Course</h5>
-                            </div>
-                        </div>
-
-                        <!-- Start Single Card  -->
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="rbt-card variation-01 rbt-hover">
-                                <div class="rbt-card-img">
-                                    <a href="course-details.html">
-                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Card image">
-                                    </a>
-                                </div>
-                                <div class="rbt-card-body">
-                                    <h5 class="rbt-card-title"><a href="course-details.html">React Js</a>
-                                    </h5>
-                                    <div class="rbt-review">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="rating-count"> (15 Reviews)</span>
-                                    </div>
-                                    <div class="rbt-card-bottom">
-                                        <div class="rbt-price">
-                                            <span class="current-price">$15</span>
-                                            <span class="off-price">$25</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Card  -->
-
-                        <!-- Start Single Card  -->
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="rbt-card variation-01 rbt-hover">
-                                <div class="rbt-card-img">
-                                    <a href="course-details.html">
-                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-online-02.jpg" alt="Card image">
-                                    </a>
-                                </div>
-                                <div class="rbt-card-body">
-                                    <h5 class="rbt-card-title"><a href="course-details.html">Java Program</a>
-                                    </h5>
-                                    <div class="rbt-review">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="rating-count"> (15 Reviews)</span>
-                                    </div>
-                                    <div class="rbt-card-bottom">
-                                        <div class="rbt-price">
-                                            <span class="current-price">$10</span>
-                                            <span class="off-price">$40</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Card  -->
-
-                        <!-- Start Single Card  -->
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="rbt-card variation-01 rbt-hover">
-                                <div class="rbt-card-img">
-                                    <a href="course-details.html">
-                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-online-03.jpg" alt="Card image">
-                                    </a>
-                                </div>
-                                <div class="rbt-card-body">
-                                    <h5 class="rbt-card-title"><a href="course-details.html">Web Design</a>
-                                    </h5>
-                                    <div class="rbt-review">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="rating-count"> (15 Reviews)</span>
-                                    </div>
-                                    <div class="rbt-card-bottom">
-                                        <div class="rbt-price">
-                                            <span class="current-price">$10</span>
-                                            <span class="off-price">$20</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Card  -->
-
-                        <!-- Start Single Card  -->
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="rbt-card variation-01 rbt-hover">
-                                <div class="rbt-card-img">
-                                    <a href="course-details.html">
-                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-online-04.jpg" alt="Card image">
-                                    </a>
-                                </div>
-                                <div class="rbt-card-body">
-                                    <h5 class="rbt-card-title"><a href="course-details.html">Web Design</a>
-                                    </h5>
-                                    <div class="rbt-review">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="rating-count"> (15 Reviews)</span>
-                                    </div>
-                                    <div class="rbt-card-bottom">
-                                        <div class="rbt-price">
-                                            <span class="current-price">$20</span>
-                                            <span class="off-price">$40</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Card  -->
-                    </div>
-
-                </div>
-            </div>
+            <jsp:include page="/layout/header/search-dropdown.jsp"/>
             <!-- End Search Dropdown  -->
         </div>
+
+        <!-- USE FOR MOBILE -->
+        <jsp:include page="/layout/header/mobile-category-side.jsp"/>
     </header>
+    <!-- USE FOR MOBILE -->
+    <jsp:include page="/layout/header/mobile-menu-side.jsp"/>
+    <!-- Cart Side -->
+    <jsp:include page="/layout/header/cart-side.jsp"/>      
 </div>
