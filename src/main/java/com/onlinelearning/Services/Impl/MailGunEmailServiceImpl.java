@@ -24,7 +24,7 @@ public class MailGunEmailServiceImpl implements EmailService {
         DOMAIN = DotEnv.get("MAILGUN_DOMAIN");
     }
 
-    public MailGunEmailServiceImpl load() {
+    public static MailGunEmailServiceImpl load() {
         if (mailGunEmailServiceInstance == null) {
             mailGunEmailServiceInstance = new MailGunEmailServiceImpl();
         }
