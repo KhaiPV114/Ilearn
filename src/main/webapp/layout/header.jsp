@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<div class="rbt-header-sticky">
+<div>
     <header class="rbt-header rbt-header-10">
         <div class="rbt-sticky-placeholder"></div>
 
@@ -14,7 +14,7 @@
                         <!-- Logo -->
                         <div class="header-info">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png" alt="Education Logo Images">
                                 </a>
                             </div>
