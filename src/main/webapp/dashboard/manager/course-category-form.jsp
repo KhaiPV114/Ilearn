@@ -17,9 +17,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
+                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
                             <!-- Start Content  -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -30,13 +30,20 @@
                                             <nav class="rbt-title-style-3 h4 pb-0" aria-label="breadcrumb">
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
-                                                        <a href="#">
+                                                        <a href="${pageContext.request.contextPath}/manager/category">
                                                             Course category
                                                         </a>
                                                     </li>
                                                     <li class="breadcrumb-item active" aria-current="page">
                                                         <a class="color-primary" href="#">
-                                                            Add
+                                                            <c:choose>
+                                                                <c:when test="${isEditPage}">
+                                                                    Edit
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    Add
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </a>
                                                     </li>
                                                 </ol>
@@ -45,6 +52,7 @@
                                         <!-- End Title -->
 
                                         <form action="#" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="id" value="${id}">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
