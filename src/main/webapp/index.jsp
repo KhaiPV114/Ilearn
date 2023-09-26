@@ -28,6 +28,9 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist.jsp">Learner wishlist</a>        
         <br>
-
+        <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
+        <br>
     </body>
 </html>
