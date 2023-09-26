@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private void validateCart(Cart cart) throws Exception {
-        if (cartDAO.getCartByUserIdAndCourseId(cart.getUserId(), cart.getUserId()) != null) {
+        if (cartDAO.getCartByUserIdAndCourseId(cart.getUserId(), cart.getCourseId()) != null) {
             throw new Exception("Cart of " + cart.getUserId() + " with " + cart.getCourseId() + " is already exist!");
         }
     }
@@ -44,8 +44,7 @@ public class CartServiceImpl implements CartService {
     public Cart createCart(Cart cart) {
         try {
             validateCart(cart);
-            Cart addedCart = cartDAO.createCart(cart);
-            return addedCart;
+            return cartDAO.createCart(cart);
         } catch (Exception ex) {
             Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -57,8 +56,7 @@ public class CartServiceImpl implements CartService {
         try {
             validateCart(cart);
         } catch (Exception ex) {
-            Cart deletedCart = cartDAO.deleteCart(cart);
-            return deletedCart;
+            return cartDAO.deleteCart(cart);
         }
         return null;
     }
