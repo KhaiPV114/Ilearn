@@ -24,7 +24,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Category category = Category.builder()
-                            .id(rs.getInt("id"))
+                            .id(rs.getInt("category_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
                             .description(rs.getString("description"))
@@ -42,11 +42,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     public Category getCategoryByName(String name) {
         String sql = "select category_id, name, image_url, description from categories where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(2, name);
+            ps.setString(1, name);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Category category = Category.builder()
-                            .id(rs.getInt("id"))
+                            .id(rs.getInt("category_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
                             .description(rs.getString("description"))
@@ -67,7 +67,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             List<Category> categories = new ArrayList<>();
             while (rs.next()) {
                 Category category = Category.builder()
-                        .id(rs.getInt("id"))
+                        .id(rs.getInt("category_id"))
                         .name(rs.getString("name"))
                         .imageUrl(rs.getString("image_url"))
                         .description(rs.getString("description"))
@@ -110,6 +110,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             ps.setString(1, category.getName());
             ps.setString(2, category.getImageUrl());
             ps.setString(3, category.getDescription());
+            ps.setInt(4, category.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return category;

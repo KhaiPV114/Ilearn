@@ -3,17 +3,16 @@ package com.onlinelearning.Utils;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class DotEnv {
-    private final Dotenv dotenv;
+    private static final Dotenv dotenv = Dotenv.configure().directory(".").load();
 
-    public DotEnv() {
-        dotenv = Dotenv.configure().directory(".").load();
+    private DotEnv() {
     }
     
-    public String get(String key) {
+    public static String get(String key) {
         return dotenv.get(key);
     }
     
-    public String get(String key, String defaultValue) {
+    public static String get(String key, String defaultValue) {
         return dotenv.get(key, defaultValue);
     }
 }

@@ -10,16 +10,14 @@ import java.util.logging.Logger;
 
 public class DBContextImpl implements DBContext {
 
-    private final DotEnv dotEnv = new DotEnv();
-
     @Override
     public Connection getConnection() {
-        String connectionString = "jdbc:mysql://" + dotEnv.get("MYSQL_HOST")
-                + "/" + dotEnv.get("MYSQL_DATABASE");
-        String username = dotEnv.get("MYSQL_USERNAME");
-        String password = dotEnv.get("MYSQL_PASSWORD");
+        String connectionString = "jdbc:mysql://" + DotEnv.get("MYSQL_HOST")
+                + "/" + DotEnv.get("MYSQL_DATABASE");
+        String username = DotEnv.get("MYSQL_USERNAME");
+        String password = DotEnv.get("MYSQL_PASSWORD");
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(connectionString, username, password);
         }
         catch (ClassNotFoundException | SQLException ex) {
