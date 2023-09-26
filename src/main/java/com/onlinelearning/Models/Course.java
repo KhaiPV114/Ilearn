@@ -11,7 +11,7 @@ public class Course {
     
     private Integer categoryId;
     
-    private Integer owner_id;
+    private Integer ownerId;
     
     private String name;
     

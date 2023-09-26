@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:set var="carts" value="${sessionScope['carts']}" />
+
 <!-- Start Cart Side Menu -->
 <div class="rbt-cart-side-menu">
     <div class="inner-wrapper">
@@ -17,69 +19,24 @@
         </div>
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/1.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Miracle Morning</a></h6>
+                <c:forEach var="cartItem" items="${carts}">
+                    <li class="minicart-item">
+                        <div class="thumbnail">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}/assets/images/product/1.jpg" alt="Product Images">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <h6 class="title"><a href="single-product.html">Course ${cartItem.courseId}</a></h6>
 
-                        <span class="quantity">1 * <span class="price">$22</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
+                            <span class="quantity">1 * <span class="price">$22</span></span>
 
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/7.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Happy Strong</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$30</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
-
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/3.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Rich Dad Poor Dad</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$50</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
-
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/4.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Momentum Theorem</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$50</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
+                        </div>
+                        <div class="close-btn">
+                            <button class="rbt-round-btn" onclick="removeCartItem('${pageContext.request.contextPath}', 1)"><i class="feather-x"></i></button>
+                        </div>
+                    </li>
+                </c:forEach>
             </ul>
         </nav>
 
@@ -92,13 +49,13 @@
             <hr class="mb--0">
             <div class="rbt-minicart-bottom mt--20">
                 <div class="view-cart-btn">
-                    <a class="rbt-btn btn-border icon-hover w-100 text-center" href="#">
+                    <a class="rbt-btn btn-border icon-hover w-100 text-center" href="${pageContext.request.contextPath}/cart">
                         <span class="btn-text">View Cart</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                     </a>
                 </div>
                 <div class="checkout-btn mt--20">
-                    <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="#">
+                    <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="${pageContext.request.contextPath}/checkout">
                         <span class="btn-text">Checkout</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                     </a>
