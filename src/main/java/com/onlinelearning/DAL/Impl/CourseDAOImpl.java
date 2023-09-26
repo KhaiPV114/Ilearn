@@ -18,7 +18,7 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course getCourseById(Integer id) {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses where course_id = ?";
+        String sql = "select * from courses where course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
@@ -26,10 +26,11 @@ public class CourseDAOImpl implements CourseDAO {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
                             .categoryId(rs.getInt("categoryID"))
-                            .owner_id(rs.getInt("owner_id"))
+                            .ownerId(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
                             .description(rs.getString("description"))
+                            .price(rs.getDouble("price"))
                             .build();
                     return course;
                 }
@@ -42,7 +43,7 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course getCourseByName(String name) {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses where name = ?";
+        String sql = "select * from courses where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, name);
             try ( ResultSet rs = ps.executeQuery()) {
@@ -50,10 +51,11 @@ public class CourseDAOImpl implements CourseDAO {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
                             .categoryId(rs.getInt("categoryID"))
-                            .owner_id(rs.getInt("owner_id"))
+                            .ownerId(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
                             .description(rs.getString("description"))
+                            .price(rs.getDouble("price"))
                             .build();
                     return course;
                 }
@@ -66,17 +68,18 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public List<Course> getAllCourses() {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses";
+        String sql = "select * from courses";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
                 Course course = Course.builder()
                         .id(rs.getInt("course_id"))
                         .categoryId(rs.getInt("categoryID"))
-                        .owner_id(rs.getInt("owner_id"))
+                        .ownerId(rs.getInt("owner_id"))
                         .name(rs.getString("name"))
                         .imageUrl(rs.getString("image_url"))
                         .description(rs.getString("description"))
+                        .price(rs.getDouble("price"))
                         .build();
                 courses.add(course);
             }
@@ -89,11 +92,14 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course createCourse(Course course) {
-        String sql = "insert into courses(name, image_url, description) values (?, ?, ?)";
+        String sql = "insert into courses(category_id, owner_id, name, image_url, description, price) values (?, ?, ?, ?, ?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, course.getName());
-            ps.setString(2, course.getImageUrl());
-            ps.setString(3, course.getDescription());
+            ps.setInt(1, course.getCategoryId());
+            ps.setInt(2, course.getOwnerId());
+            ps.setString(3, course.getName());
+            ps.setString(4, course.getImageUrl());
+            ps.setString(5, course.getDescription());
+            ps.setDouble(6, course.getPrice());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
@@ -111,11 +117,17 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course updateCourse(Course course) {
-        String sql = "insert into courses(name, image_url, description) values (?, ?, ?)";
+        String sql = "update courses"
+                + " set category_id = ?, owner_id = ?, name = ?, image_url = ?, description = ? "
+                + " where course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, course.getName());
-            ps.setString(2, course.getImageUrl());
-            ps.setString(3, course.getDescription());
+            ps.setInt(1, course.getCategoryId());
+            ps.setInt(2, course.getOwnerId());
+            ps.setString(3, course.getName());
+            ps.setString(4, course.getImageUrl());
+            ps.setString(5, course.getDescription());
+            ps.setDouble(6, course.getPrice());
+            ps.setInt(7, course.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return course;
