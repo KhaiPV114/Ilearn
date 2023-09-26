@@ -25,7 +25,7 @@ public class CourseDAOImpl implements CourseDAO {
                 if (rs.next()) {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
-                            .categoryId(rs.getInt("categoryID"))
+                            .categoryId(rs.getInt("category_id"))
                             .ownerId(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
@@ -50,7 +50,7 @@ public class CourseDAOImpl implements CourseDAO {
                 if (rs.next()) {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
-                            .categoryId(rs.getInt("categoryID"))
+                            .categoryId(rs.getInt("category_id"))
                             .ownerId(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
@@ -74,7 +74,7 @@ public class CourseDAOImpl implements CourseDAO {
             while (rs.next()) {
                 Course course = Course.builder()
                         .id(rs.getInt("course_id"))
-                        .categoryId(rs.getInt("categoryID"))
+                        .categoryId(rs.getInt("category_id"))
                         .ownerId(rs.getInt("owner_id"))
                         .name(rs.getString("name"))
                         .imageUrl(rs.getString("image_url"))
