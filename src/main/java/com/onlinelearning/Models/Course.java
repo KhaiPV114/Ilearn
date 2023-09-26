@@ -19,4 +19,6 @@ public class Course {
     
     private String description;
     
+    private Double price;
+    
 }
