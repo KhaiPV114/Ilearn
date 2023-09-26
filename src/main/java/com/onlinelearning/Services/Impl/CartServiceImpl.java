@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CartServiceImpl implements CartService {
 
@@ -24,21 +26,40 @@ public class CartServiceImpl implements CartService {
         return cartDAO.getCartsByUserId(userId);
     }
 
-    private void validateCart(Cart cart) throws Exception{
-        if(cartDAO.getCartByUserIdAndCourseId(cart.getUserId(), cart.getUserId()) != null){
-            throw new Exception("Cart is already exist!");
-        }
-    }
-    
     @Override
-    public Cart createCart(Cart cart) throws Exception {
-        validateCart(cart);
-        Cart addedCart = cartDAO.createCart(cart);
-        return addedCart;
+    public Cart getCartsByUserIdAndCourseId(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return null;
+        }
+        return cartDAO.getCartByUserIdAndCourseId(userId, courseId);
+    }
+
+    private void validateCart(Cart cart) throws Exception {
+        if (cartDAO.getCartByUserIdAndCourseId(cart.getUserId(), cart.getUserId()) != null) {
+            throw new Exception("Cart of " + cart.getUserId() + " with " + cart.getCourseId() + " is already exist!");
+        }
     }
 
     @Override
-    public Cart deleteCart(Cart cart) throws Exception {
+    public Cart createCart(Cart cart) {
+        try {
+            validateCart(cart);
+            Cart addedCart = cartDAO.createCart(cart);
+            return addedCart;
+        } catch (Exception ex) {
+            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    @Override
+    public Cart deleteCart(Cart cart) {
+        try {
+            validateCart(cart);
+        } catch (Exception ex) {
+            Cart deletedCart = cartDAO.deleteCart(cart);
+            return deletedCart;
+        }
         return null;
     }
 
@@ -65,7 +86,7 @@ public class CartServiceImpl implements CartService {
         Gson gson = new Gson();
         String cartsJson = gson.toJson(carts);
         Cookie cartCookie = new Cookie("carts", cartsJson);
-        cartCookie.setMaxAge(7 * 24 * 60 * 60);
+        cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
         response.addCookie(cartCookie);
     }
 

@@ -47,16 +47,18 @@ public class CartDAOImpl implements CartDAO {
         String sql = "select cart_id, user_id, course_id"
                 + " from " + TABLE_NAME
                 + " where user_id = ? and course_id = ?";
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery();) {
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, userId);
-            ps.setInt(1, courseId);
-            if (rs.next()) {
-                Cart cart = Cart.builder()
-                        .id(rs.getInt("cart_id"))
-                        .userId(rs.getInt("user_id"))
-                        .courseId(rs.getInt("course_id"))
-                        .build();
-                return cart;
+            ps.setInt(2, courseId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    Cart cart = Cart.builder()
+                            .id(rs.getInt("cart_id"))
+                            .userId(rs.getInt("user_id"))
+                            .courseId(rs.getInt("course_id"))
+                            .build();
+                    return cart;
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,5 +104,4 @@ public class CartDAOImpl implements CartDAO {
         }
         return null;
     }
-
 }

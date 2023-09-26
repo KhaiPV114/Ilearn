@@ -9,9 +9,11 @@ public interface CartService {
 
     List<Cart> getCartsByUserId(Integer userId);
     
-    Cart createCart(Cart cart) throws Exception;
+    Cart getCartsByUserIdAndCourseId(Integer userId, Integer courseId);
     
-    Cart deleteCart(Cart cart) throws Exception;
+    Cart createCart(Cart cart);
+    
+    Cart deleteCart(Cart cart);
     
     List<Cart> getCartsFromCookie(HttpServletRequest request);
     
