@@ -4,7 +4,7 @@ import com.onlinelearning.Models.Wishlist;
 import java.util.List;
 
 public interface WishlistDAO{
-    Wishlist getWishlistById(Integer id);
+    Wishlist getWishlistByUserId(Integer userId);
     
     List<Wishlist> getAllWishlists();
     

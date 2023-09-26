@@ -11,23 +11,12 @@ public class WishlistServiceImpl implements WishlistService {
     private final WishlistDAO wishlistDAO = new WishlistDAOImpl();
 
     @Override
-    public Wishlist getWishlistById(Integer id) {
-        if (id == null) {
+    public Wishlist getWishlistByUserId(Integer userId) {
+        if (userId == null) {
             return null;
         }
-        return wishlistDAO.getWishlistById(id);
+        return wishlistDAO.getWishlistByUserId(userId);
     }
-    
-//    @Override
-//    public List<Category> getAllCategories() {
-//        return categoryDAO.getAllCategories();
-//    }
-//
-//    private void validateCategory(Category category) throws Exception {
-//        if (categoryDAO.getCategoryByName(category.getName()) != null) {
-//            throw new Exception("Category name is already existed!");
-//        }
-//    }
 
     @Override
     public List<Wishlist> getAllWishlists() {
@@ -35,7 +24,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     private void validateWishlist(Wishlist wishlist) throws Exception {
-        if (wishlistDAO.getWishlistById(wishlist.getId()) != null) {
+        if (wishlistDAO.getWishlistByUserId(wishlist.getId()) != null) {
             throw new Exception("This course is already existed!");
         }
     }

@@ -18,10 +18,10 @@ public class WishlistDAOImpl implements WishlistDAO {
     private final DBContext dbContext = new DBContextImpl();
 
     @Override
-    public Wishlist getWishlistById(Integer id) {
+    public Wishlist getWishlistByUserId(Integer userId) {
         String sql = "SELECT wishlist_id, user_id, course_id FROM wishlists WHERE wishlist_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -97,4 +97,5 @@ public class WishlistDAOImpl implements WishlistDAO {
         }
         return null;
     }
+
 }
