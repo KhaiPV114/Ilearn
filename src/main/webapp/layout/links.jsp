@@ -19,3 +19,4 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/jquery-ui.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/magnigy-popup.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/custom.css">
