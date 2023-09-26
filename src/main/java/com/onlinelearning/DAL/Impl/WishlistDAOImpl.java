@@ -19,7 +19,7 @@ public class WishlistDAOImpl implements WishlistDAO {
 
     @Override
     public Wishlist getWishlistByUserId(Integer userId) {
-        String sql = "SELECT wishlist_id, user_id, course_id FROM wishlists WHERE wishlist_id = ?";
+        String sql = "SELECT wishlist_id, user_id, course_id FROM wishlists WHERE user_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
 
@@ -63,7 +63,7 @@ public class WishlistDAOImpl implements WishlistDAO {
 
     @Override
     public Wishlist addWishlist(Wishlist wishlist) {
-        String sql = "INSERT INTO wishlists(user_id, course_id) VALUES (?, ?)";
+        String sql = "INSERT INTO wishlists(user_id, course_id) VALUES (?, ?) Where wishlist_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, wishlist.getUserId());
             ps.setInt(2, wishlist.getCourseId());
@@ -71,7 +71,7 @@ public class WishlistDAOImpl implements WishlistDAO {
             if (affectedRows > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        int wishlistId = rs.getInt(1);
+                        wishlist.setId(rs.getInt(1));
                         return wishlist;
                     }
                 }
