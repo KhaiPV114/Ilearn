@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 @WebServlet(name = "DeleteCart", urlPatterns = {"/remove-cart"})
 public class DeleteCart extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/cart.jsp";
     private static final String HOME_PATH = "/homepage";
 
     private final CartService cartService = new CartServiceImpl();
@@ -39,7 +38,6 @@ public class DeleteCart extends HttpServlet {
             Cart deleteCart = Cart.builder().courseId(courseId).build();
             carts.remove(deleteCart);
             cartService.addCartsToCookie(response, carts);
-            response.sendRedirect(request.getContextPath() + "/cart");
         } else {
             try {
                 Cart deleteCart = Cart.builder().userId(user.getId()).courseId(courseId).build();
@@ -47,8 +45,7 @@ public class DeleteCart extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(DeleteCart.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect(request.getContextPath() + "/cart");
         }
-
+        response.sendRedirect(request.getContextPath() + "/cart");
     }
 }

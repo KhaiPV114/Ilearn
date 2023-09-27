@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
 public class ViewCart extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/cart.jsp";
+    private static final String VIEW_PATH = "/general/cart.jsp";
 
     private final CartService cartService = new CartServiceImpl();
 
