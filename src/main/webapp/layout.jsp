@@ -8,13 +8,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="/layout/links.jsp"></jsp:include>
-        </head>
-        <body>
-        <jsp:include page="/layout/header.jsp"></jsp:include>
-            <div class="container">
-                
-            </div>
-        <jsp:include page="/layout/scripts.jsp"></jsp:include>
+        <jsp:include page="/layout/links.jsp"/>
+    </head>
+    <body class="rbt-header-sticky">
+        <jsp:include page="/layout/header.jsp"/>
+        <div class="container">
+
+        </div>
+        <jsp:include page="/layout/footer.jsp"/>
     </body>
+    <jsp:include page="/layout/scripts.jsp"/>
 </html>

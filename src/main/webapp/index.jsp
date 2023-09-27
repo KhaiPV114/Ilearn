@@ -10,6 +10,10 @@
     </head>
     <body>
         <h1>JSP layout:</h1>
+        <a target="_blank" href="${pageContext.request.contextPath}/homepage">Homepage</a>  
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/testing/cart.jsp">Cart</a>  
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/_draft.jsp">Instructor layout draft</a>  
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/dashboard.jsp">Instructor dashboard</a>        

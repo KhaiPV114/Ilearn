@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- Start Cart Side Menu -->
 <div class="rbt-cart-side-menu">
     <div class="inner-wrapper">
         <div class="inner-top">
@@ -17,21 +16,6 @@
         </div>
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/1.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Miracle Morning</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$22</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
 
                 <li class="minicart-item">
                     <div class="thumbnail">
@@ -41,45 +25,28 @@
                     </div>
                     <div class="product-content">
                         <h6 class="title"><a href="single-product.html">Happy Strong</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$30</span></span>
                     </div>
                     <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
+                        <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
                     </div>
                 </li>
+                <c:forEach var="course" items="${coursesInCart}">
+                    <li class="minicart-item" id="cart-side-item">
+                        <div class="thumbnail">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product Images">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <h6 class="title"><a href="single-product.html">${course.name}</a></h6>
 
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/3.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Rich Dad Poor Dad</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$50</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
-
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/4.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Momentum Theorem</a></h6>
-
-                        <span class="quantity">1 * <span class="price">$50</span></span>
-                    </div>
-                    <div class="close-btn">
-                        <button class="rbt-round-btn"><i class="feather-x"></i></button>
-                    </div>
-                </li>
+                            <span class="price">$${course.price}</span>
+                        </div>
+                        <div class="close-btn">
+                            <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
+                        </div> 
+                    </li>
+                </c:forEach>
             </ul>
         </nav>
 
@@ -108,5 +75,4 @@
 
     </div>
 </div>
-<!-- End Cart Side Menu -->
 <a class="close_side_menu" href="javascript:void(0);"></a>
