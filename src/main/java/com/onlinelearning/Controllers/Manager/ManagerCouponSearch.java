@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/CouponSearch"})
+@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/dashboard/manager/coupon-search"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10, // 5 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB

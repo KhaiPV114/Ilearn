@@ -8,9 +8,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="/layout/links.jsp"></jsp:include>
-        </head>
-        <body>
+        <jsp:include page="/layout/links.jsp"/>
+    </head>
+    <body>
         <jsp:include page="/layout/header.jsp" />
         <jsp:include page="/layout/dashboard-header.jsp" />
         <div class="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
@@ -26,7 +26,6 @@
                                     <div class="content">
                                         <!-- Start Title -->
                                         <div class="section-title">
-                                            <!--<h4 class="rbt-title-style-3">Add course category</h4>-->
                                             <nav class="rbt-title-style-3 h4 pb-0" aria-label="breadcrumb">
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
@@ -43,7 +42,7 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="./CouponSearch" method="post" enctype="multipart/form-data">
+                                        <form action="coupon-search" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
@@ -82,10 +81,11 @@
                                 </div>
                             </div>
                             <!-- End Content -->
-
-                            <jsp:include page="/layout/scripts.jsp"></jsp:include>
-                                </body>
-                                <footer>
-                                <jsp:include page="/layout/footer.jsp" />
-                            </footer>
-                            </html>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jsp:include page="/layout/footer.jsp" />
+    </body>
+    <jsp:include page="/layout/scripts.jsp"/>
+</html>
