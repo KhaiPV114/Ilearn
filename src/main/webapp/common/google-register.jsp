@@ -30,7 +30,7 @@
                                 <span class="text-warning">${g_fullname_error}</span>
                             </c:if>
                             <div class="form-group">
-                                <input name="g_fullname" value="${g_fullname}" type="text">
+                                <input name="g_fullname" value="${g_fullname}" type="text" required>
                                 <label>Full name *</label>
                                 <span class="focus-border"></span>
                             </div>
@@ -40,7 +40,7 @@
                             </c:if>
                             <div class="form-group">
                                 <span class="mb--0">Date of birth *</span>
-                                <input class="mt--0" name="g_dob" value="${g_dob}" type="date">
+                                <input class="mt--0" name="g_dob" value="${g_dob}" type="date" required>
                                 <span class="focus-border"></span>
                             </div>
 
@@ -48,7 +48,7 @@
                                 <span class="text-warning">${g_phoneNumber_error}</span>
                             </c:if>
                             <div class="form-group">
-                                <input name="g_phoneNumber" value="${g_phoneNumber}" type="text">
+                                <input name="g_phoneNumber" value="${g_phoneNumber}" type="text" required>
                                 <label>Phone number *</label>
                                 <span class="focus-border"></span>
                             </div>

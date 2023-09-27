@@ -50,11 +50,11 @@
                             <h3 class="title">Login</h3>
                             <form action="${pageContext.request.contextPath}/authentication/login" method="post" class="max-width-auto">
                                 <div class="form-group">
-                                    <input name="l_username" value="${l_username}" id="l_username" type="text">
+                                    <input name="l_username" value="${l_username}" id="l_username" type="text" required>
                                     <label>Username or email *</label>
                                 </div>
                                 <div class="form-group">
-                                    <input name="l_password" value="${l_password}" id="l_password" type="password">
+                                    <input name="l_password" value="${l_password}" id="l_password" type="password" required>
                                     <i class="feather-eye togglePassword" id="l_togglePassword"></i>
                                     <label>Password *</label>
                                     <span class="focus-border"></span>
@@ -122,7 +122,7 @@
                                     <span class="text-warning">${r_username_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_username" value="${r_username}" type="text">
+                                    <input name="r_username" value="${r_username}" type="text" required>
                                     <label>Username *</label>
                                     <span class="focus-border"></span>
                                 </div>
@@ -131,7 +131,7 @@
                                     <span class="text-warning">${r_password_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_password" value="${r_password}" id="r_password" type="password">
+                                    <input name="r_password" value="${r_password}" id="r_password" type="password" required>
                                     <label>Password *</label>
                                     <i class="feather-eye togglePassword" id="r_togglePassword"></i>
                                     <span class="focus-border"></span>
@@ -141,7 +141,7 @@
                                     <span class="text-warning">${r_email_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_email" value="${r_email}" type="text">
+                                    <input name="r_email" value="${r_email}" type="text" required>
                                     <label>Email address *</label>
                                     <span class="focus-border"></span>
                                 </div>
@@ -150,14 +150,14 @@
                                     <span class="text-warning">${r_fullname_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_fullname" value="${r_fullname}" type="text">
+                                    <input name="r_fullname" value="${r_fullname}" type="text" required>
                                     <label>Full name *</label>
                                     <span class="focus-border"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <p class="mb--0">Date of birth *</p>
-                                    <input class="mt--0" name="r_dob" value="${r_dob}" type="date">
+                                    <input class="mt--0" name="r_dob" value="${r_dob}" type="date" required>
                                     <span class="focus-border"></span>
                                 </div>
 
@@ -165,7 +165,7 @@
                                     <span class="text-warning">${r_phoneNumber_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_phoneNumber" value="${r_phoneNumber}" type="text">
+                                    <input name="r_phoneNumber" value="${r_phoneNumber}" type="text" required>
                                     <label>Phone number *</label>
                                     <span class="focus-border"></span>
                                 </div>
