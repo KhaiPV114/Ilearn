@@ -2,6 +2,7 @@ package com.onlinelearning.Controllers.CartController;
 
 import com.onlinelearning.Models.Cart;
 import com.onlinelearning.Models.Course;
+import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
@@ -26,14 +27,17 @@ public class ViewCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
         List<Cart> carts = new ArrayList<>();
         List<Course> coursesInCart = new ArrayList<>();
-        //If user not login, read cart from cookies
-//        carts = cartService.getCartsFromCookie(request);
-        //Else read cart with userId
-        carts = cartService.getCartsByUserId(1);
+        
+        if(user == null){
+            carts = cartService.getCartsFromCookie(request);
+        }else{
+            carts = cartService.getCartsByUserId(user.getId());
+        }
 
-        //Get list course in cart
+        //Get list course in cart to display
         if (!carts.isEmpty()) {
             for (Cart cart : carts) {
                 coursesInCart.add(courseService.getCourseById(cart.getCourseId()));

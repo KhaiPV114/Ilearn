@@ -2,8 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="carts" value="${sessionScope['carts']}" />
-
 <!-- Start Cart Side Menu -->
 <div class="rbt-cart-side-menu">
     <div class="inner-wrapper">
@@ -17,23 +15,24 @@
                 </div>
             </div>
         </div>
+        
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-                <c:forEach var="cartItem" items="${carts}">
-                    <li class="minicart-item">
+                <c:forEach var="course" items="${coursesInCart}">
+                    <li class="minicart-item" id="cart-side-item">
                         <div class="thumbnail">
                             <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/images/product/1.jpg" alt="Product Images">
+                                <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product Images">
                             </a>
                         </div>
                         <div class="product-content">
                             <h6 class="title"><a href="single-product.html">Course ${cartItem.courseId}</a></h6>
 
-                            <span class="quantity">1 * <span class="price">$22</span></span>
+                            <span class="price">$${course.price}</span>
 
                         </div>
                         <div class="close-btn">
-                            <button class="rbt-round-btn" onclick="removeCartItem('${pageContext.request.contextPath}', 1)"><i class="feather-x"></i></button>
+                            <button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>
                         </div>
                     </li>
                 </c:forEach>
@@ -42,9 +41,9 @@
 
         <div class="rbt-minicart-footer">
             <hr class="mb--0">
-            <div class="rbt-cart-subttotal">
+            <div class="rbt-cart-subttotal" id="total-cart-display">
                 <p class="subtotal"><strong>Subtotal:</strong></p>
-                <p class="price">$121</p>
+                <p class="price" id="total-cart-price">$121</p>
             </div>
             <hr class="mb--0">
             <div class="rbt-minicart-bottom mt--20">

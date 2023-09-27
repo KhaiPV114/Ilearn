@@ -84,6 +84,7 @@ public class CartServiceImpl implements CartService {
         Gson gson = new Gson();
         String cartsJson = gson.toJson(carts);
         Cookie cartCookie = new Cookie("carts", cartsJson);
+        cartCookie.setPath("/");    //For all pages in website
         cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
         response.addCookie(cartCookie);
     }
