@@ -17,11 +17,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/dashboard/manager/coupon-search"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 10, // 5 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 100 // 100 MB
-)
 public class ManagerCouponSearch extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/manager/coupon-form.jsp";
