@@ -18,14 +18,14 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course getCourseById(Integer id) {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses where course_id = ?";
+        String sql = "select course_id, category_id, owner_id,name,image_url, description from courses where course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
-                            .categoryId(rs.getInt("categoryID"))
+                            .categoryId(rs.getInt("category_id"))
                             .owner_id(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
@@ -42,14 +42,14 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Course getCourseByName(String name) {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses where name = ?";
+        String sql = "select course_id, category_id, owner_id,name,image_url, description from courses where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, name);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Course course = Course.builder()
                             .id(rs.getInt("course_id"))
-                            .categoryId(rs.getInt("categoryID"))
+                            .categoryId(rs.getInt("category_id"))
                             .owner_id(rs.getInt("owner_id"))
                             .name(rs.getString("name"))
                             .imageUrl(rs.getString("image_url"))
@@ -66,13 +66,13 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public List<Course> getAllCourses() {
-        String sql = "select course_id, categoryID, owner_id,name,image_url, description from courses";
+        String sql = "select course_id, category_id, owner_id,name,image_url, description from courses";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             List<Course> courses = new ArrayList<>();
             while (rs.next()) {
                 Course course = Course.builder()
                         .id(rs.getInt("course_id"))
-                        .categoryId(rs.getInt("categoryID"))
+                        .categoryId(rs.getInt("category_id"))
                         .owner_id(rs.getInt("owner_id"))
                         .name(rs.getString("name"))
                         .imageUrl(rs.getString("image_url"))

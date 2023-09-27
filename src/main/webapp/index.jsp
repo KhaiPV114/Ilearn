@@ -30,7 +30,9 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>   
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/course">Manager course</a>   
         <br>
     </body>
 </html>

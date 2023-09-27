@@ -25,7 +25,7 @@ public class CourseServiceImpl implements CourseService {
 
     private void validateCourse(Course course) throws Exception {
         if (courseDAO.getCourseByName(course.getName()) != null) {
-            throw new Exception("Category name is already existed!");
+            throw new Exception("Course name is already existed!");
         }
     }
 
