@@ -11,12 +11,14 @@ public interface CartService {
     
     Cart getCartsByUserIdAndCourseId(Integer userId, Integer courseId);
     
-    Cart createCart(Cart cart);
+    Cart createCart(Cart cart) throws Exception;
     
-    Cart deleteCart(Cart cart);
+    Cart deleteCart(Cart cart) throws Exception;
     
     List<Cart> getCartsFromCookie(HttpServletRequest request);
     
     void addCartsToCookie(HttpServletResponse response, List<Cart> carts);
+    
+    void removeCartsFromCookie(HttpServletRequest request, HttpServletResponse response);
     
 }

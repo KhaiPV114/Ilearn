@@ -18,6 +18,22 @@
         
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
+                <li class="minicart-item" id="cart-side-item">
+                        <div class="thumbnail">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Product Images">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <h6 class="title"><a href="single-product.html">Prototype</a></h6>
+
+                            <span class="course-price-cart-side">$199.89</span>
+
+                        </div>
+                        <div class="close-btn">
+                            <button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>
+                        </div>
+                    </li>
                 <c:forEach var="course" items="${coursesInCart}">
                     <li class="minicart-item" id="cart-side-item">
                         <div class="thumbnail">
@@ -28,7 +44,7 @@
                         <div class="product-content">
                             <h6 class="title"><a href="single-product.html">${course.name}</a></h6>
 
-                            <span class="price">$${course.price}</span>
+                            <span class="course-price-cart-side">$${course.price}</span>
 
                         </div>
                         <div class="close-btn">
@@ -43,7 +59,7 @@
             <hr class="mb--0">
             <div class="rbt-cart-subttotal" id="total-cart-display">
                 <p class="subtotal"><strong>Subtotal:</strong></p>
-                <p class="price" id="total-cart-price">$121</p>
+                <p class="price" id="course-total-cart-side">$0</p>
             </div>
             <hr class="mb--0">
             <div class="rbt-minicart-bottom mt--20">

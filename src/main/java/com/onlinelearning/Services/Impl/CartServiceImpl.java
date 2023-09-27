@@ -36,29 +36,24 @@ public class CartServiceImpl implements CartService {
 
     private void validateCart(Cart cart) throws Exception {
         if (cartDAO.getCartByUserIdAndCourseId(cart.getUserId(), cart.getCourseId()) != null) {
-            throw new Exception("Cart of " + cart.getUserId() + " with " + cart.getCourseId() + " is already exist!");
+            throw new Exception("Cart: " + cart + " is already exist!");
         }
     }
 
     @Override
-    public Cart createCart(Cart cart) {
-        try {
-            validateCart(cart);
-            return cartDAO.createCart(cart);
-        } catch (Exception ex) {
-            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+    public Cart createCart(Cart cart) throws Exception {
+        validateCart(cart);
+        return cartDAO.createCart(cart);
     }
 
     @Override
-    public Cart deleteCart(Cart cart) {
+    public Cart deleteCart(Cart cart) throws Exception {
         try {
             validateCart(cart);
         } catch (Exception ex) {
             return cartDAO.deleteCart(cart);
         }
-        return null;
+        throw new Exception("Cart: " + cart + "doesn't exist");
     }
 
     @Override
@@ -87,6 +82,20 @@ public class CartServiceImpl implements CartService {
         cartCookie.setPath("/");    //For all pages in website
         cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
         response.addCookie(cartCookie);
+    }
+
+    @Override
+    public void removeCartsFromCookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cartsCookie = request.getCookies();
+        for (Cookie cookie : cartsCookie) {
+            if (cookie.getName().equals("carts")) {
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                System.out.println("Remove success");
+                break;
+            }
+        }
     }
 
 }

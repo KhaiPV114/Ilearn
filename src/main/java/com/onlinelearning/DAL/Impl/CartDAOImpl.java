@@ -92,9 +92,10 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public Cart deleteCart(Cart cart) {
         String sql = "delete from " + TABLE_NAME
-                + " where cart_id = ?";
+                + " where user_id = ? and course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, cart.getId());
+            ps.setInt(1, cart.getUserId());
+            ps.setInt(2, cart.getCourseId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return cart;

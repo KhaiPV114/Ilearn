@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(name = "AddCart", urlPatterns = {"/testing/add-to-cart"})
+@WebServlet(name = "AddCart", urlPatterns = {"/add-to-cart"})
 public class AddCart extends HttpServlet {
 
     private static final String VIEW_PATH = "/testing/cart.jsp";
@@ -33,7 +33,6 @@ public class AddCart extends HttpServlet {
         Integer courseId = Integer.parseInt(request.getParameter("course-id"));
         String message = "";
 
-        //If is guest
         if (user == null) {
             List<Cart> carts = cartService.getCartsFromCookie(request);
             Cart newCart = Cart.builder().courseId(courseId).build();
@@ -42,20 +41,20 @@ public class AddCart extends HttpServlet {
             } else {
                 carts.add(newCart);
                 cartService.addCartsToCookie(response, carts);
+                message = "Add cart to cookies successful!";
             }
-            request.setAttribute("messageGuest", message);
-            request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         } else {
             Cart newCart = Cart.builder().id(null).userId(user.getId()).courseId(courseId).build();
-            Cart addedCart = cartService.createCart(newCart);
-            if (addedCart == null) {
-                message = "Add cart unsuccessful!";
-            } else {
-                message = "Add cart successful!";
+            Cart addedCart;
+            try {
+                addedCart = cartService.createCart(newCart);
+                request.setAttribute("addedCart", addedCart);
+                message = "Add cart to database successful!";
+            } catch (Exception ex) {
+                message = ex.getMessage();
             }
-            request.setAttribute("messageUser", message);
-            request.setAttribute("addedCart", addedCart);
-            request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         }
+        request.setAttribute("messageAddToCart", message);
+        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }

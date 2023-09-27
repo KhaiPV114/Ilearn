@@ -22,19 +22,33 @@ public class ViewCart extends HttpServlet {
     private static final String VIEW_PATH = "/common/cart.jsp";
 
     private final CartService cartService = new CartServiceImpl();
+
     private final CourseService courseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        List<Cart> carts = new ArrayList<>();
+        List<Cart> carts;
         List<Course> coursesInCart = new ArrayList<>();
-        
-        if(user == null){
+
+        if (user == null) {
             carts = cartService.getCartsFromCookie(request);
-        }else{
+        } else {
             carts = cartService.getCartsByUserId(user.getId());
+            //If in database, user haven't have cart's info, will add cart from 
+            //cookie to database, and delete old cookie on broswer
+            if (carts.isEmpty()) {
+                List<Cart> cartsFromCookie = cartService.getCartsFromCookie(request);
+                for (Cart cart : cartsFromCookie) {
+                    cart.setUserId(user.getId());
+                    try {
+                        cartService.createCart(cart);
+                    } catch (Exception ex) {}
+                }
+                carts = cartService.getCartsByUserId(user.getId());
+            }
+            cartService.removeCartsFromCookie(request, response);
         }
 
         //Get list course in cart to display

@@ -1,3 +1,16 @@
+<script>
+    const coursePriceCartSide = document.getElementsByClassName("course-price-cart-side");
+    const courseTotalCartSide = document.getElementById('course-total-cart-side');
+    courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
+    function calculateCoursesPriceCartSide() {
+        let total = 0;
+        for (let price of coursePriceCartSide) {
+            total += parseFloat(price.innerHTML.replace("$", ""));
+        }
+        return total;
+    }
+</script>
+
 <!-- JS -->
 <!-- Modernizer JS -->
 <script src="${pageContext.request.contextPath}/assets/js/vendor/modernizr.min.js"></script>

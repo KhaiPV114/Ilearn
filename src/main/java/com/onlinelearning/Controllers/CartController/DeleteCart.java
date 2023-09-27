@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "DeleteCart", urlPatterns = {"/remove-cart"})
 public class DeleteCart extends HttpServlet {
@@ -31,8 +33,7 @@ public class DeleteCart extends HttpServlet {
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         int courseId = Integer.parseInt(request.getParameter("course-id"));
-        
-        //If is guest, delete course id of carts in Cookie
+
         if (user == null) {
             List<Cart> carts = cartService.getCartsFromCookie(request);
             Cart deleteCart = Cart.builder().courseId(courseId).build();
@@ -40,8 +41,12 @@ public class DeleteCart extends HttpServlet {
             cartService.addCartsToCookie(response, carts);
             response.sendRedirect(request.getContextPath() + "/cart");
         } else {
-            int userId = user.getId();
-            cartService.deleteCart(cartService.getCartsByUserIdAndCourseId(userId, courseId));
+            try {
+                Cart deleteCart = Cart.builder().userId(user.getId()).courseId(courseId).build();
+                cartService.deleteCart(deleteCart);
+            } catch (Exception ex) {
+                Logger.getLogger(DeleteCart.class.getName()).log(Level.SEVERE, null, ex);
+            }
             response.sendRedirect(request.getContextPath() + "/cart");
         }
 
