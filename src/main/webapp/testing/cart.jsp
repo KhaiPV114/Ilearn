@@ -13,7 +13,7 @@
         <a target="_blank" href="${pageContext.request.contextPath}/cart">View Cart</a>
         <h3>Add cart as guest</h3>
         
-        <form action="add-to-cart" method="post">
+        <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
             <input type="text" name="course-id" placeholder="course id">
             <input type="submit" value="add course to cart">
             <p>${messageAddToCart}</p>
