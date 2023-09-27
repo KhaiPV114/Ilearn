@@ -26,7 +26,7 @@
                             </a>
                         </div>
                         <div class="product-content">
-                            <h6 class="title"><a href="single-product.html">Course ${cartItem.courseId}</a></h6>
+                            <h6 class="title"><a href="single-product.html">${course.name}</a></h6>
 
                             <span class="price">$${course.price}</span>
 

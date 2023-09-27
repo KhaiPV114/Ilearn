@@ -9,6 +9,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cart</title>
         <jsp:include page="/layout/links.jsp"/>
+        <style>
+            .pro-description{
+                max-width: 500px;
+                font-size: smaller;
+            }
+            .pro-description{
+                max-width: 400px;
+                font-size: smaller;
+            }
+        </style>
     </head>
 
     <body class="rbt-header-sticky">
@@ -46,23 +56,91 @@
                                             <tr>
                                                 <th class="pro-thumbnail">Image</th>
                                                 <th class="pro-title">Course</th>
-                                                <th class="pro-price">Description</th>
+                                                <th class="pro-description">Description</th>
+                                                <th class="pro-information">Infomation</th>
                                                 <th class="pro-subtotal">Total</th>
                                                 <th class="pro-remove">Remove</th>
                                             </tr>
-                                        </thead>    
-                                        <c:forEach items="${coursesInCart}" var="course">
-                                            <tbody>
+                                        </thead>  
+
+                                        <tbody>
+                                            <tr>
+                                                <td class="pro-thumbnail">
+                                                    <a href="#"><img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Product"></a>
+                                                </td>
+                                                <td class="pro-title">
+                                                    <a href="#">Prototype</a>
+                                                </td>
+                                                <td class="pro-description">
+                                                    <span>JavaScript is a dynamic programming language that's used for web development, in web applications, for game development, and lots more.</span>
+                                                </td>
+                                                <td class="pro-information">
+                                                    <ul class="rbt-list-style-3">
+                                                        <li>
+                                                            <i class="feather-edit-2"></i> By DuyDuc</li>
+                                                        <li>
+                                                            <i class="feather-book"></i>12 Lessons&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>50 Students
+                                                        </li>
+                                                        <li>
+                                                            <div class="rbt-review">
+                                                                <div class="rating">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                </div>
+                                                                <span class="rating-count"> (15 Reviews)</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td class="pro-subtotal">
+                                                    <span class="course-price">$199.89</span>
+                                                </td>
+                                                <td class="pro-remove">
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
+                                                </td>
+                                            </tr>
+                                            <c:forEach items="${coursesInCart}" var="course">
                                                 <tr>
-                                                    <td class="pro-thumbnail"><a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a></td>
-                                                    <td class="pro-title"><a href="#">${course.name}</a></td>
-                                                    <td class="pro-price"><span>${course.description}</span></td>
-                                                    <td class="pro-subtotal"><span class="course-price">$${course.price}</span></td>
+                                                    <td class="pro-thumbnail">
+                                                        <a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a>
+                                                    </td>
+                                                    <td class="pro-title">
+                                                        <a href="#">${course.name}</a>
+                                                    </td>
+                                                    <td class="pro-description">
+                                                        <span>${course.description}</span>
+                                                    </td>
+                                                    <td class="pro-information">
+                                                        <ul class="rbt-list-style-3">
+                                                            <li>
+                                                                <i class="feather-edit-2"></i>By ${"onwerName"}</li>
+                                                            <li>
+                                                                <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
+                                                            </li>
+                                                            <li>
+                                                                <div class="rbt-review">
+                                                                    <div class="rating">
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                    </div>
+                                                                    <span class="rating-count"> (${"numOfReview"})</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td class="pro-subtotal">
+                                                        <span class="course-price">$${course.price}</span>
+                                                    </td>
                                                     <td class="pro-remove">
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
+
                                                     </td>
-                                                </tr>
-                                            </tbody>
                                             <div class="modal fade" id="confirm-remove-cart-${course.id}" tabindex="-1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
@@ -83,7 +161,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </tr>
                                         </c:forEach>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -125,7 +205,7 @@
 
                                             <div class="cart-submit-btn-group">
                                                 <div class="single-button w-50">
-                                                    <button class="rbt-btn rbt-switch-btn rbt-switch-y w-100 btn-border" onclick="window.location.href='${pageContext.request.contextPath}/homepage'">
+                                                    <button class="rbt-btn rbt-switch-btn rbt-switch-y w-100 btn-border" onclick="window.location.href = '${pageContext.request.contextPath}/homepage'">
                                                         <span data-text="Return Homepage">Return Homepage</span>
                                                     </button>
                                                 </div>
@@ -266,7 +346,7 @@
             const targetElement = document.getElementById('content-display');
             const scrollDuration = 800;
             scrollToElementWithTime(targetElement, scrollDuration);
-            
+
             const coursesPrice = document.getElementsByClassName("course-price");
             const courseSubTotal = document.getElementById('course-sub-total');
             const discountSubTotal = document.getElementById('discount-sub-total');
@@ -274,8 +354,8 @@
             const courseSubTotalNum = calculateCoursesPrice();
             const discountSubTotalNum = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
             const grandTotalNum = courseSubTotalNum - discountSubTotalNum;
-            courseSubTotal.innerHTML = '$' + courseSubTotalNum;
-            grandTotal.innerHTML = '$' + grandTotalNum;
+            courseSubTotal.innerHTML = '$' + courseSubTotalNum.toFixed(2);
+            grandTotal.innerHTML = '$' + grandTotalNum.toFixed(2);
             function calculateCoursesPrice() {
                 let total = 0;
                 for (let price of coursesPrice) {
@@ -283,7 +363,7 @@
                 }
                 return total;
             }
-            
+
             function scrollToElementWithTime(element, duration) {
                 const targetPosition = element.offsetTop;
                 const startPosition = window.pageYOffset;
