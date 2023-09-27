@@ -9,6 +9,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
+        <c:if test="${not empty sessionScope.user}">
+            <h1>Authentication testing:</h1>
+            <h3>Username: ${sessionScope.user.username}</h3>
+            <h3>Fullname: ${sessionScope.user.fullName}</h3>
+            <h3>Email:    ${sessionScope.user.email}</h3>
+            <h3>Role: </h3>
+            <ul>
+                <c:forEach var="role" items="${sessionScope.roles}">
+                    <li>${role}</li>
+                    </c:forEach>
+            </ul>
+            <a href="${pageContext.request.contextPath}/authentication/logout">Logout</a>
+        </c:if>
         <h1>JSP layout:</h1>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/_draft.jsp">Instructor layout draft</a>  
         <br>
@@ -31,6 +44,8 @@
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
     </body>
 </html>
