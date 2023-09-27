@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Authentication</title>
         <jsp:include page="/layout/links.jsp"/>
         <style>
             .togglePassword {
@@ -20,6 +20,7 @@
                 cursor: pointer;
             }
         </style>
+        <script src="https://accounts.google.com/gsi/client" async></script>
     </head>
     <body>
         <jsp:include page="/layout/header.jsp"/>
@@ -89,6 +90,21 @@
                                     </button>
                                 </div>
                             </form>
+                            <button id="custom-google-btn" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-100 mt-4">
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Log in with Google</span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                </span>
+                            </button>
+                            <div class="g_id_signin mt-4 d-none"
+                                 data-type="standard"
+                                 data-shape="rectangular"
+                                 data-theme="outline"
+                                 data-text="signin_with"
+                                 data-size="large"
+                                 data-logo_alignment="center">
+                            </div>
                             <c:if test="${not empty l_error}">
                                 <p class="text-danger mt-4 fw-bold">${l_error}</p>
                             </c:if>
@@ -257,6 +273,21 @@
 
             document.getElementById("content").scrollIntoView({behavior: 'instant'});
             location.hash = '#content';
+        </script>
+        <div id="g_id_onload"
+             data-client_id="${initParam.GOOGLE_CLIENT_ID}"
+             data-context="signin"
+             data-ux_mode="redirect"
+             data-login_uri="${pageContext.request.contextPath}/authentication/login-with-google"
+             data-nonce=""
+             data-itp_support="true">
+        </div>
+        <script>
+            const googleBtn = document.getElementById('custom-google-btn');
+
+            googleBtn.addEventListener('click', () => {
+                document.querySelector('.g_id_signin div[role=button]').click();
+            });
         </script>
     </body>
 </html>

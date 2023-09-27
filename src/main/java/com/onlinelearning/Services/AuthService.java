@@ -3,6 +3,7 @@ package com.onlinelearning.Services;
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
 
@@ -13,6 +14,8 @@ public interface AuthService {
     User register(User user) throws Exception;
 
     User getUser(HttpServletRequest request);
+
+    User updateUser(User user) throws Exception;
 
     Integer getUserId(HttpServletRequest request);
 

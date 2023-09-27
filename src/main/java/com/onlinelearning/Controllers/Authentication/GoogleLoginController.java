@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "GoogleLogin", urlPatterns = {"/authentication/login-with-google"})
-public class GoogleLogin extends HttpServlet {
+@WebServlet(name = "GoogleLoginController", urlPatterns = {"/authentication/login-with-google"})
+public class GoogleLoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/common/authentication.jsp";
 
@@ -21,7 +21,7 @@ public class GoogleLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(request.getContextPath() + "/authentication");
     }
 
     @Override
