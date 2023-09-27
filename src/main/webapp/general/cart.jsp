@@ -341,50 +341,48 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            const targetElement = document.getElementById('content-display');
-            const scrollDuration = 800;
-            scrollToElementWithTime(targetElement, scrollDuration);
-
-            const coursesPrice = document.getElementsByClassName("course-price");
-            const courseSubTotal = document.getElementById('course-sub-total');
-            const discountSubTotal = document.getElementById('discount-sub-total');
-            const grandTotal = document.getElementById('grand-total');
-            const courseSubTotalNum = calculateCoursesPrice();
-            const discountSubTotalNum = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
-            const grandTotalNum = courseSubTotalNum - discountSubTotalNum;
-            courseSubTotal.innerHTML = '$' + courseSubTotalNum.toFixed(2);
-            grandTotal.innerHTML = '$' + grandTotalNum.toFixed(2);
-            function calculateCoursesPrice() {
-                let total = 0;
-                for (let price of coursesPrice) {
-                    total += parseFloat(price.innerHTML.replace("$", ""));
-                }
-                return total;
-            }
-
-            function scrollToElementWithTime(element, duration) {
-                const targetPosition = element.offsetTop;
-                const startPosition = window.pageYOffset;
-                const distance = targetPosition - startPosition;
-                let startTime = null;
-                function scrollStep(timestamp) {
-                    if (!startTime) {
-                        startTime = timestamp;
-                    }
-                    const progress = timestamp - startTime;
-                    const percentage = Math.min(progress / duration, 1);
-                    window.scrollTo(0, startPosition + distance * percentage);
-                    if (progress < duration) {
-                        window.requestAnimationFrame(scrollStep);
-                    }
-                }
-                window.requestAnimationFrame(scrollStep);
-            }
-        </script>
-
         <jsp:include page="/layout/footer.jsp"/>
-        <jsp:include page="/layout/scripts.jsp"/>
     </body>
+    <script>
+        const targetElement = document.getElementById('content-display');
+        const scrollDuration = 800;
+        scrollToElementWithTime(targetElement, scrollDuration);
+
+        const coursesPrice = document.getElementsByClassName("course-price");
+        const courseSubTotal = document.getElementById('course-sub-total');
+        const discountSubTotal = document.getElementById('discount-sub-total');
+        const grandTotal = document.getElementById('grand-total');
+        const courseSubTotalNum = calculateCoursesPrice();
+        const discountSubTotalNum = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
+        const grandTotalNum = courseSubTotalNum - discountSubTotalNum;
+        courseSubTotal.innerHTML = '$' + courseSubTotalNum.toFixed(2);
+        grandTotal.innerHTML = '$' + grandTotalNum.toFixed(2);
+        function calculateCoursesPrice() {
+            let total = 0;
+            for (let price of coursesPrice) {
+                total += parseFloat(price.innerHTML.replace("$", ""));
+            }
+            return total;
+        }
+
+        function scrollToElementWithTime(element, duration) {
+            const targetPosition = element.offsetTop;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            let startTime = null;
+            function scrollStep(timestamp) {
+                if (!startTime) {
+                    startTime = timestamp;
+                }
+                const progress = timestamp - startTime;
+                const percentage = Math.min(progress / duration, 1);
+                window.scrollTo(0, startPosition + distance * percentage);
+                if (progress < duration) {
+                    window.requestAnimationFrame(scrollStep);
+                }
+            }
+            window.requestAnimationFrame(scrollStep);
+        }
+    </script>
+    <jsp:include page="/layout/scripts.jsp"/>
 </html>

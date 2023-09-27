@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "BeUser", urlPatterns = {"/BeUser"})
 public class BeUser extends HttpServlet {
+    
+    private final String TEST_PATH = "testing/cart.jsp";
 
     //response.setContentType("text/html;charset=UTF-8");
     //PrintWriter out = response.getWriter();
@@ -36,7 +38,7 @@ public class BeUser extends HttpServlet {
             message = "Logout success!";
         }
         request.setAttribute("message", message);
-        request.getRequestDispatcher("testing/cart.jsp").forward(request, response);
+        request.getRequestDispatcher(TEST_PATH).forward(request, response);
     }
 
     @Override
