@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- Start Cart Side Menu -->
 <div class="rbt-cart-side-menu">
     <div class="inner-wrapper">
         <div class="inner-top">
@@ -18,22 +17,20 @@
         
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-                <li class="minicart-item" id="cart-side-item">
-                        <div class="thumbnail">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Product Images">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <h6 class="title"><a href="single-product.html">Prototype</a></h6>
 
-                            <span class="course-price-cart-side">$199.89</span>
-
-                        </div>
-                        <div class="close-btn">
-                            <button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>
-                        </div>
-                    </li>
+                <li class="minicart-item">
+                    <div class="thumbnail">
+                        <a href="#">
+                            <img src="assets/images/product/7.jpg" alt="Product Images">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <h6 class="title"><a href="single-product.html">Happy Strong</a></h6>
+                    </div>
+                    <div class="close-btn">
+                        <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
+                    </div>
+                </li>
                 <c:forEach var="course" items="${coursesInCart}">
                     <li class="minicart-item" id="cart-side-item">
                         <div class="thumbnail">
@@ -44,12 +41,11 @@
                         <div class="product-content">
                             <h6 class="title"><a href="single-product.html">${course.name}</a></h6>
 
-                            <span class="course-price-cart-side">$${course.price}</span>
-
+                            <span class="price">$${course.price}</span>
                         </div>
                         <div class="close-btn">
-                            <button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>
-                        </div>
+                            <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
+                        </div> 
                     </li>
                 </c:forEach>
             </ul>
@@ -80,5 +76,4 @@
 
     </div>
 </div>
-<!-- End Cart Side Menu -->
 <a class="close_side_menu" href="javascript:void(0);"></a>
