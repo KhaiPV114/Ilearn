@@ -24,7 +24,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     private void validateWishlist(Wishlist wishlist) throws Exception {
-        if (wishlistDAO.getWishlistByUserId(wishlist.getId()) != null) {
+        if (wishlistDAO.getWishlistByUserId(wishlist.getUserId()) != null) {
             throw new Exception("This course is already existed!");
         }
     }
@@ -50,5 +50,6 @@ public class WishlistServiceImpl implements WishlistService {
         }
         return deletedWishlist;
      }
+    
     
 }

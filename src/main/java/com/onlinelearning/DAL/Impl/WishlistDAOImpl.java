@@ -63,7 +63,7 @@ public class WishlistDAOImpl implements WishlistDAO {
 
     @Override
     public Wishlist addWishlist(Wishlist wishlist) {
-        String sql = "INSERT INTO wishlists(user_id, course_id) VALUES (?, ?) Where wishlist_id = ?";
+        String sql = "INSERT INTO wishlists(user_id, course_id) VALUES (?, ?) WHERE wishlist_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, wishlist.getUserId());
             ps.setInt(2, wishlist.getCourseId());
