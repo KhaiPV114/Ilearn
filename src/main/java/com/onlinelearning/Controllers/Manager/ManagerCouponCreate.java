@@ -98,7 +98,7 @@ public class ManagerCouponCreate extends HttpServlet {
         try {
             Coupon newCoupon = couponService.createCoupon(coupon);
             System.out.println(newCoupon);
-            request.setAttribute("success", "Create coupon successfully!");
+            request.setAttribute("success", "C  reate coupon successfully!");
         } catch (Exception ex) {
             request.setAttribute("fail", ex.getMessage());
         }

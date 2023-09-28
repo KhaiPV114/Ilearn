@@ -48,12 +48,12 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="${pageContext.request.contextPath}/manager/coupon-search" method="post">
+                                        <form action="${pageContext.request.contextPath}/dashboard/manager/coupon-search" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
-                                                        <label for="id">Coupon ID:</label>
-                                                        <input type="text" name="id" id="id" class="form-control" placeholder="ID"/>
+                                                        <label for="id">Course name:</label>
+                                                        <input type="text" name="courseName" id="courseName" class="form-control" placeholder="ID"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7 col-lg-8">

@@ -25,7 +25,7 @@ public class CouponServiceImpl implements CouponService{
 
     @Override
     public Coupon getCouponByCode(String code){
-        if(!code.isEmpty()){
+        if(code.isEmpty()){
             return null;
         }
         return couponDAO.getCouponByCode(code);

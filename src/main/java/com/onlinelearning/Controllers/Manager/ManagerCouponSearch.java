@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/manager/coupon-search"})
+@WebServlet(name = "ManagerCouponSearch", urlPatterns = {"/dashboard/manager/coupon-search"})
 public class ManagerCouponSearch extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/manager/coupon-search-form.jsp";
@@ -34,13 +34,13 @@ public class ManagerCouponSearch extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
 
-        String id = request.getParameter("id");
+        String courseName = request.getParameter("courseName");
         String code = request.getParameter("code");
         
         List<Coupon> coupons = new ArrayList<>();
         Coupon coupon;
 
-        if (StringUtils.isBlank(id) && StringUtils.isBlank(code)) {
+        if (StringUtils.isBlank(courseName) && StringUtils.isBlank(code)) {
             
                 coupons = couponService.getAllCoupon();
                 System.out.println(coupons);
@@ -48,11 +48,10 @@ public class ManagerCouponSearch extends HttpServlet {
                 requestDispatcher.forward(request, response);
         }
         
-         if (!StringUtils.isBlank(code)) {
+         if (StringUtils.isBlank(courseName) && !StringUtils.isBlank(code)) {
             try {
                 coupon = couponService.getCouponByCode(code);
                 coupons.add(coupon);
-                System.out.println(coupons);
                 request.setAttribute("coupons", coupons);
                 requestDispatcher.forward(request, response);      
             } catch (Exception ex) {
@@ -60,18 +59,9 @@ public class ManagerCouponSearch extends HttpServlet {
             }
         }
 
-//        if (!StringUtils.isBlank(id) && StringUtils.isBlank(code)) {
-//            coupon = couponService.getCouponById(Integer.valueOf(id));
-//            request.setAttribute("coupon", coupon);
-//            requestDispatcher.forward(request, response);
-//        }
-
-//        if (StringUtils.isBlank(id) && !StringUtils.isBlank(code)) {
-////                coupon = couponService.getCouponByCode(code);
-////                request.setAttribute("coupon", coupon);
-////                requestDispatcher.forward(request, response);
-//
-//        }
+        if (!StringUtils.isBlank(courseName) && StringUtils.isBlank(code)) {
+            
+        }
 
     }
 }

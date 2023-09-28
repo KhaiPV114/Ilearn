@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,17 +144,20 @@ public class CouponDAOImpl implements CouponDAO {
     @Override
     public Coupon createCoupon(Coupon coupon
     ) {
-        String sql = "insert into coupons(code, percent, quantity, remain_quantity, created_at, start_time, end_time, status)"
-                + " values ( ?, ?, ?, ?, ? ,? ,? ,?)";
+        String sql = "insert into coupons(code, percent, quantity, created_at, start_time, end_time, status)"
+                + " values ( ?, ?, ?, ? ,? ,? ,?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, coupon.getCode());
             ps.setFloat(2, coupon.getPercent());
             ps.setInt(3, coupon.getQuantity());
-            ps.setInt(4, coupon.getRemainQuantity());
-            ps.setTimestamp(5, Timestamp.valueOf(coupon.getCreatedAt()));
-            ps.setTimestamp(6, Timestamp.valueOf(coupon.getStartTime()));
-            ps.setTimestamp(7, Timestamp.valueOf(coupon.getEndTime()));
-            ps.setString(8, coupon.getStatus());
+            ps.setTimestamp(4, Timestamp.valueOf(coupon.getCreatedAt()));
+            ps.setTimestamp(5, Timestamp.valueOf(coupon.getStartTime()));
+            ps.setTimestamp(6, Timestamp.valueOf(coupon.getEndTime()));
+            if (coupon.getStatus()== null) {
+                ps.setNull(7, Types.VARCHAR);
+            } else {
+                ps.setString(7, coupon.getStatus());
+            }
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {

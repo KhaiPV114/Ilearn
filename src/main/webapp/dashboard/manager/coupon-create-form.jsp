@@ -46,15 +46,6 @@
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
-                                                        <label for="code">Coupon id: </label>
-                                                        <input type="text" name="code" id="code" class="form-control" placeholder="Coupon code"/>
-                                                        <c:if test="${not empty codeError}">
-                                                            <div class="form-text text-danger">${codeError}</div>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7 col-lg-8">
-                                                    <div class="mb-3">
                                                         <label for="code">Coupon code:</label>
                                                         <input type="text" name="code" id="code" class="form-control" placeholder="Coupon code"/>
                                                         <c:if test="${not empty codeError}">
