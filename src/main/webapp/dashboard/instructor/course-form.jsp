@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Course</title>
         <jsp:include page="/layout/links.jsp" />
     </head>
     <body>
@@ -30,7 +30,7 @@
                                             <nav class="rbt-title-style-3 h4 pb-0" aria-label="breadcrumb">
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
-                                                        <a href="${pageContext.request.contextPath}/manager/course">
+                                                        <a href="${pageContext.request.contextPath}/instructor/course">
                                                             Course
                                                         </a>
                                                     </li>
@@ -57,7 +57,7 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Course name</label>
-                                                        <input value="${name}" name="name" type="text" class="form-control" id="name">
+                                                        <input value="${name}" name="name" type="text" class="form-control" id="name" required>
                                                         <c:if test="${not empty nameError}">
                                                             <div class="form-text text-danger">${nameError}</div>
                                                         </c:if>
@@ -69,18 +69,26 @@
                                                             <div class="form-text text-danger">${imageError}</div>
                                                         </c:if>
                                                     </div>
+                                                    <c:if test="${not empty categoryError}">
+                                                        <span class="text-warning">${categoryError}</span>
+                                                    </c:if>
                                                     <div class="mb-3">
-                                                        <label for="description" class="form-label">Description</label>
-                                                        <c:choose>
-                                                            <c:when test="${not empty description}">
-                                                                <textarea name="description" type="text" rows="3" class="form-control" style="font-size: 16px" id="description">${description}</textarea>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <textarea name="description" type="text" rows="3" class="form-control" style="font-size: 16px" id="description"></textarea>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                        <c:if test="${not empty descriptionError}">
-                                                            <div class="form-text text-danger">${descriptionError}</div>
+                                                        <label for="field-4">Course category</label>
+                                                        <div class="rbt-modern-select bg-transparent height-50 mb--10 mt-2">
+                                                            <div class="dropdown bootstrap-select w-100">
+                                                                <select name="category" class="w-100" id="field-4" tabindex="null" required>
+                                                                    <c:forEach var="item" items="${categories}">
+                                                                        <option value="${item.id}">${item.name}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="price" class="form-label">Course price <i>(0 for free course)</i></label>
+                                                        <input value="${price}" name="price" type="number" min="0" max="10000000" class="form-control" id="price" required>
+                                                        <c:if test="${not empty priceError}">
+                                                            <div class="form-text text-danger">${priceError}</div>
                                                         </c:if>
                                                     </div>
                                                 </div>
@@ -96,6 +104,21 @@
                                                          </c:choose>
                                                          " alt="Preview image" class="rounded img-fluid" id="image-preview">
                                                 </div>
+                                                <div class="mb-3">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <c:choose>
+                                                        <c:when test="${not empty description}">
+                                                            <textarea required name="description" type="text" rows="3" class="form-control" style="font-size: 16px" id="description">${description}</textarea>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <textarea required name="description" type="text" rows="3" class="form-control" style="font-size: 16px" id="description"></textarea>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:if test="${not empty descriptionError}">
+                                                        <div class="form-text text-danger">${descriptionError}</div>
+                                                    </c:if>
+                                                </div>
+
                                             </div>
                                             <button type="submit" class="rbt-btn btn-md mt-3">Submit</button>
                                         </form>

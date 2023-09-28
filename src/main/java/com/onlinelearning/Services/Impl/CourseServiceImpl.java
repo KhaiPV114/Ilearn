@@ -4,6 +4,7 @@ import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.Impl.CourseDAOImpl;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
+import com.onlinelearning.Utils.Constants;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -21,6 +22,36 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getAllCourses() {
         return courseDAO.getAllCourses();
+    }
+
+    @Override
+    public List<Course> getCourseByOwnerId(Integer ownerId, Integer size, Integer page) {
+        if (ownerId == null) {
+            return null;
+        }
+        if (size == null || size <= 0 || size > Constants.PAGINATION_MAX_PAGE_SIZE) {
+            size = Constants.PAGINATION_DEFAULT_PAGE_SIZE;
+        }
+        if (page == null || page < 0) {
+            page = 1;
+        }
+        return courseDAO.getCourseByOwnerIdPaging(ownerId, size, page);
+    }
+
+    @Override
+    public Integer countNumberOfCourseByOwnerId(Integer ownerId, Integer size) {
+        if (ownerId == null) {
+            return 0;
+        }
+        if (size == null || size <= 0 || size > Constants.PAGINATION_MAX_PAGE_SIZE) {
+            size = Constants.PAGINATION_DEFAULT_PAGE_SIZE;
+        }
+        int rowNumber = courseDAO.countNumberOfCourseByOwnerId(ownerId);
+        if (rowNumber == 0) {
+            return 0;
+        }
+        Double totalDouble = Math.ceil(rowNumber * 1.0f / size);
+        return totalDouble.intValue();
     }
 
     private void validateCourse(Course course) throws Exception {

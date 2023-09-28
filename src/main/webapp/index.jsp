@@ -48,7 +48,7 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>   
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/manager/course">Manager course</a>   
+        <a target="_blank" href="${pageContext.request.contextPath}/instructor/course">Manager course - Must be logged in as INSTRUCTOR</a>   
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>

@@ -9,6 +9,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="/layout/links.jsp" />
+        <style>
+            .truncate-4 {
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .truncate-5 {
+                display: -webkit-box;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .truncate-6 {
+                display: -webkit-box;
+                -webkit-line-clamp: 6;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="/layout/header.jsp" />
@@ -45,7 +65,7 @@
                                         <!-- End Title -->
 
                                         <div class="tutor-btn">
-                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/manager/course/add">
+                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/instructor/course/add">
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Create a New Course</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -59,7 +79,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Detail</th>
+                                                        <th style="width: 40%;">Detail</th>
+                                                        <th>Price</th>
                                                         <th>Image</th>
                                                         <th style="min-width: 140px;"></th>
                                                     </tr>
@@ -69,17 +90,18 @@
                                                     <c:forEach var="item" items="${courses}">
                                                         <c:set var="i" value="${i + 1}"/>
                                                         <tr>
-                                                            <th>
+                                                            <td>
                                                                 ${i}
-                                                            </th>
-                                                            <th>
+                                                            </td>
+                                                            <td>
                                                                 <p class="h6 mb--5">
                                                                     <b>Name:</b> ${item.name}
                                                                 </p>
-                                                                <p class="b3">
+                                                                <p class="b3 truncate-6">
                                                                     Description: ${item.description}
                                                                 </p>
-                                                            </th>
+                                                            </td>
+                                                            <td>${item.price}</td>
                                                             <td>
                                                                 <img src="${pageContext.request.contextPath}${item.imageUrl}" alt="image"/>
                                                             </td>
@@ -94,6 +116,8 @@
                                                 </tbody>
                                             </table>
                                         </div>
+
+                                        <div class="d-flex mt-3" id="pageBar"></div>
 
                                         <!--Delete via post method-->                                                    
                                         <form id="deletion-form" action="${pageContext.request.contextPath}/manager/category/delete" method="post">
@@ -126,6 +150,36 @@
 
             document.getElementById("content").scrollIntoView({behavior: 'instant'});
             location.hash = '#content';
+        </script>
+        <script>
+            var key = ${page},
+                    start = ${start},
+                    end = ${end},
+                    size = ${size},
+                    total = ${total},
+                    result = '';
+            result += '<ul class=\"pagination mx-auto\">';
+            if (start > 1) {
+                result += "<li class=\"page-item\">\n" +
+                        "<a class=\"page-link\" href=\"?size=" + size + "&page=1\">First</a>\n" +
+                        "</li>";
+            }
+            for (i = start; i <= end; ++i) {
+                if (i === key) {
+                    result += "<li class=\"page-item active\" aria-current=\"page\">\n" +
+                            "<a class=\"page-link\" href=\"#\">" + i + "<span class=\"visually-hidden\">(current)</span></a>\n" +
+                            "</li>";
+                } else {
+                    result += '<li class="page-item"><a class="page-link" href="?size=' + size + '&page=' + i + '">' + i + '</a></li>';
+                }
+            }
+            if (end < total) {
+                result += "<li class=\"page-item\">\n" +
+                        "<a class=\"page-link\" href=\"?size=" + size + "&page=" + total + "\">Last</a>\n" +
+                        "</li>";
+            }
+            result += '</ul>';
+            document.getElementById('pageBar').innerHTML = result;
         </script>
     </body>
 </html>
