@@ -2,7 +2,9 @@ package com.onlinelearning.Models;
 
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -29,5 +31,7 @@ public class User {
     private LocalDateTime createdAt;
 
     private String status;
+    
+    private HashSet<Role> roles;
 
 }
