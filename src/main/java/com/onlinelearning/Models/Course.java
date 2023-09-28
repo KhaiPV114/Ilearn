@@ -11,12 +11,14 @@ public class Course {
     
     private Integer categoryId;
     
-    private Integer owner_id;
+    private Integer ownerId;
     
     private String name;
     
     private String imageUrl;
     
     private String description;
+    
+    private Double price;
     
 }
