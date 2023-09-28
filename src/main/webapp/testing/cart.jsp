@@ -18,13 +18,17 @@
             <input type="submit" value="add course to cart">
             <p>${messageAddToCart}</p>
         </form>
-        ${user.username}
+        ${user}
         <br/>
-        <button onclick="window.location.href='/online-learning/BeUser?status=Login'">
-            Login
-        </button>
+        <form action="${pageContext.request.contextPath}/BeUser">
+            <input type="hidden" name="status" value="Login"/>
+            <input type="number" name="user-id"/>
+            <button type="submit">
+                Login
+            </button>
+        </form>
         <br/>
-        <button onclick="window.location.href='/online-learning/BeUser?status=Logout'">
+        <button onclick="window.location.href='/online-learning/BeUser?status=Logout&user-id=0'">
             Logout
         </button>
         <br/>

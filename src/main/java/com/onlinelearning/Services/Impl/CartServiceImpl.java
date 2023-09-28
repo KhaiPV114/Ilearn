@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CartServiceImpl implements CartService {
 
@@ -86,13 +84,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeCartsFromCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cartsCookie = request.getCookies();
-        for (Cookie cookie : cartsCookie) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
             if (cookie.getName().equals("carts")) {
                 cookie.setPath("/");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
-                System.out.println("Remove success");
                 break;
             }
         }

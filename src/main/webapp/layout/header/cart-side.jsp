@@ -15,25 +15,9 @@
                 </div>
             </div>
         </div>
-        
+
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-                <li class="minicart-item" id="cart-side-item">
-                        <div class="thumbnail">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Product Images">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <h6 class="title"><a href="single-product.html">Prototype</a></h6>
-
-                            <span class="course-price-cart-side">$199.89</span>
-
-                        </div>
-                        <div class="close-btn">
-                            <button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>
-                        </div>
-                    </li>
                 <c:forEach var="course" items="${coursesInCart}">
                     <li class="minicart-item" id="cart-side-item">
                         <div class="thumbnail">
