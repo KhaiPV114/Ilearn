@@ -22,6 +22,7 @@ import com.password4j.BcryptFunction;
 import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -140,14 +141,6 @@ public class AuthServiceImpl implements AuthService {
     public HashSet<Role> getUserRoles(User user) throws IllegalAccessError {
         //Try to get all roles
         HashSet<Role> roles = userDAO.getRoles(user);
-        if (roles == null || roles.isEmpty()) { //If doesn't have role yet, add role LEARNER
-            try {
-                userDAO.addUserRole(user, Role.LEARNER);
-                roles = userDAO.getRoles(user);
-            } catch (Exception ex) {
-                return null;
-            }
-        }
         return roles;
     }
 
@@ -238,7 +231,7 @@ public class AuthServiceImpl implements AuthService {
         //Get google user after logged in with google
         GoogleUser loggedInGoogleUser = getGoogleUserFromGoogleLoginRequest(request);
         if (loggedInGoogleUser == null) { //If logged in fail, return null to exit
-            return null;
+            throw new Exception("Login with your google account failed. Please try again!");
         }
 
         //Get user by google email from logged in google user
@@ -257,15 +250,10 @@ public class AuthServiceImpl implements AuthService {
                     .fullName(loggedInGoogleUser.getName())
                     .build();
 
-            //Add new user to database
+            //Add new user to database without role, 
+            //GoogleLoginFilter will check and force to choose role later
             User registedUser = userDAO.addUser(newUser);
             if (registedUser == null) { //If add fail, throw exception
-                throw new IllegalArgumentException("Register with Google failed. Please try again!");
-            }
-
-            //Add role for new user
-            User addedUserWithRole = userDAO.addUserRole(registedUser, Role.LEARNER);
-            if (addedUserWithRole == null) { //If add fail, throw exception
                 throw new IllegalArgumentException("Register with Google failed. Please try again!");
             }
 
@@ -274,9 +262,6 @@ public class AuthServiceImpl implements AuthService {
 
         //If user existed, get user role
         HashSet<Role> roles = getUserRoles(user);
-        if (roles == null) { //If get role failed, means login failed, return null to exit
-            throw new Exception("User does not have permission to access!");
-        }
 
         //Get session
         HttpSession session = request.getSession(true);
@@ -284,6 +269,18 @@ public class AuthServiceImpl implements AuthService {
         session.setAttribute("roles", roles);   //Add role to session
 
         return user;
+    }
+
+    @Override
+    public User updateUser(User user) throws Exception {
+        if (user == null) {
+            throw new Exception("User must not be empty!");
+        }
+        User updatedUser = userDAO.updateUser(user);
+        if (updatedUser == null) {
+            throw new Exception("Update user failed!");
+        }
+        return updatedUser;
     }
 
 }

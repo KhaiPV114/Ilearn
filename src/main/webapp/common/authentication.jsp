@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Authentication</title>
         <jsp:include page="/layout/links.jsp"/>
         <style>
             .togglePassword {
@@ -20,6 +20,7 @@
                 cursor: pointer;
             }
         </style>
+        <script src="https://accounts.google.com/gsi/client" async></script>
     </head>
     <body>
         <jsp:include page="/layout/header.jsp"/>
@@ -49,11 +50,11 @@
                             <h3 class="title">Login</h3>
                             <form action="${pageContext.request.contextPath}/authentication/login" method="post" class="max-width-auto">
                                 <div class="form-group">
-                                    <input name="l_username" value="${l_username}" id="l_username" type="text">
+                                    <input name="l_username" value="${l_username}" id="l_username" type="text" required>
                                     <label>Username or email *</label>
                                 </div>
                                 <div class="form-group">
-                                    <input name="l_password" value="${l_password}" id="l_password" type="password">
+                                    <input name="l_password" value="${l_password}" id="l_password" type="password" required>
                                     <i class="feather-eye togglePassword" id="l_togglePassword"></i>
                                     <label>Password *</label>
                                     <span class="focus-border"></span>
@@ -89,6 +90,21 @@
                                     </button>
                                 </div>
                             </form>
+                            <button id="custom-google-btn" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-100 mt-4">
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Log in with Google</span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                </span>
+                            </button>
+                            <div class="g_id_signin mt-4 d-none"
+                                 data-type="standard"
+                                 data-shape="rectangular"
+                                 data-theme="outline"
+                                 data-text="signin_with"
+                                 data-size="large"
+                                 data-logo_alignment="center">
+                            </div>
                             <c:if test="${not empty l_error}">
                                 <p class="text-danger mt-4 fw-bold">${l_error}</p>
                             </c:if>
@@ -106,7 +122,7 @@
                                     <span class="text-warning">${r_username_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_username" value="${r_username}" type="text">
+                                    <input name="r_username" value="${r_username}" type="text" required>
                                     <label>Username *</label>
                                     <span class="focus-border"></span>
                                 </div>
@@ -115,7 +131,7 @@
                                     <span class="text-warning">${r_password_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_password" value="${r_password}" id="r_password" type="password">
+                                    <input name="r_password" value="${r_password}" id="r_password" type="password" required>
                                     <label>Password *</label>
                                     <i class="feather-eye togglePassword" id="r_togglePassword"></i>
                                     <span class="focus-border"></span>
@@ -125,7 +141,7 @@
                                     <span class="text-warning">${r_email_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_email" value="${r_email}" type="text">
+                                    <input name="r_email" value="${r_email}" type="text" required>
                                     <label>Email address *</label>
                                     <span class="focus-border"></span>
                                 </div>
@@ -134,14 +150,14 @@
                                     <span class="text-warning">${r_fullname_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_fullname" value="${r_fullname}" type="text">
+                                    <input name="r_fullname" value="${r_fullname}" type="text" required>
                                     <label>Full name *</label>
                                     <span class="focus-border"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <p class="mb--0">Date of birth *</p>
-                                    <input class="mt--0" name="r_dob" value="${r_dob}" type="date">
+                                    <input class="mt--0" name="r_dob" value="${r_dob}" type="date" required>
                                     <span class="focus-border"></span>
                                 </div>
 
@@ -149,7 +165,7 @@
                                     <span class="text-warning">${r_phoneNumber_error}</span>
                                 </c:if>
                                 <div class="form-group">
-                                    <input name="r_phoneNumber" value="${r_phoneNumber}" type="text">
+                                    <input name="r_phoneNumber" value="${r_phoneNumber}" type="text" required>
                                     <label>Phone number *</label>
                                     <span class="focus-border"></span>
                                 </div>
@@ -257,6 +273,21 @@
 
             document.getElementById("content").scrollIntoView({behavior: 'instant'});
             location.hash = '#content';
+        </script>
+        <div id="g_id_onload"
+             data-client_id="${initParam.GOOGLE_CLIENT_ID}"
+             data-context="signin"
+             data-ux_mode="redirect"
+             data-login_uri="${pageContext.request.contextPath}/authentication/login-with-google"
+             data-nonce=""
+             data-itp_support="true">
+        </div>
+        <script>
+            const googleBtn = document.getElementById('custom-google-btn');
+
+            googleBtn.addEventListener('click', () => {
+                document.querySelector('.g_id_signin div[role=button]').click();
+            });
         </script>
     </body>
 </html>
