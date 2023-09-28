@@ -25,36 +25,37 @@ public class InstructorCourseView extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String sizeString = request.getParameter("size");
-        String pageString = request.getParameter("page");
-        Integer size = null, page = null;
-        if (sizeString != null) {
-            size = Integer.valueOf(sizeString);
-        } else {
-            size = 10;
-        }
-        if (pageString != null) {
-            page = Integer.valueOf(pageString);
-        } else {
-            page = 1;
-        }
-        Integer userId = authService.getUserId(request);
-        List<Course> courses = courseService.getCourseByOwnerId(userId, size, page);
-        int total = courseService.countNumberOfCourseByOwnerId(userId, size);
-        int start = Math.max(1, page - 2);
-        int end = Math.min(total, page + 2);
-        if (page < 3) {
-            end = total < 5 ? total : 5;
-        } else if (page > end - 2) {
-            int tempStart = total - 4;
-            start = tempStart > 0 ? tempStart : 1;
-        }
-        List<Integer> pages = new ArrayList<>();
-        request.setAttribute("courses", courses);
-        request.setAttribute("size", size);
-        request.setAttribute("start", start);
-        request.setAttribute("end", end);
-        request.setAttribute("total", total);
+//        String sizeString = request.getParameter("size");
+//        String pageString = request.getParameter("page");
+//        Integer size = null, page = null;
+//        if (sizeString != null) {
+//            size = Integer.valueOf(sizeString);
+//        } else {
+//            size = 10;
+//        }
+//        if (pageString != null) {
+//            page = Integer.valueOf(pageString);
+//        } else {
+//            page = 1;
+//        }
+//        Integer userId = authService.getUserId(request);
+//        List<Course> courses = courseService.getCourseByOwnerId(userId, size, page);
+//        int total = courseService.countNumberOfCourseByOwnerId(userId, size);
+//        int start = Math.max(1, page - 2);
+//        int end = Math.min(total, page + 2);
+//        if (page < 3) {
+//            end = total < 5 ? total : 5;
+//        } else if (page > end - 2) {
+//            int tempStart = total - 4;
+//            start = tempStart > 0 ? tempStart : 1;
+//        }
+//        List<Integer> pages = new ArrayList<>();
+//        request.setAttribute("courses", courses);
+//        request.setAttribute("size", size);
+//        request.setAttribute("start", start);
+//        request.setAttribute("end", end);
+//        request.setAttribute("total", total);
+        request.setAttribute("courses", courseService.getAllCourses());
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
