@@ -23,7 +23,9 @@ public interface AuthService {
 
     boolean isGuest(HttpServletRequest request);
 
-    boolean isUser(HttpServletRequest request);
+    boolean isLearner(HttpServletRequest request);
+
+    boolean isInstructor(HttpServletRequest request);
 
     boolean isManager(HttpServletRequest request);
 
