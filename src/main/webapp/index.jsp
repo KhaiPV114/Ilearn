@@ -34,7 +34,7 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-form.jsp">Coupon</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-search-form.jsp">Search coupon</a>        
         <br>
     </body>
 </html>

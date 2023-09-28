@@ -24,7 +24,7 @@ public class CouponServiceImpl implements CouponService{
     }
 
     @Override
-    public Coupon getCouponByCode(String code) throws Exception {
+    public Coupon getCouponByCode(String code){
         if(!code.isEmpty()){
             return null;
         }

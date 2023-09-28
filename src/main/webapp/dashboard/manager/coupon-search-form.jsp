@@ -9,6 +9,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="/layout/links.jsp"/>
+        <style>
+            .resultTable td,th{
+                padding-left: 10px;
+                padding-right: 10px
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="/layout/header.jsp" />
@@ -42,42 +48,57 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="coupon-search" method="post">
+                                        <form action="${pageContext.request.contextPath}/manager/coupon-search" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="id">Coupon ID:</label>
-                                                        <input type="text" name="${id}" id="id" class="form-control"/>
-
+                                                        <input type="text" name="id" id="id" class="form-control" placeholder="ID"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="id">Coupon Code:</label>
-                                                        <input type="text" name="id" id="id" class="form-control"/>
+                                                        <input type="text" name="code" id="code" class="form-control" placeholder="Code"/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <button type="submit" class="rbt-btn btn-md mt-3">Search</button>
+                                            <a class="rbt-btn btn-md hover-icon-reverse mt-3" href="./coupon-create-form.jsp">Create new coupon</a>
                                         </form>
-                                        <div class="Result">
-                                            <table style="border: 1px solid black">
-                                                Result
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Code</th>
-                                                    <th>Percent</th>
-                                                </tr>
-                                                <c:forEach items="${coupons}" var = "coupon">
-                                                    <tr>
-                                                        <td>${coupon.id}</td>
-                                                        <td>${coupon.code}</td>
-                                                        <td>${coupon.percent}</td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </table>
-                                        </div>
+
                                     </div>
+                                </div>
+                                <div class="result rbt-dashboard-content bg-color-white rbt-shadow-box" style=" margin: 10px">
+                                    <table class="resultTable rbt-table table table-borderless" >
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Course ID</th>
+                                            <th>Code</th>
+                                            <th>Percent</th>
+                                            <th>Quantity</th>
+                                            <th>Remain Quantity</th>
+                                            <th>Time created</th>
+                                            <th>Time start</th>
+                                            <th>Time end</th>
+                                            <th>Status</th>
+
+                                        </tr>
+                                        <c:forEach items="${coupons}" var = "coupon">
+                                            <tr>
+                                                <td>${coupon.id}</td>
+                                                <td>${coupon.courseId}</td>
+                                                <td>${coupon.code}</td>
+                                                <td>${coupon.percent}</td>
+                                                <td>${coupon.quantity}</td>
+                                                <td>${coupon.remainQuantity}</td>
+                                                <td>${coupon.createdAt}</td>
+                                                <td>${coupon.startTime}</td>
+                                                <td>${coupon.endTime}</td>
+                                                <td>${coupon.status}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </table>
                                 </div>
                             </div>
                             <!-- End Content -->
