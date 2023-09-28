@@ -8,7 +8,6 @@
 <div>
     <header class="rbt-header rbt-header-10">
         <div class="rbt-sticky-placeholder"></div>
-
         <div class="rbt-header-wrapper header-space-betwween header-sticky">
             <div class="container-fluid">
                 <div class="mainbar-row rbt-navigation-center align-items-center">
@@ -553,7 +552,7 @@
                             </li>
                             <!-- Cart -->
                             <li class="access-icon rbt-mini-cart">
-                                <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#">
+                                <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#" id="open-cart-side-menu">
                                     <i class="feather-shopping-cart"></i>
                                     <c:if test="${coursesInCart.size()>0}">
                                         <span class="rbt-cart-count">${coursesInCart.size()}</span>

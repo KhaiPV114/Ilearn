@@ -52,7 +52,7 @@
         <br>
 
         <c:if test="${roleService.isGuest(pageContext.request)}">
-            <script src="https://accounts.google.com/gsi/client" async></script>
+            <script src="https://accounts.google.com/gsi/client"></script>
             <div id="g_id_onload"
                  data-client_id="${initParam.GOOGLE_CLIENT_ID}"
                  data-context="signin"

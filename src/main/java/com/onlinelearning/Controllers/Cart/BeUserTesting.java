@@ -1,14 +1,11 @@
 /*
  * DuyDuc94
  */
-package com.onlinelearning.Controllers.CartController;
+package com.onlinelearning.Controllers.Cart;
 
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
 import com.onlinelearning.Models.User;
-import com.onlinelearning.Services.AuthService;
-import com.onlinelearning.Services.Impl.AuthServiceImpl;
-import com.onlinelearning.Services.UserService;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

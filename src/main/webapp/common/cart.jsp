@@ -78,7 +78,7 @@
                                                     <td class="pro-information">
                                                         <ul class="rbt-list-style-3">
                                                             <li>
-                                                                <i class="feather-edit-2"></i>By ${"onwerName"}</li>
+                                                                <i class="feather-edit-2"></i>By ${course.ownerId}</li>
                                                             <li>
                                                                 <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
                                                             </li>

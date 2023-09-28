@@ -2,7 +2,7 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.CartDAO;
 import com.onlinelearning.DAL.DBContext;
-import com.onlinelearning.Models.Cart;
+import com.onlinelearning.Models.CartItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,32 +18,32 @@ public class CartDAOImpl implements CartDAO {
     private final String TABLE_NAME = "carts";
 
     @Override
-    public List<Cart> getCartsByUserId(Integer userId) {
+    public List<CartItem> getCartByUserId(Integer userId) {
         String sql = "select cart_id, user_id, course_id"
                 + " from " + TABLE_NAME
                 + " where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, userId);
             try ( ResultSet rs = ps.executeQuery()) {
-                List<Cart> carts = new ArrayList<>();
+                List<CartItem> cart = new ArrayList<>();
                 while (rs.next()) {
-                    Cart cart = Cart.builder()
+                    CartItem cartItem = CartItem.builder()
                             .id(rs.getInt("cart_id"))
                             .userId(rs.getInt("user_id"))
                             .courseId(rs.getInt("course_id"))
                             .build();
-                    carts.add(cart);
+                    cart.add(cartItem);
                 }
-                return carts;
+                return cart;
             }
         } catch (Exception ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return null;
     }
 
     @Override
-    public Cart getCartByUserIdAndCourseId(Integer userId, Integer courseId) {
+    public CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId) {
         String sql = "select cart_id, user_id, course_id"
                 + " from " + TABLE_NAME
                 + " where user_id = ? and course_id = ?";
@@ -52,12 +52,12 @@ public class CartDAOImpl implements CartDAO {
             ps.setInt(2, courseId);
             try ( ResultSet rs = ps.executeQuery();) {
                 if (rs.next()) {
-                    Cart cart = Cart.builder()
+                    CartItem cartItem = CartItem.builder()
                             .id(rs.getInt("cart_id"))
                             .userId(rs.getInt("user_id"))
                             .courseId(rs.getInt("course_id"))
                             .build();
-                    return cart;
+                    return cartItem;
                 }
             }
         } catch (Exception ex) {
@@ -67,19 +67,22 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public Cart createCart(Cart cart) {
+    public CartItem createCart(Integer userId, Integer courseId) {
         String sql = "insert into " + TABLE_NAME
                 + "(user_id, course_id)"
                 + " values (?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, cart.getUserId());
-            ps.setInt(2, cart.getCourseId());
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        cart.setId(rs.getInt(1));
-                        return cart;
+                        return CartItem.builder()
+                                .id(rs.getInt(1))
+                                .userId(userId)
+                                .courseId(courseId)
+                                .build();
                     }
                 }
             }
@@ -90,15 +93,15 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public Cart deleteCart(Cart cart) {
+    public CartItem deleteCart(CartItem cartItem) {
         String sql = "delete from " + TABLE_NAME
                 + " where user_id = ? and course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, cart.getUserId());
-            ps.setInt(2, cart.getCourseId());
+            ps.setInt(1, cartItem.getUserId());
+            ps.setInt(2, cartItem.getCourseId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
-                return cart;
+                return cartItem;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

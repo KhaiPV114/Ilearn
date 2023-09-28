@@ -1,4 +1,20 @@
 <script>
+//    function removeCartSide() {
+//        const xhr = new XMLHttpRequest();
+//        xhr.open('POST', 'online-learning/remove-cart', true);
+//        xhr.onload = function () {
+//            if (xhr.status >= 200 && xhr.status < 400) {
+//                openCartSideMenu();
+//            }
+//        };
+//        xhr.send();
+//    }
+
+    function openCartSideMenu() {
+        const openCartButton = document.getElementById('open-cart-side-menu');
+        openCartButton.click();
+    }
+
     const coursePriceCartSide = document.getElementsByClassName("course-price-cart-side");
     const courseTotalCartSide = document.getElementById('course-total-cart-side');
     courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);

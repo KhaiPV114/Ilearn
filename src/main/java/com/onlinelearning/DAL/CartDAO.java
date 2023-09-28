@@ -1,15 +1,15 @@
 package com.onlinelearning.DAL;
 
-import com.onlinelearning.Models.Cart;
+import com.onlinelearning.Models.CartItem;
 import java.util.List;
 
 public interface CartDAO {
 
-    List<Cart> getCartsByUserId(Integer userId);
+    List<CartItem> getCartByUserId(Integer userId);
     
-    Cart getCartByUserIdAndCourseId(Integer userId, Integer courseId);
+    CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId);
 
-    Cart createCart(Cart cart);
+    CartItem createCart(Integer userId, Integer courseId);
 
-    Cart deleteCart(Cart cart);
+    CartItem deleteCart(CartItem cartItem);
 }
