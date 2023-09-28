@@ -27,3 +27,5 @@
 <script src="${pageContext.request.contextPath}/assets/js/vendor/magnify-popup.min.js"></script>
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+<!--Font Awesome-->
+<script src="https://kit.fontawesome.com/81fcade62e.js" crossorigin="anonymous"></script>
