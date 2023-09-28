@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="roleService" scope="session" class="com.onlinelearning.Services.Impl.RoleService" />
 
 <!DOCTYPE html>
 <html>
@@ -47,5 +48,17 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
+
+        <c:if test="${roleService.isGuest(pageContext.request)}">
+            <script src="https://accounts.google.com/gsi/client" async></script>
+            <div id="g_id_onload"
+                 data-client_id="${initParam.GOOGLE_CLIENT_ID}"
+                 data-context="signin"
+                 data-ux_mode="redirect"
+                 data-login_uri="${pageContext.request.contextPath}/authentication/login-with-google"
+                 data-nonce=""
+                 data-itp_support="true">
+            </div>
+        </c:if>
     </body>
 </html>

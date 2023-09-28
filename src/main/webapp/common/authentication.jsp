@@ -19,6 +19,35 @@
                 z-index: 100;
                 cursor: pointer;
             }
+            .hr-text {
+                line-height: 1em;
+                position: relative;
+                outline: 0;
+                border: 0;
+                color: black;
+                text-align: center;
+                height: 1.5em;
+                opacity: 0.5;
+            }
+            .hr-text:before {
+                content: "";
+                background: linear-gradient(to right, transparent, #818078, transparent);
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                height: 1px;
+            }
+            .hr-text:after {
+                content: attr(data-content);
+                position: relative;
+                display: inline-block;
+                color: black;
+                padding: 0 0.5em;
+                line-height: 1.5em;
+                color: #818078;
+                background-color: #fcfcfa;
+            }
         </style>
         <script src="https://accounts.google.com/gsi/client" async></script>
     </head>
@@ -90,14 +119,18 @@
                                     </button>
                                 </div>
                             </form>
-                            <button id="custom-google-btn" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-100 mt-4">
+                            <hr class="my-4">
+                            <button id="custom-google-btn" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-100">
                                 <span class="icon-reverse-wrapper">
-                                    <span class="btn-text">Log in with Google</span>
+                                    <span class="btn-text d-flex align-items-center gap-2">
+                                        <i class="fa-brands fa-google top-0"></i>
+                                        Log in with Google
+                                    </span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                 </span>
                             </button>
-                            <div class="g_id_signin mt-4 d-none"
+                            <div class="g_id_signin d-none"
                                  data-type="standard"
                                  data-shape="rectangular"
                                  data-theme="outline"
