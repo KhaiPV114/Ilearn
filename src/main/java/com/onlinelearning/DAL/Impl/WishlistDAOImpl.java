@@ -18,43 +18,24 @@ public class WishlistDAOImpl implements WishlistDAO {
     private final DBContext dbContext = new DBContextImpl();
 
     @Override
-    public Wishlist getWishlistByUserId(Integer userId) {
-        String sql = "SELECT wishlist_id, user_id, course_id FROM wishlists WHERE user_id = ?";
+    public List<Wishlist> getWishlistByUserId(Integer userId) {
+        String sql = "SELECT wishlist_id, user_id, course_id"
+                + " FROM wishlists"
+                + " WHERE user_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
-
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+                List<Wishlist> wishlists = new ArrayList<>();
+                while (rs.next()) {
                     Wishlist wishlist = Wishlist.builder()
                     .id(rs.getInt("wishlist_id"))
-                    .id(rs.getInt("user_id"))
-                    .id(rs.getInt("course_id"))
+                    .userId(rs.getInt("user_id"))
+                    .courseId(rs.getInt("course_id"))
                     .build();
-                    return wishlist;
+                    wishlists.add(wishlist);
                 }
+                return wishlists;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(WishlistDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    @Override
-    public List<Wishlist> getAllWishlists() {
-        String sql = "SELECT wishlist_id, user_id, course_id FROM wishlists";
-        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            List<Wishlist> wishlists = new ArrayList<>();
-            while (rs.next()) {
-                Wishlist wishlist = Wishlist.builder()
-                .id(rs.getInt("wishlist_id"))
-                .id(rs.getInt("user_id"))
-                .id(rs.getInt("course_id"))
-                .build();
-                wishlists.add(wishlist);
-            }
-            return wishlists;
         } catch (SQLException ex) {
             Logger.getLogger(WishlistDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,7 +44,8 @@ public class WishlistDAOImpl implements WishlistDAO {
 
     @Override
     public Wishlist addWishlist(Wishlist wishlist) {
-        String sql = "INSERT INTO wishlists(user_id, course_id) VALUES (?, ?) WHERE wishlist_id = ?";
+        String sql = "INSERT INTO wishlists(user_id, course_id)"
+                + " VALUES (?, ?)";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, wishlist.getUserId());
             ps.setInt(2, wishlist.getCourseId());
@@ -84,10 +66,10 @@ public class WishlistDAOImpl implements WishlistDAO {
 
     @Override
     public Wishlist deleteWishlist(Wishlist wishlist) {
-        String sql = "DELETE FROM wishlists WHERE wishlist_id = ?";
+        String sql = "DELETE FROM wishlists"
+                + " WHERE wishlist_id = ?";
         try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, wishlist.getId());
-
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 return wishlist;

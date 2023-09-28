@@ -5,9 +5,7 @@ import java.util.List;
 
 public interface WishlistService {
     
-    Wishlist getWishlistByUserId(Integer userId);
-
-    List<Wishlist> getAllWishlists();
+    List<Wishlist> getWishlistByUserId(Integer userId);
 
     Wishlist addWishlist(Wishlist wishlist) throws Exception;
 
