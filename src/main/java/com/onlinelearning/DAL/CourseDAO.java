@@ -11,6 +11,10 @@ public interface CourseDAO {
 
     List<Course> getAllCourses();
 
+    List<Course> getCourseByOwnerIdPaging(Integer ownerId, Integer size, Integer page);
+
+    Integer countNumberOfCourseByOwnerId(Integer ownerId);
+
     Course createCourse(Course course);
 
     Course updateCourse(Course course);
