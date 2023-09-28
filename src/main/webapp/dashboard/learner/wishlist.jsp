@@ -35,7 +35,7 @@
                                                     <div class="rbt-card variation-01 rbt-hover">
                                                         <div class="rbt-card-img">
                                                             <a href="">
-                                                            <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Card image"/>
+                                                            <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Course: ${course.name}"/>
                                                             </a>
                                                         </div>
                                                         <div class="rbt-card-body">
@@ -49,24 +49,24 @@
                                                                         <i class="fas fa-star"></i>
                                                                     </div>
                                                                     <!-- Display the number of reviews -->
-                                                                    <span class="rating-count"> ( Reviews)</span>
+                                                                    <span class="rating-count">(${course.reviews} Reviews)</span>
                                                                 </div>
                                                                 <!-- Other course card elements -->
                                                             </div>
                                                             <h4 class="rbt-card-title">
-                                                                <a href=""/>${course.name}</a>
+                                                                <a href="">${course.name}</a>
                                                             </h4>
                                                             <ul class="rbt-meta">
                                                                 <!-- Display the number of lessons -->
-                                                                <li><i class="feather-book"></i> Lessons</li>
+                                                                <li><i class="feather-book"></i>${course.numLessons} Lessons</li>
                                                                 <!-- Display the number of students enrolled -->
-                                                                <li><i class="feather-users"></i> Students</li>
+                                                                <li><i class="feather-users"></i>${course.numStudents} Students</li>
                                                             </ul>
                                                             <div class="rbt-card-bottom">
                                                                 <div class="rbt-price">
                                                                     <span class="current-price"><c:out value="${course.price}"/></span>
                                                                 </div>
-                                                                <a class="rbt-btn-link" href="<c:out value=""/>">Learn More<i class="feather-arrow-right"></i></a>
+                                                                <a class="rbt-btn-link" href="<c:out value="#"/>">Learn More<i class="feather-arrow-right"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
