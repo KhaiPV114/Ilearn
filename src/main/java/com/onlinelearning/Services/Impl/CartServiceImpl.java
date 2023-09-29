@@ -1,7 +1,5 @@
 package com.onlinelearning.Services.Impl;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import com.onlinelearning.DAL.CartDAO;
 import com.onlinelearning.DAL.Impl.CartDAOImpl;
 import com.onlinelearning.Models.CartItem;
@@ -19,7 +17,7 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
 
     private final CartDAO cartDAO = new CartDAOImpl();
-    
+
     private final CourseService courseService = new CourseServiceImpl();
 
     @Override
@@ -45,9 +43,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartItem createCartItem(Integer userId, Integer courseId) throws Exception {
-        validateCart(userId, courseId);
-        return cartDAO.createCart(userId, courseId);
+    public CartItem createCartItem(CartItem cartItem) throws Exception {
+        validateCart(cartItem.getUserId(), cartItem.getCourseId());
+        return cartDAO.createCartItem(cartItem);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class CartServiceImpl implements CartService {
         try {
             validateCart(cartItem.getUserId(), cartItem.getCourseId());
         } catch (Exception cartItemIsExistException) {
-            return cartDAO.deleteCart(cartItem);
+            return cartDAO.deleteCartItem(cartItem);
         }
         throw new Exception("Cart: " + cartItem + "doesn't exist");
     }
@@ -63,15 +61,20 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartItem> getCartFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        Gson gson = new Gson();
         List<CartItem> cart = new ArrayList<>();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("cart")) {
-                    String cartInJson = cookie.getValue();
-                    cart = gson.fromJson(cartInJson, new TypeToken<List<CartItem>>() {
-                    }.getType());
-                    break;
+                if (cookie.getName().equals("CART")) {
+                    String[] coursesInCart = cookie.getValue().split("-");
+                    for (String course : coursesInCart) {
+                        try {
+                            int courseId = Integer.parseInt(course);
+                            cart.add(CartItem.builder()
+                                    .courseId(courseId)
+                                    .build());
+                        } catch (NumberFormatException e) {
+                        }
+                    }
                 }
             }
         }
@@ -80,9 +83,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addCartToCookie(HttpServletResponse response, List<CartItem> cart) {
-        Gson gson = new Gson();
-        String cartJson = gson.toJson(cart);
-        Cookie cartCookie = new Cookie("cart", cartJson);
+        String coursesInCart = "";
+        for (CartItem cartItem : cart) {
+            coursesInCart += cartItem.getCourseId().toString() + "-";
+        }
+        coursesInCart = coursesInCart.substring(0, coursesInCart.length()-1);
+        Cookie cartCookie = new Cookie("CART", coursesInCart);
         cartCookie.setPath("/");    //For all pages in website
         cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
         response.addCookie(cartCookie);
@@ -92,7 +98,7 @@ public class CartServiceImpl implements CartService {
     public void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("cart")) {
+            if (cookie.getName().equals("CART")) {
                 cookie.setPath("/");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
@@ -117,7 +123,8 @@ public class CartServiceImpl implements CartService {
                 cart = getCartFromCookie(request);
                 for (CartItem cartItem : cart) {
                     try {
-                        cartItem = createCartItem(user.getId(), cartItem.getCourseId());
+                        cartItem.setUserId(user.getId());
+                        cartItem = createCartItem(cartItem);
                     } catch (Exception ex) {
                     }
                 }

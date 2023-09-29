@@ -1,8 +1,7 @@
-package com.onlinelearning.Controllers.Wishlist;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Models.Course;
-import com.onlinelearning.Models.User;
-import com.onlinelearning.Models.Wishlist;
+import com.onlinelearning.Models.WishlistItem;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import com.onlinelearning.Services.Impl.WishlistServiceImpl;
@@ -16,8 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "WishlistView", urlPatterns = {"/dashboard/learner/wishlist"})
-public class WishlistView extends HttpServlet {
+@WebServlet(name = "LearnerWishlistView", urlPatterns = {"/dashboard/learner/wishlist"})
+public class LearnerWishlistView extends HttpServlet {
 
     private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
 
@@ -32,9 +31,9 @@ public class WishlistView extends HttpServlet {
 //        if(user == null){
 //            
 //        }
-        List<Wishlist> wishlists = wishlistService.getWishlistByUserId(3);
+        List<WishlistItem> wishlists = wishlistService.getWishlistByUserId(3);
         List<Course> courses = new ArrayList<>();
-        for (Wishlist wishlist : wishlists) {
+        for (WishlistItem wishlist : wishlists) {
             courses.add(courseService.getCourseById(wishlist.getCourseId()));
         }
         request.setAttribute("coursesInWishlist", courses);

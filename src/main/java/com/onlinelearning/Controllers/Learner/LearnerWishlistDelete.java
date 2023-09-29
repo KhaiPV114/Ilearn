@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Wishlist;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Services.Impl.WishlistServiceImpl;
 import com.onlinelearning.Services.WishlistService;
@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "WishlistDelete", urlPatterns = {"/dashboard/learner/wishlist/delete"})
-public class WishlistDelete extends HttpServlet {
+@WebServlet(name = "LearnerWishlistDelete", urlPatterns = {"/dashboard/learner/wishlist/delete-wishlist"})
+public class LearnerWishlistDelete extends HttpServlet {
 
     private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
     private final WishlistService wishlistService = new WishlistServiceImpl();

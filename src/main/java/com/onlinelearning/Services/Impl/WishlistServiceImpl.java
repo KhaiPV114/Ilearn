@@ -2,7 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.WishlistDAO;
 import com.onlinelearning.DAL.Impl.WishlistDAOImpl;
-import com.onlinelearning.Models.Wishlist;
+import com.onlinelearning.Models.WishlistItem;
 import com.onlinelearning.Services.WishlistService;
 import java.util.List;
 
@@ -10,8 +10,8 @@ public class WishlistServiceImpl implements WishlistService {
 
     private final WishlistDAO wishlistDAO = new WishlistDAOImpl();
 
-    @Override
-    public List<Wishlist> getWishlistByUserId(Integer userId) {
+     @Override
+    public List<WishlistItem> getWishlistByUserId(Integer userId) {
         if (userId == null) {
             return null;
         }
@@ -19,23 +19,32 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public Wishlist addWishlist(Wishlist wishlist) throws Exception {
-        Wishlist addedWishlist = wishlistDAO.addWishlist(wishlist);
-        if (addedWishlist == null) {
-            throw new Exception("Add wishlist failed!");
+    public WishlistItem getWishlistByUserIdAndCourseId(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return null;
         }
-        return addedWishlist;
+        return wishlistDAO.getWishlistByUserIdAndCourseId(userId, courseId);
+    }
+
+    private void validateWishlist(Integer userId, Integer courseId) throws Exception {
+        if (wishlistDAO.getWishlistByUserIdAndCourseId(userId, courseId) != null) {
+            throw new Exception("Wishlist: (" + userId + ", " + courseId + ") is already exist!");
+        }
     }
 
     @Override
-    public Wishlist deleteWishlist(Wishlist wishlist) throws Exception {
-        if (wishlist.getId() == null) {
-            throw new Exception("Wishlist id must not be empty!");
+    public WishlistItem createWishlistItem(WishlistItem cartItem) throws Exception {
+        validateWishlist(cartItem.getUserId(), cartItem.getCourseId());
+        return wishlistDAO.createWishlistItem(cartItem);
+    }
+
+    @Override
+    public WishlistItem deleteWishlistItem(WishlistItem cartItem) throws Exception {
+        try {
+            validateWishlist(cartItem.getUserId(), cartItem.getCourseId());
+        } catch (Exception cartItemIsExistException) {
+            return wishlistDAO.deleteWishlistItem(cartItem);
         }
-        Wishlist deletedWishlist = wishlistDAO.deleteWishlist(wishlist);
-        if (deletedWishlist == null) {
-            throw new Exception("Delete wishlist failed!");
-        }
-        return deletedWishlist;
+        throw new Exception("Wishlist: " + cartItem + "doesn't exist");
     }
 }
