@@ -1,6 +1,6 @@
-package com.onlinelearning.Controllers.CartController;
+package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Models.Cart;
+import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(name = "AddCart", urlPatterns = {"/add-to-cart"})
-public class AddCart extends HttpServlet {
+@WebServlet(name = "AddToCart", urlPatterns = {"/add-to-cart"})
+public class AddToCart extends HttpServlet {
 
     private static final String VIEW_PATH = "/testing/cart.jsp";
     private static final String HOME_PATH = "/homepage";
@@ -31,29 +31,28 @@ public class AddCart extends HttpServlet {
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         Integer courseId = Integer.parseInt(request.getParameter("course-id"));
-        String message = "";
+        String message;
 
         if (user == null) {
-            List<Cart> carts = cartService.getCartsFromCookie(request);
-            Cart newCart = Cart.builder().courseId(courseId).build();
-            if (carts.contains(newCart)) {
+            List<CartItem> cart = cartService.getCartFromCookie(request);
+            CartItem newCartItem = CartItem.builder().courseId(courseId).build();
+            if (cart.contains(newCartItem)) {
                 message = "This already in your cart";
             } else {
-                carts.add(newCart);
-                cartService.addCartsToCookie(response, carts);
+                cart.add(newCartItem);
+                cartService.addCartToCookie(response, cart);
                 message = "Add cart to cookies successful!";
             }
         } else {
-            Cart newCart = Cart.builder().id(null).userId(user.getId()).courseId(courseId).build();
-            Cart addedCart;
             try {
-                addedCart = cartService.createCart(newCart);
-                request.setAttribute("addedCart", addedCart);
+                cartService.createCartItem(user.getId(), courseId);
                 message = "Add cart to database successful!";
             } catch (Exception ex) {
                 message = ex.getMessage();
             }
         }
+        
+        cartService.updateCartInSession(request.getSession(false), request, response);
         request.setAttribute("messageAddToCart", message);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }

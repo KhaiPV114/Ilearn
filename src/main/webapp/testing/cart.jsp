@@ -9,26 +9,33 @@
         <title>Add to cart</title>
     </head>
     <body>
-        <h3>Cart view</h3>
-        <a target="_blank" href="${pageContext.request.contextPath}/cart">View Cart</a>
-        <h3>Add cart as guest</h3>
-        
+        <h3>
+            <a target="_blank" href="${pageContext.request.contextPath}/cart">View Cart</a>
+        </h3>
+        <hr/>
+        <h3>Add course id to cart</h3>
         <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
             <input type="text" name="course-id" placeholder="course id">
-            <input type="submit" value="add course to cart">
+            <input type="submit" value="add to cart">
             <p>${messageAddToCart}</p>
         </form>
-        ${user.username}
+        <hr/>
+        <h3>Authentication</h3>
+        <c:if test="${user != null}">
+            <p>Welcome, ${user.fullName}</p>
+        </c:if>
+        <form action="${pageContext.request.contextPath}/BeUser">
+            <input type="hidden" name="status" value="Login"/>
+            <input type="number" name="user-id"/>
+            <button type="submit">
+                Login
+            </button>
+        </form>
         <br/>
-        <button onclick="window.location.href='/online-learning/BeUser?status=Login'">
-            Login
-        </button>
-        <br/>
-        <button onclick="window.location.href='/online-learning/BeUser?status=Logout'">
+        <button onclick="window.location.href = '/online-learning/BeUser?status=Logout&user-id=0'">
             Logout
         </button>
         <br/>
         ${message}
-        
     </body>
 </html>

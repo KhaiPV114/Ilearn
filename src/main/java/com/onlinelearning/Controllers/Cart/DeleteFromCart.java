@@ -1,6 +1,6 @@
-package com.onlinelearning.Controllers.CartController;
+package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Models.Cart;
+import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
@@ -11,12 +11,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "DeleteCart", urlPatterns = {"/remove-cart"})
-public class DeleteCart extends HttpServlet {
-
+public class DeleteFromCart extends HttpServlet {
+    
     private static final String HOME_PATH = "/homepage";
 
     private final CartService cartService = new CartServiceImpl();
@@ -30,22 +28,25 @@ public class DeleteCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession(false).getAttribute("user");
         int courseId = Integer.parseInt(request.getParameter("course-id"));
 
         if (user == null) {
-            List<Cart> carts = cartService.getCartsFromCookie(request);
-            Cart deleteCart = Cart.builder().courseId(courseId).build();
-            carts.remove(deleteCart);
-            cartService.addCartsToCookie(response, carts);
+            List<CartItem> cart = cartService.getCartFromCookie(request);
+            cart.remove(CartItem.builder().courseId(courseId).build());
+            cartService.addCartToCookie(response, cart);
         } else {
             try {
-                Cart deleteCart = Cart.builder().userId(user.getId()).courseId(courseId).build();
-                cartService.deleteCart(deleteCart);
+                cartService.deleteCartItem(
+                        CartItem.builder()
+                                .userId(user.getId())
+                                .courseId(courseId)
+                                .build()
+                );
             } catch (Exception ex) {
-                Logger.getLogger(DeleteCart.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        cartService.updateCartInSession(request.getSession(false), request, response);
         response.sendRedirect(request.getContextPath() + "/cart");
     }
 }

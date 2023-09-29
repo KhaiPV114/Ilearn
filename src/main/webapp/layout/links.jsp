@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vendor/slick-theme.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/sal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/feather.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/fontawesome.min.css">
+<!--<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/fontawesome.min.css">-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/euclid-circulara.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/swiper.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/plugins/magnify.css">

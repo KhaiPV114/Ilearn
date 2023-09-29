@@ -14,24 +14,11 @@
                 </div>
             </div>
         </div>
-        
+
         <nav class="side-nav w-100">
             <ul class="rbt-minicart-wrapper">
-
-                <li class="minicart-item">
-                    <div class="thumbnail">
-                        <a href="#">
-                            <img src="assets/images/product/7.jpg" alt="Product Images">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h6 class="title"><a href="single-product.html">Happy Strong</a></h6>
-                    </div>
-                    <div class="close-btn">
-                        <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
-                    </div>
-                </li>
                 <c:forEach var="course" items="${coursesInCart}">
+
                     <li class="minicart-item" id="cart-side-item">
                         <div class="thumbnail">
                             <a href="#">
@@ -44,8 +31,13 @@
                             <span class="price">$${course.price}</span>
                         </div>
                         <div class="close-btn">
-                            <!--<button class="rbt-round-btn" onclick=""><i class="feather-x"></i></button>-->
-                        </div> 
+                            <form action="${pageContext.request.contextPath}/remove-cart" id="remove-cart-side-${course.id}" method="post">
+                                <input type="hidden" name="course-id" value="${course.id}">
+                                <button class="rbt-round-btn" type="submit" form="remove-cart-side-${course.id}" onclick="removeCartSide()">
+                                    <i class="feather-x"></i>
+                                </button>
+                            </form>
+                        </div>
                     </li>
                 </c:forEach>
             </ul>

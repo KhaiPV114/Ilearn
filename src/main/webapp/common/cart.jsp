@@ -62,47 +62,9 @@
                                                 <th class="pro-remove">Remove</th>
                                             </tr>
                                         </thead>  
-
+                                        
                                         <tbody>
-                                            <tr>
-                                                <td class="pro-thumbnail">
-                                                    <a href="#"><img src="${pageContext.request.contextPath}/assets/images/course/course-online-01.jpg" alt="Product"></a>
-                                                </td>
-                                                <td class="pro-title">
-                                                    <a href="#">Prototype</a>
-                                                </td>
-                                                <td class="pro-description">
-                                                    <span>JavaScript is a dynamic programming language that's used for web development, in web applications, for game development, and lots more.</span>
-                                                </td>
-                                                <td class="pro-information">
-                                                    <ul class="rbt-list-style-3">
-                                                        <li>
-                                                            <i class="feather-edit-2"></i> By DuyDuc</li>
-                                                        <li>
-                                                            <i class="feather-book"></i>12 Lessons&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>50 Students
-                                                        </li>
-                                                        <li>
-                                                            <div class="rbt-review">
-                                                                <div class="rating">
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                </div>
-                                                                <span class="rating-count"> (15 Reviews)</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <td class="pro-subtotal">
-                                                    <span class="course-price">$199.89</span>
-                                                </td>
-                                                <td class="pro-remove">
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
-                                                </td>
-                                            </tr>
-                                            <c:forEach items="${coursesInCart}" var="course">
+                                            <c:forEach items="${sessionScope['coursesInCart']}" var="course">
                                                 <tr>
                                                     <td class="pro-thumbnail">
                                                         <a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a>
@@ -116,7 +78,7 @@
                                                     <td class="pro-information">
                                                         <ul class="rbt-list-style-3">
                                                             <li>
-                                                                <i class="feather-edit-2"></i>By ${"onwerName"}</li>
+                                                                <i class="feather-edit-2"></i>By ${course.ownerId}</li>
                                                             <li>
                                                                 <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
                                                             </li>
