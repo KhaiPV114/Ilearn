@@ -121,7 +121,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User getUser(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             return null;
         }
@@ -146,8 +146,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkRole(HttpServletRequest request, Role role) {
-        HttpSession session = request.getSession();
-        if (session == null) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("roles") == null) {
             return false;
         }
         HashSet<Role> roles = (HashSet<Role>) session.getAttribute("roles");
@@ -156,15 +156,20 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean isGuest(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         return !(session != null && session.getAttribute("user") != null);
     }
 
     @Override
-    public boolean isUser(HttpServletRequest request) {
+    public boolean isLearner(HttpServletRequest request) {
         return checkRole(request, Role.LEARNER);
     }
 
+    @Override
+    public boolean isInstructor(HttpServletRequest request) {
+        return checkRole(request, Role.INSTRUCTOR);
+    }
+    
     @Override
     public boolean isManager(HttpServletRequest request) {
         return checkRole(request, Role.MANAGER);
