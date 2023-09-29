@@ -1,54 +1,53 @@
 package com.onlinelearning.Controllers.Learner;
 
+import com.onlinelearning.Models.User;
+import com.onlinelearning.Models.WishlistItem;
+import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.CourseService;
+import com.onlinelearning.Services.Impl.AuthServiceImpl;
+import com.onlinelearning.Services.Impl.CourseServiceImpl;
+import com.onlinelearning.Services.Impl.WishlistServiceImpl;
+import com.onlinelearning.Services.WishlistService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@WebServlet(name="LearnerWishlistAdd", urlPatterns={"/LearnerWishlistAdd1"})
+@WebServlet(name = "LearnerWishlistAdd", urlPatterns = {"/add-to-wishlist"})
 public class LearnerWishlistAdd extends HttpServlet {
 
-    //response.setContentType("text/html;charset=UTF-8");
-    //PrintWriter out = response.getWriter();
-    //request.setCharacterEncoding("UTF-8");
+    private final WishlistService wishlistService = new WishlistServiceImpl();
+
+    private final AuthService authService = new AuthServiceImpl();
+
+    private final String VIEW_PATH = "/dashboard/learner/wishlist";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        //processRequest(request, response);
-        
-    } 
+            throws ServletException, IOException {
+
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        //processRequest(request, response);
-        
-    }
-
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LearnerWishlistAdd1</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LearnerWishlistAdd1 at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            throws ServletException, IOException {
+        User user = authService.getUser(request);
+        if (user != null) {
+            int courseId = Integer.parseInt(request.getParameter("course-id"));
+            WishlistItem wishlistItem = WishlistItem.builder()
+                    .userId(user.getId())
+                    .courseId(courseId)
+                    .build();
+            try {
+                wishlistService.createWishlistItem(wishlistItem);
+            } catch (Exception ex) {
+                Logger.getLogger(LearnerWishlistAdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            response.sendRedirect(request.getContextPath() + VIEW_PATH);
         }
-    }   
-  
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    }
 }
