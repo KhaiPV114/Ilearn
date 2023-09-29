@@ -120,7 +120,7 @@
                                         <div class="d-flex mt-3" id="pageBar"></div>
 
                                         <!--Delete via post method-->                                                    
-                                        <form id="deletion-form" action="${pageContext.request.contextPath}/manager/category/delete" method="post">
+                                        <form id="deletion-form" action="${pageContext.request.contextPath}/instructor/course/delete" method="post">
                                             <input id="deletion-id" name="id" value="" type="hidden">
                                         </form>
 
