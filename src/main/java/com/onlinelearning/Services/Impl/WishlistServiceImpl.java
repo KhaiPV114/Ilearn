@@ -18,15 +18,8 @@ public class WishlistServiceImpl implements WishlistService {
         return wishlistDAO.getWishlistByUserId(userId);
     }
 
-    private void validateWishlist(Wishlist wishlist) throws Exception {
-        if (wishlistDAO.getWishlistByUserId(wishlist.getUserId()) != null) {
-            throw new Exception("Wishlist is already existed!");
-        }
-    }
-
     @Override
     public Wishlist addWishlist(Wishlist wishlist) throws Exception {
-        validateWishlist(wishlist);
         Wishlist addedWishlist = wishlistDAO.addWishlist(wishlist);
         if (addedWishlist == null) {
             throw new Exception("Add wishlist failed!");
