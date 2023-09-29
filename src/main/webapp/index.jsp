@@ -44,11 +44,15 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course.jsp">Learner course</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist.jsp">Learner wishlist</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist">Learner wishlist</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>   
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/instructor/course">Manager course - Must be logged in as INSTRUCTOR</a>   
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-search-form.jsp">Search coupon</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
