@@ -9,10 +9,14 @@ public interface CourseService {
 
     List<Course> getAllCourses();
 
+    List<Course> getCourseByOwnerId(Integer ownerId, Integer size, Integer page);
+
+    Integer countNumberOfCourseByOwnerId(Integer ownerId, Integer size);
+
     Course createCourse(Course course) throws Exception;
 
     Course updateCourse(Course course) throws Exception;
 
     Course deleteCourse(Course course) throws Exception;
-    
+
 }
