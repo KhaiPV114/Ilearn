@@ -2,10 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<div class="rbt-header-sticky">
+
+<c:set var="coursesInCart" value="${sessionScope['coursesInCart']}"/>
+
+<div>
     <header class="rbt-header rbt-header-10">
         <div class="rbt-sticky-placeholder"></div>
-
         <div class="rbt-header-wrapper header-space-betwween header-sticky">
             <div class="container-fluid">
                 <div class="mainbar-row rbt-navigation-center align-items-center">
@@ -14,7 +16,7 @@
                         <!-- Logo -->
                         <div class="header-info">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png" alt="Education Logo Images">
                                 </a>
                             </div>
@@ -550,9 +552,11 @@
                             </li>
                             <!-- Cart -->
                             <li class="access-icon rbt-mini-cart">
-                                <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#">
+                                <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#" id="open-cart-side-menu">
                                     <i class="feather-shopping-cart"></i>
-                                    <span class="rbt-cart-count">4</span>
+                                    <c:if test="${coursesInCart.size()>0}">
+                                        <span class="rbt-cart-count">${coursesInCart.size()}</span>
+                                    </c:if>
                                 </a>
                             </li>
                             <!-- User -->

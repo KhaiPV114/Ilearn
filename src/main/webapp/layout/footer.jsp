@@ -1,7 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+
 <footer class="rbt-footer footer-style-1 bg-color-white overflow-hidden">
+    
+    <div class="rbt-separator-mid">
+        <div class="container">
+            <hr class="rbt-separator m-0">
+        </div>
+    </div>
+    
     <div class="footer-top">
         <div class="container">
             <div class="row g-5">
@@ -134,11 +144,13 @@
             </div>
         </div>
     </div>
+
     <div class="rbt-separator-mid">
         <div class="container">
             <hr class="rbt-separator m-0">
         </div>
     </div>
+
     <!-- Start Copyright Area  -->
     <div class="copyright-area copyright-style-1 ptb--20">
         <div class="container">

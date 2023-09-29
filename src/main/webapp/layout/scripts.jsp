@@ -1,3 +1,32 @@
+<script>
+//    function removeCartSide() {
+//        const xhr = new XMLHttpRequest();
+//        xhr.open('POST', 'online-learning/remove-cart', true);
+//        xhr.onload = function () {
+//            if (xhr.status >= 200 && xhr.status < 400) {
+//                openCartSideMenu();
+//            }
+//        };
+//        xhr.send();
+//    }
+
+    function openCartSideMenu() {
+        const openCartButton = document.getElementById('open-cart-side-menu');
+        openCartButton.click();
+    }
+
+    const coursePriceCartSide = document.getElementsByClassName("course-price-cart-side");
+    const courseTotalCartSide = document.getElementById('course-total-cart-side');
+    courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
+    function calculateCoursesPriceCartSide() {
+        let total = 0;
+        for (let price of coursePriceCartSide) {
+            total += parseFloat(price.innerHTML.replace("$", ""));
+        }
+        return total;
+    }
+</script>
+
 <!-- JS -->
 <!-- Modernizer JS -->
 <script src="${pageContext.request.contextPath}/assets/js/vendor/modernizr.min.js"></script>
@@ -27,3 +56,5 @@
 <script src="${pageContext.request.contextPath}/assets/js/vendor/magnify-popup.min.js"></script>
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+<!--Font Awesome-->
+<script src="https://kit.fontawesome.com/81fcade62e.js" crossorigin="anonymous"></script>
