@@ -1,15 +1,4 @@
 <script>
-//    function removeCartSide() {
-//        const xhr = new XMLHttpRequest();
-//        xhr.open('POST', 'online-learning/remove-cart', true);
-//        xhr.onload = function () {
-//            if (xhr.status >= 200 && xhr.status < 400) {
-//                openCartSideMenu();
-//            }
-//        };
-//        xhr.send();
-//    }
-
     function openCartSideMenu() {
         const openCartButton = document.getElementById('open-cart-side-menu');
         openCartButton.click();
@@ -20,7 +9,7 @@
     courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
     function calculateCoursesPriceCartSide() {
         let total = 0;
-        for (let price of coursePriceCart) {
+        for (let price of coursePriceCartSide) {
             total += parseFloat(price.innerHTML.replace("$", ""));
         }
         return total;

@@ -1,9 +1,7 @@
 package com.onlinelearning.Controllers.Cart;
 
 import com.onlinelearning.Services.CartService;
-import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
-import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,7 +19,7 @@ public class GeneralCartView extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        cartService.updateCartInSession(request.getSession(false), request, response);
+        cartService.updateCartInSession(request.getSession(), request, response);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 

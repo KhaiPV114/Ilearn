@@ -33,8 +33,6 @@ public class GoogleLoginFilter implements Filter {
                 && session.getAttribute("roles") == null) {
             String googleRegisterPath = request.getContextPath() + "/authentication/register/google";
             String logoutPath = request.getContextPath() + "/authentication/logout";
-            System.out.println(googleRegisterPath);
-            System.out.println(request.getRequestURI());
             //If request url is not equal to logout or google register url, continue to register form
             if (request.getRequestURI().equals(googleRegisterPath)
                     || request.getRequestURI().equals(logoutPath)) {

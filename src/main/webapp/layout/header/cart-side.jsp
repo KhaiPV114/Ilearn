@@ -29,7 +29,7 @@
                             <h6 class="title">
                                 <a href="single-product.html">${course.name}</a>
                             </h6>
-                            <span class="course-price-cart">$${course.price}</span>
+                            <span class="course-price-cart-side">$${course.price}</span>
                         </div>
                         <div class="close-btn">
                             <form action="${pageContext.request.contextPath}/remove-cart" id="remove-cart-side-${course.id}" method="post">
