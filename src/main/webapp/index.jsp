@@ -24,6 +24,8 @@
             <a href="${pageContext.request.contextPath}/authentication/logout">Logout</a>
         </c:if>
         <h1>JSP layout:</h1>
+        <a target="_blank" href="${pageContext.request.contextPath}/testing/cart.jsp">Cart</a>        
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/_draft.jsp">Instructor layout draft</a>  
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/instructor/dashboard.jsp">Instructor dashboard</a>        
@@ -44,13 +46,17 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>   
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/instructor/course">Manager course - Must be logged in as INSTRUCTOR</a>   
+        <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-search-form.jsp">Search coupon</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
 
         <c:if test="${roleService.isGuest(pageContext.request)}">
-            <script src="https://accounts.google.com/gsi/client" async></script>
+            <script src="https://accounts.google.com/gsi/client"></script>
             <div id="g_id_onload"
                  data-client_id="${initParam.GOOGLE_CLIENT_ID}"
                  data-context="signin"

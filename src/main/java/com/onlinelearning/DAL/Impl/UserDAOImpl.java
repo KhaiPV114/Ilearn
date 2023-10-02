@@ -103,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
     public User getUserById(int id) {
         String sql = "select user_id, username, password, email, google_email, "
                 + "full_name, dob, phone_number, created_at, status from users "
-                + "where id = ?";
+                + "where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {

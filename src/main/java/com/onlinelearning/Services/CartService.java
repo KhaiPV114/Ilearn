@@ -1,20 +1,27 @@
 package com.onlinelearning.Services;
 
-import com.onlinelearning.Models.Cart;
+import com.onlinelearning.Models.CartItem;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 public interface CartService {
 
-    List<Cart> getCartsByUserId(Integer userId);
+    List<CartItem> getCartByUserId(Integer userId);
     
-    Cart createCart(Cart cart) throws Exception;
+    CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId);
     
-    Cart deleteCart(Cart cart) throws Exception;
+    CartItem createCartItem(Integer userId, Integer courseId) throws Exception;
     
-    List<Cart> getCartsFromCookie(HttpServletRequest request);
+    CartItem deleteCartItem(CartItem cartItem) throws Exception;
     
-    void addCartsToCookie(HttpServletResponse response, List<Cart> carts);
+    List<CartItem> getCartFromCookie(HttpServletRequest request);
+    
+    void addCartToCookie(HttpServletResponse response, List<CartItem> carts);
+    
+    void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response);
+    
+    void updateCartInSession(HttpSession session, HttpServletRequest request, HttpServletResponse response);
     
 }

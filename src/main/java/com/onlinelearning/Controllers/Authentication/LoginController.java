@@ -2,7 +2,9 @@ package com.onlinelearning.Controllers.Authentication;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
+import com.onlinelearning.Services.Impl.CartServiceImpl;
 import com.onlinelearning.Utils.CookieUtils;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -20,7 +22,8 @@ public class LoginController extends HttpServlet {
     private static final String VIEW_PATH = "/common/authentication.jsp";
 
     private static final int REMEMBER_ME_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-
+    
+    private final CartService cartService = new CartServiceImpl();
     private final AuthService authService = new AuthServiceImpl();
 
     @Override
@@ -47,6 +50,7 @@ public class LoginController extends HttpServlet {
         User user;
         try {
             user = authService.login(request);
+            cartService.updateCartInSession(request.getSession(false), request, response);
         } catch (Exception ex) {
             request.setAttribute("l_error", ex.getMessage());
             viewDispatcher.forward(request, response);
