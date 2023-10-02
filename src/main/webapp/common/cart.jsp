@@ -307,7 +307,7 @@
     </body>
     <script>
         const targetElement = document.getElementById('content-display');
-        const scrollDuration = 800;
+        const scrollDuration = 1;
         scrollToElementWithTime(targetElement, scrollDuration);
 
         const coursesPrice = document.getElementsByClassName("course-price");

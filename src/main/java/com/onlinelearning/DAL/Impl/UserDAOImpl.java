@@ -6,7 +6,6 @@ import com.onlinelearning.DAL.UserDAO;
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "CartController", urlPatterns = {"/cart"})
-public class ViewCart extends HttpServlet {
+@WebServlet(name = "GeneralCartView", urlPatterns = {"/cart"})
+public class GeneralCartView extends HttpServlet {
 
     private static final String VIEW_PATH = "/common/cart.jsp";
 

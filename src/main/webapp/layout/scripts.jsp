@@ -20,7 +20,7 @@
     courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
     function calculateCoursesPriceCartSide() {
         let total = 0;
-        for (let price of coursePriceCartSide) {
+        for (let price of coursePriceCart) {
             total += parseFloat(price.innerHTML.replace("$", ""));
         }
         return total;

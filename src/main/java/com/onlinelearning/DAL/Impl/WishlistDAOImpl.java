@@ -1,9 +1,8 @@
 package com.onlinelearning.DAL.Impl;
 
-import com.onlinelearning.DAL.WishlistDAO;
 import com.onlinelearning.DAL.DBContext;
-import com.onlinelearning.Models.Wishlist;
-
+import com.onlinelearning.DAL.WishlistDAO;
+import com.onlinelearning.Models.WishlistItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,68 +15,93 @@ import java.util.logging.Logger;
 public class WishlistDAOImpl implements WishlistDAO {
 
     private final DBContext dbContext = new DBContextImpl();
+    private final String TABLE_NAME = "wishlists";
 
     @Override
-    public List<Wishlist> getWishlistByUserId(Integer userId) {
-        String sql = "SELECT wishlist_id, user_id, course_id"
-                + " FROM wishlists"
-                + " WHERE user_id = ?";
-        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+    public List<WishlistItem> getWishlistByUserId(Integer userId) {
+        String sql = "select user_id, course_id"
+                + " from " + TABLE_NAME
+                + " where user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                List<Wishlist> wishlists = new ArrayList<>();
+            try ( ResultSet rs = ps.executeQuery()) {
+                List<WishlistItem> wishlist = new ArrayList<>();
                 while (rs.next()) {
-                    Wishlist wishlist = Wishlist.builder()
-                    .id(rs.getInt("wishlist_id"))
-                    .userId(rs.getInt("user_id"))
-                    .courseId(rs.getInt("course_id"))
-                    .build();
-                    wishlists.add(wishlist);
+                    WishlistItem wishlistItem = WishlistItem.builder()
+                            .userId(rs.getInt("user_id"))
+                            .courseId(rs.getInt("course_id"))
+                            .build();
+                    wishlist.add(wishlistItem);
                 }
-                return wishlists;
+                return wishlist;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(WishlistDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     @Override
-    public Wishlist addWishlist(Wishlist wishlist) {
-        String sql = "INSERT INTO wishlists(user_id, course_id)"
-                + " VALUES (?, ?)";
-        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, wishlist.getUserId());
-            ps.setInt(2, wishlist.getCourseId());
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
+    public WishlistItem getWishlistByUserIdAndCourseId(Integer userId, Integer courseId) {
+        String sql = "select user_id, course_id"
+                + " from " + TABLE_NAME
+                + " where user_id = ? and course_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    return WishlistItem.builder()
+                            .userId(rs.getInt("user_id"))
+                            .courseId(rs.getInt("course_id"))
+                            .build();
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public WishlistItem createWishlistItem(WishlistItem wishlistItem) {
+        String sql = "insert into " + TABLE_NAME
+                + "(user_id, course_id)"
+                + " values (?, ?)";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, wishlistItem.getUserId());
+            ps.setInt(2, wishlistItem.getCourseId());
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                try ( ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        wishlist.setId(rs.getInt(1));
-                        return wishlist;
+                        return WishlistItem.builder()
+                                .userId(rs.getInt("user_id"))
+                                .courseId(rs.getInt("course_id"))
+                                .build();
                     }
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(WishlistDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     @Override
-    public Wishlist deleteWishlist(Wishlist wishlist) {
-        String sql = "DELETE FROM wishlists"
-                + " WHERE wishlist_id = ?";
-        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, wishlist.getId());
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows > 0) {
-                return wishlist;
+    public WishlistItem deleteWishlistItem(WishlistItem wishlistItem) {
+        String sql = "delete from " + TABLE_NAME
+                + " where user_id = ? and course_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, wishlistItem.getUserId());
+            ps.setInt(2, wishlistItem.getCourseId());
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return wishlistItem;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(WishlistDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-
 }

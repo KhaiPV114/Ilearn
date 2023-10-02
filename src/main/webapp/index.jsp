@@ -44,7 +44,7 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course.jsp">Learner course</a>        
         <br>
-        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/wishlist">Learner wishlist</a>        
+        <a target="_blank" href="${pageContext.request.contextPath}/testing/wishlist.jsp">Learner wishlist</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>

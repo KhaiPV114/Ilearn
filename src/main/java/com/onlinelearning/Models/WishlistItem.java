@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Wishlist {
-
-    private Integer id;
+public class WishlistItem {
 
     private Integer userId;
 
