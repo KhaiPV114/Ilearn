@@ -2,9 +2,7 @@ package com.onlinelearning.Controllers;
 
 import com.onlinelearning.Models.Coupon;
 import com.onlinelearning.Models.Course;
-import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CouponService;
-import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CouponServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -46,14 +44,23 @@ public class GeneralGetCoupon extends HttpServlet {
             pw.close();
             return;
         }
+        
+        if (coupon.getStartTime().isAfter(LocalDateTime.now())) {
+            response.setStatus(response.SC_NOT_ACCEPTABLE);
+            pw.print("Coupon code will be released soon!");
+            pw.close();
+            return;
+        }
 
         //Check if coupon code is for course in cart
         for (Course course : coursesInCart) {
             if (coupon.getCourseId().equals(course.getId())) {
                 response.setStatus(response.SC_OK);
                 double discount = course.getPrice() * coupon.getPercent() / 100;
+                pw.print(coupon.getCode() + " ");
                 pw.print(discount);
                 pw.close();
+                
             }
         }
 

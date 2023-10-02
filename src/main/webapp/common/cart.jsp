@@ -65,44 +65,44 @@
 
                                         <tbody>
                                             <c:forEach items="${sessionScope['coursesInCart']}" var="course">
-                                            <tr>
-                                                <td class="pro-thumbnail">
-                                                    <a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a>
-                                                </td>
-                                                <td class="pro-title">
-                                                    <a href="#">${course.name}</a>
-                                                </td>
-                                                <td class="pro-description text-truncate" style="max-width: 350px;">
-                                                    <span>${course.description}</span>
-                                                </td>
-                                                <td class="pro-information">
-                                                    <ul class="rbt-list-style-3">
-                                                        <li>
-                                                            <i class="feather-edit-2"></i>By ${userService.getUserFullNameById(course.ownerId)}</li>
-                                                        <li>
-                                                            <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
-                                                        </li>
-                                                        <li>
-                                                            <div class="rbt-review">
-                                                                <div class="rating">
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
+                                                <tr>
+                                                    <td class="pro-thumbnail">
+                                                        <a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a>
+                                                    </td>
+                                                    <td class="pro-title">
+                                                        <a href="#">${course.name}</a>
+                                                    </td>
+                                                    <td class="pro-description text-truncate" style="max-width: 350px;">
+                                                        <span>${course.description}</span>
+                                                    </td>
+                                                    <td class="pro-information">
+                                                        <ul class="rbt-list-style-3">
+                                                            <li>
+                                                                <i class="feather-edit-2"></i>By ${userService.getUserFullNameById(course.ownerId)}</li>
+                                                            <li>
+                                                                <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
+                                                            </li>
+                                                            <li>
+                                                                <div class="rbt-review">
+                                                                    <div class="rating">
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                    </div>
+                                                                    <span class="rating-count"> (${"numOfReview"})</span>
                                                                 </div>
-                                                                <span class="rating-count"> (${"numOfReview"})</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <td class="pro-subtotal">
-                                                    <span class="course-price">$${course.price}</span>
-                                                </td>
-                                                <td class="pro-remove">
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td class="pro-subtotal">
+                                                        <span class="course-price">$${course.price}</span>
+                                                    </td>
+                                                    <td class="pro-remove">
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
 
-                                                </td>
+                                                    </td>
                                             <div class="modal fade" id="confirm-remove-cart-${course.id}" tabindex="-1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
@@ -150,11 +150,8 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <p id="coupon-code-msg" style="display: none"></p>
-                                            <ul class="plan-offer-list" id="coupon-code-list" style="display: none">
-                                                <li>
-                                                    <i class="feather-check"></i> App Development
-                                                </li>
+                                            <p id="coupon-code-msg" style="display: none">
+                                            <ul class="plan-offer-list" id="coupon-code-list">
                                             </ul>
                                         </div>
                                     </div>
@@ -178,9 +175,11 @@
                                                     </button>
                                                 </div>
                                                 <div class="single-button w-50">
-                                                    <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="window.location.href = '${pageContext.request.contextPath}/learner/cart/checkout'">
-                                                        <span data-text="Checkout">Checkout</span>
-                                                    </button>
+                                                    <form action="${pageContext.request.contextPath}/cart/checkout" id="checkout-form" method="post">
+                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100">
+                                                            <span data-text="Checkout">Checkout</span>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -312,34 +311,12 @@
         <jsp:include page="/layout/footer.jsp"/>
     </body>
     <script>
-        const targetElement = document.getElementById('content-display');
-        const scrollDuration = 500;
-        scrollToElementWithTime(targetElement, scrollDuration);
-
-        setCartPrice();
-
-        function setCartPrice() {
-            const coursesPrice = document.getElementsByClassName("course-price");
-            const courseSubTotal = document.getElementById('course-sub-total');
-            const discountSubTotal = document.getElementById('discount-sub-total');
-            const grandTotal = document.getElementById('grand-total');
-            const courseSubTotalNum = calculateCoursesPrice(coursesPrice);
-            const discountSubTotalNum = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
-            const grandTotalNum = courseSubTotalNum - discountSubTotalNum;
-            courseSubTotal.innerHTML = '$' + courseSubTotalNum.toFixed(2);
-            grandTotal.innerHTML = '$' + grandTotalNum.toFixed(2);
-        }
-
-        function calculateCoursesPrice(coursesPrice) {
-            let total = 0;
-            for (let price of coursesPrice) {
-                total += parseFloat(price.innerHTML.replace("$", ""));
-            }
-            return total;
-        }
-
-        function scrollToElementWithTime(element, duration) {
-            const targetPosition = element.offsetTop;
+        //Auto scroll to the content of page with delay
+        scrollToElementWithTime();
+        function scrollToElementWithTime() {
+            const targetElement = document.getElementById('content-display');
+            const scrollDelay = 500;
+            const targetPosition = targetElement.offsetTop;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
             let startTime = null;
@@ -348,39 +325,109 @@
                     startTime = timestamp;
                 }
                 const progress = timestamp - startTime;
-                const percentage = Math.min(progress / duration, 1);
+                const percentage = Math.min(progress / scrollDelay, 1);
                 window.scrollTo(0, startPosition + distance * percentage);
-                if (progress < duration) {
+                if (progress < scrollDelay) {
                     window.requestAnimationFrame(scrollStep);
                 }
             }
             window.requestAnimationFrame(scrollStep);
         }
 
+        //Set all value of cart base on course price and coupon value
+        setCartPrice();
+        function setCartPrice() {
+            const coursesPrice = document.getElementsByClassName("course-price");
+            const courseSubTotal = document.getElementById('course-sub-total');
+            const discountSubTotal = parseFloat(document.getElementById('discount-sub-total').innerHTML.replace("$", ""));
+            const grandTotal = document.getElementById('grand-total');
+
+            let totalCoursesPrice = 0;
+            for (let price of coursesPrice) {
+                totalCoursesPrice += parseFloat(price.innerHTML.replace("$", ""));
+            }
+
+            courseSubTotal.innerHTML = '$' + totalCoursesPrice.toFixed(2);
+            grandTotal.innerHTML = '$' + (totalCoursesPrice - discountSubTotal).toFixed(2);
+        }
+
+        function setNewDiscountValue(newDiscount) {
+            const discountSubTotal = document.getElementById('discount-sub-total');
+            const oldDiscount = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
+            discountSubTotal.innerHTML = '$' + (oldDiscount + parseFloat(newDiscount)).toFixed(2);
+        }
+
+
+        //Get coupon code from servlet
+        let numOfCouponCode = 0;
         function getCouponCode() {
-            const couponCode = document.getElementById('coupon-code');
+            const couponCodeValue = document.getElementById('coupon-code');
             const couponCodeList = document.getElementById('coupon-code-list');
+            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
             const couponCodeMsg = document.getElementById('coupon-code-msg');
-            const discoundDisplay = document.getElementById('discount-sub-total');
+            let urlPath = "${pageContext.request.contextPath}/get-coupon-code?coupon-code=" + encodeURIComponent(couponCodeValue.value);
+
+            const checkoutForm = document.getElementById('checkout-form');
+
             const xhttp = new XMLHttpRequest();
+
             xhttp.onload = function () {
-                console.log(xhttp.responseText);
                 if (xhttp.status === 200) {
-                    discoundDisplay.innerHTML = '$' + parseFloat(xhttp.responseText).toFixed(2);
-                    couponCodeMsg.style.display = "block";
-                    couponCodeMsg.style.color = "#2F57EF";
-                    couponCodeMsg.innerHTML = "Apply coupon success!";
-                    setCartPrice();
+                    const resStrArr = xhttp.responseText.split(" ");
+                    const key = resStrArr[0];
+                    const value = resStrArr[1];
+                    let isAppliedCode = false;
+                    for (let item of couponCodeItem) {
+                        if (item.id === key) {
+                            couponCodeMsg.style.display = "block";
+                            couponCodeMsg.style.color = "red";
+                            couponCodeMsg.innerHTML = "You already add this coupon code!";
+                            isAppliedCode = true;
+                            break;
+                        }
+                    }
+                    if (!isAppliedCode) {
+                        let li = document.createElement('li');
+                        li.classList.add('coupon-code-item');
+                        li.id = key;
+                        li.innerHTML = `<i class="feather-check"></i>Applied <strong>` + key + `</strong> to cart`;
+                        couponCodeList.appendChild(li);
+                        setNewDiscountValue(value);
+                        setCartPrice();
+                        //Add hidden input to submit checkout
+                        let input = document.createElement('input');
+                        input.type = "hidden";
+                        input.name = "cId" + numOfCouponCode;
+                        input.value = key;
+                        checkoutForm.appendChild(input);
+                        numOfCouponCode++;
+                    }
                 } else {
                     couponCodeMsg.style.display = "block";
                     couponCodeMsg.style.color = "red";
                     couponCodeMsg.innerHTML = xhttp.responseText;
                 }
-                couponCode.value = "";
-                couponCode.placeholder = "Coupon Code";
+                couponCodeValue.value = "";
+                couponCodeValue.placeholder = "Coupon Code";
             }
-            xhttp.open("GET", "${pageContext.request.contextPath}/get-coupon-code?coupon-code=" + encodeURIComponent(couponCode.value));
+
+            xhttp.open("GET", urlPath);
             xhttp.send();
+        }
+
+        function checkout() {
+            const xhttp = new XMLHttpRequest();
+            let url = "${pageContext.request.contextPath}/cart/checkout";
+            xhttp.open("POST", url);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
+            let data = "";
+            let index = 0;
+            for (let item of couponCodeItem) {
+                data += "cId" + index + "=" + item.id + "&";
+                index++;
+            }
+            xhttp.send(data.substring(0, data.length - 1));
         }
     </script>
     <jsp:include page="/layout/scripts.jsp"/>
