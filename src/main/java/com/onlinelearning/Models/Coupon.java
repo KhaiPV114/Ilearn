@@ -1,5 +1,6 @@
 package com.onlinelearning.Models;
 
+import com.onlinelearning.Enums.CouponStatus;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,6 @@ public class Coupon {
     
     private LocalDateTime endTime;
     
-    private String status;
+    private CouponStatus status;
     
 }

@@ -1,5 +1,6 @@
 package com.onlinelearning.Models;
 
+import com.onlinelearning.Enums.OrderStatus;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,6 @@ public class Order {
     
     private LocalDateTime createdAt;
     
-    private String status;
+    private OrderStatus status;
     
 }

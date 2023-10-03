@@ -3,6 +3,7 @@ package com.onlinelearning.DAL.Impl;
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.DAL.RoleDAO;
 import com.onlinelearning.DAL.UserDAO;
+import com.onlinelearning.Enums.UserStatus;
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import java.sql.Connection;
@@ -32,6 +33,10 @@ public class UserDAOImpl implements UserDAO {
         if (rs.findColumn("password") > 0) {
             password = rs.getString("password");
         }
+        UserStatus status = null;
+        if (rs.getString("status") != null) {
+            status = UserStatus.valueOf(rs.getString("status"));
+        }
         User user = User.builder().id(rs.getInt("user_id"))
                 .username(rs.getString("username"))
                 .password(password)
@@ -41,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
                 .dob(rs.getDate("dob"))
                 .phoneNumber(rs.getString("phone_number"))
                 .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
-                .status(rs.getString("status"))
+                .status(status)
                 .build();
         return user;
     }
@@ -79,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
                 ps.setString(7, user.getPhoneNumber());
             }
             ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setString(9, user.getStatus());
+            ps.setString(9, user.getStatus().toString());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
@@ -236,7 +241,7 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 ps.setString(7, user.getPhoneNumber());
             }
-            ps.setString(8, user.getStatus());
+            ps.setString(8, user.getStatus().toString());
             ps.setInt(9, user.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
