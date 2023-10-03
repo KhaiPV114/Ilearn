@@ -2,6 +2,7 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.CouponDAO;
 import com.onlinelearning.DAL.DBContext;
+import com.onlinelearning.Enums.CouponStatus;
 import com.onlinelearning.Models.Coupon;
 import com.onlinelearning.Models.Course;
 import java.sql.Connection;
@@ -10,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,6 +30,10 @@ public class CouponDAOImpl implements CouponDAO {
             ps.setString(1, course.getName());
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    CouponStatus status = null;
+                    if (rs.getString("status") != null) {
+                        status = CouponStatus.valueOf(rs.getString("status"));
+                    }
                     Coupon coupon = Coupon.builder()
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
@@ -40,7 +44,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
                             .startTime(rs.getTimestamp("start_time").toLocalDateTime())
                             .endTime(rs.getTimestamp("end_time").toLocalDateTime())
-                            .status(rs.getString("status"))
+                            .status(status)
                             .build();
                     return coupon;
                 }
@@ -61,6 +65,10 @@ public class CouponDAOImpl implements CouponDAO {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    CouponStatus status = null;
+                    if (rs.getString("status") != null) {
+                        status = CouponStatus.valueOf(rs.getString("status"));
+                    }
                     Coupon coupon = Coupon.builder()
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
@@ -71,7 +79,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
                             .startTime(rs.getTimestamp("start_time").toLocalDateTime())
                             .endTime(rs.getTimestamp("end_time").toLocalDateTime())
-                            .status(rs.getString("status"))
+                            .status(status)
                             .build();
                     return coupon;
                 }
@@ -92,6 +100,10 @@ public class CouponDAOImpl implements CouponDAO {
             ps.setString(1, code);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    CouponStatus status = null;
+                    if (rs.getString("status") != null) {
+                        status = CouponStatus.valueOf(rs.getString("status"));
+                    }
                     Coupon coupon = Coupon.builder()
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
@@ -102,7 +114,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
                             .startTime(rs.getTimestamp("start_time").toLocalDateTime())
                             .endTime(rs.getTimestamp("end_time").toLocalDateTime())
-                            .status(rs.getString("status"))
+                            .status(status)
                             .build();
                     return coupon;
                 }
@@ -120,6 +132,10 @@ public class CouponDAOImpl implements CouponDAO {
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             List<Coupon> coupons = new ArrayList<>();
             while (rs.next()) {
+                CouponStatus status = null;
+                if (rs.getString("status") != null) {
+                    status = CouponStatus.valueOf(rs.getString("status"));
+                }
                 Coupon coupon = Coupon.builder()
                         .id(rs.getInt("coupon_id"))
                         .courseId(rs.getInt("course_id"))
@@ -130,7 +146,7 @@ public class CouponDAOImpl implements CouponDAO {
                         .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
                         .startTime(rs.getTimestamp("start_time").toLocalDateTime())
                         .endTime(rs.getTimestamp("end_time").toLocalDateTime())
-                        .status(rs.getString("status"))
+                        .status(status)
                         .build();
                 coupons.add(coupon);
             }
@@ -153,10 +169,10 @@ public class CouponDAOImpl implements CouponDAO {
             ps.setTimestamp(4, Timestamp.valueOf(coupon.getCreatedAt()));
             ps.setTimestamp(5, Timestamp.valueOf(coupon.getStartTime()));
             ps.setTimestamp(6, Timestamp.valueOf(coupon.getEndTime()));
-            if (coupon.getStatus()== null) {
+            if (coupon.getStatus() == null) {
                 ps.setNull(7, Types.VARCHAR);
             } else {
-                ps.setString(7, coupon.getStatus());
+                ps.setString(7, coupon.getStatus().toString());
             }
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
@@ -187,7 +203,7 @@ public class CouponDAOImpl implements CouponDAO {
             ps.setTimestamp(5, Timestamp.valueOf(coupon.getCreatedAt()));
             ps.setTimestamp(6, Timestamp.valueOf(coupon.getStartTime()));
             ps.setTimestamp(7, Timestamp.valueOf(coupon.getEndTime()));
-            ps.setString(8, coupon.getStatus());
+            ps.setString(8, coupon.getStatus().toString());
             ps.setInt(9, coupon.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
@@ -222,7 +238,6 @@ public class CouponDAOImpl implements CouponDAO {
 //        System.out.println(coupons);
 
 //        get by course name 
-
 //      get by id
 //        Coupon coupon = couponDAOImpl.getCouponById(2);
 //        System.out.println(coupon);
