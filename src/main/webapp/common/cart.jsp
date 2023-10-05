@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="userService" scope="request" class="com.onlinelearning.Services.Impl.UserServiceImpl" />
+
 <!DOCTYPE html>
 
 <html>
@@ -39,6 +40,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
+                            
                             <c:if test="${!coursesInCart.isEmpty()}">
                                 <div class="cart-table table-responsive mb--60">
                                     <table class="table">
@@ -103,15 +105,15 @@
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="staticBackdropLabel">Remove this course from your cart</h5>
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Confirm to remove</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Now or never?
+                                                            Remove this course from your cart?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <a class="rbt-btn btn-white btn-sm btn-border radius-round-10" href="#" data-bs-dismiss="modal">Cancel</a>
-                                                            <form action="remove-cart" method="post" id="remove-cart-${course.id}">
+                                                            <form action="${pageContext.request.contextPath}/cart/remove" method="post" id="remove-cart-${course.id}">
                                                                 <input type="hidden" name="course-id" value="${course.id}" class="course-id">
                                                                 <a class="rbt-btn btn-sm" href="#" onclick="document.getElementById('remove-cart-${course.id}').submit();">Remove</a>
                                                             </form>
@@ -168,7 +170,7 @@
 
                                             <div class="cart-submit-btn-group">
                                                 <div class="single-button w-50">
-                                                    <button class="rbt-btn rbt-switch-btn rbt-switch-y w-100 btn-border" onclick="window.location.href = '${pageContext.request.contextPath}/homepage'">
+                                                    <button class="rbt-btn rbt-switch-btn w-100 btn-border" onclick="window.location.href = '${pageContext.request.contextPath}/homepage'">
                                                         <span data-text="Return Homepage">Return Homepage</span>
                                                     </button>
                                                 </div>
@@ -177,8 +179,12 @@
                                                         <form action="${pageContext.request.contextPath}/cart/checkout" method="post" id="checkout-form">
                                                             <input type="hidden" name="data" id="hidden-data">
                                                         </form>
-                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="checkout()">
-                                                            <span data-text="Checkout">Checkout</span>
+                                                        <button class="rbt-btn btn-gradient hover-icon-reverse w-100" onclick="checkout()">
+                                                            <span class="icon-reverse-wrapper">
+                                                                <span class="btn-text">Checkout</span>
+                                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                            </span>
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${user==null}">
@@ -192,13 +198,15 @@
                                     </div>
                                 </div>
                             </c:if>
+                            
                             <c:if test="${coursesInCart.isEmpty()}">
                                 <div class="col-lg-12">
                                     <div class="section-title text-center mb--60">
-                                        <h5 class="title">Ohh, your cart is as empty as your wallet, let's fill it up</h5>
-                                        <<img src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png" alt="empty cart" style="width: 30%"/>
+                                        <h5 class="title">Ohh, your cart is empty, let's fill it up</h5>
+                                        <img src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png" alt="empty cart" style="width: 30%"/>
                                     </div>
                                 </div>
+                                
                                 <div class="rbt-categories-area bg-color-white">
                                     <div class="container">
                                         <div class="row">
@@ -315,32 +323,8 @@
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>
+        <jsp:include page="/layout/delayScrollToContent.jsp"/>
     </body>
-
-    <script>
-        //Auto scroll to the content of page with delay
-        scrollToElementWithTime();
-        function scrollToElementWithTime() {
-            const targetElement = document.getElementById('content-display');
-            const scrollDelay = 500;
-            const targetPosition = targetElement.offsetTop;
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
-            let startTime = null;
-            function scrollStep(timestamp) {
-                if (!startTime) {
-                    startTime = timestamp;
-                }
-                const progress = timestamp - startTime;
-                const percentage = Math.min(progress / scrollDelay, 1);
-                window.scrollTo(0, startPosition + distance * percentage);
-                if (progress < scrollDelay) {
-                    window.requestAnimationFrame(scrollStep);
-                }
-            }
-            window.requestAnimationFrame(scrollStep);
-        }
-    </script>
 
     <c:if test="${!coursesInCart.isEmpty()}">
         <script>

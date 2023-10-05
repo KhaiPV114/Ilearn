@@ -1,6 +1,5 @@
 package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;

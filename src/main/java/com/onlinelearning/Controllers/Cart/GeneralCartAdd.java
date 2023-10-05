@@ -10,59 +10,65 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.io.PrintWriter;
 
 @WebServlet(name = "GeneralCartAdd", urlPatterns = {"/cart/add"})
 public class GeneralCartAdd extends HttpServlet {
 
-    private static final String HOME_PATH = "/homepage";
+    private final String ERROR_404_PATH = "/error/404.jsp";
 
     private final CartService cartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + HOME_PATH);
+        request.getRequestDispatcher(ERROR_404_PATH).forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        PrintWriter pw = response.getWriter();
+        //Validate request
         User user = (User) request.getSession().getAttribute("user");
-        Integer courseId = Integer.parseInt(request.getParameter("course-id"));
+        String courseIdParam = request.getParameter("course-id");
+        if (courseIdParam == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
 
-        boolean successAdding = false;
-        int quantity = 0;
-        
+        //Processing cart
+        Integer courseId = Integer.parseInt(courseIdParam);
         if (user == null) { //If is guest
-            //Get cart stored in cookie
-            List<CartItem> cart = cartService.getCartFromCookie(request);
-            
-            CartItem newCartItem = CartItem.builder().courseId(courseId).build();
-            
-            //If cart exist new cart item, do nothing
-            if (cart.contains(newCartItem)) {
-                //Nothing
-            } else {    //Else add cart item to cookie, and send back new quantity of cart
-                cart.add(newCartItem);
-                cartService.addCartToCookie(response, cart);
-                quantity = cart.size();
-                successAdding = true;
+            CartItem newCartItem = CartItem.builder()
+                    .courseId(courseId)
+                    .build();
+            try {
+                cartService.addNewCartItemToCookie(newCartItem, request, response);
+                response.setStatus(HttpServletResponse.SC_OK);
+                pw.print("Add to cart successful!");
+            } catch (Exception cartException) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                pw.print(cartException.getMessage());
+                return;
             }
         } else {    //If is user
             try {
-                CartItem cartItem = CartItem.builder()
+                //Create new cart item from request
+                CartItem newCartItem = CartItem.builder()
                         .userId(user.getId())
                         .courseId(courseId)
                         .build();
-                cartService.createCartItem(cartItem);
-                successAdding = true;
-            } catch (Exception ex) {
-                //Failed, do nothing
+                cartService.createCartItem(newCartItem);
+                response.setStatus(HttpServletResponse.SC_OK);
+                pw.print("Add to cart successful!");
+            } catch (Exception cartException) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                pw.print(cartException.getMessage());
+                return;
             }
         }
-        
+
         cartService.updateCartInSession(request.getSession(false), request, response);
     }
 }

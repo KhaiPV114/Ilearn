@@ -97,4 +97,20 @@ public class CartDAOImpl implements CartDAO {
         }
         return null;
     }
+
+    @Override
+    public boolean deleteCartOfUserId(Integer userId) {
+        String sql = "delete from " + TABLE_NAME
+                + " where user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
