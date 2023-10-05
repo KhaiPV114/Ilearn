@@ -13,11 +13,21 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemDAO orderItemDAO = new OrderItemDAOImpl();
 
     @Override
+    public Order getOrderById(Integer orderId) {
+        return orderDAO.getOrderById(orderId);
+    }
+    
+    @Override
     public Order createOrder(Order newOrder) {
         if (newOrder == null) {
             return null;
         }
         return orderDAO.createOrder(newOrder);
+    }
+
+    @Override
+    public Order updateOrder(Order newOrder) {
+        return orderDAO.updateOrder(newOrder);
     }
 
     @Override

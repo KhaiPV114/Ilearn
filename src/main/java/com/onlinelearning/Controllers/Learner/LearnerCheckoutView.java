@@ -7,8 +7,10 @@ import com.onlinelearning.Models.Order;
 import com.onlinelearning.Models.OrderItem;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.CouponService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
+import com.onlinelearning.Services.Impl.CartServiceImpl;
 import com.onlinelearning.Services.Impl.CouponServiceImpl;
 import com.onlinelearning.Services.Impl.OrderItemServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
@@ -35,6 +37,7 @@ public class LearnerCheckoutView extends HttpServlet {
     private final OrderItemService orderItemService = new OrderItemServiceImpl();
     private final CouponService couponService = new CouponServiceImpl();
     private final AuthService authService = new AuthServiceImpl();
+    private final CartService CartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,11 +48,10 @@ public class LearnerCheckoutView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-//        String dratfCheckout = request.getParameter("dratfCheckout");
 
+//        String dratfCheckout = request.getParameter("dratfCheckout");
         User user = authService.getUser(request);
-        if(user == null){
+        if (user == null) {
             response.sendRedirect(request.getContextPath() + HOME_PATH);
             return;
         }
@@ -71,6 +73,7 @@ public class LearnerCheckoutView extends HttpServlet {
         //Create order item base on cart and coupon it applied
         List<OrderItem> orderItems = new ArrayList<>();
         List<String> messageError = new ArrayList<>();
+        Coupon mightyCoupon = null;     //If this order have applied 1 mighty coupon: Mã giảm giá toàn sàn, then only minus this coupon remanin in database by 1.
         for (Course course : coursesInCart) {
             //Create order item
             OrderItem newOrderItem = OrderItem.builder()
@@ -82,6 +85,9 @@ public class LearnerCheckoutView extends HttpServlet {
             //Validate coupon and applied it to get new price
             if (!courseCouponMap.get(course.getId().toString()).isEmpty()) {
                 Coupon currentCoupon = couponService.getCouponByCode(courseCouponMap.get(course.getId().toString()));
+                if (currentCoupon.getCourseId() == 0) {
+                    mightyCoupon = currentCoupon;
+                }
                 try {
                     //Validated and applied success
                     if (couponService.canApplyCoupon(currentCoupon)) {
@@ -89,7 +95,9 @@ public class LearnerCheckoutView extends HttpServlet {
                         newOrderItem.setPrice(
                                 course.getPrice() - (course.getPrice() * (currentCoupon.getPercent() / 100))
                         );
-                        couponService.minusCouponRemain(currentCoupon);
+                        if (!currentCoupon.equals(mightyCoupon)) {
+                            couponService.minusCouponRemain(currentCoupon);
+                        }
                     }
                 } catch (Exception couponException) {
                     newOrderItem.setPrice(course.getPrice());
@@ -98,10 +106,14 @@ public class LearnerCheckoutView extends HttpServlet {
             } else {
                 newOrderItem.setPrice(course.getPrice());
             }
-            
+
             orderItems.add(orderItemService.createOrderITem(newOrderItem));
             subTotal += newOrderItem.getOriginalPrice();
             grandTotal += newOrderItem.getPrice();
+        }
+        
+        if(mightyCoupon != null){
+            couponService.minusCouponRemain(mightyCoupon);
         }
 
         request.setAttribute("order", newOrder);
@@ -111,6 +123,11 @@ public class LearnerCheckoutView extends HttpServlet {
         request.setAttribute("discount", subTotal - grandTotal);
         request.setAttribute("grandTotal", grandTotal);
 
+        if (grandTotal == 0) {
+            request.setAttribute("noNeedPayment", true);
+        }
+
+        CartService.deleteCartOfUserId(user.getId());
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }

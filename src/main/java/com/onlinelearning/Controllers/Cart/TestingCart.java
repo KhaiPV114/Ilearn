@@ -1,13 +1,9 @@
-/*
- * DuyDuc94
- */
 package com.onlinelearning.Controllers.Cart;
 
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,9 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-/**
- * @author duy20
- */
 @WebServlet(name = "TestingCart", urlPatterns = {"/cart/testing"})
 public class TestingCart extends HttpServlet {
 
