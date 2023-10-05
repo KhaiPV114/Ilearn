@@ -68,19 +68,12 @@ public class CartDAOImpl implements CartDAO {
         String sql = "insert into " + TABLE_NAME
                 + "(user_id, course_id)"
                 + " values (?, ?)";
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, cartItem.getUserId());
             ps.setInt(2, cartItem.getCourseId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
-                try ( ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        return CartItem.builder()
-                                .userId(rs.getInt("user_id"))
-                                .courseId(rs.getInt("course_id"))
-                                .build();
-                    }
-                }
+                return cartItem;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

@@ -9,16 +9,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cart</title>
         <jsp:include page="/layout/links.jsp"/>
-        <style>
-            .pro-description{
-                max-width: 500px;
-                font-size: smaller;
-            }
-            .pro-description{
-                max-width: 400px;
-                font-size: smaller;
-            }
-        </style>
     </head>
 
     <body class="rbt-header-sticky">
@@ -65,14 +55,17 @@
 
                                         <tbody>
                                             <c:forEach items="${sessionScope['coursesInCart']}" var="course">
+
                                                 <tr>
                                                     <td class="pro-thumbnail">
-                                                        <a href="#"><img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product"></a>
+                                                        <a href="#">
+                                                            <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product">
+                                                        </a>
                                                     </td>
                                                     <td class="pro-title">
                                                         <a href="#">${course.name}</a>
                                                     </td>
-                                                    <td class="pro-description text-truncate" style="max-width: 350px;">
+                                                    <td class="pro-description text-truncate" style="max-width: 350px; font-size: medium;">
                                                         <span>${course.description}</span>
                                                     </td>
                                                     <td class="pro-information">
@@ -97,11 +90,14 @@
                                                         </ul>
                                                     </td>
                                                     <td class="pro-subtotal">
-                                                        <span class="course-price">$${course.price}</span>
+                                                        <span class="course-price">
+                                                            $${course.price}
+                                                        </span>
                                                     </td>
                                                     <td class="pro-remove">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}"><i class="feather-x"></i></a> 
-
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#confirm-remove-cart-${course.id}">
+                                                            <i class="feather-x"></i>
+                                                        </a> 
                                                     </td>
                                             <div class="modal fade" id="confirm-remove-cart-${course.id}" tabindex="-1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
@@ -116,7 +112,7 @@
                                                         <div class="modal-footer">
                                                             <a class="rbt-btn btn-white btn-sm btn-border radius-round-10" href="#" data-bs-dismiss="modal">Cancel</a>
                                                             <form action="remove-cart" method="post" id="remove-cart-${course.id}">
-                                                                <input type="hidden" name="course-id" value="${course.id}">
+                                                                <input type="hidden" name="course-id" value="${course.id}" class="course-id">
                                                                 <a class="rbt-btn btn-sm" href="#" onclick="document.getElementById('remove-cart-${course.id}').submit();">Remove</a>
                                                             </form>
                                                         </div>
@@ -134,7 +130,9 @@
                                     <div class="col-lg-6 col-12">
                                         <div class="discount-coupon edu-bg-shade">
                                             <div class="section-title text-start">
-                                                <h4 class="title mb--30">Apply Coupon Code To Your Cart</h4>
+                                                <h4 class="title mb--30">
+                                                    Apply Coupon Code To Your Cart
+                                                </h4>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 col-12 mb--25">
@@ -163,9 +161,9 @@
                                                 <div class="section-title text-start">
                                                     <h4 class="title mb--30">Cart Summary</h4>
                                                 </div>
-                                                <p>Sub Total <span id="course-sub-total">$0</span></p>
-                                                <p>Discount <span id="discount-sub-total">$0</span></p>
-                                                <h2>Grand Total <span id="grand-total">$0</span></h2>
+                                                <p>Sub Total <span id="course-sub-total">$0.00</span></p>
+                                                <p>Discount <span id="discount-sub-total">$0.00</span></p>
+                                                <h2>Grand Total <span id="grand-total">$0.00</span></h2>
                                             </div>
 
                                             <div class="cart-submit-btn-group">
@@ -175,11 +173,19 @@
                                                     </button>
                                                 </div>
                                                 <div class="single-button w-50">
-                                                    <form action="${pageContext.request.contextPath}/cart/checkout" id="checkout-form" method="post">
-                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100">
+                                                    <c:if test="${user!=null}">
+                                                        <form action="${pageContext.request.contextPath}/cart/checkout" method="post" id="checkout-form">
+                                                            <input type="hidden" name="data" id="hidden-data">
+                                                        </form>
+                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="checkout()">
                                                             <span data-text="Checkout">Checkout</span>
                                                         </button>
-                                                    </form>
+                                                    </c:if>
+                                                    <c:if test="${user==null}">
+                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="window.location.href = '${pageContext.request.contextPath}/authentication'">
+                                                            <span data-text="Login to Checkout">Checkout</span>
+                                                        </button>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>
@@ -310,6 +316,7 @@
         </div>
         <jsp:include page="/layout/footer.jsp"/>
     </body>
+
     <script>
         //Auto scroll to the content of page with delay
         scrollToElementWithTime();
@@ -333,102 +340,120 @@
             }
             window.requestAnimationFrame(scrollStep);
         }
+    </script>
 
-        //Set all value of cart base on course price and coupon value
-        setCartPrice();
-        function setCartPrice() {
-            const coursesPrice = document.getElementsByClassName("course-price");
-            const courseSubTotal = document.getElementById('course-sub-total');
-            const discountSubTotal = parseFloat(document.getElementById('discount-sub-total').innerHTML.replace("$", ""));
-            const grandTotal = document.getElementById('grand-total');
+    <c:if test="${!coursesInCart.isEmpty()}">
+        <script>
+            //Set all value of cart base on course price and coupon value
+            setCartPrice();
+            function setCartPrice() {
+                const coursesPrice = document.getElementsByClassName("course-price");
+                const courseSubTotal = document.getElementById('course-sub-total');
+                const discountSubTotal = parseFloat(document.getElementById('discount-sub-total').innerHTML.replace("$", ""));
+                const grandTotal = document.getElementById('grand-total');
 
-            let totalCoursesPrice = 0;
-            for (let price of coursesPrice) {
-                totalCoursesPrice += parseFloat(price.innerHTML.replace("$", ""));
+                let totalCoursesPrice = 0;
+                for (let price of coursesPrice) {
+                    totalCoursesPrice += parseFloat(price.innerHTML.replace("$", ""));
+                }
+
+                courseSubTotal.innerHTML = '$' + totalCoursesPrice.toFixed(2);
+                grandTotal.innerHTML = '$' + (totalCoursesPrice - discountSubTotal).toFixed(2);
+            }
+            function setNewDiscountValue(newDiscount) {
+                const discountSubTotal = document.getElementById('discount-sub-total');
+                discountSubTotal.innerHTML = '$' + parseFloat(newDiscount).toFixed(2);
+                setCartPrice();
+            }
+            function displayAppliedCode(couponApplied, rootUlElement) {
+                while (rootUlElement.firstChild) {
+                    rootUlElement.removeChild(rootUlElement.firstChild);
+                }
+
+                for (let item of couponApplied) {
+                    let li = document.createElement('li');
+                    li.innerHTML = `<i class="feather-check"></i><strong>` + item + `</strong> is apllied`;
+                    rootUlElement.appendChild(li);
+                }
             }
 
-            courseSubTotal.innerHTML = '$' + totalCoursesPrice.toFixed(2);
-            grandTotal.innerHTML = '$' + (totalCoursesPrice - discountSubTotal).toFixed(2);
-        }
+            let mapCouponAndCourse = new Map();
+            const courseIdsInCart = document.getElementsByClassName('course-id');
+            for (let item of courseIdsInCart) {
+                mapCouponAndCourse.set(item.value, "");
+            }
 
-        function setNewDiscountValue(newDiscount) {
-            const discountSubTotal = document.getElementById('discount-sub-total');
-            const oldDiscount = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
-            discountSubTotal.innerHTML = '$' + (oldDiscount + parseFloat(newDiscount)).toFixed(2);
-        }
+            //Get coupon code from servlet
+            let appliedCoupons = [];
+            function getCouponCode() {
+                //Get elements
+                const couponCodeInserted = document.getElementById('coupon-code');
+                const couponCodeList = document.getElementById('coupon-code-list');
+                const couponCodeMsg = document.getElementById('coupon-code-msg');
 
+                let urlPath = "${pageContext.request.contextPath}/get-coupon-code";
 
-        //Get coupon code from servlet
-        let numOfCouponCode = 0;
-        function getCouponCode() {
-            const couponCodeValue = document.getElementById('coupon-code');
-            const couponCodeList = document.getElementById('coupon-code-list');
-            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
-            const couponCodeMsg = document.getElementById('coupon-code-msg');
-            let urlPath = "${pageContext.request.contextPath}/get-coupon-code?coupon-code=" + encodeURIComponent(couponCodeValue.value);
-
-            const checkoutForm = document.getElementById('checkout-form');
-
-            const xhttp = new XMLHttpRequest();
-
-            xhttp.onload = function () {
-                if (xhttp.status === 200) {
-                    const resStrArr = xhttp.responseText.split(" ");
-                    const key = resStrArr[0];
-                    const value = resStrArr[1];
-                    let isAppliedCode = false;
-                    for (let item of couponCodeItem) {
-                        if (item.id === key) {
-                            couponCodeMsg.style.display = "block";
-                            couponCodeMsg.style.color = "red";
-                            couponCodeMsg.innerHTML = "You already add this coupon code!";
-                            isAppliedCode = true;
-                            break;
-                        }
-                    }
-                    if (!isAppliedCode) {
-                        let li = document.createElement('li');
-                        li.classList.add('coupon-code-item');
-                        li.id = key;
-                        li.innerHTML = `<i class="feather-check"></i>Applied <strong>` + key + `</strong> to cart`;
-                        couponCodeList.appendChild(li);
-                        setNewDiscountValue(value);
-                        setCartPrice();
-                        //Add hidden input to submit checkout
-                        let input = document.createElement('input');
-                        input.type = "hidden";
-                        input.name = "cId" + numOfCouponCode;
-                        input.value = key;
-                        checkoutForm.appendChild(input);
-                        numOfCouponCode++;
-                    }
-                } else {
+                //Check if inserted coupon is applied
+                if (appliedCoupons.includes(couponCodeInserted.value)) {
                     couponCodeMsg.style.display = "block";
                     couponCodeMsg.style.color = "red";
-                    couponCodeMsg.innerHTML = xhttp.responseText;
+                    couponCodeMsg.innerHTML = "You already applied this code";
+                    couponCodeInserted.value = "";
+                    couponCodeInserted.placeholder = "Coupon Code";
+                    return;
+                } else {
+                    mapCouponAndCourse.set('insertCoupon', couponCodeInserted.value);
                 }
-                couponCodeValue.value = "";
-                couponCodeValue.placeholder = "Coupon Code";
+
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.onload = function () {
+                    if (xhttp.status === 200) {
+                        //Convert Json response to Map
+                        mapCouponAndCourse = new Map(Object.entries(JSON.parse(xhttp.responseText)));
+
+                        //If success applied coupon to cart
+                        if (mapCouponAndCourse.has('appliedMsg')) {
+
+                            //Display message of success
+                            couponCodeMsg.style.display = "block";
+                            couponCodeMsg.style.color = "green";
+                            couponCodeMsg.innerHTML = mapCouponAndCourse.get('appliedMsg');
+
+                            //Create an array to store applied code
+                            let appliedCouponString = mapCouponAndCourse.get('appliedCoupons');
+                            appliedCoupons = appliedCouponString.substring(1, appliedCouponString.length - 1).split(', ');
+
+                            //Display all applied coupon
+                            displayAppliedCode(appliedCoupons, couponCodeList);
+
+                            //Recalculate total cart price
+                            setNewDiscountValue(mapCouponAndCourse.get('discount'));
+
+                        } else {
+                            couponCodeMsg.style.display = "block";
+                            couponCodeMsg.style.color = "red";
+                            couponCodeMsg.innerHTML = mapCouponAndCourse.get('failedMsg');
+                        }
+                    } else {
+                        couponCodeMsg.style.display = "block";
+                        couponCodeMsg.style.color = "red";
+                        couponCodeMsg.innerHTML = "Unknown Error";
+                    }
+                    couponCodeInserted.value = "";
+                    couponCodeInserted.placeholder = "Coupon Code";
+                };
+
+                xhttp.open("POST", urlPath);
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhttp.send(JSON.stringify(Array.from(mapCouponAndCourse.entries())));
             }
 
-            xhttp.open("GET", urlPath);
-            xhttp.send();
-        }
-
-        function checkout() {
-            const xhttp = new XMLHttpRequest();
-            let url = "${pageContext.request.contextPath}/cart/checkout";
-            xhttp.open("POST", url);
-            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
-            let data = "";
-            let index = 0;
-            for (let item of couponCodeItem) {
-                data += "cId" + index + "=" + item.id + "&";
-                index++;
+            function checkout() {
+                document.getElementById('hidden-data').value = JSON.stringify(Array.from(mapCouponAndCourse.entries()));
+                document.getElementById('checkout-form').submit();
             }
-            xhttp.send(data.substring(0, data.length - 1));
-        }
-    </script>
+        </script>
+    </c:if>
     <jsp:include page="/layout/scripts.jsp"/>
 </html>

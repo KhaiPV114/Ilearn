@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<jsp:useBean id="courseService" scope="request" class="com.onlinelearning.Services.Impl.CourseServiceImpl" />
 <!DOCTYPE html>
 
 <html>
@@ -35,68 +35,55 @@
                 <div class="row g-5 checkout-form">
 
                     <div class="col-lg-7">
-
                         <!-- Payment Method -->
                         <div class="col-12 mb--60">
                             <h4 class="checkout-title">Payment Method</h4>
                             <div class="checkout-payment-method">
-
-                                <div class="single-method">
-                                    <input type="radio" id="payment_check" name="payment-method" value="check">
-                                    <label for="payment_check">Check Payment</label>
-                                    <p data-method="check">Please send a Check to Store name with
-                                        Store Street, Store Town, Store State, Store Postcode,
-                                        Store Country.</p>
-                                </div>
-
-                                <div class="single-method">
-                                    <input type="radio" id="payment_bank" name="payment-method" value="bank">
-                                    <label for="payment_bank">Direct Bank Transfer</label>
-                                    <p data-method="bank">Please send a Check to Store name with
-                                        Store Street, Store Town, Store State, Store Postcode,
-                                        Store Country.</p>
-                                </div>
-
-                                <div class="single-method">
-                                    <input type="radio" id="payment_cash" name="payment-method" value="cash">
-                                    <label for="payment_cash">Cash on Delivery</label>
-                                    <p data-method="cash">Please send a Check to Store name with
-                                        Store Street, Store Town, Store State, Store Postcode,
-                                        Store Country.</p>
-                                </div>
-
-                                <div class="single-method">
-                                    <input type="radio" id="payment_paypal" name="payment-method" value="paypal">
-                                    <label for="payment_paypal">Paypal</label>
-                                    <p data-method="paypal">Please send a Check to Store name with
-                                        Store Street, Store Town, Store State, Store Postcode,
-                                        Store Country.</p>
-                                </div>
-
-                                <div class="single-method">
-                                    <input type="radio" id="payment_payoneer" name="payment-method" value="payoneer">
-                                    <label for="payment_payoneer">Payoneer</label>
-                                    <p data-method="payoneer">Please send a Check to Store name
-                                        with Store Street, Store Town, Store State, Store Postcode,
-                                        Store Country.</p>
-                                </div>
-
-                                <div class="single-method">
-                                    <input type="checkbox" id="accept_terms">
-                                    <label for="accept_terms">I’ve read and accept the terms &amp;
-                                        conditions</label>
-                                </div>
+                                <form action="${pageContext.request.contextPath}/cart/checkou/payment" method="post" id="payment-checkout-form">
+                                    <input type="hidden" name="order-id" value="${order.id}">
+                                    <input type="hidden" name="price" value="${grandTotal}">
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_paypal" name="payment-method" value="paypal" required disabled>
+                                        <label for="payment_paypal">Paypal - Unsupported</label>
+                                        <p data-method="paypal">Unsupported</p>
+                                    </div>
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_bank" name="payment-method" value="bank" required>
+                                        <label for="payment_bank">Bank</label>
+                                        <p data-method="bank">BIDV: LUONG HUU DUC DUY</p>
+                                    </div>
+                                </form>
                             </div>
                             <br/>
                             <div class="cart-submit-btn-group">
                                 <div class="single-button w-50">
-                                    <button class="rbt-btn rbt-switch-btn rbt-switch-y w-100 btn-border" onclick="window.location.href = '${pageContext.request.contextPath}/homepage'">
-                                        <span data-text="Return Homepage">Return Homepage</span>
+                                    <button class="rbt-btn rbt-switch-btn rbt-switch-y w-100 btn-border" data-bs-toggle="modal" data-bs-target="#cancel-checkout">
+                                        <span data-text="Cancel">Cancel</span>
                                     </button>
+                                    <div class="modal fade" id="cancel-checkout" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">This order will be cancel</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="rbt-btn btn-white btn-sm btn-border radius-round-10" href="#" data-bs-dismiss="modal">Cancel</a>
+                                                    <form action="${pageContext.request.contextPath}/cart/checkout/cancel" method="post" id="cancel-checkout-form">
+                                                        <input type="hidden" name="order-id" value="${order.id}">
+                                                        <a class="rbt-btn btn-sm" href="#" onclick="document.getElementById('cancel-checkout-form').submit();">Yes</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="single-button w-50">
-                                    <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="window.location.href = '${pageContext.request.contextPath}/learner/cart/checkout'">
-                                        <span data-text="Checkout">Place Order</span>
+                                    <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100" onclick="document.getElementById('payment-checkout-form').submit()">
+                                        <span data-text="Place Order">Place Order</span>
                                     </button>
                                 </div>
                             </div>
@@ -112,19 +99,35 @@
 
                                 <div class="checkout-cart-total">
 
-                                    <h4>Product <span>Total</span></h4>
-
+                                    <h4>Courses <span>Total</span></h4>
+                                    <c:if test="${!messageError.isEmpty()}">
+                                        <ul class="plan-offer-list" >
+                                            <c:forEach var="msg" items="${messageError}">
+                                                <li class="off">
+                                                    <i class="feather-x"></i>${msg}
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </c:if>
                                     <ul>
-                                        <li>Samsome Notebook Pro 5 X 01 <span>$295.00</span></li>
-                                        <li>Aquet Drone D 420 X 02 <span>$550.00</span></li>
-                                        <li>Play Station X 22 X 01 <span>$295.00</span></li>
-                                        <li>Roxxe Headphone Z 75 X 01 <span>$110.00</span></li>
+                                        <c:forEach var="orderItem" items="${orderItems}">
+                                            <li>
+                                                ${courseService.getCourseById(orderItem.courseId).name}
+                                                <c:if test="${orderItem.price==orderItem.originalPrice}">
+                                                    <span class="number">$${orderItem.price}</span>
+                                                </c:if>
+                                                <c:if test="${orderItem.price<orderItem.originalPrice}">
+                                                    <span class="number" >$${orderItem.price}</span><span>&nbsp;&nbsp;</span>
+                                                    <span class="number" style="text-decoration: line-through; font-size: smaller;">$${orderItem.originalPrice}</span>
+                                                </c:if>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
 
-                                    <p>Sub Total <span>$1250.00</span></p>
-                                    <p>Shipping Fee <span>$00.00</span></p>
+                                    <p>Sub Total <span class="number">$${subTotal}</span></p>
+                                    <p>Discount <span class="number">$${discount}</span></p>
 
-                                    <h4 class="mt--30">Grand Total <span>$1250.00</span></h4>
+                                    <h4 class="mt--30">Grand Total <span class="number">$${grandTotal}</span></h4>
 
                                 </div>
 
@@ -159,6 +162,14 @@
                 }
             }
             window.requestAnimationFrame(scrollStep);
+        }
+    </script>
+
+    <script>
+        const number = document.getElementsByClassName('number');
+        for (var item of number) {
+            let value = parseFloat(item.innerHTML.trim().replace("$", ""));
+            item.innerHTML = '$' + value.toFixed(2);
         }
     </script>
     <jsp:include page="/layout/scripts.jsp"/>

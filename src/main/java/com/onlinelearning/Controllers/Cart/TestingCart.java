@@ -1,30 +1,37 @@
+/*
+ * DuyDuc94
+ */
 package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Models.User;
-import com.onlinelearning.Services.AuthService;
-import com.onlinelearning.Services.CartService;
-import com.onlinelearning.Services.Impl.AuthServiceImpl;
-import com.onlinelearning.Services.Impl.CartServiceImpl;
+import com.onlinelearning.Models.Course;
+import com.onlinelearning.Services.CourseService;
+import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
-@WebServlet(name = "GeneralCartView", urlPatterns = {"/cart"})
-public class GeneralCartView extends HttpServlet {
+/**
+ * @author duy20
+ */
+@WebServlet(name = "TestingCart", urlPatterns = {"/cart/testing"})
+public class TestingCart extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/cart.jsp";
+    private final String VIEW_PATH = "/testing/cart.jsp";
 
-    private final CartService cartService = new CartServiceImpl();
-
-    private final AuthService authService = new AuthServiceImpl();
+    private final CourseService CourseService = new CourseServiceImpl();
+    
+    private final GeneralCartAdd GeneralCartAdd = new GeneralCartAdd();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        cartService.updateCartInSession(request.getSession(), request, response);
+        List<Course> courses = CourseService.getAllCourses();
+        request.setAttribute("courses", courses);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 

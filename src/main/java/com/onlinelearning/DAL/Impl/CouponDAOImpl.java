@@ -38,7 +38,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
                             .code(rs.getString("code"))
-                            .percent(rs.getFloat("percent"))
+                            .percent(rs.getDouble("percent"))
                             .quantity(rs.getInt("quantity"))
                             .remainQuantity(rs.getInt("remain_quantity"))
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
@@ -73,7 +73,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
                             .code(rs.getString("code"))
-                            .percent(rs.getFloat("percent"))
+                            .percent(rs.getDouble("percent"))
                             .quantity(rs.getInt("quantity"))
                             .remainQuantity(rs.getInt("remain_quantity"))
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
@@ -92,8 +92,7 @@ public class CouponDAOImpl implements CouponDAO {
     }
 
     @Override
-    public Coupon getCouponByCode(String code
-    ) {
+    public Coupon getCouponByCode(String code) {
         String sql = "select coupon_id, course_id, code, percent, quantity, remain_quantity, created_at, start_time, end_time, status "
                 + "from coupons where code = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
@@ -108,7 +107,7 @@ public class CouponDAOImpl implements CouponDAO {
                             .id(rs.getInt("coupon_id"))
                             .courseId(rs.getInt("course_id"))
                             .code(rs.getString("code"))
-                            .percent(rs.getFloat("percent"))
+                            .percent(rs.getDouble("percent"))
                             .quantity(rs.getInt("quantity"))
                             .remainQuantity(rs.getInt("remain_quantity"))
                             .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
@@ -140,7 +139,7 @@ public class CouponDAOImpl implements CouponDAO {
                         .id(rs.getInt("coupon_id"))
                         .courseId(rs.getInt("course_id"))
                         .code(rs.getString("code"))
-                        .percent(rs.getFloat("percent"))
+                        .percent(rs.getDouble("percent"))
                         .quantity(rs.getInt("quantity"))
                         .remainQuantity(rs.getInt("remain_quantity"))
                         .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
@@ -164,7 +163,7 @@ public class CouponDAOImpl implements CouponDAO {
                 + " values ( ?, ?, ?, ? ,? ,? ,?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, coupon.getCode());
-            ps.setFloat(2, coupon.getPercent());
+            ps.setDouble(2, coupon.getPercent());
             ps.setInt(3, coupon.getQuantity());
             ps.setTimestamp(4, Timestamp.valueOf(coupon.getCreatedAt()));
             ps.setTimestamp(5, Timestamp.valueOf(coupon.getStartTime()));
@@ -197,7 +196,7 @@ public class CouponDAOImpl implements CouponDAO {
                 + " where coupon_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, coupon.getCode());
-            ps.setFloat(2, coupon.getPercent());
+            ps.setDouble(2, coupon.getPercent());
             ps.setInt(3, coupon.getQuantity());
             ps.setInt(4, coupon.getRemainQuantity());
             ps.setTimestamp(5, Timestamp.valueOf(coupon.getCreatedAt()));
@@ -230,31 +229,6 @@ public class CouponDAOImpl implements CouponDAO {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        CouponDAOImpl couponDAOImpl = new CouponDAOImpl();
-//        get
-//        List<Coupon> coupons = couponDAOImpl.getAllCoupon();
-//        System.out.println(coupons);
-
-//        get by course name 
-//      get by id
-//        Coupon coupon = couponDAOImpl.getCouponById(2);
-//        System.out.println(coupon);
-//       get coupon by code
-//        Coupon coupon = couponDAOImpl.getCouponByCode("abcxyz");
-//        System.out.println(coupon);
-//        create
-//          Coupon coupon = Coupon.builder().code("abcxyz").createdAt(LocalDateTime.of(2015, 1, 2, 1, 1)).startTime(LocalDateTime.now()).endTime(LocalDateTime.of(2018, 1, 4, 1, 1)).percent(0.10F).quantity(100).remainQuantity(110).status("done").build();
-//          couponDAOImpl.createCoupon(coupon);
-//          System.out.println(coupon);
-//        update
-//            Coupon coupon = Coupon.builder().id(1).code("haha").createdAt(LocalDateTime.of(2011, 1, 1, 1, 1)).startTime(LocalDateTime.now()).endTime(LocalDateTime.of(2012, 1, 1, 1, 1)).percent(0.10F).quantity(100).remainQuantity(110).status("done").build();
-//            couponDAOImpl.updateCoupon(coupon);
-//            System.out.println(coupon);
-//        delete
-//          Coupon coupon = Coupon.builder().id(1).build();
-//          couponDAOImpl.deleteCoupon(coupon);
-//          System.out.println(coupon);
-    }
+    
+    
 }

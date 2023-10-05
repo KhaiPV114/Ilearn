@@ -99,6 +99,7 @@ public class CartServiceImpl implements CartService {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("CART")) {
+                
                 cookie.setPath("/");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);

@@ -692,7 +692,7 @@
                                id="open-cart-side-menu">
                                 <i class="feather-shopping-cart"></i>
                                 <c:if test="${coursesInCart.size()>0}">
-                                    <span class="rbt-cart-count">${coursesInCart.size()}</span>
+                                    <span class="rbt-cart-count" id="cart-side-quantity">${coursesInCart.size()}</span>
                                 </c:if>
                             </a>
                         </li>

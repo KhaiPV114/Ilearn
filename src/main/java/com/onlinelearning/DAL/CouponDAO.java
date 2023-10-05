@@ -16,4 +16,5 @@ public interface CouponDAO {
     Coupon updateCoupon(Coupon coupon);
     
     Coupon deleteCoupon(Coupon coupon);
+
 }
