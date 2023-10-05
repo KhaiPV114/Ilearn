@@ -1,7 +1,5 @@
-package com.onlinelearning.Controllers.Wishlist;
+package com.onlinelearning.Controllers;
 
-import com.onlinelearning.Services.Impl.WishlistServiceImpl;
-import com.onlinelearning.Services.WishlistService;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,16 +7,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "WishlistDelete", urlPatterns = {"/dashboard/learner/wishlist/delete"})
-public class WishlistDelete extends HttpServlet {
-
-    private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
-    private final WishlistService wishlistService = new WishlistServiceImpl();
+@WebServlet(name = "HomepageView", urlPatterns = {"/homepage"})
+public class HomepageView extends HttpServlet {
+    
+    private static final String HOME_PATH = "homepage.jsp";
+    private static final String TEST_PATH = "index.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.getRequestDispatcher(HOME_PATH).forward(request, response);
     }
 
     @Override

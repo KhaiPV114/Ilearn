@@ -7,8 +7,6 @@ import lombok.Data;
 @Builder
 public class CartItem {
     
-    private Integer id;
-    
     private Integer userId;
     
     private Integer courseId;

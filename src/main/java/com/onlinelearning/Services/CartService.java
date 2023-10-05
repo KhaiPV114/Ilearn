@@ -12,7 +12,7 @@ public interface CartService {
     
     CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId);
     
-    CartItem createCartItem(Integer userId, Integer courseId) throws Exception;
+    CartItem createCartItem(CartItem cartItem) throws Exception;
     
     CartItem deleteCartItem(CartItem cartItem) throws Exception;
     

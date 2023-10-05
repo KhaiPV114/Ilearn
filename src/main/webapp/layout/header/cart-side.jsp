@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- Start Cart Side Menu -->
 <div class="rbt-cart-side-menu">
     <div class="inner-wrapper">
         <div class="inner-top">
@@ -27,10 +26,10 @@
                             </a>
                         </div>
                         <div class="product-content">
-                            <h6 class="title"><a href="single-product.html">${course.name}</a></h6>
-
+                            <h6 class="title">
+                                <a href="single-product.html">${course.name}</a>
+                            </h6>
                             <span class="course-price-cart-side">$${course.price}</span>
-
                         </div>
                         <div class="close-btn">
                             <form action="${pageContext.request.contextPath}/remove-cart" id="remove-cart-side-${course.id}" method="post">
@@ -60,7 +59,7 @@
                     </a>
                 </div>
                 <div class="checkout-btn mt--20">
-                    <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="${pageContext.request.contextPath}/checkout">
+                    <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="${pageContext.request.contextPath}/cart/checkout">
                         <span class="btn-text">Checkout</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                     </a>
@@ -70,5 +69,4 @@
 
     </div>
 </div>
-<!-- End Cart Side Menu -->
 <a class="close_side_menu" href="javascript:void(0);"></a>

@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(name = "DeleteCart", urlPatterns = {"/remove-cart"})
-public class DeleteFromCart extends HttpServlet {
+@WebServlet(name = "GeneralCartDelete", urlPatterns = {"/remove-cart"})
+public class GeneralCartDelete extends HttpServlet {
     
     private static final String HOME_PATH = "/homepage";
 
