@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<jsp:useBean id="userService" scope="request" class="com.onlinelearning.Services.Impl.UserServiceImpl" />
 <!DOCTYPE html>
 
 <html>
@@ -62,7 +62,7 @@
                                                 <th class="pro-remove">Remove</th>
                                             </tr>
                                         </thead>  
-                                        
+
                                         <tbody>
                                             <c:forEach items="${sessionScope['coursesInCart']}" var="course">
                                                 <tr>
@@ -72,13 +72,13 @@
                                                     <td class="pro-title">
                                                         <a href="#">${course.name}</a>
                                                     </td>
-                                                    <td class="pro-description">
+                                                    <td class="pro-description text-truncate" style="max-width: 350px;">
                                                         <span>${course.description}</span>
                                                     </td>
                                                     <td class="pro-information">
                                                         <ul class="rbt-list-style-3">
                                                             <li>
-                                                                <i class="feather-edit-2"></i>By ${course.ownerId}</li>
+                                                                <i class="feather-edit-2"></i>By ${userService.getUserFullNameById(course.ownerId)}</li>
                                                             <li>
                                                                 <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
                                                             </li>
@@ -134,14 +134,14 @@
                                     <div class="col-lg-6 col-12">
                                         <div class="discount-coupon edu-bg-shade">
                                             <div class="section-title text-start">
-                                                <h4 class="title mb--30">Discount Coupon Code</h4>
+                                                <h4 class="title mb--30">Apply Coupon Code To Your Cart</h4>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 col-12 mb--25">
                                                     <input type="text" placeholder="Coupon Code" id="coupon-code">
                                                 </div>
                                                 <div class="col-md-6 col-12 mb--25">
-                                                    <button class="rbt-btn btn-gradient hover-icon-reverse btn-sm">
+                                                    <button class="rbt-btn btn-gradient hover-icon-reverse btn-sm" onclick="getCouponCode()">
                                                         <span class="icon-reverse-wrapper">
                                                             <span class="btn-text">Apply Code</span>
                                                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -150,6 +150,9 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                            <p id="coupon-code-msg" style="display: none">
+                                            <ul class="plan-offer-list" id="coupon-code-list">
+                                            </ul>
                                         </div>
                                     </div>
 
@@ -160,9 +163,9 @@
                                                 <div class="section-title text-start">
                                                     <h4 class="title mb--30">Cart Summary</h4>
                                                 </div>
-                                                <p>Sub Total <span id="course-sub-total">$1250.00</span></p>
-                                                <p>Discount <span id="discount-sub-total">$5.00</span></p>
-                                                <h2>Grand Total <span id="grand-total">$1250.00</span></h2>
+                                                <p>Sub Total <span id="course-sub-total">$0</span></p>
+                                                <p>Discount <span id="discount-sub-total">$0</span></p>
+                                                <h2>Grand Total <span id="grand-total">$0</span></h2>
                                             </div>
 
                                             <div class="cart-submit-btn-group">
@@ -172,9 +175,11 @@
                                                     </button>
                                                 </div>
                                                 <div class="single-button w-50">
-                                                    <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100">
-                                                        <span data-text="Checkout">Checkout</span>
-                                                    </button>
+                                                    <form action="${pageContext.request.contextPath}/cart/checkout" id="checkout-form" method="post">
+                                                        <button class="rbt-btn btn-gradient rbt-switch-btn rbt-switch-y w-100">
+                                                            <span data-text="Checkout">Checkout</span>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -306,29 +311,12 @@
         <jsp:include page="/layout/footer.jsp"/>
     </body>
     <script>
-        const targetElement = document.getElementById('content-display');
-        const scrollDuration = 800;
-        scrollToElementWithTime(targetElement, scrollDuration);
-
-        const coursesPrice = document.getElementsByClassName("course-price");
-        const courseSubTotal = document.getElementById('course-sub-total');
-        const discountSubTotal = document.getElementById('discount-sub-total');
-        const grandTotal = document.getElementById('grand-total');
-        const courseSubTotalNum = calculateCoursesPrice();
-        const discountSubTotalNum = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
-        const grandTotalNum = courseSubTotalNum - discountSubTotalNum;
-        courseSubTotal.innerHTML = '$' + courseSubTotalNum.toFixed(2);
-        grandTotal.innerHTML = '$' + grandTotalNum.toFixed(2);
-        function calculateCoursesPrice() {
-            let total = 0;
-            for (let price of coursesPrice) {
-                total += parseFloat(price.innerHTML.replace("$", ""));
-            }
-            return total;
-        }
-
-        function scrollToElementWithTime(element, duration) {
-            const targetPosition = element.offsetTop;
+        //Auto scroll to the content of page with delay
+        scrollToElementWithTime();
+        function scrollToElementWithTime() {
+            const targetElement = document.getElementById('content-display');
+            const scrollDelay = 500;
+            const targetPosition = targetElement.offsetTop;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
             let startTime = null;
@@ -337,13 +325,109 @@
                     startTime = timestamp;
                 }
                 const progress = timestamp - startTime;
-                const percentage = Math.min(progress / duration, 1);
+                const percentage = Math.min(progress / scrollDelay, 1);
                 window.scrollTo(0, startPosition + distance * percentage);
-                if (progress < duration) {
+                if (progress < scrollDelay) {
                     window.requestAnimationFrame(scrollStep);
                 }
             }
             window.requestAnimationFrame(scrollStep);
+        }
+
+        //Set all value of cart base on course price and coupon value
+        setCartPrice();
+        function setCartPrice() {
+            const coursesPrice = document.getElementsByClassName("course-price");
+            const courseSubTotal = document.getElementById('course-sub-total');
+            const discountSubTotal = parseFloat(document.getElementById('discount-sub-total').innerHTML.replace("$", ""));
+            const grandTotal = document.getElementById('grand-total');
+
+            let totalCoursesPrice = 0;
+            for (let price of coursesPrice) {
+                totalCoursesPrice += parseFloat(price.innerHTML.replace("$", ""));
+            }
+
+            courseSubTotal.innerHTML = '$' + totalCoursesPrice.toFixed(2);
+            grandTotal.innerHTML = '$' + (totalCoursesPrice - discountSubTotal).toFixed(2);
+        }
+
+        function setNewDiscountValue(newDiscount) {
+            const discountSubTotal = document.getElementById('discount-sub-total');
+            const oldDiscount = parseFloat(discountSubTotal.innerHTML.replace("$", ""));
+            discountSubTotal.innerHTML = '$' + (oldDiscount + parseFloat(newDiscount)).toFixed(2);
+        }
+
+
+        //Get coupon code from servlet
+        let numOfCouponCode = 0;
+        function getCouponCode() {
+            const couponCodeValue = document.getElementById('coupon-code');
+            const couponCodeList = document.getElementById('coupon-code-list');
+            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
+            const couponCodeMsg = document.getElementById('coupon-code-msg');
+            let urlPath = "${pageContext.request.contextPath}/get-coupon-code?coupon-code=" + encodeURIComponent(couponCodeValue.value);
+
+            const checkoutForm = document.getElementById('checkout-form');
+
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function () {
+                if (xhttp.status === 200) {
+                    const resStrArr = xhttp.responseText.split(" ");
+                    const key = resStrArr[0];
+                    const value = resStrArr[1];
+                    let isAppliedCode = false;
+                    for (let item of couponCodeItem) {
+                        if (item.id === key) {
+                            couponCodeMsg.style.display = "block";
+                            couponCodeMsg.style.color = "red";
+                            couponCodeMsg.innerHTML = "You already add this coupon code!";
+                            isAppliedCode = true;
+                            break;
+                        }
+                    }
+                    if (!isAppliedCode) {
+                        let li = document.createElement('li');
+                        li.classList.add('coupon-code-item');
+                        li.id = key;
+                        li.innerHTML = `<i class="feather-check"></i>Applied <strong>` + key + `</strong> to cart`;
+                        couponCodeList.appendChild(li);
+                        setNewDiscountValue(value);
+                        setCartPrice();
+                        //Add hidden input to submit checkout
+                        let input = document.createElement('input');
+                        input.type = "hidden";
+                        input.name = "cId" + numOfCouponCode;
+                        input.value = key;
+                        checkoutForm.appendChild(input);
+                        numOfCouponCode++;
+                    }
+                } else {
+                    couponCodeMsg.style.display = "block";
+                    couponCodeMsg.style.color = "red";
+                    couponCodeMsg.innerHTML = xhttp.responseText;
+                }
+                couponCodeValue.value = "";
+                couponCodeValue.placeholder = "Coupon Code";
+            }
+
+            xhttp.open("GET", urlPath);
+            xhttp.send();
+        }
+
+        function checkout() {
+            const xhttp = new XMLHttpRequest();
+            let url = "${pageContext.request.contextPath}/cart/checkout";
+            xhttp.open("POST", url);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            const couponCodeItem = document.getElementsByClassName('coupon-code-item');
+            let data = "";
+            let index = 0;
+            for (let item of couponCodeItem) {
+                data += "cId" + index + "=" + item.id + "&";
+                index++;
+            }
+            xhttp.send(data.substring(0, data.length - 1));
         }
     </script>
     <jsp:include page="/layout/scripts.jsp"/>

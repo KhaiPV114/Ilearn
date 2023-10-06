@@ -9,7 +9,7 @@ public interface CouponService {
     
     List<Coupon> getAllCoupon();
     
-    Coupon getCouponByCode(String code) throws Exception;
+    Coupon getCouponByCode(String code);
     
     Coupon createCoupon(Coupon coupon) throws Exception;
     

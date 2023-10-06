@@ -1,7 +1,7 @@
-package com.onlinelearning.Controllers.Wishlist;
+package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Services.Impl.WishlistServiceImpl;
-import com.onlinelearning.Services.WishlistService;
+import com.onlinelearning.Services.CartService;
+import com.onlinelearning.Services.Impl.CartServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,16 +9,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "WishlistDelete", urlPatterns = {"/dashboard/learner/wishlist/delete"})
-public class WishlistDelete extends HttpServlet {
+@WebServlet(name = "GeneralCartView", urlPatterns = {"/cart"})
+public class GeneralCartView extends HttpServlet {
 
-    private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
-    private final WishlistService wishlistService = new WishlistServiceImpl();
+    private static final String VIEW_PATH = "/common/cart.jsp";
 
+    private final CartService cartService = new CartServiceImpl();
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        cartService.updateCartInSession(request.getSession(), request, response);
+        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
     @Override

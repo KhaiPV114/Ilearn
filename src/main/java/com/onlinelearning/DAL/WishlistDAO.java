@@ -1,14 +1,16 @@
 package com.onlinelearning.DAL;
 
-import com.onlinelearning.Models.Wishlist;
+import com.onlinelearning.Models.WishlistItem;
 import java.util.List;
 
 public interface WishlistDAO{
     
-    List<Wishlist> getWishlistByUserId(Integer userId);
+    List<WishlistItem> getWishlistByUserId(Integer userId);
     
-    Wishlist addWishlist(Wishlist wishlist);
+    WishlistItem getWishlistByUserIdAndCourseId(Integer userId, Integer courseId);
     
-    Wishlist deleteWishlist(Wishlist wishlist);
+    WishlistItem createWishlistItem(WishlistItem wishlistItem);
+    
+    WishlistItem deleteWishlistItem(WishlistItem wishlistItem);
 
 }

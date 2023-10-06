@@ -43,7 +43,6 @@ public class ManagerCouponSearch extends HttpServlet {
         if (StringUtils.isBlank(courseName) && StringUtils.isBlank(code)) {
             
                 coupons = couponService.getAllCoupon();
-                System.out.println(coupons);
                 request.setAttribute("coupons", coupons);
                 requestDispatcher.forward(request, response);
         }
