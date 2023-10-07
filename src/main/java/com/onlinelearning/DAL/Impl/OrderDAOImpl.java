@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,6 +60,54 @@ public class OrderDAOImpl implements OrderDAO {
                             .build();
                     return order;
                 }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> getAllOrdersByUserId(Integer userId) {
+        String sql = "select order_id, user_id, created_at, status"
+                + " from " + TABLE_NAME
+                + " where user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            List<Order> orders = new ArrayList<>();
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(Order.builder()
+                            .id(rs.getInt("order_id"))
+                            .userId(userId)
+                            .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
+                            .status(OrderStatus.valueOf(rs.getString("status")))
+                            .build());
+                }
+                return orders;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        String sql = "select order_id, user_id, created_at, status"
+                + " from " + TABLE_NAME;
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            List<Order> orders = new ArrayList<>();
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(Order.builder()
+                            .id(rs.getInt("order_id"))
+                            .userId(rs.getInt("user_id"))
+                            .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
+                            .status(OrderStatus.valueOf(rs.getString("status")))
+                            .build());
+                }
+                return orders;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

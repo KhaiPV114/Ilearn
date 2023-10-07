@@ -29,6 +29,7 @@ public class GeneralCartAdd extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter pw = response.getWriter();
+
         //Validate request
         User user = (User) request.getSession().getAttribute("user");
         String courseIdParam = request.getParameter("course-id");
@@ -37,9 +38,8 @@ public class GeneralCartAdd extends HttpServlet {
             return;
         }
 
-        //Processing cart
         Integer courseId = Integer.parseInt(courseIdParam);
-        if (user == null) { //If is guest
+        if (user == null) {
             CartItem newCartItem = CartItem.builder()
                     .courseId(courseId)
                     .build();
@@ -52,13 +52,13 @@ public class GeneralCartAdd extends HttpServlet {
                 pw.print(cartException.getMessage());
                 return;
             }
-        } else {    //If is user
+        } else {
+            //Create new cart item from request
+            CartItem newCartItem = CartItem.builder()
+                    .userId(user.getId())
+                    .courseId(courseId)
+                    .build();
             try {
-                //Create new cart item from request
-                CartItem newCartItem = CartItem.builder()
-                        .userId(user.getId())
-                        .courseId(courseId)
-                        .build();
                 cartService.createCartItem(newCartItem);
                 response.setStatus(HttpServletResponse.SC_OK);
                 pw.print("Add to cart successful!");

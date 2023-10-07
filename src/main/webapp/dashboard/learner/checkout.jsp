@@ -165,6 +165,9 @@
         <jsp:include page="/layout/delayScrollToContent.jsp"/>
     </body>
     <script>
+        document.getElementById('open-cart-side-menu').style.display = 'none';
+        document.getElementById('cart-side-menu').style.display = 'none';
+
         //Format all number display to 00.00
         const number = document.getElementsByClassName('number');
         for (var item of number) {
@@ -176,7 +179,7 @@
             document.getElementById('qr-loading').style.display = 'none';
             document.getElementById('qr-message').style.display = 'inline';
         });
-        
+
         document.getElementById('qr-image').addEventListener('error', () => {
             document.getElementById('qr-loading').innerHTML = 'Error to get QR';
         });

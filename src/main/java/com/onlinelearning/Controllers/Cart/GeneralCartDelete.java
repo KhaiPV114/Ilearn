@@ -35,6 +35,7 @@ public class GeneralCartDelete extends HttpServlet {
         String courseIdParam = request.getParameter("course-id");
         if (courseIdParam == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            pw.print("course-id: null");
             return;
         }
         int courseId = Integer.parseInt(courseIdParam);
@@ -52,9 +53,11 @@ public class GeneralCartDelete extends HttpServlet {
                                 .build()
                 );
             } catch (Exception ex) {
+                pw.print(ex.getMessage());
             }
         }
-        cartService.updateCartInSession(request.getSession(false), request, response);
-        response.sendRedirect(request.getContextPath() + "/cart");
+        
+        response.setStatus(HttpServletResponse.SC_OK);
+        cartService.updateCartInSession(request.getSession(), request, response);
     }
 }

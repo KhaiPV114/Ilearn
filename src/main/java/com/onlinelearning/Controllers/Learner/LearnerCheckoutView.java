@@ -48,8 +48,7 @@ public class LearnerCheckoutView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-//        String dratfCheckout = request.getParameter("dratfCheckout");
+        
         User user = authService.getUser(request);
         if (user == null) {
             response.sendRedirect(request.getContextPath() + HOME_PATH);
@@ -59,7 +58,7 @@ public class LearnerCheckoutView extends HttpServlet {
         //Get courses represent in cart
         List<Course> coursesInCart = (List<Course>) request.getSession().getAttribute("coursesInCart");
         HashMap<String, String> courseCouponMap = JsonUtils.convertJsonToHashMap(request.getParameter("data"));
-
+        
         //Create new order
         Order newOrder = orderService.createOrder(Order.builder()
                 .userId(user.getId())
@@ -127,7 +126,10 @@ public class LearnerCheckoutView extends HttpServlet {
             request.setAttribute("noNeedPayment", true);
         }
 
-        CartService.deleteCartOfUserId(user.getId());
+        if(!CartService.deleteCartOfUserId(user.getId())){
+            System.out.println("False to delete cart");
+        }
+        CartService.updateCartInSession(request.getSession(), request, response);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }

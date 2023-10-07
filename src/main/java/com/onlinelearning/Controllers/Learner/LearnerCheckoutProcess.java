@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "LearnerCheckoutProcess", urlPatterns = {"/cart/checkout/process"})
 public class LearnerCheckoutProcess extends HttpServlet {
@@ -40,7 +41,11 @@ public class LearnerCheckoutProcess extends HttpServlet {
                     createdOrder.setStatus(OrderStatus.PENDING);
                     createdOrder = OrderService.updateOrder(createdOrder);
                     PrintWriter out = response.getWriter();
-                    out.print(createdOrder.toString());
+                    List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
+                    for (Order order : orders) {
+                        out.print(order.toString() + "<br/>");
+                    }
+                    out.print("New added:" + createdOrder.toString());
                 }
             }
 

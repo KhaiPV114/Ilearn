@@ -25,6 +25,8 @@ public class RegisterController extends HttpServlet {
     
     private static final String VIEW_PATH = "/common/authentication.jsp";
     
+    private static final String HOME_PATH = "/homepage";
+    
     private final AuthService authService = new AuthServiceImpl();
     
     private final LoginController loginController = new LoginController();

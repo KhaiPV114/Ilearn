@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GoogleLoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/common/authentication.jsp";
+    private static final String HOME_PATH = "/homepage";
 
     private final AuthService authService = new AuthServiceImpl();
 
@@ -36,7 +37,7 @@ public class GoogleLoginController extends HttpServlet {
             viewDispatcher.forward(request, response);
             return;
         }
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + HOME_PATH);
     }
 
 }

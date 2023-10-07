@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LearnerCheckoutCancel extends HttpServlet {
     
     private final OrderService orderService = new OrderServiceImpl();
-    private final OrderItemService orderItemService = new OrderItemServiceImpl();
     private final String HOME_PATH = "/homepage";
 
     @Override

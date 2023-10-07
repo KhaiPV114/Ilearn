@@ -107,7 +107,9 @@ public class CartServiceImpl implements CartService {
         for (CartItem cartItem : cart) {    //1-2-3-4-5
             dataStoreInCookie += cartItem.getCourseId().toString() + SeperateCharacter;
         }
-        dataStoreInCookie = dataStoreInCookie.substring(0, dataStoreInCookie.length() - 1);
+        if (!dataStoreInCookie.isEmpty()) {
+            dataStoreInCookie = dataStoreInCookie.substring(0, dataStoreInCookie.length() - 1);
+        }
         Cookie cartCookie = new Cookie(CookieName, dataStoreInCookie);
         cartCookie.setPath("/");    //For all pages in website
         cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
@@ -137,9 +139,7 @@ public class CartServiceImpl implements CartService {
             cart = getCartFromCookie(request);
         } else {
             cart = getCartByUserId(user.getId());
-            //If in database, user haven't have cart's info
             if (cart.isEmpty()) {
-                //Get cart from cookie, and add to database
                 cart = getCartFromCookie(request);
                 for (CartItem cartItem : cart) {
                     try {
@@ -152,7 +152,6 @@ public class CartServiceImpl implements CartService {
             removeCartFromCookie(request, response);
         }
 
-        //Get list course in cart to display
         if (!cart.isEmpty()) {
             for (CartItem cartItem : cart) {
                 coursesInCart.add(courseService.getCourseById(cartItem.getCourseId()));
