@@ -180,10 +180,6 @@
             document.getElementById('qr-message').style.display = 'inline';
         });
 
-        document.getElementById('qr-image').addEventListener('error', () => {
-            document.getElementById('qr-loading').innerHTML = 'Error to get QR';
-        });
-
         function placeOrder() {
             let radios = document.getElementsByClassName("payment-method");
             let checked = false;

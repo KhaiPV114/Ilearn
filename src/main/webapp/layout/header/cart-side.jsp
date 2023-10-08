@@ -57,21 +57,31 @@
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                     </a>
                 </div>
-                <c:if test="${user!=null}">
-                    <div class="checkout-btn mt--20">
-                        <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="#" onclick="checkoutCartside()">
-                            <span class="btn-text">Checkout</span>
-                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                        </a>
-                        <form action="${pageContext.request.contextPath}/cart/checkout" method="post" id="checkout-cart-side">
-                            <input type="hidden" name="data" id="hidden-data-cart-side">
-                        </form>
-                    </div>
+                <c:if test="${!coursesInCart.isEmpty()}">
+                    <c:if test="${user!=null}">
+                        <div class="checkout-btn mt--20">
+                            <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="javascript:void(0);" onclick="checkoutCartside()">
+                                <span class="btn-text">Checkout</span>
+                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            </a>
+                            <form action="${pageContext.request.contextPath}/cart/checkout" method="post" id="checkout-cart-side">
+                                <input type="hidden" name="data" id="hidden-data-cart-side">
+                            </form>
+                        </div>
+                    </c:if>
+                    <c:if test="${user==null}">
+                        <div class="checkout-btn mt--20">
+                            <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="${pageContext.request.contextPath}/authentication">
+                                <span class="btn-text">Login to checkout</span>
+                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </c:if>
                 </c:if>
-                <c:if test="${user==null}">
+                <c:if test="${coursesInCart.isEmpty()}">
                     <div class="checkout-btn mt--20">
-                        <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="${pageContext.request.contextPath}/authentication">
-                            <span class="btn-text">Login to checkout</span>
+                        <a class="rbt-btn btn-gradient icon-hover w-100 text-center" href="javascript:void(0);">
+                            <span class="btn-text">Checkout</span>
                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                         </a>
                     </div>
@@ -112,9 +122,9 @@
                 calculateCoursesPriceCartSide();
                 let cartSizeQuantity = document.getElementById("cart-side-quantity");
                 let newCartSize = parseInt(cartSizeQuantity.innerHTML) - 1;
-                if(newCartSize===0){
+                if (newCartSize === 0) {
                     cartSizeQuantity.style.display = 'none';
-                }else{
+                } else {
                     cartSizeQuantity.innerHTML = newCartSize;
                 }
             } else {

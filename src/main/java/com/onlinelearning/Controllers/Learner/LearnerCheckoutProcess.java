@@ -4,7 +4,9 @@ import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Order;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
+import com.onlinelearning.Services.Impl.CartServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
 import com.onlinelearning.Services.OrderService;
 import java.io.IOException;
@@ -21,7 +23,8 @@ public class LearnerCheckoutProcess extends HttpServlet {
 
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
-    
+    private final CartService CartService = new CartServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,9 +40,15 @@ public class LearnerCheckoutProcess extends HttpServlet {
             String orderId = request.getParameter("order-id");
             if (orderId != null) {
                 Order createdOrder = OrderService.getOrderById(Integer.parseInt(orderId));
-                if(createdOrder.getUserId().equals(user.getId()) ){
+                if (createdOrder.getUserId().equals(user.getId())) {
                     createdOrder.setStatus(OrderStatus.PENDING);
                     createdOrder = OrderService.updateOrder(createdOrder);
+
+                    if (!CartService.deleteCartOfUserId(user.getId())) {
+                        System.out.println("Failed to delete cart");
+                    }
+                    CartService.updateCartInSession(request.getSession(), request, response);
+
                     PrintWriter out = response.getWriter();
                     List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
                     for (Order order : orders) {

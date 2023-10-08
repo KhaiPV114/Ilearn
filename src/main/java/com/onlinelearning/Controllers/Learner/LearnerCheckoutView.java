@@ -37,7 +37,6 @@ public class LearnerCheckoutView extends HttpServlet {
     private final OrderItemService orderItemService = new OrderItemServiceImpl();
     private final CouponService couponService = new CouponServiceImpl();
     private final AuthService authService = new AuthServiceImpl();
-    private final CartService CartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,13 +49,12 @@ public class LearnerCheckoutView extends HttpServlet {
             throws ServletException, IOException {
         
         User user = authService.getUser(request);
-        if (user == null) {
+        List<Course> coursesInCart = (List<Course>) request.getSession().getAttribute("coursesInCart");
+        if (user == null || coursesInCart.isEmpty()) {
             response.sendRedirect(request.getContextPath() + HOME_PATH);
             return;
         }
-
-        //Get courses represent in cart
-        List<Course> coursesInCart = (List<Course>) request.getSession().getAttribute("coursesInCart");
+        
         HashMap<String, String> courseCouponMap = JsonUtils.convertJsonToHashMap(request.getParameter("data"));
         
         //Create new order
@@ -126,10 +124,6 @@ public class LearnerCheckoutView extends HttpServlet {
             request.setAttribute("noNeedPayment", true);
         }
 
-        if(!CartService.deleteCartOfUserId(user.getId())){
-            System.out.println("False to delete cart");
-        }
-        CartService.updateCartInSession(request.getSession(), request, response);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }
