@@ -2,11 +2,15 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.DAL.OrderItemDAO;
+import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.OrderItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +18,17 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
     private final DBContext dbContext = new DBContextImpl();
     private final String TABLE_NAME = "order_item";
+
+    private OrderItem orderItemRowMapper(ResultSet rs) throws SQLException {
+        OrderItem orderItem = OrderItem.builder()
+                .orderId(rs.getInt("order_id"))
+                .courseId(rs.getInt("course_id"))
+                .couponId(rs.getInt("coupon_id"))
+                .originalPrice(rs.getDouble("original_price"))
+                .price(rs.getDouble("price"))
+                .build();
+        return orderItem;
+    }
 
     @Override
     public OrderItem createOrderItem(OrderItem newOrderItem) {
@@ -41,6 +56,26 @@ public class OrderItemDAOImpl implements OrderItemDAO {
     }
 
     @Override
+    public List<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
+        String sql = "select order_id, course_id, coupon_id, original_price, price "
+                + " from " + TABLE_NAME
+                + " where order_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            List<OrderItem> orderItems = new ArrayList<>();
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    orderItems.add(orderItemRowMapper(rs));
+                }
+                return orderItems;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
     public boolean deleteOrderItem(Integer orderId) {
         String sql = "delete from " + TABLE_NAME
                 + " where order_id = ?";
@@ -55,5 +90,5 @@ public class OrderItemDAOImpl implements OrderItemDAO {
         }
         return false;
     }
-    
+
 }

@@ -5,6 +5,7 @@ import com.onlinelearning.DAL.Impl.OrderItemDAOImpl;
 import com.onlinelearning.DAL.OrderDAO;
 import com.onlinelearning.DAL.OrderItemDAO;
 import com.onlinelearning.Models.Order;
+import com.onlinelearning.Models.OrderItem;
 import com.onlinelearning.Services.OrderService;
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderDAO.getAllOrders();
+    }
+
+    @Override
+    public List<OrderItem> getCoursesOfOrderByOrderId(Integer orderId) {
+        return orderItemDAO.getAllOrderItemsByOrderId(orderId);
     }
 
     @Override

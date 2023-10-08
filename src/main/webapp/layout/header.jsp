@@ -747,7 +747,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="instructor-order-history.html">
+                                                <a href="${pageContext.request.contextPath}/dashboard/learner/order/history">
                                                     <i class="feather-clock"></i>
                                                     <span>Order History</span>
                                                 </a>

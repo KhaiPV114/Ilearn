@@ -15,8 +15,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "LearnerCheckoutProcess", urlPatterns = {"/cart/checkout/process"})
 public class LearnerCheckoutProcess extends HttpServlet {
@@ -24,6 +22,7 @@ public class LearnerCheckoutProcess extends HttpServlet {
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
     private final CartService CartService = new CartServiceImpl();
+    private final String VIEW_PATH = "/dashboard/learner/order/history";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,12 +48,7 @@ public class LearnerCheckoutProcess extends HttpServlet {
                     }
                     CartService.updateCartInSession(request.getSession(), request, response);
 
-                    PrintWriter out = response.getWriter();
-                    List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
-                    for (Order order : orders) {
-                        out.print(order.toString() + "<br/>");
-                    }
-                    out.print("New added:" + createdOrder.toString());
+                    response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }
             }
 
