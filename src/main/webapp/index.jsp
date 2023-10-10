@@ -46,6 +46,8 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image-s3">Test upload image with AWS s3</a>        
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/manager/category">Manager course category</a>   
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/instructor/course">Manager course - Must be logged in as INSTRUCTOR</a>   

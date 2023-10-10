@@ -19,13 +19,13 @@
         <h1>Upload image test</h1>
         <form action="#" method="post" enctype="multipart/form-data">
             <p>Image:</p>
-            <img id="image-preview" src="#" alt="image preview" />
+            <img id="image-preview" src="${link}" alt="image preview" />
             </br>
             <input id="image" name="image" type="file" accept=".jpg, .jpeg, .png"/>
             <br/>
             <input type="submit">
         </form>
-        <a href="${pageContext.request.contextPath}/${link}">${link}</a>
+        <a href="${link}">${link}</a>
         <p>${message}</p>
         <script>
             let imagePreviewDiv = document.getElementById("image-preview");
