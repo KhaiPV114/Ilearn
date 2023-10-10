@@ -143,16 +143,14 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public Course updateCourse(Course course) {
         String sql = "update courses"
-                + " set category_id = ?, owner_id = ?, name = ?, image_url = ?, description = ? "
+                + " set name = ?, image_url = ?, description = ?, price = ?"
                 + " where course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, course.getCategoryId());
-            ps.setInt(2, course.getOwnerId());
-            ps.setString(3, course.getName());
-            ps.setString(4, course.getImageUrl());
-            ps.setString(5, course.getDescription());
-            ps.setDouble(6, course.getPrice());
-            ps.setInt(7, course.getId());
+            ps.setString(1, course.getName());
+            ps.setString(2, course.getImageUrl());
+            ps.setString(3, course.getDescription());
+            ps.setDouble(4, course.getPrice());
+            ps.setInt(5, course.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return course;

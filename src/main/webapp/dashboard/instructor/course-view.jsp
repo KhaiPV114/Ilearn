@@ -107,7 +107,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="rbt-button-group justify-content-end">
-                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round" href="${pageContext.request.contextPath}/manager/category/edit?id=${item.id}" title="Edit"><i class="feather-edit pl--0"></i></a>
+                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round" href="${pageContext.request.contextPath}/instructor/course/edit?id=${item.id}" title="Edit"><i class="feather-edit pl--0"></i></a>
                                                                     <span class="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger" onclick="submitDeletionForm(${item.id})" title="Delete"><i class="feather-trash-2 pl--0"></i></span>
                                                                 </div>
                                                             </td>

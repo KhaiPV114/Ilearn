@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.Impl.CourseDAOImpl;
+import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
@@ -84,7 +85,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course updateCourse(Course course) throws Exception {
-        validateCourse(course);
+        Course oldCourse = courseDAO.getCourseById(course.getId());
+        if (!oldCourse.getName().equals(course.getName())) {
+            validateCourse(course);
+        }
+        if (course.getImageUrl() == null) {
+            course.setImageUrl(oldCourse.getImageUrl());
+        }
         Course updatedCourse = courseDAO.updateCourse(course);
         if (updatedCourse == null) {
             throw new Exception("Update course failed!");
