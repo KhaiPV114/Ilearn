@@ -15,7 +15,7 @@ public class Coupon {
     
     private String code;
     
-    private Float percent;
+    private Double percent;
     
     private Integer quantity;
     

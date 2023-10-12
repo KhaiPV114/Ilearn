@@ -7,6 +7,8 @@ public interface CartDAO {
 
     List<CartItem> getCartByUserId(Integer userId);
     
+    boolean deleteCartOfUserId(Integer userId);
+    
     CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId);
 
     CartItem createCartItem(CartItem cartItem);

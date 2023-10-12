@@ -84,14 +84,14 @@ public class ManagerCouponCreate extends HttpServlet {
                 .courseId(Integer.parseInt(courseId))
                 .createdAt(createdAt)
                 .endTime(LocalDateTime.parse(endedAt))
-                .percent(Float.parseFloat(percent))
+                .percent(Double.parseDouble(percent))
                 .quantity(Integer.parseInt(quantity))
                 .startTime(LocalDateTime.parse(startAt))
                 .build();
 
         try {
             Coupon newCoupon = couponService.createCoupon(coupon);
-            request.setAttribute("success", "C  reate coupon successfully!");
+            request.setAttribute("success", "Create coupon successfully!");
         } catch (Exception ex) {
             request.setAttribute("fail", ex.getMessage());
         }

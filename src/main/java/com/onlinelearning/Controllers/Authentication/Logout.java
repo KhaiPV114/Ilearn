@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name="Logout", urlPatterns={"/authentication/logout"})
 public class Logout extends HttpServlet {
+    
+    private static final String HOME_PATH = "/homepage";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,7 +24,7 @@ public class Logout extends HttpServlet {
         HttpSession session = request.getSession();
         if (session != null)
             session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + HOME_PATH);
     } 
 
     @Override

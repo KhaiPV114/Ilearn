@@ -2,9 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-<c:set var="coursesInCart" value="${sessionScope['coursesInCart']}" />
-
 <header class="rbt-header rbt-header-10">
     <div class="rbt-sticky-placeholder"></div>
     <div class="rbt-header-wrapper header-space-betwween header-sticky">
@@ -15,7 +12,7 @@
                     <!-- Logo -->
                     <div class="header-info">
                         <div class="logo">
-                            <a href="index.jsp">
+                            <a href="${pageContext.request.contextPath}/homepage">
                                 <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png"
                                      alt="Education Logo Images">
                             </a>
@@ -688,11 +685,10 @@
                         </li>
                         <!-- Cart -->
                         <li class="access-icon rbt-mini-cart">
-                            <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#"
-                               id="open-cart-side-menu">
+                            <a class="rbt-cart-sidenav-activation rbt-round-btn" href="javascript:void(0);" id="open-cart-side-menu">
                                 <i class="feather-shopping-cart"></i>
                                 <c:if test="${coursesInCart.size()>0}">
-                                    <span class="rbt-cart-count">${coursesInCart.size()}</span>
+                                    <span class="rbt-cart-count" id="cart-side-quantity">${coursesInCart.size()}</span>
                                 </c:if>
                             </a>
                         </li>
@@ -791,7 +787,7 @@
                                 </div>
                             </c:if>
                             <c:if test="${sessionScope['user']==null}">
-                               <a href="${pageContext.request.contextPath}/authentication"><i class="feather-log-in"></i>Login</a> 
+                                <a href="${pageContext.request.contextPath}/authentication"><i class="feather-log-in"></i>Login</a> 
                             </c:if>
                         </li>
                         <!--

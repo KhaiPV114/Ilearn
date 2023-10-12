@@ -15,7 +15,7 @@ public class GeneralCartView extends HttpServlet {
     private static final String VIEW_PATH = "/common/cart.jsp";
 
     private final CartService cartService = new CartServiceImpl();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

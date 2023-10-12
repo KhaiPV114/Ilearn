@@ -10,54 +10,65 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.io.PrintWriter;
 
-@WebServlet(name = "GeneralCartAdd", urlPatterns = {"/add-to-cart"})
+@WebServlet(name = "GeneralCartAdd", urlPatterns = {"/cart/add"})
 public class GeneralCartAdd extends HttpServlet {
 
-    private static final String VIEW_PATH = "/testing/cart.jsp";
-    private static final String HOME_PATH = "/homepage";
+    private final String ERROR_404_PATH = "/error/404.jsp";
 
     private final CartService cartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + HOME_PATH);
+        request.getRequestDispatcher(ERROR_404_PATH).forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        Integer courseId = Integer.parseInt(request.getParameter("course-id"));
-        String message;
+        PrintWriter pw = response.getWriter();
 
+        //Validate request
+        User user = (User) request.getSession().getAttribute("user");
+        String courseIdParam = request.getParameter("course-id");
+        if (courseIdParam == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        Integer courseId = Integer.parseInt(courseIdParam);
         if (user == null) {
-            List<CartItem> cart = cartService.getCartFromCookie(request);
-            CartItem newCartItem = CartItem.builder().courseId(courseId).build();
-            if (cart.contains(newCartItem)) {
-                message = "This already in your cart";
-            } else {
-                cart.add(newCartItem);
-                cartService.addCartToCookie(response, cart);
-                message = "Add cart to cookies successful!";
+            CartItem newCartItem = CartItem.builder()
+                    .courseId(courseId)
+                    .build();
+            try {
+                cartService.addNewCartItemToCookie(newCartItem, request, response);
+                response.setStatus(HttpServletResponse.SC_OK);
+                pw.print("Add to cart successful!");
+            } catch (Exception cartException) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                pw.print(cartException.getMessage());
+                return;
             }
         } else {
+            //Create new cart item from request
+            CartItem newCartItem = CartItem.builder()
+                    .userId(user.getId())
+                    .courseId(courseId)
+                    .build();
             try {
-                CartItem cartItem = CartItem.builder()
-                        .userId(user.getId())
-                        .courseId(courseId)
-                        .build();
-                cartService.createCartItem(cartItem);
-                message = "Add cart to database successful!";
-            } catch (Exception ex) {
-                message = ex.getMessage();
+                cartService.createCartItem(newCartItem);
+                response.setStatus(HttpServletResponse.SC_OK);
+                pw.print("Add to cart successful!");
+            } catch (Exception cartException) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+                pw.print(cartException.getMessage());
+                return;
             }
         }
 
         cartService.updateCartInSession(request.getSession(false), request, response);
-        request.setAttribute("messageAddToCart", message);
-        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }

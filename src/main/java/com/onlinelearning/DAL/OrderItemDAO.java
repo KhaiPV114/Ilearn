@@ -7,4 +7,6 @@ import com.onlinelearning.Models.OrderItem;
  */
 public interface OrderItemDAO {
     OrderItem createOrderItem(OrderItem newOrderItem);
+    
+    boolean deleteOrderItem(Integer orderId);
 }

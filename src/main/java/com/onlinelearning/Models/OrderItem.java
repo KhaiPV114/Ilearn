@@ -7,14 +7,14 @@ import lombok.Data;
 @Builder
 public class OrderItem {
 
-    private Integer id;
+    private Integer orderId;
 
     private Integer courseId;
 
     private Integer couponId;
 
-    private Float originalPrice;
+    private Double originalPrice;
 
-    private Float price;
+    private Double price;
 
 }

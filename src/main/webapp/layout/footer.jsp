@@ -13,6 +13,5 @@
     </div>
 </div>
 
-<!-- Start Copyright Area  -->
+<!-- Copyright  -->
 <jsp:include page="../layout/footer/copy-right.jsp" />
-<!-- End Copyright Area  -->
