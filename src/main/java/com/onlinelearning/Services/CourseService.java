@@ -18,5 +18,7 @@ public interface CourseService {
     Course updateCourse(Course course) throws Exception;
 
     Course deleteCourse(Course course) throws Exception;
+    
+    List<Course> getAllCoursesByUserId(Integer userId);
 
 }

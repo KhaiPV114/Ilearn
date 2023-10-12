@@ -65,7 +65,7 @@
                                         <!-- End Title -->
 
                                         <div class="tutor-btn">
-                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/learner/course/add">
+                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/learner/course" >
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Learn a New Course</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -80,39 +80,26 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th style="width: 25%;">Course Name</th>
-                                                        <th style="width: 35%;">Detail</th>
+                                                        <th style="width: 35%;">Description</th>
                                                         <th>Image</th>
-                                                        <th style="min-width: 140px;"></th>
+                                                       
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <c:set var="i" value="0"/>
-                                                    <c:forEach var="enrolledCourse" items="${enrolledCourse}">
-                                                        <c:set var="i" value="${i + 1}"/>
+                                                <tbody> 
+                                                    <c:forEach var="enrolledCourse" items="${enrolledCourses}">
                                                         <tr>
+                                                            <td>${enrolledCourse.id}</td>
+                                                            <td>${enrolledCourse.name}</td>
+                                                            <td>${enrolledCourse.description}</td>
                                                             <td>
-                                                                ${i}
+                                                                <!-- Hiển thị hình ảnh của khóa học nếu có -->
+                                                                <img src="${pageContext.request.contextPath}${enrolledCourse.imageUrl}" alt="image" />
                                                             </td>
-                                                            <td>
-                                                                <p class="h6 mb--5">
-                                                                    <b>Name:</b> ${enrolledCourse.name}
-                                                                </p>
-                                                                <p class="b3 truncate-6">
-                                                                    Detail: ${enrolledCourse.detail}
-                                                                </p>
-                                                            </td>
-                                                            <td>
-                                                                <img src="${pageContext.request.contextPath}${item.imageUrl}" alt="image"/>
-                                                            </td>
-                                                            <td>
-                                                                <div class="rbt-button-group justify-content-end">
-                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round" href="${pageContext.request.contextPath}/learner/course/edit?id=${item.id}" title="Edit"><i class="feather-edit pl--0"></i></a>
-                                                                    <span class="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger" onclick="submitDeletionForm(${item.id})" title="Delete"><i class="feather-trash-2 pl--0"></i></span>
-                                                                </div>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
+
                                             </table>
                                         </div>
 
@@ -135,50 +122,6 @@
 
         <jsp:include page="/layout/footer.jsp" />
         <jsp:include page="/layout/scripts.jsp" />
-        <script>
-            const deletionForm = document.getElementById("deletion-form");
-            const deletionId = document.getElementById("deletion-id");
-            function submitDeletionForm(id) {
-//                let check = confirm("Are you sure?");
-                if (!confirm("Are you sure?")) {
-                    return false;
-                }
-                deletionId.value = id;
-                deletionForm.submit();
-            }
-
-            document.getElementById("content").scrollIntoView({behavior: 'instant'});
-            location.hash = '#content';
-        </script>
-        <script>
-            var key = ${page},
-                    start = ${start},
-                    end = ${end},
-                    size = ${size},
-                    total = ${total},
-                    result = '';
-            result += '<ul class=\"pagination mx-auto\">';
-            if (start > 1) {
-                result += "<li class=\"page-item\">\n" +
-                        "<a class=\"page-link\" href=\"?size=" + size + "&page=1\">First</a>\n" +
-                        "</li>";
-            }
-            for (i = start; i <= end; ++i) {
-                if (i === key) {
-                    result += "<li class=\"page-item active\" aria-current=\"page\">\n" +
-                            "<a class=\"page-link\" href=\"#\">" + i + "<span class=\"visually-hidden\">(current)</span></a>\n" +
-                            "</li>";
-                } else {
-                    result += '<li class="page-item"><a class="page-link" href="?size=' + size + '&page=' + i + '">' + i + '</a></li>';
-                }
-            }
-            if (end < total) {
-                result += "<li class=\"page-item\">\n" +
-                        "<a class=\"page-link\" href=\"?size=" + size + "&page=" + total + "\">Last</a>\n" +
-                        "</li>";
-            }
-            result += '</ul>';
-            document.getElementById('pageBar').innerHTML = result;
-        </script>
+        
     </body>
 </html>

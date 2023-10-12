@@ -178,4 +178,25 @@ public class CourseDAOImpl implements CourseDAO {
         return null;
     }
 
+     @Override
+    public List<Course> getAllCoursesByUserId(Integer userId) {
+        String sql = "select c.* from courses c " +
+                     "JOIN users_courses uc ON c.course_id = uc.course_id " +
+                     "where uc.user_id = ?";
+        //String sql = "select * from courses where user_id = ?";
+        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                List<Course> courses = new ArrayList<>();
+                while (rs.next()) {
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
+                return courses;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

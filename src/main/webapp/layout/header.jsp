@@ -723,7 +723,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="instructor-enrolled-courses.html">
+                                                <a href="${pageContext.request.contextPath}/dashboard/learner/course-enrolled-view">
                                                     <i class="feather-shopping-bag"></i>
                                                     <span>Enrolled Courses</span>
                                                 </a>
