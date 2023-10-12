@@ -10,10 +10,15 @@ import java.util.HashMap;
  * @author duy20
  */
 public class JsonUtils {
-
+    
+    /**
+     * Read JSON String and convert to HashMap<String, String>
+     * @param Json
+     * @return HashMap<String, String>
+     */
     public static HashMap<String, String> convertJsonToHashMap(String Json) {
-        // Using Gson to parse the JSON array to 2d array
         Gson gson = new Gson();
+        // Using Gson to parse the JSON array to 2d array
         Object[][] array = gson.fromJson(Json, Object[][].class);
 
         HashMap<String, String> hashMap = new HashMap<>();

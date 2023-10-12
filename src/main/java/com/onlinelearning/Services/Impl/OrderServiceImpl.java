@@ -6,6 +6,7 @@ import com.onlinelearning.DAL.OrderDAO;
 import com.onlinelearning.DAL.OrderItemDAO;
 import com.onlinelearning.Models.Order;
 import com.onlinelearning.Services.OrderService;
+import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -13,11 +14,34 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemDAO orderItemDAO = new OrderItemDAOImpl();
 
     @Override
+    public Order getOrderById(Integer orderId) {
+        return orderDAO.getOrderById(orderId);
+    }
+
+    @Override
+    public List<Order> getAllOrdersByUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return orderDAO.getAllOrdersByUserId(userId);
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return orderDAO.getAllOrders();
+    }
+
+    @Override
     public Order createOrder(Order newOrder) {
         if (newOrder == null) {
             return null;
         }
         return orderDAO.createOrder(newOrder);
+    }
+
+    @Override
+    public Order updateOrder(Order newOrder) {
+        return orderDAO.updateOrder(newOrder);
     }
 
     @Override

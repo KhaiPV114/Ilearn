@@ -96,12 +96,16 @@ public class CouponServiceImpl implements CouponService {
         return true;
     }
 
+    @Override
     public Coupon minusCouponRemain(Coupon coupon) {
         if (coupon == null) {
             return null;
         }
-        int newRemainQuantity = coupon.getRemainQuantity() - 1;
-        coupon.setRemainQuantity(newRemainQuantity);
-        return couponDAO.updateCoupon(coupon);
+
+        if (coupon.getRemainQuantity() > 0) {
+            coupon.setRemainQuantity(coupon.getRemainQuantity() - 1);
+            return couponDAO.updateCoupon(coupon);
+        }
+        return coupon;
     }
 }

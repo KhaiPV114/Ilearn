@@ -20,6 +20,8 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/common/authentication.jsp";
+    
+    private static final String HOME_PATH = "/homepage";
 
     private static final int REMEMBER_ME_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
     
@@ -71,6 +73,6 @@ public class LoginController extends HttpServlet {
             CookieUtils.deleteCookieByName(request, response, "username");
             CookieUtils.deleteCookieByName(request, response, "password");
         }
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + HOME_PATH);
     }
 }
