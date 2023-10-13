@@ -102,4 +102,22 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.getAllCoursesByUserId(userId);
     }
     
+    
+   @Override
+    public List<Course> getCourseByCategoryId(Integer categoryId) {
+
+      if (categoryId == null) {
+        return null;
+      }
+
+      List<Course> courses = courseDAO.getCourseByCategoryId(categoryId);
+
+      if (courses == null) {
+        return null; 
+      }
+
+      return courses;
+    }
+      
+   
 }

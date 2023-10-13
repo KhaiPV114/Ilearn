@@ -22,5 +22,6 @@ public interface CourseDAO {
     Course deleteCourse(Course course);
     
     List<Course> getAllCoursesByUserId(Integer userId);
-
+    
+    List<Course> getCourseByCategoryId(Integer categoryId);
 }

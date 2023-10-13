@@ -1,5 +1,6 @@
 package com.onlinelearning.Models;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,5 +15,11 @@ public class Category {
     private String imageUrl;
 
     private String description;
+    
+    private List<Course> courses;
+
+    public void setCourses(List<Course> courses) {
+    this.courses = courses;
+  }
 
 }
