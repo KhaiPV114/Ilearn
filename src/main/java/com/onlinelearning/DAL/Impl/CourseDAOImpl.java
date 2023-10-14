@@ -178,4 +178,105 @@ public class CourseDAOImpl implements CourseDAO {
         return null;
     }
 
+    @Override
+    public List<Course> getCourseByKeyword(String keyword) {
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = "select * from courses where name LIKE CONCAT('%', ?, '%')";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, keyword);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseRowMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = "select * from courses where name LIKE CONCAT('%', ?, '%') "
+                + "order by price desc";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, keyword);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseRowMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword){
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = "select * from courses where name LIKE CONCAT('%', ?, '%') "
+                + "order by price asc";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, keyword);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseRowMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Course> getAllCourseOrderByPriceDesc(){
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = "select * from courses "
+                + "order by price desc";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseRowMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Course> getAllCourseOrderByPriceAsc() {
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = "select * from courses "
+                + "order by price asc";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseRowMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

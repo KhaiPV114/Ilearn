@@ -44,6 +44,8 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course.jsp">Learner course</a>        
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course-find-and-filter.jsp">Learner find and filter</a>        
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/wishlist.jsp">Learner wishlist</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/testing/upload-image">Test upload image</a>        

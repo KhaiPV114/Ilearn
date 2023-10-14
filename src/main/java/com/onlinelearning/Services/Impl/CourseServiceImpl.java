@@ -5,6 +5,7 @@ import com.onlinelearning.DAL.Impl.CourseDAOImpl;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -92,4 +93,34 @@ public class CourseServiceImpl implements CourseService {
         return updatedCourse;
     }
 
+    @Override
+    public List<Course> getCourseByKeyword(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeyword(keyword);
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceDesc(keyword);
+        return courses;
+    }
+
+    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
+        return courses;
+    }
+    
+    public List<Course> getAllCourseOrderByPriceDesc() {
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getAllCourseOrderByPriceAsc() {
+         List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
+        return courses;
+    }
+    
+    
+    
 }

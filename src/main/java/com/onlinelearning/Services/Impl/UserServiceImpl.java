@@ -4,6 +4,7 @@ import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.UserService;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 public class UserServiceImpl implements UserService{
@@ -41,5 +42,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean changePassword(int id, String newPassword) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<User> getUsersByRole(String role) {
+        if(StringUtils.isBlank(role)){
+            return null;
+        }
+        return userDao.getUsersByRole(role);
     }
 }

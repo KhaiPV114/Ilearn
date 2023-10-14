@@ -20,5 +20,17 @@ public interface CourseDAO {
     Course updateCourse(Course course);
 
     Course deleteCourse(Course course);
+    
+    List<Course> getAllCourseOrderByPriceDesc();
+    
+    List<Course> getAllCourseOrderByPriceAsc();
 
+    List<Course> getCourseByKeyword(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+    
+    
+    
 }
