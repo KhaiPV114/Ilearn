@@ -20,5 +20,7 @@ public interface CourseDAO {
     Course updateCourse(Course course);
 
     Course deleteCourse(Course course);
+    
+    List<Course> getAllCoursesByUserId(Integer userId);
 
 }
