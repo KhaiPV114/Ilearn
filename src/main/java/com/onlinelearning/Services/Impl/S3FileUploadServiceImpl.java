@@ -28,6 +28,8 @@ public class S3FileUploadServiceImpl implements FileUploadService {
     private static final String UPLOAD_ROOT_BUCKET = DotEnv.get("AWS_S3_ROOT_BUCKET");
 
     private static final String UPLOAD_ROOT_BUCKET_URL = DotEnv.get("AWS_S3_ROOT_BUCKER_URL");
+    
+    private static final String UPLOAD_CDN_URL = "https://" + UPLOAD_ROOT_BUCKET + "/";
 
     private static final String DEFAULT_IMAGE_UPLOAD_DIRECTORY = DotEnv.get("AWS_S3_DEFAULT_IMAGE_UPLOAD_DIRECTORY");
 
@@ -126,7 +128,7 @@ public class S3FileUploadServiceImpl implements FileUploadService {
         }
 
         //File url to access from internet
-        String savedFileUrl = UPLOAD_ROOT_BUCKET_URL + savingFilePath;
+        String savedFileUrl = UPLOAD_CDN_URL + savingFilePath;
 
         return savedFileUrl;
     }
