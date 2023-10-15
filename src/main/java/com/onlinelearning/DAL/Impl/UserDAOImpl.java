@@ -84,7 +84,11 @@ public class UserDAOImpl implements UserDAO {
                 ps.setString(7, user.getPhoneNumber());
             }
             ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setString(9, user.getStatus().toString());
+            if (user.getStatus() == null) {
+                ps.setNull(9, Types.VARCHAR);
+            } else {
+                ps.setString(9, user.getStatus().toString());
+            }
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
@@ -241,7 +245,11 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 ps.setString(7, user.getPhoneNumber());
             }
-            ps.setString(8, user.getStatus().toString());
+            if (user.getStatus() == null) {
+                ps.setNull(8, Types.VARCHAR);
+            } else {
+                ps.setString(8, user.getStatus().toString());
+            }
             ps.setInt(9, user.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
