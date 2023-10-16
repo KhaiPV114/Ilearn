@@ -105,17 +105,6 @@
 
                                     <div class="filter-select-option">
                                         <div class="filter-select rbt-modern-select">
-                                            <span class="select-label d-block">Short By Offer</span>
-                                            <select>
-                                                <option>Free</option>
-                                                <option>Paid</option>
-                                                <option>Premium</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="filter-select-option">
-                                        <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By Category</span>
                                             <select data-live-search="true" name="filterCategories" id="filterCategories">
                                                 <option value="">--------------</option>
@@ -212,8 +201,8 @@
                                         </div>
                                         <div class="rbt-card-bottom">
                                             <div class="rbt-price">
-                                                <span class="current-price">$60</span>
-                                                <span class="off-price">${course.price}</span>
+                                                <span class="current-price">$${course.price}</span>
+                                                <span class="off-price"></span>
                                             </div>
                                             <a class="rbt-btn-link left-icon" href="course-details.html"><i class="feather-shopping-cart"></i> Add To Cart</a>
                                         </div>
