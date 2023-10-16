@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Enrolled Courses</title>
         <jsp:include page="/layout/links.jsp" />
         <style>
             .truncate-4 {
@@ -56,7 +56,7 @@
                                                     </li>
                                                     <li class="breadcrumb-item active" aria-current="page">
                                                         <a class="color-primary" href="#"> <!--link vào phần course categories-->
-                                                            Courses Enrolled View
+                                                            Enrolled Courses
                                                         </a>
                                                     </li>
                                                 </ol>
