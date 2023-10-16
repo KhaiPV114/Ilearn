@@ -96,7 +96,7 @@
                                                     <img class="mt-4" src="
                                                          <c:choose>
                                                              <c:when test="${not empty imageUrl}">
-                                                                 ${pageContext.request.contextPath}/${imageUrl}
+                                                                 ${imageUrl}
                                                              </c:when>
                                                              <c:otherwise>
                                                                  ${pageContext.request.contextPath}/assets/images/others/thumbnail-placeholder.svg

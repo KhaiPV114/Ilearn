@@ -26,6 +26,6 @@ public class Constants {
 
     public static final Integer PAGINATION_MAX_PAGE_SIZE = 50;
 
-    public static final Integer PAGINATION_DEFAULT_PAGE_SIZE = 5;
+    public static final Integer PAGINATION_DEFAULT_PAGE_SIZE = 2;
 
 }

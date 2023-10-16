@@ -84,7 +84,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course updateCourse(Course course) throws Exception {
-        validateCourse(course);
         Course updatedCourse = courseDAO.updateCourse(course);
         if (updatedCourse == null) {
             throw new Exception("Update course failed!");

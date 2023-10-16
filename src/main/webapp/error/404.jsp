@@ -14,8 +14,8 @@
         <jsp:include page="/layout/header.jsp"/>
         <div class="container text-center">
             <div class="row my-5">
-                <h1 class="mt-5 text-warning">403 - Unauthorized!</h1>
-                <h3 class="text-warning">You do not have permission to access this resource!</h3>
+                <h1 class="mt-5 text-warning">404 - Not Found!</h1>
+                <h3 class="text-warning">Resource not found!</h3>
                 <a type="submit" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-25 mx-auto" href="${pageContext.request.contextPath}">
                     <span class="icon-reverse-wrapper">
                         <span class="btn-text">Back to home</span>
