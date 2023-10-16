@@ -22,5 +22,18 @@ public interface CourseDAO {
     Course deleteCourse(Course course);
     
     List<Course> getAllCoursesByUserId(Integer userId);
+    
+    List<Course> getAllCourseOrderByPriceDesc();
+    
+    List<Course> getAllCourseOrderByPriceAsc();
 
+    List<Course> getCourseByKeyword(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+    
+    List<Course> getCourseByCategory(String category);
+    
+    
 }

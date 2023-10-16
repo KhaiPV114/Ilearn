@@ -20,5 +20,15 @@ public interface CourseService {
     Course deleteCourse(Course course) throws Exception;
     
     List<Course> getAllCoursesByUserId(Integer userId);
+    List<Course> getAllCourseOrderByPriceDesc();
+    
+    List<Course> getAllCourseOrderByPriceAsc();
 
+    List<Course> getCourseByKeyword(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+    
+    List<Course> getCourseByCategory(String category);
 }

@@ -402,5 +402,28 @@ public class UserDAOImpl implements UserDAO {
         }
         return false;
     }
-
+    
+    @Override
+    public List<User> getUsersByRole(String role){
+        List<User> users = new ArrayList<>();
+        
+         String sql = "select * from users u "
+                 + "join user_roles ur on u.user_id = ur.user_id "
+                 + "join roles r on ur.role_id = r.role_id where r.name = ?";
+        
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, role.toUpperCase());
+            try ( ResultSet rs = ps.executeQuery()) {
+                while(rs.next()){
+                    User user = userRowMapper(rs);
+                    users.add(user);
+                }
+            }
+            return users;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
 }

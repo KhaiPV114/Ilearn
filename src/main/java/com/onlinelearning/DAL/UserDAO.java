@@ -36,5 +36,8 @@ public interface UserDAO {
     int countAllNumberOfSearchingRows(String searchField, String searchText);
 
     boolean changePassword(int id, String newPassword);
+    
+    List<User> getUsersByRole(String role);
+    
 
 }
