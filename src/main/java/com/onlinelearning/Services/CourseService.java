@@ -28,4 +28,6 @@ public interface CourseService {
     List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
     
     List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+    
+    List<Course> getCourseByCategory(String category);
 }

@@ -15,4 +15,5 @@ public interface CategoryService {
 
     Category deleteCategory(Category category) throws Exception;
 
+    Category getCategoryByName(String name);
 }

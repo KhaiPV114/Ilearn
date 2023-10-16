@@ -9,40 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="/layout/links.jsp"/>
-        <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", () => {
-                console.log("${filterShort}");
-                console.log("${filterShort}===undefined || ${filterShort}==='' || ${filterShort}===latest");
-                console.log("${filterShort}===lowtohigh");
-                console.log("${filterShort}===hightolow");
-                console.log("Hello World!");
-            });
-            function formSubmit() {
-                let courseKeyword = document.getElementById("courseKeyword").value;
-                let filterShort = document.getElementById("filterShort").value;
-                let url = "${pageContext.request.contextPath}/course/find";
-                let firstParamSet = false;
-                if (courseKeyword !== "") {
-                    if (firstParamSet === false) {
-                        url = url + "?" + "courseKeyword=" + courseKeyword;
-                        firstParamSet = true;
-                    } else {
-                        url = url + "&" + "courseKeyword=" + courseKeyword;
-                    }
-                }
-                if (filterShort !== "") {
-                    if (firstParamSet === false) {
-                        url = url + "?" + "filterShort=" + filterShort;
-                        firstParamSet = true;
-                    } else {
-                        url = url + "&" + "filterShort=" + filterShort;
-                    }
-                }
-                window.location.href = url;
-                console.log("form submited");
-                console.log("${pageContext.request.contextPath}/course/find");
-            }
-        </script>
+        
     </head>
     <body class="rbt-header-sticky">
         <jsp:include page="/layout/header.jsp"/>
@@ -127,7 +94,8 @@
                                     <div class="filter-select-option">
                                         <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By</span>  
-                                            <select name="filterShort" id="filterShort">
+                                            <select name="filterPrice" id="filterPrice">
+                                                <option value="">------------</option>
                                                 <option value="latest">Latest</option>
                                                 <option value="lowtohigh">Price: low to high</option>
                                                 <option value="hightolow">Price: high to low</option>
@@ -149,9 +117,10 @@
                                     <div class="filter-select-option">
                                         <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By Category</span>
-                                            <select data-live-search="true">
+                                            <select data-live-search="true" name="filterCategories" id="filterCategories">
+                                                <option value="">--------------</option>
                                                 <c:forEach items="${categorys}" var="categorys">
-                                                    <option>${categorys.name}</option>
+                                                    <option value="${categorys.name}">${categorys.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -167,7 +136,7 @@
                                                 <div class="slider__range--output">
                                                     <div class="price__output--wrap">
                                                         <div class="price--output">
-                                                            <span>Price :</span><input type="text" id="amount">
+                                                            <span>Price :</span><input type="text" id="amount" name="priceRange" value="${priceRange}">
                                                         </div>
                                                     </div>                                                        <div class="price--filter">
                                                         <button type="submit" class="rbt-btn btn-gradient btn-sm">Filter</button>
@@ -246,8 +215,7 @@
                                                 <span class="current-price">$60</span>
                                                 <span class="off-price">${course.price}</span>
                                             </div>
-                                            <a class="rbt-btn-link" href="course-details.html">Learn
-                                                More<i class="feather-arrow-right"></i></a>
+                                            <a class="rbt-btn-link left-icon" href="course-details.html"><i class="feather-shopping-cart"></i> Add To Cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -272,6 +240,51 @@
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>
+        <script type="text/javascript">
+            function formSubmit() {
+                let courseKeyword = document.getElementById("courseKeyword").value;
+                let filterPrice = document.getElementById("filterPrice").value;
+                let priceRange = document.getElementById("amount").value;
+                let filterCategories = document.getElementById("filterCategories").value;
+                let url = "${pageContext.request.contextPath}/search";
+                let firstParamSet = false;
+                if (courseKeyword !== "") {
+                    if (firstParamSet === false) {
+                        url = url + "?" + "courseKeyword=" + courseKeyword;
+                        firstParamSet = true;
+                    } else {
+                        url = url + "&" + "courseKeyword=" + courseKeyword;
+                    }
+                }
+                if (filterPrice !== "") {
+                    if (firstParamSet === false) {
+                        url = url + "?" + "filterPrice=" + filterPrice;
+                        firstParamSet = true;
+                    } else {
+                        url = url + "&" + "filterPrice=" + filterPrice;
+                    }
+                }
+                if(filterCategories !== ""){
+                    if (firstParamSet === false) {
+                        url = url + "?" + "filterCategory=" + filterCategories;
+                        firstParamSet = true;
+                    } else {
+                        url = url + "&" + "filterCategory=" + filterCategories;
+                    }
+                }
+                if(priceRange !== ""){
+                    if (firstParamSet === false) {
+                        url = url + "?" + "priceRange=" + priceRange;
+                        firstParamSet = true;
+                    } else {
+                        url = url + "&" + "priceRange=" + priceRange;
+                    }
+                }
+                window.location.href = url;
+                console.log("form submited");
+                console.log("${pageContext.request.contextPath}/course/find");
+            }
+        </script>
     </body>
     <jsp:include page="/layout/scripts.jsp"/>
 

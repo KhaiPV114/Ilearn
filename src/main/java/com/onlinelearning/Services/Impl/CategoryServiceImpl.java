@@ -66,5 +66,13 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return deletedCategory;
     }
+
+    @Override
+    public Category getCategoryByName(String name) {
+        if (name.equals("")) {
+            return null;
+        }
+        return categoryDAO.getCategoryByName(name);
+    }
     
 }

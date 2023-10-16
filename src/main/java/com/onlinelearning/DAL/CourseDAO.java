@@ -31,6 +31,7 @@ public interface CourseDAO {
     
     List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
     
+    List<Course> getCourseByCategory(String category);
     
     
 }

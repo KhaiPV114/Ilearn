@@ -120,6 +120,12 @@ public class CourseServiceImpl implements CourseService {
          List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
         return courses;
     }
+
+    @Override
+    public List<Course> getCourseByCategory(String category) {
+        List<Course> courses = courseDAO.getCourseByCategory(category);
+        return courses;
+    }
     
     
     
