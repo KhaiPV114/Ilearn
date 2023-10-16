@@ -105,17 +105,6 @@
 
                                     <div class="filter-select-option">
                                         <div class="filter-select rbt-modern-select">
-                                            <span class="select-label d-block">Short By Offer</span>
-                                            <select>
-                                                <option>Free</option>
-                                                <option>Paid</option>
-                                                <option>Premium</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="filter-select-option">
-                                        <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By Category</span>
                                             <select data-live-search="true" name="filterCategories" id="filterCategories">
                                                 <option value="">--------------</option>
