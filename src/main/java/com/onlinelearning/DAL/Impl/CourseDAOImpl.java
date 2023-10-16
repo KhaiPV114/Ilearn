@@ -18,6 +18,11 @@ public class CourseDAOImpl implements CourseDAO {
     private final DBContext dbContext = new DBContextImpl();
 
     private Course courseRowMapper(ResultSet rs) throws SQLException {
+        String courseStatus = rs.getString("status");
+        CourseStatus status = null;
+        if (courseStatus != null) {
+            status = CourseStatus.valueOf(courseStatus);
+        }
         Course course = Course.builder()
                 .id(rs.getInt("course_id"))
                 .categoryId(rs.getInt("category_id"))
@@ -26,7 +31,7 @@ public class CourseDAOImpl implements CourseDAO {
                 .imageUrl(rs.getString("image_url"))
                 .description(rs.getString("description"))
                 .price(rs.getDouble("price"))
-                .status(CourseStatus.valueOf(rs.getString("status")))
+                .status(status)
                 .build();
         return course;
     }
@@ -207,15 +212,15 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> getCourseByKeyword(String keyword) {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses where name LIKE CONCAT('%', ?, '%')";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, keyword);
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
-            }
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -227,24 +232,24 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses where name LIKE CONCAT('%', ?, '%') "
                 + "order by price desc";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, keyword);
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
                 }
             }
             return courses;
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     @Override
     public Boolean isEnrolled(Integer userId, Integer courseId) {
         String sql = "select * from users_courses"
@@ -260,20 +265,20 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
-    
+
     @Override
-    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword){
+    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses where name LIKE CONCAT('%', ?, '%') "
                 + "order by price asc";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, keyword);
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
-            }
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -283,17 +288,17 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public List<Course> getAllCourseOrderByPriceDesc(){
+    public List<Course> getAllCourseOrderByPriceDesc() {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses "
                 + "order by price desc";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
-            }
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -305,15 +310,15 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> getAllCourseOrderByPriceAsc() {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses "
                 + "order by price asc";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
-            }
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -325,7 +330,7 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public List<Course> getCourseByCategory(String category) {
         List<Course> courses = new ArrayList<>();
-        
+
         String sql = "select * from courses c "
                 + "join categories ca on c.category_id = ca.category_id "
                 + "where ca.name = ?";
@@ -333,9 +338,9 @@ public class CourseDAOImpl implements CourseDAO {
             ps.setString(1, category);
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
-            }
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -343,7 +348,7 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         CourseDAO courseDAO = new CourseDAOImpl();
         List<Course> course = courseDAO.getCourseByCategory("James");
