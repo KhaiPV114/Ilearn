@@ -43,12 +43,12 @@
                                     </div>
                                 </div>
                                 <div class="shape-wrapper" id="scene">
-                                    <img src="assets/images/banner/banner-01.png" alt="Hero Image">
+                                    <img src="${pageContext.request.contextPath}/assets/images/banner/banner-01.png" alt="Hero Image">
                                     <div class="hero-bg-shape-1 layer" data-depth="0.4">
-                                        <img src="assets/images/shape/shape-01.png" alt="Hero Image Background Shape">
+                                        <img src="${pageContext.request.contextPath}/assets/images/shape/shape-01.png" alt="Hero Image Background Shape">
                                     </div>
                                     <div class="hero-bg-shape-2 layer" data-depth="0.4">
-                                        <img src="assets/images/shape/shape-02.png" alt="Hero Image Background Shape">
+                                        <img src="${pageContext.request.contextPath}/assets/images/shape/shape-02.png" alt="Hero Image Background Shape">
                                     </div>
                                 </div>
 
@@ -60,7 +60,7 @@
                                             <div class="rbt-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="course-details.html">
-                                                        <img src="assets/images/course/course-01.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-01.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>-40%</span>
                                                             <span>Off</span>
@@ -104,7 +104,7 @@
                                             <div class="rbt-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="course-details.html">
-                                                        <img src="assets/images/course/classic-lms-01.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/course/classic-lms-01.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>-40%</span>
                                                             <span>Off</span>
@@ -148,7 +148,7 @@
                                             <div class="rbt-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="course-details.html">
-                                                        <img src="assets/images/course/course-online-02.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-online-02.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>-40%</span>
                                                             <span>Off</span>
@@ -213,7 +213,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/web-design.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/web-design.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Web Design</h5>
@@ -231,7 +231,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/design.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/design.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Graphic Design</h5>
@@ -249,7 +249,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/personal.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/personal.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Personal Development</h5>
@@ -267,7 +267,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/server.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/server.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">IT and Software</h5>
@@ -285,7 +285,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/pantone.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/pantone.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Sales Marketing</h5>
@@ -303,7 +303,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/paint-palette.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/paint-palette.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Art & Humanities</h5>
@@ -321,7 +321,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/smartphone.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/smartphone.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Mobile Application</h5>
@@ -339,7 +339,7 @@
                             <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/category/infographic.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/category/infographic.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h5 class="title">Finance & Accounting</h5>
@@ -373,7 +373,7 @@
                             <div class="rbt-card variation-01 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
-                                        <img src="assets/images/course/course-01.jpg" alt="Card image">
+                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-01.jpg" alt="Card image">
                                         <div class="rbt-badge-3 bg-white">
                                             <span>-50%</span>
                                             <span>Off</span>
@@ -409,7 +409,7 @@
                                     <div class="rbt-author-meta mb--20">
                                         <div class="rbt-avater">
                                             <a href="#">
-                                                <img src="assets/images/client/avater-01.png" alt="Sophia Jaymes">
+                                                <img src="${pageContext.request.contextPath}/assets/images/client/avater-01.png" alt="Sophia Jaymes">
                                             </a>
                                         </div>
                                         <div class="rbt-author-info">
@@ -435,7 +435,7 @@
                             <div class="rbt-card variation-01 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
-                                        <img src="assets/images/course/course-02.jpg" alt="Card image">
+                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-02.jpg" alt="Card image">
                                         <div class="rbt-badge-3 bg-white">
                                             <span>-40%</span>
                                             <span>Off</span>
@@ -469,7 +469,7 @@
                                     <div class="rbt-author-meta mb--20">
                                         <div class="rbt-avater">
                                             <a href="#">
-                                                <img src="assets/images/client/avatar-02.png" alt="Sophia Jaymes">
+                                                <img src="${pageContext.request.contextPath}/assets/images/client/avatar-02.png" alt="Sophia Jaymes">
                                             </a>
                                         </div>
                                         <div class="rbt-author-info">
@@ -493,7 +493,7 @@
                             <div class="rbt-card variation-01 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
-                                        <img src="assets/images/course/course-03.jpg" alt="Card image">
+                                        <img src="${pageContext.request.contextPath}/assets/images/course/course-03.jpg" alt="Card image">
                                         <div class="rbt-badge-3 bg-white">
                                             <span>-40%</span>
                                             <span>Off</span>
@@ -528,7 +528,7 @@
                                     <div class="rbt-author-meta mb--20">
                                         <div class="rbt-avater">
                                             <a href="#">
-                                                <img src="assets/images/client/avatar-03.png" alt="Sophia Jaymes">
+                                                <img src="${pageContext.request.contextPath}/assets/images/client/avatar-03.png" alt="Sophia Jaymes">
                                             </a>
                                         </div>
                                         <div class="rbt-author-info">
@@ -574,13 +574,13 @@
                         <div class="col-lg-6">
                             <div class="thumbnail-wrapper">
                                 <div class="thumbnail image-1">
-                                    <img data-parallax='{"x": 0, "y": -20}' src="assets/images/about/about-01.png" alt="Education Images">
+                                    <img data-parallax='{"x": 0, "y": -20}' src="${pageContext.request.contextPath}/assets/images/about/about-01.png" alt="Education Images">
                                 </div>
                                 <div class="thumbnail image-2 d-none d-xl-block">
-                                    <img data-parallax='{"x": 0, "y": 60}' src="assets/images/about/about-02.png" alt="Education Images">
+                                    <img data-parallax='{"x": 0, "y": 60}' src="${pageContext.request.contextPath}/assets/images/about/about-02.png" alt="Education Images">
                                 </div>
                                 <div class="thumbnail image-3 d-none d-md-block">
-                                    <img data-parallax='{"x": 0, "y": 80}' src="assets/images/about/about-03.png" alt="Education Images">
+                                    <img data-parallax='{"x": 0, "y": 80}' src="${pageContext.request.contextPath}/assets/images/about/about-03.png" alt="Education Images">
                                 </div>
                             </div>
                         </div>
@@ -653,7 +653,7 @@
                                     </div>
                                     <div class="col-lg-12 col-xl-7">
                                         <div class="video-popup-wrapper mt_lg--10 mt_md--20 mt_sm--20">
-                                            <img class="w-100 rbt-radius" src="assets/images/others/video-01.jpg" alt="Video Images">
+                                            <img class="w-100 rbt-radius" src="${pageContext.request.contextPath}/assets/images/others/video-01.jpg" alt="Video Images">
                                             <a class="rbt-btn rounded-player-2 sm-size popup-video position-to-top with-animation" href="https://www.youtube.com/watch?v=nA1Aqp0sPQo">
                                                 <span class="play-icon"></span>
                                             </a>
@@ -705,7 +705,7 @@
                                 <div class="top-circle-shape"></div>
                                 <div class="inner">
                                     <div class="rbt-round-icon">
-                                        <img src="assets/images/icons/counter-01.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/counter-01.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h3 class="counter"><span class="odometer" data-count="500">00</span>
@@ -723,7 +723,7 @@
                                 <div class="top-circle-shape"></div>
                                 <div class="inner">
                                     <div class="rbt-round-icon">
-                                        <img src="assets/images/icons/counter-02.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/counter-02.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h3 class="counter"><span class="odometer" data-count="800">00</span>
@@ -741,7 +741,7 @@
                                 <div class="top-circle-shape"></div>
                                 <div class="inner">
                                     <div class="rbt-round-icon">
-                                        <img src="assets/images/icons/counter-03.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/counter-03.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h3 class="counter"><span class="odometer" data-count="1000">00</span>
@@ -759,7 +759,7 @@
                                 <div class="top-circle-shape"></div>
                                 <div class="inner">
                                     <div class="rbt-round-icon">
-                                        <img src="assets/images/icons/counter-04.png" alt="Icons Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/counter-04.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
                                         <h3 class="counter"><span class="odometer" data-count="100">00</span>
@@ -797,14 +797,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/facebook.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/facebook.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">After the launch, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-01.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Martha Maldonado, <span>CEO</span></h5>
@@ -821,14 +821,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/google.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/google.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Histudy education, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-02.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-02.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Michael D., <span>CEO</span></h5>
@@ -845,14 +845,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/yelp.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/yelp.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Our educational, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-03.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-03.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Valerie J., <span>CEO</span></h5>
@@ -869,14 +869,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/facebook.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/facebook.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">People says about, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-04.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-04.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Hannah R., <span>CEO</span></h5>
@@ -892,14 +892,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/bing.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/bing.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Like this histudy, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-05.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-05.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Pearl B. Hill, <span>Marketing</span></h5>
@@ -916,14 +916,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/facebook.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/facebook.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Educational template, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-01.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Mandy F. Wood, <span>SR Designer</span></h5>
@@ -940,14 +940,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/hubs.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/hubs.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Online leaning, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-07.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-07.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Mildred W. Diaz, <span>Executive</span></h5>
@@ -964,14 +964,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/bing.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/bing.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Remote learning, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-08.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-08.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Christopher, <span>CEO</span></h5>
@@ -988,14 +988,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/yelp.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/yelp.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">University managemnet, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-06.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-06.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Fatima, <span>Child</span></h5>
@@ -1017,14 +1017,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/facebook.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/facebook.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">After the launch, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-01.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Martha Maldonado, <span>CEO</span></h5>
@@ -1041,14 +1041,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/google.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/google.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Histudy education, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-02.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-02.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Michael D., <span>CEO</span></h5>
@@ -1065,14 +1065,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/yelp.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/yelp.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Our educational, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-03.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-03.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Valerie J., <span>CEO</span></h5>
@@ -1089,14 +1089,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/bing.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/bing.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">People says about, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-04.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-04.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Hannah R., <span>CEO</span></h5>
@@ -1112,14 +1112,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/hubs.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/hubs.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Like this histudy, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-05.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-05.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Pearl B. Hill, <span>Marketing</span></h5>
@@ -1136,14 +1136,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/yelp.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/yelp.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Educational template, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-01.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Mandy F. Wood, <span>SR Designer</span></h5>
@@ -1160,14 +1160,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/bing.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/bing.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Online leaning, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-07.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-07.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Mildred W. Diaz, <span>Executive</span></h5>
@@ -1184,14 +1184,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/facebook.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/facebook.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">Remote learning, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-08.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-08.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Christopher, <span>CEO</span></h5>
@@ -1208,14 +1208,14 @@
                             <div class="rbt-testimonial-box style-2">
                                 <div class="inner">
                                     <div class="icons">
-                                        <img src="assets/images/icons/yelp.png" alt="Clint Images">
+                                        <img src="${pageContext.request.contextPath}/assets/images/icons/yelp.png" alt="Clint Images">
                                     </div>
                                     <div class="description">
                                         <p class="subtitle-3">University managemnet, vulputate at sapien sit amet,
                                             auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
                                         <div class="clint-info-wrapper">
                                             <div class="thumb">
-                                                <img src="assets/images/testimonial/client-06.png" alt="Clint Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/testimonial/client-06.png" alt="Clint Images">
                                             </div>
                                             <div class="client-info">
                                                 <h5 class="title">Fatima, <span>Child</span></h5>
@@ -1251,7 +1251,7 @@
                                             <div class="rbt-card event-grid-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="event-details.html">
-                                                        <img src="assets/images/event/grid-type-02.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/event/grid-type-02.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>11 Mar</span>
                                                             <span>2023</span>
@@ -1285,7 +1285,7 @@
                                             <div class="rbt-card event-grid-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="event-details.html">
-                                                        <img src="assets/images/event/grid-type-04.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/event/grid-type-04.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>11 Jan</span>
                                                             <span>2023</span>
@@ -1320,7 +1320,7 @@
                                             <div class="rbt-card event-grid-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="event-details.html">
-                                                        <img src="assets/images/event/grid-type-05.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/event/grid-type-05.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>11 Mar</span>
                                                             <span>2023</span>
@@ -1355,7 +1355,7 @@
                                             <div class="rbt-card event-grid-card variation-01 rbt-hover">
                                                 <div class="rbt-card-img">
                                                     <a href="event-details.html">
-                                                        <img src="assets/images/event/grid-type-01.jpg" alt="Card image">
+                                                        <img src="${pageContext.request.contextPath}/assets/images/event/grid-type-01.jpg" alt="Card image">
                                                         <div class="rbt-badge-3 bg-white">
                                                             <span>11 Jan</span>
                                                             <span>2023</span>
@@ -1426,7 +1426,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-01.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-01.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1469,7 +1469,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-02.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-02.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1512,7 +1512,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-03.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-03.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1555,7 +1555,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-04.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-04.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1598,7 +1598,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-05.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-05.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1641,7 +1641,7 @@
                                     <div class="inner">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-06.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-06.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                         <div class="rbt-team-details">
@@ -1692,7 +1692,7 @@
                                     <a class="active" id="team-tab1-tab" data-bs-toggle="tab" data-bs-target="#team-tab1" role="tab" aria-controls="team-tab1" aria-selected="true">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-01.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-01.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1702,7 +1702,7 @@
                                     <a id="team-tab2-tab" data-bs-toggle="tab" data-bs-target="#team-tab2" role="tab" aria-controls="team-tab2" aria-selected="false">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-02.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-02.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1712,7 +1712,7 @@
                                     <a id="team-tab3-tab" data-bs-toggle="tab" data-bs-target="#team-tab3" role="tab" aria-controls="team-tab3" aria-selected="false">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-03.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-03.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1721,7 +1721,7 @@
                                     <a id="team-tab4-tab" data-bs-toggle="tab" data-bs-target="#team-tab4" role="tab" aria-controls="team-tab4" aria-selected="false">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-04.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-04.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1731,7 +1731,7 @@
                                     <a id="team-tab5-tab" data-bs-toggle="tab" data-bs-target="#team-tab5" role="tab" aria-controls="team-tab5" aria-selected="false">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-05.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-05.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1741,7 +1741,7 @@
                                     <a id="team-tab6-tab" data-bs-toggle="tab" data-bs-target="#team-tab6" role="tab" aria-controls="team-tab6" aria-selected="false">
                                         <div class="rbt-team-thumbnail">
                                             <div class="thumb">
-                                                <img src="assets/images/team/team-06.jpg" alt="Testimonial Images">
+                                                <img src="${pageContext.request.contextPath}/assets/images/team/team-06.jpg" alt="Testimonial Images">
                                             </div>
                                         </div>
                                     </a>
@@ -1783,7 +1783,7 @@
                             <div class="rbt-card variation-02 height-330 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/blog-card-01.jpg" alt="Card image"> </a>
+                                        <img src="${pageContext.request.contextPath}/assets/images/blog/blog-card-01.jpg" alt="Card image"> </a>
                                 </div>
                                 <div class="rbt-card-body">
                                     <h3 class="rbt-card-title"><a href="blog-details.html">React</a></h3>
@@ -1801,7 +1801,7 @@
                             <div class="rbt-card card-list variation-02 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/blog-card-02.jpg" alt="Card image"> </a>
+                                        <img src="${pageContext.request.contextPath}/assets/images/blog/blog-card-02.jpg" alt="Card image"> </a>
                                 </div>
                                 <div class="rbt-card-body">
                                     <h5 class="rbt-card-title"><a href="blog-details.html">Why Is Education So Famous?</a></h5>
@@ -1816,7 +1816,7 @@
                             <div class="rbt-card card-list variation-02 rbt-hover mt--30">
                                 <div class="rbt-card-img">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/blog-card-03.jpg" alt="Card image"> </a>
+                                        <img src="${pageContext.request.contextPath}/assets/images/blog/blog-card-03.jpg" alt="Card image"> </a>
                                 </div>
                                 <div class="rbt-card-body">
                                     <h5 class="rbt-card-title"><a href="blog-details.html">Difficult Things About Education.</a></h5>
@@ -1831,7 +1831,7 @@
                             <div class="rbt-card card-list variation-02 rbt-hover mt--30">
                                 <div class="rbt-card-img">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/blog-card-04.jpg" alt="Card image"> </a>
+                                        <img src="${pageContext.request.contextPath}/assets/images/blog/blog-card-04.jpg" alt="Card image"> </a>
                                 </div>
                                 <div class="rbt-card-body">
                                     <h5 class="rbt-card-title"><a href="blog-details.html">Education Is So Famous, But Why?</a></h5>

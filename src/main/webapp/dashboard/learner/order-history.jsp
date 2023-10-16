@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Order History</title>
         <jsp:include page="/layout/links.jsp"/>
         <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
     </head>
@@ -25,6 +25,81 @@
                             <jsp:include page="/layout/dashboard-learner-sidebar.jsp"/>
                             <!-- Start Content  -->
                             <div class="col-lg-9">
+
+                                <c:if test="${unfinishOrders!=null && !unfinishOrders.isEmpty()}">
+                                    <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
+                                        <div class="content">
+                                            <div class="section-title">
+                                                <h4 class="rbt-title-style-3">Unfinish Order</h4>
+                                            </div>
+
+                                            <div class="rbt-dashboard-table table-responsive mobile-table-750" id="content-display">
+
+                                                <table class="rbt-table table table-borderless" id="unfinish-order-table" data-page-length="10">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Course Name</th>
+                                                            <th>Date</th>
+                                                            <th>Price</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <c:forEach var="order" items="${unfinishOrders}">
+                                                            <tr>
+                                                                <th>#${order.id}</th>
+                                                                <td>
+                                                                    <c:set var="price" value="${0}"/>
+                                                                    <c:forEach var="orderItem" items="${OrderService.getOrderItemsByOrderId(order.id)}">
+                                                                        <i class="feather-minus-square"></i> ${CourseService.getCourseById(orderItem.courseId).name}<br/>
+                                                                        <c:set var="price" value="${price + orderItem.price}"/>
+                                                                    </c:forEach>
+                                                                </td>
+
+                                                                <td>
+                                                                    <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
+                                                                </td>
+                                                                <td>$${price}</td>
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${order.status=='NEW'}">
+                                                                            <span class="rbt-badge-5 bg-color-warning-opacity color-warning">On Hold</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status =='PENDING'}">
+                                                                            <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
+                                                                        </c:when>
+                                                                        <c:when test="${order.status == 'SUCCESSFUL' || order.status=='DONE'}">
+                                                                            <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status=='FAILED' || order.status=='REJECTED'}">
+                                                                            <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status=='EXPIRED'}">
+                                                                            <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
+                                                                        </c:when>
+                                                                    </c:choose>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="rbt-button-group justify-content-end">
+                                                                        <a class="rbt-btn-link left-icon" href="${pageContext.request.contextPath}/cart/checkout/continue?order-id=${order.id}" style='color: blue;'><i class="feather-play"></i>Continue</a>
+                                                                        <a class="rbt-btn-link left-icon" href="${pageContext.request.contextPath}/cart/checkout/cancel?order-id=${order.id}" style='color: red;'><i class="feather-trash-2"></i> Cancel</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </br>
+                                </c:if>
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
                                     <div class="content">
                                         <div class="section-title">
@@ -32,57 +107,62 @@
                                         </div>
 
                                         <div class="rbt-dashboard-table table-responsive mobile-table-750" id="content-display">
-                                            <table class="rbt-table table table-borderless" id="order-table" data-page-length="10">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Order ID</th>
-                                                        <th>Course Name</th>
-                                                        <th>Date</th>
-                                                        <th>Price</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <c:forEach var="order" items="${orders}">
+                                            <c:if test="${orders!=null && !orders.isEmpty()}">
+                                                <table class="rbt-table table table-borderless" id="order-table" data-page-length="10">
+                                                    <thead>
                                                         <tr>
-                                                            <th>#${order.id}</th>
-                                                            <td>
-                                                                <c:set var="price" value="${0}"/>
-                                                                <c:forEach var="orderItem" items="${OrderService.getCoursesOfOrderByOrderId(order.id)}">
-                                                                    - ${CourseService.getCourseById(orderItem.courseId).name}<br/>
-                                                                    <c:set var="price" value="${price + orderItem.price}"/>
-                                                                </c:forEach>
-                                                            </td>
-
-                                                            <td>
-                                                                <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                                                <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
-                                                            </td>
-                                                            <td>$${price}</td>
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test="${order.status=='NEW'}">
-                                                                        <span class="rbt-badge-5 bg-color-warning-opacity color-warning">On Hold</span>
-                                                                    </c:when>
-                                                                    <c:when test="${order.status =='PENDING'}">
-                                                                        <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
-                                                                    </c:when>
-                                                                    <c:when test="${order.status == 'SUCCESSFUL' || order.status=='DONE'}">
-                                                                        <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                                                                    </c:when>
-                                                                    <c:when test="${order.status=='FAILED' || order.status=='REJECTED'}">
-                                                                        <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                    </c:when>
-                                                                    <c:when test="${order.status=='EXPIRED'}">
-                                                                        <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
-                                                                    </c:when>
-                                                                </c:choose>
-                                                            </td>          
+                                                            <th>Order ID</th>
+                                                            <th>Course Name</th>
+                                                            <th>Date</th>
+                                                            <th>Price</th>
+                                                            <th>Status</th>
                                                         </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <c:forEach var="order" items="${orders}">
+                                                            <tr>
+                                                                <th>#${order.id}</th>
+                                                                <td>
+                                                                    <c:set var="price" value="${0}"/>
+                                                                    <c:forEach var="orderItem" items="${OrderService.getOrderItemsByOrderId(order.id)}">
+                                                                        - ${CourseService.getCourseById(orderItem.courseId).name}<br/>
+                                                                        <c:set var="price" value="${price + orderItem.price}"/>
+                                                                    </c:forEach>
+                                                                </td>
+
+                                                                <td>
+                                                                    <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
+                                                                </td>
+                                                                <td>$${price}</td>
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${order.status=='NEW'}">
+                                                                            <span class="rbt-badge-5 bg-color-warning-opacity color-warning">On Hold</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status =='PENDING'}">
+                                                                            <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
+                                                                        </c:when>
+                                                                        <c:when test="${order.status == 'SUCCESSFUL' || order.status=='DONE'}">
+                                                                            <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status=='FAILED' || order.status=='REJECTED'}">
+                                                                            <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
+                                                                        </c:when>
+                                                                        <c:when test="${order.status=='EXPIRED'}">
+                                                                            <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
+                                                                        </c:when>
+                                                                    </c:choose>
+                                                                </td>          
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </c:if>
+                                            <c:if test="${orders==null || orders.isEmpty()}">
+                                                <p style="color: red; text-align: center;">You haven't place any order</p>
+                                            </c:if>
                                         </div>
 
                                     </div>
@@ -95,16 +175,24 @@
             </div>
             <jsp:include page="/layout/footer.jsp"/>
             <jsp:include page="/layout/delayScrollToContent.jsp"/>
+            <jsp:include page="/layout/scripts.jsp"/>
+            <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#order-table').DataTable({
+                        "order": [0, 'desc'],
+                        "lengthChange": false,
+                        "searching": false
+                    });
+                });
+
+                $(document).ready(function () {
+                    $('#unfinish-order-table').DataTable({
+                        "order": [0, 'desc'],
+                        "lengthChange": false,
+                        "searching": false
+                    });
+                });
+            </script>
     </body>
-    <jsp:include page="/layout/scripts.jsp"/>
-    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#order-table').DataTable({
-                "order": [0, 'desc'],
-                "lengthChange": false,
-                "searching": false
-            });
-        });
-    </script>
 </html>

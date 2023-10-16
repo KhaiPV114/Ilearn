@@ -2,7 +2,9 @@ package com.onlinelearning.Controllers.Cart;
 
 import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.User;
+import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
+import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,14 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "GeneralCartDelete", urlPatterns = {"/cart/remove"})
 public class GeneralCartDelete extends HttpServlet {
 
     private final String ERROR_404_PATH = "/error/404.jsp";
 
-    private final CartService cartService = new CartServiceImpl();
+    private final AuthService AuthService = new AuthServiceImpl();
+    private final CartService CartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,34 +32,48 @@ public class GeneralCartDelete extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter pw = response.getWriter();
-        //Validate request
-        User user = (User) request.getSession().getAttribute("user");
+
+        //Get Cart item need delete from request
         String courseIdParam = request.getParameter("course-id");
-        if (courseIdParam == null) {
+        Integer courseId;
+        try {
+            courseId = Integer.parseInt(courseIdParam);
+        } catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            pw.print("course-id: null");
             return;
         }
-        int courseId = Integer.parseInt(courseIdParam);
+        
+        CartItem cartItemNeedDelete = CartItem.builder()
+                .courseId(courseId)
+                .build();
 
+        //Delete from cart
+        User user = AuthService.getUser(request);
+        boolean removedFromCart = true;
         if (user == null) {
-            List<CartItem> cart = cartService.getCartFromCookie(request);
-            cart.remove(CartItem.builder().courseId(courseId).build());
-            cartService.addCartToCookie(response, cart);
-        } else {
             try {
-                cartService.deleteCartItem(
-                        CartItem.builder()
-                                .userId(user.getId())
-                                .courseId(courseId)
-                                .build()
-                );
+                CartService.removeCartItemFromCookie(cartItemNeedDelete, request, response);
             } catch (Exception ex) {
+                removedFromCart = false;
+                pw.print(ex.getMessage());
+            }
+        } else {
+            cartItemNeedDelete.setUserId(user.getId());
+            try {
+                CartService.deleteCartItem(cartItemNeedDelete);
+            } catch (Exception ex) {
+                removedFromCart = false;
                 pw.print(ex.getMessage());
             }
         }
         
-        response.setStatus(HttpServletResponse.SC_OK);
-        cartService.updateCartInSession(request.getSession(), request, response);
+        //Response to client 
+        if (removedFromCart) {
+            CartService.updateCartInSession(request.getSession(), request, response);
+            response.setStatus(HttpServletResponse.SC_OK);
+            pw.print("Remove from cart successful!");
+        } else {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+        }
     }
 }

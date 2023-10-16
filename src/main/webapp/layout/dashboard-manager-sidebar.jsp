@@ -11,17 +11,35 @@
 
                 <div class="rbt-default-sidebar-wrapper">
                     <div class="section-title mb--20">
-                        <h6 class="rbt-title-style-2">Welcome, Jone Due</h6>
+                        <h6 class="rbt-title-style-2">Welcome, ${user.username}</h6>
                     </div>
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li><a href="instructor-dashboard.html" class="active"><i class="feather-home"></i><span>Dashboard</span></a></li>
-                            <li><a href="instructor-profile.html"><i class="feather-user"></i><span>My Profile</span></a></li>
-                            <li><a href="instructor-enrolled-courses.html"><i class="feather-book-open"></i><span>Enrolled Courses</span></a></li>
-                            <li><a href="instructor-wishlist.html"><i class="feather-bookmark"></i><span>Wishlist</span></a></li>
-                            <li><a href="instructor-reviews.html"><i class="feather-star"></i><span>Reviews</span></a></li>
-                            <li><a href="instructor-my-quiz-attempts.html"><i class="feather-help-circle"></i><span>My Quiz Attempts</span></a></li>
-                            <li><a href="instructor-order-history.html"><i class="feather-shopping-bag"></i><span>Order History</span></a></li>
+                            <li>
+                                <a href="instructor-dashboard.html" class="active">
+                                    <i class="feather-home"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-profile.html">
+                                    <i class="feather-user"></i><span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-reviews.html">
+                                    <i class="feather-star"></i><span>Reviews</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-my-quiz-attempts.html">
+                                    <i class="feather-help-circle"></i><span>My Quiz Attempts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-order-history.html">
+                                    <i class="feather-shopping-bag"></i><span>Manager Order</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
 

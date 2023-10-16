@@ -19,6 +19,8 @@ public interface CartService {
     CartItem deleteCartItem(CartItem cartItem) throws Exception;
 
     void addNewCartItemToCookie(CartItem newCartItem, HttpServletRequest request, HttpServletResponse response) throws Exception;
+    
+    void removeCartItemFromCookie(CartItem cartItem, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
     List<CartItem> getCartFromCookie(HttpServletRequest request);
 

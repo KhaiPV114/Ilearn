@@ -2,6 +2,7 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.DBContext;
+import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,7 @@ public class CourseDAOImpl implements CourseDAO {
                 .imageUrl(rs.getString("image_url"))
                 .description(rs.getString("description"))
                 .price(rs.getDouble("price"))
+                .status(CourseStatus.valueOf(rs.getString("status")))
                 .build();
         return course;
     }
@@ -177,16 +179,16 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
-    
+
     @Override
     public List<Course> getAllCoursesByUserId(Integer userId) {
-        String sql = "select c.* from courses c " +
-                     "JOIN users_courses uc ON c.course_id = uc.course_id " +
-                     "where uc.user_id = ?";
+        String sql = "select c.* from courses c "
+                + "JOIN users_courses uc ON c.course_id = uc.course_id "
+                + "where uc.user_id = ?";
         //String sql = "select * from courses where user_id = ?";
-        try (Connection cn = dbContext.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
+            try ( ResultSet rs = ps.executeQuery()) {
                 List<Course> courses = new ArrayList<>();
                 while (rs.next()) {
                     Course course = courseRowMapper(rs);
@@ -232,9 +234,25 @@ public class CourseDAOImpl implements CourseDAO {
                 while (rs.next()) {
                 Course course = courseRowMapper(rs);
                 courses.add(course);
-            }
+                }
             }
             return courses;
+            } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public Boolean isEnrolled(Integer userId, Integer courseId) {
+        String sql = "select * from users_courses"
+                + " where user_id = ? and course_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -323,7 +341,6 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
-    
     
     public static void main(String[] args) {
         CourseDAO courseDAO = new CourseDAOImpl();

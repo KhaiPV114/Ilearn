@@ -26,6 +26,8 @@ public interface CourseDAO {
     List<Course> getAllCourseOrderByPriceDesc();
     
     List<Course> getAllCourseOrderByPriceAsc();
+    
+    Boolean isEnrolled(Integer userId, Integer courseId);
 
     List<Course> getCourseByKeyword(String keyword);
     

@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.Impl.CourseDAOImpl;
+import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
@@ -95,10 +96,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCoursesByUserId(Integer userId) {
-        if (userId == null){
+        if (userId == null) {
             return null;
-        }    
-        
+        }
+
         // return 
         return courseDAO.getAllCoursesByUserId(userId);
     }
@@ -136,6 +137,30 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
     
-    
-    
+    @Override
+    public Course validateCourse(Integer courseId) throws Exception {
+        if (courseId != null) {
+            Course course = courseDAO.getCourseById(courseId);
+            if (course != null) {
+                if(course.getStatus().equals(CourseStatus.ARCHIVED) || course.getStatus().equals(CourseStatus.NEW)){
+                    throw new Exception("Course not available: This course have been archived or unpublished");
+                }else{
+                    return course;
+                }
+            } else {
+                throw new Exception("Invalid course");
+            }
+        } else {
+            throw new Exception("Invalid course");
+        }
+    }
+
+    @Override
+    public Boolean isEnrolled(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return false;
+        }
+        return courseDAO.isEnrolled(userId, courseId);
+    }
+
 }

@@ -29,13 +29,14 @@ public class LearnerOrderHistoryView extends HttpServlet {
             throws ServletException, IOException {
         User user = AuthService.getUser(request);
         if (user == null) {
-
+            
         } else {
+            List<Order> unfinishOrders = OrderService.getUnfinishOrdersByUserId(user.getId());
             List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
-
+            request.setAttribute("unfinishOrders", unfinishOrders);
             request.setAttribute("orders", orders);
+            request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         }
-        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
     @Override

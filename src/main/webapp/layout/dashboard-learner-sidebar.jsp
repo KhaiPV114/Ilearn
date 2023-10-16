@@ -43,12 +43,12 @@
                                     <span>Reviews</span>
                                 </a>
                             </li>
-                            <li>
+<!--                            <li>
                                 <a href="student-my-quiz-attempts.html">
                                     <i class="feather-help-circle"></i>
                                     <span>My Quiz Attempts</span>
                                 </a>
-                            </li>
+                            </li>-->
                             <li>
                                 <a href="${pageContext.request.contextPath}/dashboard/learner/order/history">
                                     <i class="feather-shopping-bag"></i>
@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="${pageContext.request.contextPath}/authentication/logout">
                                     <i class="feather-log-out"></i>
                                     <span>Logout</span>
                                 </a>

@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CartDAO;
 import com.onlinelearning.DAL.Impl.CartDAOImpl;
+import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.User;
@@ -17,7 +18,7 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
 
     private final CartDAO cartDAO = new CartDAOImpl();
-    private final CourseService courseService = new CourseServiceImpl();
+    private final CourseService CourseService = new CourseServiceImpl();
     private final String CookieName = "CART";
     private final String SeperateCharacter = "-";
 
@@ -74,26 +75,56 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    //Return list of cart item in cookie, empty if not found
+    @Override
+    public void removeCartItemFromCookie(CartItem cartItem, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        List<CartItem> cartInCookie = getCartFromCookie(request);
+        if (cartInCookie.isEmpty()) {
+            throw new Exception("Cart in cookie is empty");
+        }
+        if (cartInCookie.contains(cartItem)) {
+            cartInCookie.remove(cartItem);
+            addCartToCookie(response, cartInCookie);
+        } else {
+            throw new Exception("Cart item is not exist");
+        }
+    }
+
+    @Override
+    public void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(CookieName)) {
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                break;
+            }
+        }
+    }
+
     @Override
     public List<CartItem> getCartFromCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
         List<CartItem> cartInCookie = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
         String[] courseIds = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CookieName)) {
                     courseIds = cookie.getValue().split(SeperateCharacter);
-
                 }
             }
         }
         if (courseIds != null) {
-            for (String course : courseIds) {
+            for (String courseId : courseIds) {
                 try {
-                    cartInCookie.add(CartItem.builder()
-                            .courseId(Integer.parseInt(course))
-                            .build());
+                    Course course = CourseService.getCourseById(Integer.parseInt(courseId));
+                    if (course != null) {
+                        if (course.getStatus().equals(CourseStatus.PUBLISHED)) {
+                            cartInCookie.add(CartItem.builder()
+                                    .courseId(Integer.parseInt(courseId))
+                                    .build());
+                        }
+                    }
                 } catch (NumberFormatException e) {
                 }
             }
@@ -117,19 +148,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(CookieName)) {
-                cookie.setPath("/");
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-                break;
-            }
-        }
-    }
-
-    @Override
     public void updateCartInSession(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         User user = (User) session.getAttribute("user");
         List<CartItem> cart;
@@ -144,7 +162,9 @@ public class CartServiceImpl implements CartService {
                 for (CartItem cartItem : cart) {
                     try {
                         cartItem.setUserId(user.getId());
-                        cartItem = createCartItem(cartItem);
+                        if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
+                            cartItem = createCartItem(cartItem);
+                        }
                     } catch (Exception ex) {
                     }
                 }
@@ -154,7 +174,7 @@ public class CartServiceImpl implements CartService {
 
         if (!cart.isEmpty()) {
             for (CartItem cartItem : cart) {
-                coursesInCart.add(courseService.getCourseById(cartItem.getCourseId()));
+                coursesInCart.add(CourseService.getCourseById(cartItem.getCourseId()));
             }
         }
 

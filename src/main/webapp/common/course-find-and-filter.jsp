@@ -165,12 +165,12 @@
                             <div class="course-grid-3">
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
-                                        <a href="course-details.html">
-                                            <img src="assets/images/course/course-online-01.jpg" alt="Card image">
-                                            <div class="rbt-badge-3 bg-white">
+                                        <a href="#">
+                                            <img style="height: 245px" src="${pageContext.request.contextPath}${course.imageUrl}" alt="Card image">
+<!--                                            <div class="rbt-badge-3 bg-white">
                                                 <span>-40%</span>
                                                 <span>Off</span>
-                                            </div>
+                                            </div>-->
                                         </a>
                                     </div>
                                     <div class="rbt-card-body">
@@ -199,7 +199,7 @@
                                             <li><i class="feather-users"></i>50 Students</li>
                                         </ul>
 
-                                        <p class="rbt-card-text">${course.description}</p>
+                                        <p class="rbt-card-text text-truncate">${course.description}</p>
                                         <div class="rbt-author-meta mb--10">
                                             <div class="rbt-avater">
                                                 <a href="#">
@@ -212,8 +212,8 @@
                                         </div>
                                         <div class="rbt-card-bottom">
                                             <div class="rbt-price">
-                                                <span class="current-price">$60</span>
-                                                <span class="off-price">${course.price}</span>
+                                                <span class="current-price">$${course.price}</span>
+                                                <!--<span class="off-price">${course.price}</span>-->
                                             </div>
                                             <a class="rbt-btn-link left-icon" href="course-details.html"><i class="feather-shopping-cart"></i> Add To Cart</a>
                                         </div>
@@ -287,5 +287,7 @@
         </script>
     </body>
     <jsp:include page="/layout/scripts.jsp"/>
-
+    <script>
+        
+    </script>
 </html>

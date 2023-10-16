@@ -37,21 +37,30 @@ public class LearnerCheckoutProcess extends HttpServlet {
         User user = AuthService.getUser(request);
         if (user != null) {
             String orderId = request.getParameter("order-id");
+            String noNeedPayment = request.getParameter("no-need-payment");
             if (orderId != null) {
                 Order createdOrder = OrderService.getOrderById(Integer.parseInt(orderId));
                 if (createdOrder.getUserId().equals(user.getId())) {
-                    createdOrder.setStatus(OrderStatus.PENDING);
-                    createdOrder = OrderService.updateOrder(createdOrder);
+                    if (!noNeedPayment.isEmpty()) {
+                        if(Boolean.parseBoolean(noNeedPayment)){
+                            createdOrder.setStatus(OrderStatus.SUCCESSFUL);
+                        }
+                    } else {
+                        createdOrder.setStatus(OrderStatus.PENDING);
+                    }
+                    System.out.println(createdOrder);
+                    
+                    OrderService.updateOrder(createdOrder);
 
                     if (!CartService.deleteCartOfUserId(user.getId())) {
                         System.out.println("Failed to delete cart");
                     }
+                    
                     CartService.updateCartInSession(request.getSession(), request, response);
 
                     response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }
             }
-
         }
     }
 }

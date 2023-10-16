@@ -7,10 +7,8 @@ import com.onlinelearning.Models.Order;
 import com.onlinelearning.Models.OrderItem;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
-import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.CouponService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
-import com.onlinelearning.Services.Impl.CartServiceImpl;
 import com.onlinelearning.Services.Impl.CouponServiceImpl;
 import com.onlinelearning.Services.Impl.OrderItemServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
@@ -32,6 +30,7 @@ import java.util.List;
 public class LearnerCheckoutView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/checkout.jsp";
+    private final String ERROR_404_PATH = "/error/404.jsp";
     private final String HOME_PATH = "/homepage";
     private final OrderService orderService = new OrderServiceImpl();
     private final OrderItemService orderItemService = new OrderItemServiceImpl();
@@ -41,22 +40,22 @@ public class LearnerCheckoutView extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher(HOME_PATH).forward(request, response);
+        request.getRequestDispatcher(ERROR_404_PATH).forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         User user = authService.getUser(request);
         List<Course> coursesInCart = (List<Course>) request.getSession().getAttribute("coursesInCart");
         if (user == null || coursesInCart.isEmpty()) {
             response.sendRedirect(request.getContextPath() + HOME_PATH);
             return;
         }
-        
+
         HashMap<String, String> courseCouponMap = JsonUtils.convertJsonToHashMap(request.getParameter("data"));
-        
+
         //Create new order
         Order newOrder = orderService.createOrder(Order.builder()
                 .userId(user.getId())
@@ -108,8 +107,8 @@ public class LearnerCheckoutView extends HttpServlet {
             subTotal += newOrderItem.getOriginalPrice();
             grandTotal += newOrderItem.getPrice();
         }
-        
-        if(mightyCoupon != null){
+
+        if (mightyCoupon != null) {
             couponService.minusCouponRemain(mightyCoupon);
         }
 

@@ -26,6 +26,14 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDAO.getAllOrdersByUserId(userId);
     }
+    
+    @Override
+    public List<Order> getUnfinishOrdersByUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return orderDAO.getUnfinishOrdersByUserId(userId);
+    }
 
     @Override
     public List<Order> getAllOrders() {
@@ -33,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderItem> getCoursesOfOrderByOrderId(Integer orderId) {
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
         return orderItemDAO.getAllOrderItemsByOrderId(orderId);
     }
 

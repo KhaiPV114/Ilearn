@@ -2,7 +2,6 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.DAL.OrderItemDAO;
-import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.OrderItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

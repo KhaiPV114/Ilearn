@@ -375,6 +375,10 @@
                         if(appliedCoupons.length !== 0){
                             location.reload();
                         }
+                        
+                        if(document.getElementsByClassName("course-price").length === 0){
+                            location.reload();
+                        };
                     } else {
                         console.log(xhttp.responseText);
                     }

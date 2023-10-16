@@ -12,6 +12,8 @@ public interface OrderDAO {
     
     List<Order> getAllOrdersByUserId(Integer userId);
     
+    List<Order> getUnfinishOrdersByUserId(Integer userId);
+    
     List<Order> getAllOrders();
 
     Order createOrder(Order newOrder);

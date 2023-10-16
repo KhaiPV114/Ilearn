@@ -9,7 +9,9 @@ public interface OrderService {
     
     List<Order> getAllOrdersByUserId(Integer userId);
     
-    List<OrderItem> getCoursesOfOrderByOrderId(Integer orderId);
+    List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+    
+    List<Order> getUnfinishOrdersByUserId(Integer userId);
     
     List<Order> getAllOrders();
     
