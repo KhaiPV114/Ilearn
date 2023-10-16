@@ -24,13 +24,13 @@ import jakarta.servlet.http.Part;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "InstructorCourseAdd", urlPatterns = {"/instructor/course/add"})
+@WebServlet(name = "InstructorCourseEdit", urlPatterns = {"/instructor/course/edit"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10, // 5 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-public class InstructorCourseAdd extends HttpServlet {
+public class InstructorCourseEdit extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/instructor/course-form.jsp";
 
@@ -46,12 +46,30 @@ public class InstructorCourseAdd extends HttpServlet {
             throws ServletException, IOException {
         List<Category> categories = categoryService.getAllCategories();
         request.setAttribute("categories", categories);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
+        String id = request.getParameter("id");
+        try {
+            Course course = courseService.getCourseById(Integer.parseInt(id));
+            request.setAttribute("name", course.getName());
+            request.setAttribute("price", course.getPrice());
+            request.setAttribute("description", course.getDescription());
+            request.setAttribute("category", course.getCategoryId());
+            request.setAttribute("imageUrl", course.getImageUrl());
+            requestDispatcher.forward(request, response);
+            return;
+        } catch (ServletException | IOException | NumberFormatException e) {
+        }
+        response.sendRedirect(request.getContextPath() + "/manager/category");
+
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
+
+        Integer id = Integer.valueOf(request.getParameter("id"));
 
         boolean check = true;
 
@@ -98,33 +116,31 @@ public class InstructorCourseAdd extends HttpServlet {
             }
         }
 
-        if (!check) {
-            List<Category> categories = categoryService.getAllCategories();
-            request.setAttribute("categories", categories);
-            request.setAttribute("name", name);
-            request.setAttribute("category", categoryId);
-            request.setAttribute("price", priceString);
-            request.setAttribute("description", description);
-            requestDispatcher.forward(request, response);
-            return;
+//        if (!check) {
+        List<Category> categories = categoryService.getAllCategories();
+        request.setAttribute("categories", categories);
+        request.setAttribute("name", name);
+        request.setAttribute("category", categoryId);
+        request.setAttribute("price", priceString);
+        request.setAttribute("description", description);
+        requestDispatcher.forward(request, response);
+//        return;
+//        }
+
+        Course currentCourse = courseService.getCourseById(id);
+
+        currentCourse.setName(name);
+        currentCourse.setDescription(description);
+        currentCourse.setPrice(price);
+
+        if (imageUrl != null) {
+            currentCourse.setImageUrl(imageUrl);
         }
 
-        User currentUser = authService.getUser(request);
-
-        //Create course
-        Course course = Course.builder()
-                .categoryId(categoryId)
-                .ownerId(currentUser.getId())
-                .name(name)
-                .imageUrl(imageUrl)
-                .description(description)
-                .price(price)
-                .build();
-
-        //Save category
+        //Update course
         try {
-            courseService.createCourse(course);
-            request.setAttribute("success", "Add course successfully!");
+            courseService.updateCourse(currentCourse);
+            request.setAttribute("success", "Updated course successfully!");
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
         }

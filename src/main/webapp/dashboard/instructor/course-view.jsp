@@ -82,7 +82,7 @@
                                                         <th style="width: 40%;">Detail</th>
                                                         <th>Price</th>
                                                         <th>Image</th>
-                                                        <th style="min-width: 140px;"></th>
+                                                        <th style="min-width: 140px;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -103,12 +103,13 @@
                                                             </td>
                                                             <td>${item.price}</td>
                                                             <td>
-                                                                <img src="${pageContext.request.contextPath}${item.imageUrl}" alt="image"/>
+                                                                <img src="${item.imageUrl}" alt="image"/>
                                                             </td>
                                                             <td>
-                                                                <div class="rbt-button-group justify-content-end">
-                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round" href="${pageContext.request.contextPath}/manager/category/edit?id=${item.id}" title="Edit"><i class="feather-edit pl--0"></i></a>
-                                                                    <span class="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger" onclick="submitDeletionForm(${item.id})" title="Delete"><i class="feather-trash-2 pl--0"></i></span>
+                                                                <div class="rbt-button-group d-block">
+                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round mx-0" href="${pageContext.request.contextPath}/instructor/section?courseId=${item.id}" title="Edit"><i class="feather-edit pl--0"></i></a>
+                                                                    <a class="rbt-btn btn-xs bg-primary-opacity radius-round mx-0" href="${pageContext.request.contextPath}/instructor/course/edit?id=${item.id}" title="Info"><i class="feather-info pl--0"></i></a>
+                                                                    <span class="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger mx-0" style="cursor: pointer;" onclick="submitDeletionForm(${item.id})" title="Delete"><i class="feather-trash-2 pl--0"></i></span>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -116,8 +117,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <!--Pagination here-->
 
-                                        <div class="d-flex mt-3" id="pageBar"></div>
+                                        <div class="col-lg-12 mt-5" id="pagination-bar"></div>
 
                                         <!--Delete via post method-->                                                    
                                         <form id="deletion-form" action="${pageContext.request.contextPath}/instructor/course/delete" method="post">
@@ -151,35 +153,15 @@
             document.getElementById("content").scrollIntoView({behavior: 'instant'});
             location.hash = '#content';
         </script>
+        <script src="${pageContext.request.contextPath}/assets/js/pagination.js"></script>
         <script>
-            var key = ${page},
-                    start = ${start},
-                    end = ${end},
-                    size = ${size},
-                    total = ${total},
-                    result = '';
-            result += '<ul class=\"pagination mx-auto\">';
-            if (start > 1) {
-                result += "<li class=\"page-item\">\n" +
-                        "<a class=\"page-link\" href=\"?size=" + size + "&page=1\">First</a>\n" +
-                        "</li>";
-            }
-            for (i = start; i <= end; ++i) {
-                if (i === key) {
-                    result += "<li class=\"page-item active\" aria-current=\"page\">\n" +
-                            "<a class=\"page-link\" href=\"#\">" + i + "<span class=\"visually-hidden\">(current)</span></a>\n" +
-                            "</li>";
-                } else {
-                    result += '<li class="page-item"><a class="page-link" href="?size=' + size + '&page=' + i + '">' + i + '</a></li>';
-                }
-            }
-            if (end < total) {
-                result += "<li class=\"page-item\">\n" +
-                        "<a class=\"page-link\" href=\"?size=" + size + "&page=" + total + "\">Last</a>\n" +
-                        "</li>";
-            }
-            result += '</ul>';
-            document.getElementById('pageBar').innerHTML = result;
+            renderPaginationBar('pagination-bar', {
+                key: ${page},
+                start: ${start},
+                end: ${end},
+                size: ${size},
+                total: ${total}
+            });
         </script>
     </body>
 </html>

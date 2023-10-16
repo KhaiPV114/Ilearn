@@ -16,7 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebFilter(
         filterName = "InstructorRoleFilter",
         urlPatterns = {
-            "/instructor/course/*"
+            "/instructor/course/*",
+            "/instructor/section/*"
         }
 )
 public class InstructorRoleFilter implements Filter {

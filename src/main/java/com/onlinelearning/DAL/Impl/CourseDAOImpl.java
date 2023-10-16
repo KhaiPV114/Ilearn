@@ -83,16 +83,18 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public List<Course> getCourseByOwnerIdPaging(Integer ownerId, Integer size, Integer page) {
-        String sql = "select * from courses where owner_id = ? order by id offset ? limit ?";
+        String sql = "select * from courses where owner_id = ? order by course_id limit ? offset ?";
         int offset = size * (page - 1);
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, ownerId);
-            ps.setInt(2, offset);
-            ps.setInt(3, size);
+            ps.setInt(2, size);
+            ps.setInt(3, offset);
             List<Course> courses = new ArrayList<>();
-            while (rs.next()) {
-                Course course = courseRowMapper(rs);
-                courses.add(course);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Course course = courseRowMapper(rs);
+                    courses.add(course);
+                }
             }
             return courses;
         } catch (SQLException ex) {
@@ -103,7 +105,7 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Integer countNumberOfCourseByOwnerId(Integer ownerId) {
-        String sql = "select count(*) as total where owner_id = ?";
+        String sql = "select count(*) as total from courses where owner_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, ownerId);
             try ( ResultSet rs = ps.executeQuery();) {
@@ -145,7 +147,7 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public Course updateCourse(Course course) {
         String sql = "update courses"
-                + " set category_id = ?, owner_id = ?, name = ?, image_url = ?, description = ? "
+                + " set category_id = ?, owner_id = ?, name = ?, image_url = ?, description = ?, price = ? "
                 + " where course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, course.getCategoryId());
