@@ -220,6 +220,70 @@
 
                                     </div>
                                 </div>
+                                
+                                <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="section-title">
+                                                    <h4 class="rbt-title-style-3">My Learner</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row gy-5">
+                                            <div class="col-lg-12">
+                                                <div class="rbt-dashboard-table table-responsive">
+                                                    <table class="rbt-table table table-borderless">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Course Enrolled</th>
+                                                                <th>Email</th>
+                                                                <th>Phone Number</th>
+                                                                <th>Joined Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th><a href="#">Phan Van Khai</a></th>
+                                                                <td>Marketing</td>
+                                                                <td>phankhai1142003@gmail.com</td>
+                                                                <td>09347875823</td>
+                                                                <td>LocalDateTime</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><a href="#">Do Dinh Nam</a></th>
+                                                                <td>Web Design</td>
+                                                                <td>dinhthangdo@gmail.com</td>
+                                                                <td>09384785738</td>
+                                                                <td>LocalDateTime</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><a href="#">Justin Bieber</a></th>
+                                                                <td>Graphic</td>
+                                                                <td>justinbieber@gmail.com</td>
+                                                                <td>03548594945</td>
+                                                                <td>LocalDateTime</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><a href="#">Luong Duy</a></th>
+                                                                <td>Marketing</td>
+                                                                <td>duylon@gmail.com</td>
+                                                                <td>01384385733</td>
+                                                                <td>LocalDateTime</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <div class="load-more-btn text-center">
+                                                    <a class="rbt-btn-link" href="./learner-manage.jsp">Browse All Learner<i class="feather-arrow-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                             <!-- End Content  -->
                         </div>
