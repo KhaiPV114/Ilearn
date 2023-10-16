@@ -28,6 +28,8 @@ public interface CourseService {
     Course validateCourse(Integer courseId) throws Exception;
     
     Boolean isEnrolled(Integer userId, Integer courseId);
+    
+    List<Course> getCourseByCategoryId(Integer categoryId);
 
     List<Course> getCourseByKeyword(String keyword);
     

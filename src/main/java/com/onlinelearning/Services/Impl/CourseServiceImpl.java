@@ -99,7 +99,7 @@ public class CourseServiceImpl implements CourseService {
             return null;
         }
 
-        // return 
+        // return
         return courseDAO.getAllCoursesByUserId(userId);
     }
 
@@ -157,6 +157,22 @@ public class CourseServiceImpl implements CourseService {
             return false;
         }
         return courseDAO.isEnrolled(userId, courseId);
+    }
+
+    @Override
+    public List<Course> getCourseByCategoryId(Integer categoryId) {
+
+        if (categoryId == null) {
+            return null;
+        }
+
+        List<Course> courses = courseDAO.getCourseByCategoryId(categoryId);
+
+        if (courses == null) {
+            return null;
+        }
+
+        return courses;
     }
 
 }

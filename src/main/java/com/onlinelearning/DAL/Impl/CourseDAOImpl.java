@@ -354,4 +354,26 @@ public class CourseDAOImpl implements CourseDAO {
         List<Course> course = courseDAO.getCourseByCategory("James");
         System.out.println(course);
     }
+public List<Course> getCourseByCategoryId(Integer categoryId) {
+  String sql = "SELECT * FROM courses WHERE category_id = ?";
+
+  try (Connection cn = dbContext.getConnection(); 
+       PreparedStatement ps = cn.prepareStatement(sql)) {
+
+    ps.setInt(1, categoryId);
+
+    try (ResultSet rs = ps.executeQuery()) {
+      List<Course> courses = new ArrayList<>();
+
+      while (rs.next()) {
+        Course course = courseRowMapper(rs);
+        courses.add(course);
+      }
+
+      return courses;
+    } 
+  } catch (SQLException ex) {
+    return null;
+  }
+}
 }

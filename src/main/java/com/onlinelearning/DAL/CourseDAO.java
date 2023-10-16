@@ -37,5 +37,5 @@ public interface CourseDAO {
     
     List<Course> getCourseByCategory(String category);
     
-    
+    List<Course> getCourseByCategoryId(Integer categoryId);
 }
