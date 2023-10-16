@@ -18,7 +18,6 @@ public class HomepageView extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CartService.updateCartInSession(request.getSession(), request, response);
         request.getRequestDispatcher(HOME_PATH).forward(request, response);
     }
     

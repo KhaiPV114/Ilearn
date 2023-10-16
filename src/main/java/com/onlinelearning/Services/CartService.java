@@ -1,6 +1,7 @@
 package com.onlinelearning.Services;
 
 import com.onlinelearning.Models.CartItem;
+import com.onlinelearning.Models.Course;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -24,10 +25,10 @@ public interface CartService {
 
     List<CartItem> getCartFromCookie(HttpServletRequest request);
 
-    void addCartToCookie(HttpServletResponse response, List<CartItem> carts);
+    void addCartToCookie(HttpServletRequest request, HttpServletResponse response, List<CartItem> cart);
 
     void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response);
 
-    void updateCartInSession(HttpSession session, HttpServletRequest request, HttpServletResponse response);
+    List<Course> getCourseInCart(HttpServletRequest request, HttpServletResponse response);
 
 }

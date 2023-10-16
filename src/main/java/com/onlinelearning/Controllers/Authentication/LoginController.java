@@ -52,7 +52,6 @@ public class LoginController extends HttpServlet {
         User user;
         try {
             user = authService.login(request);
-            cartService.updateCartInSession(request.getSession(false), request, response);
         } catch (Exception ex) {
             request.setAttribute("l_error", ex.getMessage());
             viewDispatcher.forward(request, response);

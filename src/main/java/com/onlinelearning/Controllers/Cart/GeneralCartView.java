@@ -19,7 +19,6 @@ public class GeneralCartView extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        cartService.updateCartInSession(request.getSession(), request, response);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 

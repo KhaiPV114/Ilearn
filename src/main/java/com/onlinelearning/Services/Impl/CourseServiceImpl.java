@@ -103,7 +103,7 @@ public class CourseServiceImpl implements CourseService {
         // return 
         return courseDAO.getAllCoursesByUserId(userId);
     }
-    
+
     public List<Course> getCourseByKeyword(String keyword) {
         List<Course> courses = courseDAO.getCourseByKeyword(keyword);
         return courses;
@@ -119,7 +119,7 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
         return courses;
     }
-    
+
     public List<Course> getAllCourseOrderByPriceDesc() {
         List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
         return courses;
@@ -127,7 +127,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCourseOrderByPriceAsc() {
-         List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
         return courses;
     }
 
@@ -136,23 +136,20 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = courseDAO.getCourseByCategory(category);
         return courses;
     }
-    
+
     @Override
     public Course validateCourse(Integer courseId) throws Exception {
         if (courseId != null) {
             Course course = courseDAO.getCourseById(courseId);
             if (course != null) {
-                if(course.getStatus().equals(CourseStatus.ARCHIVED) || course.getStatus().equals(CourseStatus.NEW)){
+                if (course.getStatus().equals(CourseStatus.ARCHIVED) || course.getStatus().equals(CourseStatus.NEW)) {
                     throw new Exception("Course not available: This course have been archived or unpublished");
-                }else{
+                } else {
                     return course;
                 }
-            } else {
-                throw new Exception("Invalid course");
             }
-        } else {
-            throw new Exception("Invalid course");
         }
+        throw new Exception("Invalid course");
     }
 
     @Override

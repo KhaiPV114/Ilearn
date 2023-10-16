@@ -2,10 +2,10 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CartDAO;
 import com.onlinelearning.DAL.Impl.CartDAOImpl;
-import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.User;
+import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.CourseService;
 import jakarta.servlet.http.Cookie;
@@ -14,11 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CartServiceImpl implements CartService {
 
     private final CartDAO cartDAO = new CartDAOImpl();
     private final CourseService CourseService = new CourseServiceImpl();
+    private final AuthService AuthService = new AuthServiceImpl();
     private final String CookieName = "CART";
     private final String SeperateCharacter = "-";
 
@@ -67,11 +70,15 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addNewCartItemToCookie(CartItem newCartItem, HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<CartItem> cartInCookie = getCartFromCookie(request);
-        if (cartInCookie.contains(newCartItem)) {
-            throw new Exception("This course already in your cart");
+        if (newCartItem != null) {
+            if (cartInCookie.contains(newCartItem)) {
+                throw new Exception("This course already in your cart");
+            } else {
+                cartInCookie.add(newCartItem);
+                addCartToCookie(request, response, cartInCookie);
+            }
         } else {
-            cartInCookie.add(newCartItem);
-            addCartToCookie(response, cartInCookie);
+            throw new Exception("Invalid cart item");
         }
     }
 
@@ -83,7 +90,7 @@ public class CartServiceImpl implements CartService {
         }
         if (cartInCookie.contains(cartItem)) {
             cartInCookie.remove(cartItem);
-            addCartToCookie(response, cartInCookie);
+            addCartToCookie(request, response, cartInCookie);
         } else {
             throw new Exception("Cart item is not exist");
         }
@@ -106,50 +113,55 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> getCartFromCookie(HttpServletRequest request) {
         List<CartItem> cartInCookie = new ArrayList<>();
         Cookie[] cookies = request.getCookies();
-        String[] courseIds = null;
+        List<Course> courses = new ArrayList<>();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CookieName)) {
-                    courseIds = cookie.getValue().split(SeperateCharacter);
+                    String[] coursesId = cookie.getValue().split(SeperateCharacter);
+                    for (String courseId : coursesId) {
+                        try {
+                            courses.add(CourseService.validateCourse(Integer.parseInt(courseId)));
+                        } catch (Exception ex) {
+                            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 }
             }
         }
-        if (courseIds != null) {
-            for (String courseId : courseIds) {
-                try {
-                    Course course = CourseService.getCourseById(Integer.parseInt(courseId));
-                    if (course != null) {
-                        if (course.getStatus().equals(CourseStatus.PUBLISHED)) {
-                            cartInCookie.add(CartItem.builder()
-                                    .courseId(Integer.parseInt(courseId))
-                                    .build());
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                }
+
+        if (!courses.isEmpty()) {
+            for (Course course : courses) {
+                cartInCookie.add(CartItem.builder().courseId(course.getId()).build());
             }
         }
         return cartInCookie;
     }
 
     @Override
-    public void addCartToCookie(HttpServletResponse response, List<CartItem> cart) {
-        String dataStoreInCookie = "";
-        for (CartItem cartItem : cart) {    //1-2-3-4-5
-            dataStoreInCookie += cartItem.getCourseId().toString() + SeperateCharacter;
+    public void addCartToCookie(HttpServletRequest request, HttpServletResponse response, List<CartItem> cart) {
+        if (!cart.isEmpty()) {
+            String dataStoreInCookie = "";
+            for (CartItem cartItem : cart) {
+                if (cartItem.getCourseId() != null) {
+                    dataStoreInCookie += cartItem.getCourseId().toString() + SeperateCharacter;
+                }
+            }
+            if (!dataStoreInCookie.isEmpty()) {
+                dataStoreInCookie = dataStoreInCookie.substring(0, dataStoreInCookie.length() - 1);
+            }
+            Cookie cartCookie = new Cookie(CookieName, dataStoreInCookie);
+            cartCookie.setPath("/");    //For all pages in website
+            cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
+            response.addCookie(cartCookie);
+        } else {
+            removeCartFromCookie(request, response);
         }
-        if (!dataStoreInCookie.isEmpty()) {
-            dataStoreInCookie = dataStoreInCookie.substring(0, dataStoreInCookie.length() - 1);
-        }
-        Cookie cartCookie = new Cookie(CookieName, dataStoreInCookie);
-        cartCookie.setPath("/");    //For all pages in website
-        cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
-        response.addCookie(cartCookie);
     }
 
     @Override
-    public void updateCartInSession(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        User user = (User) session.getAttribute("user");
+    public List<Course> getCourseInCart(HttpServletRequest request, HttpServletResponse response) {
+       
+        User user = AuthService.getUser(request);
         List<CartItem> cart;
         List<Course> coursesInCart = new ArrayList<>();
 
@@ -158,14 +170,15 @@ public class CartServiceImpl implements CartService {
         } else {
             cart = getCartByUserId(user.getId());
             if (cart.isEmpty()) {
-                cart = getCartFromCookie(request);
-                for (CartItem cartItem : cart) {
-                    try {
-                        cartItem.setUserId(user.getId());
-                        if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
-                            cartItem = createCartItem(cartItem);
+                if (!(cart = getCartFromCookie(request)).isEmpty()) {
+                    for (CartItem cartItem : cart) {
+                        try {
+                            cartItem.setUserId(user.getId());
+                            if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
+                                cartItem = createCartItem(cartItem);
+                            }
+                        } catch (Exception ex) {
                         }
-                    } catch (Exception ex) {
                     }
                 }
             }
@@ -174,11 +187,15 @@ public class CartServiceImpl implements CartService {
 
         if (!cart.isEmpty()) {
             for (CartItem cartItem : cart) {
-                coursesInCart.add(CourseService.getCourseById(cartItem.getCourseId()));
+                try {
+                    coursesInCart.add(CourseService.validateCourse(cartItem.getCourseId()));
+                } catch (Exception ex) {
+                    Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-
-        session.setAttribute("coursesInCart", coursesInCart);
+//        request.getSession(true).setAttribute("coursesInCart", coursesInCart);
+        return coursesInCart;
     }
 
     @Override

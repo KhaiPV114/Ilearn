@@ -1,6 +1,5 @@
 package com.onlinelearning.Controllers.Cart;
 
-import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.User;
@@ -39,17 +38,9 @@ public class GeneralCartAdd extends HttpServlet {
         PrintWriter pw = response.getWriter();
 
         //Get and validate course need add to cart from request
-        String courseId = request.getParameter("course-id");
         Course course;
         try {
-            course = CourseService.getCourseById(Integer.parseInt(courseId));
-            if (course != null) {
-                if(course.getStatus().equals(CourseStatus.ARCHIVED) || course.getStatus().equals(CourseStatus.NEW)){
-                    throw new Exception("Course not available: This course have been archived or unpublished");
-                }
-            } else {
-                throw new Exception("Invalid course: Cannot add to your cart");
-            }
+            course = CourseService.validateCourse(Integer.parseInt(request.getParameter("course-id")));
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             pw.print(e.getMessage());
@@ -86,7 +77,6 @@ public class GeneralCartAdd extends HttpServlet {
 
         //Response to client 
         if (addedToCart) {
-            CartService.updateCartInSession(request.getSession(), request, response);
             response.setStatus(HttpServletResponse.SC_OK);
             pw.print("Add to cart successful!");
         } else {

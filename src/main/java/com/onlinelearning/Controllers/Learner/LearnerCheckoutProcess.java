@@ -55,8 +55,6 @@ public class LearnerCheckoutProcess extends HttpServlet {
                     if (!CartService.deleteCartOfUserId(user.getId())) {
                         System.out.println("Failed to delete cart");
                     }
-                    
-                    CartService.updateCartInSession(request.getSession(), request, response);
 
                     response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }

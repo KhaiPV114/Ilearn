@@ -2,13 +2,10 @@ package com.onlinelearning.Controllers;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
-import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
-import com.onlinelearning.Services.Impl.UserServiceImpl;
-import com.onlinelearning.Services.UserService;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -31,6 +28,7 @@ public class SearchCourse extends HttpServlet {
 
     private final String VIEW_PATH = "/common/course-find-and-filter.jsp";
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -66,7 +64,7 @@ public class SearchCourse extends HttpServlet {
                 System.out.print("Blank coursekeyword: ");
                 System.out.println(courses);
                 request.setAttribute("courses", courses);
-                request.getRequestDispatcher(VIEW_PATH).forward(request, response);
+                dispatcher.forward(request, response);
                 return;
             }
             //filterPrice is not blank and categories is blank
@@ -342,6 +340,7 @@ public class SearchCourse extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

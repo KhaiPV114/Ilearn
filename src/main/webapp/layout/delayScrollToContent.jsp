@@ -6,25 +6,6 @@
 
 <script>
     //Auto scroll to the content of page with delay
-    scrollToElementWithTime();
-    function scrollToElementWithTime() {
-        const targetElement = document.getElementById('content-display');
-        const scrollDelay = 500;
-        const targetPosition = targetElement.offsetTop;
-        const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition;
-        let startTime = null;
-        function scrollStep(timestamp) {
-            if (!startTime) {
-                startTime = timestamp;
-            }
-            const progress = timestamp - startTime;
-            const percentage = Math.min(progress / scrollDelay, 1);
-            window.scrollTo(0, startPosition + distance * percentage);
-            if (progress < scrollDelay) {
-                window.requestAnimationFrame(scrollStep);
-            }
-        }
-        window.requestAnimationFrame(scrollStep);
-    }
+    document.getElementById("content-display").scrollIntoView({behavior: 'instant'});
+    location.hash = '#content';
 </script>

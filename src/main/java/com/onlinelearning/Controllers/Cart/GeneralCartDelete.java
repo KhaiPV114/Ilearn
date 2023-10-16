@@ -34,10 +34,9 @@ public class GeneralCartDelete extends HttpServlet {
         PrintWriter pw = response.getWriter();
 
         //Get Cart item need delete from request
-        String courseIdParam = request.getParameter("course-id");
         Integer courseId;
         try {
-            courseId = Integer.parseInt(courseIdParam);
+            courseId = Integer.parseInt(request.getParameter("course-id"));
         } catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
@@ -69,7 +68,6 @@ public class GeneralCartDelete extends HttpServlet {
         
         //Response to client 
         if (removedFromCart) {
-            CartService.updateCartInSession(request.getSession(), request, response);
             response.setStatus(HttpServletResponse.SC_OK);
             pw.print("Remove from cart successful!");
         } else {

@@ -72,9 +72,9 @@
                                                     <td class="pro-information">
                                                         <ul class="rbt-list-style-3">
                                                             <li>
-                                                                <i class="feather-edit-2"></i>By ${userService.getUserFullNameById(course.ownerId)}</li>
+                                                                <i class="feather-edit-2"></i>By ${userService.getUser(course.ownerId).username}</li>
                                                             <li>
-                                                                <i class="feather-book"></i>${"numOfLesson"}s&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"numOfLearner"}
+                                                                <i class="feather-book"></i>${"8 lessons"}&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"3 members"}
                                                             </li>
                                                             <li>
                                                                 <div class="rbt-review">
@@ -320,7 +320,7 @@
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>
-        <jsp:include page="/layout/delayScrollToContent.jsp"/>
+        <%--<jsp:include page="/layout/delayScrollToContent.jsp"/>--%>
     </body>
 
     <script>
@@ -369,21 +369,11 @@
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function () {
                     if (xhttp.status === 200) {
-                        document.getElementById('cart-item-' + courseId).style.display = 'none';
-                        document.getElementById('cart-item-' + courseId + '-price').className = '';
-                        setCartPrice();
-                        if(appliedCoupons.length !== 0){
-                            location.reload();
-                        }
-                        
-                        if(document.getElementsByClassName("course-price").length === 0){
-                            location.reload();
-                        };
+                        location.reload();
                     } else {
                         console.log(xhttp.responseText);
                     }
                 };
-
                 xhttp.open("POST", urlPath);
                 xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhttp.send(data);

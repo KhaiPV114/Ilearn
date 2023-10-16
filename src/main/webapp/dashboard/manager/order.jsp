@@ -119,9 +119,9 @@
                                                                         </c:choose>
                                                                     </td>     
                                                                     <td>
-                                                                        <button type="button" class="btn btn-success btn-lg" style="width: 100%;">Accept</button>
+                                                                        <button type="button" class="btn btn-success btn-lg" style="width: 100%;" onclick="acceptOrder(${order.id})">Accept</button>
 
-                                                                        <button type="button" class="btn btn-danger btn-lg" style="width: 100%; margin-top: 5px;">Reject</button>
+                                                                        <button type="button" class="btn btn-danger btn-lg" style="width: 100%; margin-top: 5px;" onclick="rejectOrder(${order.id})">Reject</button>
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>
@@ -389,7 +389,6 @@
             </div>
     </body>
     <jsp:include page="/layout/footer.jsp"/>
-    <jsp:include page="/layout/delayScrollToContent.jsp"/>
     <jsp:include page="/layout/scripts.jsp"/>
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
     <script>
@@ -428,5 +427,37 @@
                 "searching": false
             });
         });
+        
+        function acceptOrder(orderId){
+            let urlPath = "${pageContext.request.contextPath}/manager/order/accept";
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                if (xhttp.status === 200) {
+                    location.reload();
+                } else {
+//                    let errMsg = document.getElementById("message-error"+courseId);
+//                    errMsg.innerHTML = xhttp.responseText;
+                }
+            };
+            xhttp.open("POST", urlPath);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("order-id=" + orderId);
+        }
+        
+        function rejectOrder(orderId){
+            let urlPath = "${pageContext.request.contextPath}/manager/order/reject";
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                if (xhttp.status === 200) {
+                    location.reload();
+                } else {
+//                    let errMsg = document.getElementById("message-error"+courseId);
+//                    errMsg.innerHTML = xhttp.responseText;
+                }
+            };
+            xhttp.open("POST", urlPath);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("order-id=" + orderId);
+        }
     </script>
 </html>

@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="/layout/links.jsp"/>
-        
+
     </head>
     <body class="rbt-header-sticky">
         <jsp:include page="/layout/header.jsp"/>
@@ -167,10 +167,10 @@
                                     <div class="rbt-card-img">
                                         <a href="#">
                                             <img style="height: 245px" src="${pageContext.request.contextPath}${course.imageUrl}" alt="Card image">
-<!--                                            <div class="rbt-badge-3 bg-white">
-                                                <span>-40%</span>
-                                                <span>Off</span>
-                                            </div>-->
+                                            <!--                                            <div class="rbt-badge-3 bg-white">
+                                                                                            <span>-40%</span>
+                                                                                            <span>Off</span>
+                                                                                        </div>-->
                                         </a>
                                     </div>
                                     <div class="rbt-card-body">
@@ -215,10 +215,24 @@
                                                 <span class="current-price">$${course.price}</span>
                                                 <!--<span class="off-price">${course.price}</span>-->
                                             </div>
-                                            <a class="rbt-btn-link left-icon" href="course-details.html"><i class="feather-shopping-cart"></i> Add To Cart</a>
+                                            <c:if test="${coursesInCart.contains(course)}">
+                                                <div>
+                                                    <a class="rbt-btn-link" href="javascript:void(0);">
+                                                        Learn More<i class="feather-arrow-right"></i>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${!coursesInCart.contains(course)}">
+                                                <div id="add-to-cart-btn${course.id}">
+                                                    <a class="rbt-btn-link left-icon" href="javascript:void(0);" onclick="addToCart(${course.id})">
+                                                        <i class="feather-shopping-cart"></i> Add To Cart
+                                                    </a>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
+                                <p id="message-error${course.id}" style="text-align: center; color: red"></p>
                             </div>
                         </c:forEach>
                         <!-- End Single Card  -->
@@ -264,7 +278,7 @@
                         url = url + "&" + "filterPrice=" + filterPrice;
                     }
                 }
-                if(filterCategories !== ""){
+                if (filterCategories !== "") {
                     if (firstParamSet === false) {
                         url = url + "?" + "filterCategory=" + filterCategories;
                         firstParamSet = true;
@@ -272,7 +286,7 @@
                         url = url + "&" + "filterCategory=" + filterCategories;
                     }
                 }
-                if(priceRange !== ""){
+                if (priceRange !== "") {
                     if (firstParamSet === false) {
                         url = url + "?" + "priceRange=" + priceRange;
                         firstParamSet = true;
@@ -288,6 +302,35 @@
     </body>
     <jsp:include page="/layout/scripts.jsp"/>
     <script>
-        
+        function addToCart(courseId) {
+            let urlPath = "${pageContext.request.contextPath}/cart/add";
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                if (xhttp.status === 200) {
+                    location.reload();
+                } else {
+                    let errMsg = document.getElementById("message-error"+courseId);
+                    errMsg.innerHTML = xhttp.responseText;
+                }
+            };
+            xhttp.open("POST", urlPath);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("course-id=" + courseId);
+        }
+
+        function addToWishlist(courseId) {
+            let urlPath = "${pageContext.request.contextPath}/wishlist/add";
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                if (xhttp.status === 200) {
+                    location.reload();
+                } else {
+                    
+                }
+            };
+            xhttp.open("POST", urlPath);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("course-id=" + courseId);
+        }
     </script>
 </html>

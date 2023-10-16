@@ -2,6 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import = "com.onlinelearning.Models.Role" %>
+<jsp:useBean id="CartService" scope="request" class="com.onlinelearning.Services.Impl.CartServiceImpl" />
+
+<c:set var="coursesInCart" scope="session" value="${CartService.getCourseInCart(pageContext.request, pageContext.response)}" />
 
 <header class="rbt-header rbt-header-10">
     <div class="rbt-sticky-placeholder"></div>
@@ -728,4 +731,4 @@
 <jsp:include page="/layout/header/mobile-menu-side.jsp" />
 
 <!-- Cart Side -->
-<jsp:include page="/layout/header/cart-side.jsp" />
+<jsp:include page="/layout/header/cart-side.jsp" /> 

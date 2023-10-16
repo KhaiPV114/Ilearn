@@ -1,6 +1,3 @@
-/*
- * DuyDuc94
- */
 package com.onlinelearning.Controllers.Manager;
 
 import com.onlinelearning.Enums.OrderStatus;
@@ -15,11 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-/**
- * @author duy20
- */
-@WebServlet(name = "ManagerAcceptOrder", urlPatterns = {"/manager/order/accept"})
-public class ManagerAcceptOrder extends HttpServlet {
+@WebServlet(name = "ManagerAcceptOrder", urlPatterns = {"/manager/order/reject"})
+public class ManagerRejectOrder extends HttpServlet {
 
     private final OrderService OrderService = new OrderServiceImpl();
 
@@ -37,7 +31,7 @@ public class ManagerAcceptOrder extends HttpServlet {
         try {
             Order order = OrderService.getOrderById(Integer.parseInt(orderId));
             if (order != null) {
-                order.setStatus(OrderStatus.SUCCESSFUL);
+                order.setStatus(OrderStatus.REJECTED);
                 OrderService.updateOrder(order);
                 response.setStatus(HttpServletResponse.SC_OK);
             }else{

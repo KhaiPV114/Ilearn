@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/${pageContext.request.contextPath}/dashboard/manager/order">
+                        <a href="${pageContext.request.contextPath}/dashboard/manager/order">
                             <i class="feather-shopping-bag"></i>
                             <span>Manager Order</span>
                         </a>
