@@ -5,21 +5,27 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.UUID;
 import com.onlinelearning.Services.FileUploadService;
+import com.onlinelearning.Utils.DotEnv;
+import org.apache.commons.lang3.StringUtils;
 
 public class FileUploadServiceImpl implements FileUploadService {
 
     private static FileUploadServiceImpl fileUploadServiceInstance;
 
-    private static String uploadDirectory = Constants.UPLOAD_DIRECTORY + File.separator + Constants.UPLOAD_IMAGE_DIRECTORY;
+    private static final String UPLOAD_ROOT_DIRECTORY = DotEnv.get("UPLOAD_DIRECTORY");
+
+    private static final String DEFAULT_IMAGE_UPLOAD_DIRECTORY = DotEnv.get("DEFAULT_IMAGE_UPLOAD_DIRECTORY");
+
+    private static final String DEFAULT_IMAGE_UPLOAD_PATH
+            = UPLOAD_ROOT_DIRECTORY
+            + File.separator
+            + DotEnv.get("DEFAULT_IMAGE_UPLOAD_DIRECTORY");
 
     //Singleton pattern: do not allow to instantiating class public
     private FileUploadServiceImpl() {
-        if (Constants.PROFILE.equals("dev")) {
-            uploadDirectory = Constants.UPLOAD_DIRECTORY_DEV + File.separator + Constants.UPLOAD_IMAGE_DIRECTORY;
-        }
-        File uploadDirectoryFile = new File(uploadDirectory);
-        if (!uploadDirectoryFile.exists()) {
-            uploadDirectoryFile.mkdirs();
+        File defaultImageUploadDirectory = new File(DEFAULT_IMAGE_UPLOAD_DIRECTORY);
+        if (!defaultImageUploadDirectory.exists()) {
+            defaultImageUploadDirectory.mkdirs();
         }
     }
 
@@ -32,11 +38,25 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public String getImageUploadDirectoryPath() {
-        return uploadDirectory;
+        return DEFAULT_IMAGE_UPLOAD_PATH;
+    }
+
+    @Override
+    public String uploadFile(String uploadDirectory, String uploadFileName, File file) throws Exception {
+        return null;
     }
 
     @Override
     public String uploadImage(Part filePart) throws Exception {
+        return uploadImage(DEFAULT_IMAGE_UPLOAD_DIRECTORY, filePart);
+    }
+
+    @Override
+    public String uploadImage(String uploadDirectory, Part filePart) throws Exception {
+        if (StringUtils.isBlank(uploadDirectory)) {
+            throw new Exception("Upload directory must not be empty!");
+        }
+
         if (filePart == null) {
             throw new Exception("File part must not be null");
         }
@@ -53,14 +73,15 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         //Generate new file name as an UUID
         String savingFileName = UUID.randomUUID().toString() + "." + fileExtension;
+
         //Create saving path
-        String savingFilePath = uploadDirectory + File.separator + savingFileName;
+        String savingFilePath = DEFAULT_IMAGE_UPLOAD_PATH + File.separator + savingFileName;
 
         //Save file
         filePart.write(savingFilePath);
 
         //File url to access from internet
-        String savedFileUrl = "/images/" + savingFileName;
+        String savedFileUrl = DEFAULT_IMAGE_UPLOAD_DIRECTORY.replaceAll("\\\\", "/") + "/" + savingFileName;
 
         return savedFileUrl;
     }
