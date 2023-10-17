@@ -27,11 +27,9 @@ public class InstructorSearchLearner extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String userName = request.getParameter("userName");
-        System.out.println(userName);
         List<User> learnerList = new ArrayList<>();
         User learner = userService.getUserByUsername(userName);
         learnerList.add(learner);
-        System.out.println(learnerList);
         request.setAttribute("learnerList", learnerList);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }

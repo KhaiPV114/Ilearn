@@ -48,11 +48,6 @@ public class ManagerOrderView extends HttpServlet {
                 successfulOrders.add(order);
             }
         }
-        System.out.println("Pending orders: " + pendingOrders);
-        System.out.println("Failed orders: " + failedOrders);
-        System.out.println("Successful orders: " + successfulOrders);
-        System.out.println("Rejected orders: " + rejectedOrders);
-        System.out.println("All orders: " + allOrders);
         request.setAttribute("pendingOrders", pendingOrders);
         request.setAttribute("rejectedOrders", rejectedOrders);
         request.setAttribute("failedOrders", failedOrders);
