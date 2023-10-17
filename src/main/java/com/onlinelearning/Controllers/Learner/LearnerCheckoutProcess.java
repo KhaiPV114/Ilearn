@@ -48,12 +48,10 @@ public class LearnerCheckoutProcess extends HttpServlet {
                     } else {
                         createdOrder.setStatus(OrderStatus.PENDING);
                     }
-                    System.out.println(createdOrder);
                     
                     OrderService.updateOrder(createdOrder);
 
                     if (!CartService.deleteCartOfUserId(user.getId())) {
-                        System.out.println("Failed to delete cart");
                     }
 
                     response.sendRedirect(request.getContextPath() + VIEW_PATH);

@@ -341,10 +341,4 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
-    
-    public static void main(String[] args) {
-        CourseDAO courseDAO = new CourseDAOImpl();
-        List<Course> course = courseDAO.getCourseByCategory("James");
-        System.out.println(course);
-    }
 }

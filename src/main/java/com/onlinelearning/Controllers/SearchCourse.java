@@ -34,9 +34,6 @@ public class SearchCourse extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW_PATH);
 
-        System.out.println("");
-        System.out.println("Start process: ");
-
         List<Course> courses = courseService.getAllCourses();
 
         List<Category> categorys = categoryService.getAllCategories();
@@ -44,25 +41,19 @@ public class SearchCourse extends HttpServlet {
 
         String filterPrice = request.getParameter("filterPrice");
         request.setAttribute("filterPrice", filterPrice);
-        System.out.println("FilterPrice: " + filterPrice);
 
         String courseKeyword = request.getParameter("courseKeyword");
         request.setAttribute("courseKeyword", courseKeyword);
-        System.out.println("CourseKeyword: " + courseKeyword);
 
         String categories = request.getParameter("filterCategory");
-        System.out.println("FilterCategory: " + categories);
 
         String priceRange = request.getParameter("priceRange");
-        System.out.println("Pricerange: " + priceRange);
         request.setAttribute("priceRange", priceRange);
 
         //CourseKeyword is blank
         if (StringUtils.isBlank(courseKeyword)) {
             //filterPrice and categories is blank
             if (StringUtils.isBlank(filterPrice) && StringUtils.isBlank(categories)) {
-                System.out.print("Blank coursekeyword: ");
-                System.out.println(courses);
                 request.setAttribute("courses", courses);
                 dispatcher.forward(request, response);
                 return;
@@ -76,8 +67,6 @@ public class SearchCourse extends HttpServlet {
                             return (int) (b.getPrice() - a.getPrice());
                         }
                     });
-                    System.out.println("filterPrice is not blank and categories is blank");
-                    System.out.println(courses);
                     request.setAttribute("courses", courses);
                     dispatcher.forward(request, response);
                     return;
@@ -89,8 +78,6 @@ public class SearchCourse extends HttpServlet {
                             return (int) (a.getPrice() - b.getPrice());
                         }
                     });
-                    System.out.println("filterPrice is not blank and categories is blank");
-                    System.out.println(courses);
                     request.setAttribute("courses", courses);
                     dispatcher.forward(request, response);
                     return;
@@ -99,8 +86,6 @@ public class SearchCourse extends HttpServlet {
             //filterPrice is blank, categories is not blank
             if (StringUtils.isBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
                 courses = courseService.getCourseByCategory(categories);
-                System.out.println("filterPrice is blank and categories is not blank");
-                System.out.println(courses);
                 request.setAttribute("courses", courses);
                 dispatcher.forward(request, response);
                 return;
@@ -109,28 +94,22 @@ public class SearchCourse extends HttpServlet {
             if (StringUtils.isNotBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
                 if (filterPrice.equals("hightolow")) {
                     courses = courseService.getCourseByCategory(categories);
-                    System.out.println("Both filterPrice and categories are not blank");
-                    System.out.println(courses);
                     Collections.sort(courses, new Comparator<Course>() {
                         public int compare(Course a, Course b) {
                             return (int) (b.getPrice() - a.getPrice());
                         }
                     });
-                    System.out.println(courses);
                     request.setAttribute("courses", courses);
                     dispatcher.forward(request, response);
                     return;
                 }
                 if (filterPrice.equals("lowtohigh")) {
-                    System.out.println("Both filterPrice and categories are not blank");
                     courses = courseService.getCourseByCategory(categories);
-                    System.out.println(courses);
                     Collections.sort(courses, new Comparator<Course>() {
                         public int compare(Course a, Course b) {
                             return (int) (a.getPrice() - b.getPrice());
                         }
                     });
-                    System.out.println(courses);
                     request.setAttribute("courses", courses);
                     dispatcher.forward(request, response);
                     return;
@@ -142,9 +121,7 @@ public class SearchCourse extends HttpServlet {
         if (StringUtils.isNotBlank(courseKeyword)) {
             //filterPrice and categories is blank
             if (StringUtils.isBlank(filterPrice) && StringUtils.isBlank(categories)) {
-                System.out.println("Not Blank coursekeyword: ");
                 courses = courseService.getCourseByKeyword(courseKeyword);
-                System.out.println(courses);
                 request.setAttribute("courses", courses);
                 request.getRequestDispatcher(VIEW_PATH).forward(request, response);
                 return;
@@ -173,7 +150,6 @@ public class SearchCourse extends HttpServlet {
                                 return (int) (a.getPrice() - b.getPrice());
                             }
                         });
-                        System.out.println(courses);
                         request.setAttribute("courses", courses);
                         dispatcher.forward(request, response);
                         return;
@@ -191,7 +167,6 @@ public class SearchCourse extends HttpServlet {
                             courses1.add(c);
                         }
                     }
-                    System.out.println(courses1);
                     request.setAttribute("courses", courses1);
                     dispatcher.forward(request, response);
                     return;
@@ -213,7 +188,6 @@ public class SearchCourse extends HttpServlet {
                                 return (int) (b.getPrice() - a.getPrice());
                             }
                         });
-                        System.out.println(courses1);
                         request.setAttribute("courses", courses1);
                         dispatcher.forward(request, response);
                         return;
@@ -233,8 +207,6 @@ public class SearchCourse extends HttpServlet {
                                 return (int) (a.getPrice() - b.getPrice());
                             }
                         });
-
-                        System.out.println(courses1);
                         request.setAttribute("courses", courses1);
                         dispatcher.forward(request, response);
                         return;
