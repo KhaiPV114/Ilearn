@@ -58,6 +58,8 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course-enrolled-view">View enrolled courses</a>    
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/learn?courseId=8">View course sections</a>    
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
 
