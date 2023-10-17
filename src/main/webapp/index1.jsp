@@ -56,6 +56,8 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-search-form.jsp">Search coupon</a>        
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/dashboard/learner/course-enrolled-view">View enrolled courses</a>    
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        
         <br>
 
