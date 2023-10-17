@@ -10,26 +10,22 @@
         <title>JSP Page</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
-    <body class="rbt-header-sticky">
+    <body>
         <jsp:include page="/layout/header.jsp"/>
-        <div class="rbt-error-area bg-gradient-11 rbt-section-gap">
-            <div class="error-area">
-                <div class="container">
-                    <div class="row justify-content-center text-center">
-                        <div class="col-10">
-                            <h1 class="title">404!</h1>
-                            <h3 class="sub-title">Page not found</h3>
-                            <p>The page you were looking for could not be found.</p>
-                            <a class="rbt-btn btn-gradient icon-hover" href="${pageContext.request.contextPath}/homepage">
-                                <span class="btn-text">Back To Home</span>
-                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="container text-center">
+            <div class="row my-5">
+                <h1 class="mt-5 text-warning">404 - Not Found!</h1>
+                <h3 class="text-warning">Resource not found!</h3>
+                <a type="submit" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-25 mx-auto" href="${pageContext.request.contextPath}">
+                    <span class="icon-reverse-wrapper">
+                        <span class="btn-text">Back to home</span>
+                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                    </span>
+                </a>
             </div>
-        </div> 
+        </div>
         <jsp:include page="/layout/footer.jsp"/>
+        <jsp:include page="/layout/scripts.jsp"/>
     </body>
-    <jsp:include page="/layout/scripts.jsp"/>
 </html>

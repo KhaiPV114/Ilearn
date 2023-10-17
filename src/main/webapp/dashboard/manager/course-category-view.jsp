@@ -81,7 +81,7 @@
                                                                 </p>
                                                             </th>
                                                             <td>
-                                                                <img src="${pageContext.request.contextPath}${item.imageUrl}" alt="image"/>
+                                                                <img src="${item.imageUrl}" alt="image"/>
                                                             </td>
                                                             <td>
                                                                 <div class="rbt-button-group justify-content-end">

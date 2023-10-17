@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "HomepageView", urlPatterns = {"/homepage"})
 public class HomepageView extends HttpServlet {
     
-    private static final String HOME_PATH = "index.jsp";
+    private static final String HOME_PATH = "index1.jsp";
     private static final CartService CartService = new CartServiceImpl();
     
     @Override
