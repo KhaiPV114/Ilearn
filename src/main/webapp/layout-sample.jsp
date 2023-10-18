@@ -7,15 +7,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>?????????</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
-    <body class="rbt-header-sticky">
+    <body class="rbt-header-sticky">    
         <jsp:include page="/layout/header.jsp"/>
-        <div class="container">
+        <!--Content go here-->
 
-        </div>
+        <!--Content go here-->
         <jsp:include page="/layout/footer.jsp"/>
+        <jsp:include page="/layout/scripts.jsp"/>
     </body>
-    <jsp:include page="/layout/scripts.jsp"/>
 </html>

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author duy20
  */
-@WebServlet(name = "ManagerOrderView", urlPatterns = {"/dashboard/manager/order"})
+@WebServlet(name = "ManagerOrderView", urlPatterns = {"/manager/order"})
 public class ManagerOrderView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/manager/order.jsp";

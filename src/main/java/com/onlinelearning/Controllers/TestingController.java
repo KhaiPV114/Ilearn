@@ -6,24 +6,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "TestingController", urlPatterns = {"/test"})
+@WebServlet(name = "TestingController", urlPatterns = {"/testing"})
 public class TestingController extends HttpServlet {
 
     private static final String VIEW_PATH = "test-page.jsp";
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        if (StringUtils.isBlank(name)) {
-            name = "World";
-        }
-        String message = "Hello, " + name + "!";
-        request.setAttribute("message", message);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

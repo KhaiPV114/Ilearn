@@ -100,7 +100,7 @@ public class CourseServiceImpl implements CourseService {
         }
 
         // return
-        return courseDAO.getAllCoursesByUserId(userId);
+        return courseDAO.getEnrolledCourseOfUserId(userId);
     }
 
     public List<Course> getCourseByKeyword(String keyword) {
@@ -173,6 +173,18 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return courses;
+    }
+
+    public Boolean getUserEnrollCourse(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return false;
+        } else {
+            if (isEnrolled(userId, courseId)) {
+                return false;
+            } else {
+                return courseDAO.isEnrolled(userId, courseId);
+            }
+        }
     }
 
 }

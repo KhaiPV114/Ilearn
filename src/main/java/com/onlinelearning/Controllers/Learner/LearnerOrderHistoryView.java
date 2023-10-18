@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(name = "LearnerOrderHistoryView", urlPatterns = {"/dashboard/learner/order/history"})
+@WebServlet(name = "LearnerOrderHistoryView", urlPatterns = {"/learner/order/history"})
 public class LearnerOrderHistoryView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/order-history.jsp";

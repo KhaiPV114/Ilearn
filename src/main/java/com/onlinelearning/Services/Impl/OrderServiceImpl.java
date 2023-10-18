@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
         if (userId == null) {
             return null;
         }
-        return orderDAO.getAllOrdersByUserId(userId);
+        return orderDAO.getAllOrdersOfUserId(userId);
     }
     
     @Override
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
         if (userId == null) {
             return null;
         }
-        return orderDAO.getUnfinishOrdersByUserId(userId);
+        return orderDAO.getUnfinishOrdersOfUserId(userId);
     }
 
     @Override

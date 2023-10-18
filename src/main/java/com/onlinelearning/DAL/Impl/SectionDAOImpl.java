@@ -2,16 +2,12 @@ package com.onlinelearning.DAL.Impl;
 
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.DAL.SectionDAO;
-import com.onlinelearning.Enums.CouponStatus;
 import com.onlinelearning.Enums.SectionStatus;
-import com.onlinelearning.Models.Coupon;
-import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.Section;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +18,7 @@ public class SectionDAOImpl implements SectionDAO {
 
     private final DBContext dbContext = new DBContextImpl();
 
-    private Section sectionRowMapper(ResultSet rs) throws SQLException {
+    private Section sectionResultSetMapper(ResultSet rs) throws SQLException {
         String statusString = rs.getString("status");
         SectionStatus status = null;
         if (statusString != null) {
@@ -90,7 +86,7 @@ public class SectionDAOImpl implements SectionDAO {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return sectionRowMapper(rs);
+                    return sectionResultSetMapper(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -107,7 +103,7 @@ public class SectionDAOImpl implements SectionDAO {
             try ( ResultSet rs = ps.executeQuery()) {
                 List<Section> sections = new ArrayList<>();
                 while (rs.next()) {
-                    sections.add(sectionRowMapper(rs));
+                    sections.add(sectionResultSetMapper(rs));
                 }
                 return sections;
             }

@@ -23,7 +23,7 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public List<Coupon> getAllCoupon() {
-        return couponDAO.getAllCoupon();
+        return couponDAO.getAllCoupons();
     }
 
     @Override

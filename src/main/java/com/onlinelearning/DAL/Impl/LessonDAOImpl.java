@@ -17,18 +17,14 @@ import java.util.logging.Logger;
 public class LessonDAOImpl implements LessonDAO {
 
     private final DBContext dbContext = new DBContextImpl();
+    private final String LESSON_TABLE = "lessons";
 
-    private Lesson lessonRowMapper(ResultSet rs) throws SQLException {
-        String statusString = rs.getString("status");
-        LessonStatus status = null;
-        if (statusString != null) {
-            status = LessonStatus.valueOf(statusString);
-        }
+    private Lesson lessonResultSetMapper(ResultSet rs) throws SQLException {
         Lesson lesson = Lesson.builder()
                 .id(rs.getInt("lesson_id"))
                 .sectionId(rs.getInt("section_id"))
                 .name(rs.getString("name"))
-                .status(status)
+                .status(LessonStatus.valueOf(rs.getString("status")))
                 .orderNumber(rs.getFloat("order_number"))
                 .content(rs.getString("content"))
                 .build();
@@ -37,7 +33,9 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Float getNewOrderNumberBySectionId(Integer sectionId) {
-        String sql = "select max(order_number) as max_order_number from lessons where section_id = ?";
+        String sql = "select max(order_number) as max_order_number"
+                + " from " + LESSON_TABLE
+                + " where section_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, sectionId);
             try ( ResultSet rs = ps.executeQuery()) {
@@ -54,7 +52,9 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson createLesson(Lesson lesson) {
-        String sql = "insert into lessons(section_id, name, status, order_number, content) VALUES (?, ?, ?, ?, ?)";
+        String sql = "insert into " + LESSON_TABLE
+                + "(section_id, name, status, order_number, content)"
+                + " values (?, ?, ?, ?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, lesson.getSectionId());
             ps.setString(2, lesson.getName());
@@ -86,12 +86,14 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson getLesson(Integer id) {
-        String sql = "select * from lessons where lesson_id = ?";
+        String sql = "select *"
+                + " from " + LESSON_TABLE
+                + " where lesson_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return lessonRowMapper(rs);
+                    return lessonResultSetMapper(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -102,13 +104,16 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public List<Lesson> getLessonsBySectionId(Integer sectionId) {
-        String sql = "select * from lessons where section_id = ? order by order_number";
+        String sql = "select *"
+                + " from " + LESSON_TABLE
+                + " where section_id = ?"
+                + " order by order_number";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, sectionId);
             try ( ResultSet rs = ps.executeQuery()) {
                 List<Lesson> lessons = new ArrayList<>();
                 while (rs.next()) {
-                    lessons.add(lessonRowMapper(rs));
+                    lessons.add(lessonResultSetMapper(rs));
                 }
                 return lessons;
             }
@@ -120,7 +125,9 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson updateLesson(Lesson lesson) {
-        String sql = "update lessons set section_id = ?, name = ?, status = ?, order_number = ?, content = ? where lesson_id = ?";
+        String sql = "update " + LESSON_TABLE
+                + " set section_id = ?, name = ?, status = ?, order_number = ?, content = ?"
+                + " where lesson_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, lesson.getSectionId());
             ps.setString(2, lesson.getName());
@@ -147,7 +154,8 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson deleteLesson(Lesson lesson) {
-        String sql = "delete from lessons where lesson_id = ?";
+        String sql = "delete from " + LESSON_TABLE
+                + " where lesson_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, lesson.getId());
             int affectedRow = ps.executeUpdate();

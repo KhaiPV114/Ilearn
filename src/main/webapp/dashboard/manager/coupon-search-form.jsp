@@ -48,7 +48,7 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="${pageContext.request.contextPath}/dashboard/manager/coupon-search" method="post">
+                                        <form action="${pageContext.request.contextPath}/manager/coupon/search" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">

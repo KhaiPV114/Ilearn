@@ -12,11 +12,13 @@ public class AuthenticationController extends HttpServlet {
    
     private final LoginController loginController = new LoginController();
     
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         loginController.doGet(request, response);
     } 
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         

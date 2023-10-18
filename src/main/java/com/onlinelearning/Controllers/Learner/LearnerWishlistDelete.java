@@ -15,10 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "LearnerWishlistDelete", urlPatterns = {"/dashboard/learner/wishlist/delete-wishlist"})
+@WebServlet(name = "LearnerWishlistDelete", urlPatterns = {"/learner/wishlist/delete"})
 public class LearnerWishlistDelete extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/wishlist";
+    private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
 
     private final WishlistService wishlistService = new WishlistServiceImpl();
 

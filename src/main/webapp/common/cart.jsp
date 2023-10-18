@@ -8,32 +8,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cart</title>
+        <title>iLearn | Cart</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
 
     <body class="rbt-header-sticky">
         <jsp:include page="/layout/header.jsp"/>
-        <!-- Breadcrumb -->
-        <div class="rbt-breadcrumb-default ptb--100 ptb_md--50 ptb_sm--30 bg-gradient-1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="breadcrumb-inner text-center">
-                            <h2 class="title">Cart</h2>
-                            <ul class="page-list">
-                                <li class="rbt-breadcrumb-item"><a href="${pageContext.request.contextPath}/homepage">Home</a></li>
-                                <li>
-                                    <div class="icon-right"><i class="feather-chevron-right"></i>
-                                    </div>
-                                </li>
-                                <li class="rbt-breadcrumb-item active">Cart</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="rbt-cart-area bg-color-white rbt-section-gap" id="content-display">
             <div class="cart_area">
@@ -197,121 +177,29 @@
                             </c:if>
 
                             <c:if test="${coursesInCart.isEmpty()}">
-                                <div class="col-lg-12">
-                                    <div class="section-title text-center mb--60">
-                                        <h5 class="title">Ohh, your cart is empty, let's fill it up</h5>
-                                        <img src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png" alt="empty cart" style="width: 30%"/>
+                                <div class="container">
+                                    <div class="row g-5">
+                                        <div class="col-lg-12">
+                                            <div class="section-title text-center">
+                                                <h3>Your cart is empty</h3>
+                                                <img src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png" alt="empty cart" style="width: 40%"/>                                    </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="rbt-categories-area bg-color-white">
-                                    <div class="container">
-                                        <div class="row">
+                                    <div class="row g-5">
+                                        <div class="rbt-categories-area bg-color-white">
                                             <div class="col-lg-12">
-                                                <div class="section-title text-center mb--60">
-                                                    <h5 class="title">Chưa biết để title là gì cho ok? Đại khái chỗ này sẽ dùng thống kê lượt truy cập của từng loại khoá học, rồi chọn ra 5 thằng để hiển thị</h5>
+                                                <div class="section-title text-center">
+                                                    <h5>Look likes you have not added anything to your cart. Go ahead and explore top courses</h5>
+                                                    <div class="rbt-button-group">
+                                                        <a class="rbt-moderbt-btn" href="${pageContext.request.contextPath}/search">
+                                                            <span class="moderbt-btn-text">More courses</span>
+                                                            <i class="feather-arrow-right"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row g-5">
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-layout"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">UI/UX Design Services</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-dollar-sign"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">Finance &amp; Accounting</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-user-check"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">Personal Development</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-cpu"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">IT and Software</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-shopping-bag"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">Sales Marketing</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-
-                                            <!-- Start Category Box Layout  -->
-                                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-                                                <a href="course-filter-one-toggle.html" class="rbt-cat-box rbt-cat-box-1 variation-4 text-center">
-                                                    <div class="inner">
-                                                        <div class="icons">
-                                                            <i class="theme-gradient feather-feather"></i>
-                                                        </div>
-                                                        <div class="content">
-                                                            <h5 class="title">Art &amp; Humanities</h5>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <!-- End Category Box Layout  -->
-                                        </div>
                                     </div>
-                                </div>
-                                <br>
-                                <div class="rbt-button-group">
-                                    <a class="rbt-moderbt-btn" href="#">
-                                        <span class="moderbt-btn-text">More courses</span>
-                                        <i class="feather-arrow-right"></i>
-                                    </a>
                                 </div>
                             </c:if>
                         </div>
@@ -393,7 +281,7 @@
                 const couponCodeList = document.getElementById('coupon-code-list');
                 const couponCodeMsg = document.getElementById('coupon-code-msg');
 
-                let urlPath = "${pageContext.request.contextPath}/get-coupon-code";
+                let urlPath = "${pageContext.request.contextPath}/coupon/get";
 
                 //Check if inserted coupon is applied
                 if (appliedCoupons.includes(couponCodeInserted.value)) {

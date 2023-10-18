@@ -50,7 +50,7 @@
                                                                     <span class="rating-count"> (15 Reviews)</span>
                                                                 </div>
                                                                 <div class="rbt-bookmark-btn">
-                                                                    <form action="${pageContext.request.contextPath}/dashboard/learner/wishlist/delete-wishlist" id="wishlist${course.id}" method="post">
+                                                                    <form action="${pageContext.request.contextPath}/learner/wishlist/delete" id="wishlist${course.id}" method="post">
                                                                         <input type="hidden" name="course-id" value="${course.id}">
                                                                         <a class="rbt-round-btn" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
                                                                             <i class="fa-solid fa-bookmark"></i>

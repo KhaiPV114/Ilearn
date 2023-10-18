@@ -10,7 +10,6 @@ import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
 import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;

@@ -50,9 +50,14 @@ public class LearnerCheckoutProcess extends HttpServlet {
                     }
                     
                     OrderService.updateOrder(createdOrder);
-
-                    if (!CartService.deleteCartOfUserId(user.getId())) {
+                    if(createdOrder.getStatus().equals(OrderStatus.SUCCESSFUL)){
+                        
                     }
+
+                        System.out.println(CartService.deleteCartOfUserId(user.getId()));
+//                    CartService.deleteCartOfUserId(user.getId());
+//                    if (!CartService.deleteCartOfUserId(user.getId())) {
+//                    }
 
                     response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }

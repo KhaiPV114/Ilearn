@@ -7,11 +7,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>iLearn | Register</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
     <body>
-        <%--<jsp:include page="/layout/header.jsp"/>--%>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mx-auto">

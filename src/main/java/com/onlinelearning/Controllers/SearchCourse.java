@@ -26,7 +26,7 @@ public class SearchCourse extends HttpServlet {
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
-    private final String VIEW_PATH = "/common/course-find-and-filter.jsp";
+    private final String VIEW_PATH = "/common/course-search.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

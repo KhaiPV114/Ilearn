@@ -16,10 +16,6 @@ import java.sql.Date;
 import java.util.HashSet;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- *
- * @author nguyenson
- */
 @WebServlet(name = "Register", urlPatterns = {"/authentication/register"})
 public class RegisterController extends HttpServlet {
     

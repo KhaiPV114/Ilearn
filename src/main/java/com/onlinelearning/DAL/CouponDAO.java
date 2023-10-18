@@ -9,7 +9,7 @@ public interface CouponDAO {
     
     Coupon getCouponByCode(String code);
     
-    List<Coupon> getAllCoupon();
+    List<Coupon> getAllCoupons();
     
     Coupon createCoupon(Coupon coupon);
     

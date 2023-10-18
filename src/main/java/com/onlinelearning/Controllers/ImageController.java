@@ -16,6 +16,7 @@ public class ImageController extends HttpServlet {
 
     private static final String IMAGE_DIRECTORY = FileUploadServiceImpl.load().getImageUploadDirectoryPath();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Get the requested image file name from the URL

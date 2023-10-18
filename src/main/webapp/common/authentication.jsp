@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Authentication</title>
+        <title>iLearn | Authentication</title>
         <jsp:include page="/layout/links.jsp"/>
         <style>
             .togglePassword {
@@ -60,7 +60,7 @@
                         <div class="breadcrumb-inner text-center">
                             <h2 class="title">Login &amp; Register</h2>
                             <ul class="page-list">
-                                <li class="rbt-breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="rbt-breadcrumb-item"><a href="${pageContext.request.contextPath}/homepage">Home</a></li>
                                 <li>
                                     <div class="icon-right"><i class="feather-chevron-right"></i></div>
                                 </li>

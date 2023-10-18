@@ -2,7 +2,6 @@ package com.onlinelearning.Controllers.Instructor;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
-import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.CourseService;
@@ -10,7 +9,6 @@ import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
 import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@WebServlet(name = "GeneralGetCoupon", urlPatterns = {"/get-coupon-code"})
+@WebServlet(name = "GeneralGetCoupon", urlPatterns = {"/coupon/get"})
 public class GeneralGetCoupon extends HttpServlet {
 
     private final String HOME_PATH = "/homepage";

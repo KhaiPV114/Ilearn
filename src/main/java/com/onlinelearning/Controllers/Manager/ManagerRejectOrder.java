@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ManagerAcceptOrder", urlPatterns = {"/manager/order/reject"})
+@WebServlet(name = "ManagerRejectOrder", urlPatterns = {"/manager/order/reject"})
 public class ManagerRejectOrder extends HttpServlet {
 
     private final OrderService OrderService = new OrderServiceImpl();

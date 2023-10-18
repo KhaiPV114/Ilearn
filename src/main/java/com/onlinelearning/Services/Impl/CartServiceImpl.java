@@ -38,11 +38,11 @@ public class CartServiceImpl implements CartService {
         if (userId == null || courseId == null) {
             return null;
         }
-        return cartDAO.getCartByUserIdAndCourseId(userId, courseId);
+        return cartDAO.getCartItem(userId, courseId);
     }
 
     private void validateCart(Integer userId, Integer courseId) throws Exception {
-        if (cartDAO.getCartByUserIdAndCourseId(userId, courseId) != null) {
+        if (cartDAO.getCartItem(userId, courseId) != null) {
             throw new Exception("This course already in your cart!");
         }
     }
@@ -101,10 +101,10 @@ public class CartServiceImpl implements CartService {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(CookieName)) {
-                cookie.setPath("/");
+//                cookie.setPath("/");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
-                break;
+                return;
             }
         }
     }

@@ -7,22 +7,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>iLearn | Error</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
     <body>
         <jsp:include page="/layout/header.jsp"/>
-        <div class="container text-center">
-            <div class="row my-5">
-                <h1 class="mt-5 text-warning">403 - Unauthorized!</h1>
-                <h3 class="text-warning">You do not have permission to access this resource!</h3>
-                <a type="submit" class="rbt-btn btn-md btn-gradient hover-icon-reverse w-25 mx-auto" href="${pageContext.request.contextPath}">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Back to home</span>
-                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                    </span>
-                </a>
+        <div class="rbt-error-area bg-gradient-11 rbt-section-gap">
+            <div class="error-area">
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-10">
+                            <h1 class="title text-warning">403</h1>
+                            <h3 class="sub-title text-warning">Unauthorized</h3>
+                            <p>You do not have permission to access this resource.</p>
+                            <a class="rbt-btn btn-gradient icon-hover" href="${pageContext.request.contextPath}/homepage">
+                                <span class="btn-text">Back To Home</span>
+                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>

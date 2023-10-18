@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/dashboard/manager/coupon-create"})
+@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/manager/coupon/create"})
 public class ManagerCouponCreate extends HttpServlet {
 
     private static final CouponService couponService = new CouponServiceImpl();

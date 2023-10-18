@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 public class OrderDAOImpl implements OrderDAO {
 
     private final DBContext dbContext = new DBContextImpl();
-    private final String TABLE_NAME = "orders";
+    private final String ORDER_TABLE = "orders";
 
-    private Order orderRowMapper(ResultSet rs) throws SQLException {
+    private Order orderResultSetMapper(ResultSet rs) throws SQLException {
         Order order = Order.builder()
                 .id(rs.getInt("order_id"))
                 .userId(rs.getInt("user_id"))
@@ -31,13 +31,13 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order createOrder(Order newOrder) {
-        String sql = "insert into " + TABLE_NAME
+        String sql = "insert into " + ORDER_TABLE
                 + "(user_id, created_at, status)"
                 + " values (?, ?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, newOrder.getUserId());
             ps.setTimestamp(2, Timestamp.valueOf(newOrder.getCreatedAt()));
-            ps.setString(3, OrderStatus.NEW.toString());
+            ps.setString(3, newOrder.toString());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
@@ -56,13 +56,13 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Order getOrderById(Integer orderId) {
         String sql = "select *"
-                + " from " + TABLE_NAME
+                + " from " + ORDER_TABLE
                 + " where order_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, orderId);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return orderRowMapper(rs);
+                    return orderResultSetMapper(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -72,16 +72,16 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getAllOrdersByUserId(Integer userId) {
+    public List<Order> getAllOrdersOfUserId(Integer userId) {
         String sql = "select *"
-                + " from " + TABLE_NAME
+                + " from " + ORDER_TABLE
                 + " where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
-            List<Order> orders = new ArrayList<>();
             try ( ResultSet rs = ps.executeQuery()) {
+                List<Order> orders = new ArrayList<>();
                 while (rs.next()) {
-                    orders.add(orderRowMapper(rs));
+                    orders.add(orderResultSetMapper(rs));
                 }
                 return orders;
             }
@@ -92,17 +92,17 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getUnfinishOrdersByUserId(Integer userId) {
+    public List<Order> getUnfinishOrdersOfUserId(Integer userId) {
         String sql = "select *"
-                + " from " + TABLE_NAME
+                + " from " + ORDER_TABLE
                 + " where user_id = ? and status = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             ps.setString(2, OrderStatus.NEW.toString());
-            List<Order> orders = new ArrayList<>();
             try ( ResultSet rs = ps.executeQuery()) {
+                List<Order> orders = new ArrayList<>();
                 while (rs.next()) {
-                    orders.add(orderRowMapper(rs));
+                    orders.add(orderResultSetMapper(rs));
                 }
                 return orders;
             }
@@ -115,12 +115,12 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getAllOrders() {
         String sql = "select *"
-                + " from " + TABLE_NAME;
+                + " from " + ORDER_TABLE;
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            List<Order> orders = new ArrayList<>();
             try ( ResultSet rs = ps.executeQuery()) {
+                List<Order> orders = new ArrayList<>();
                 while (rs.next()) {
-                    orders.add(orderRowMapper(rs));
+                    orders.add(orderResultSetMapper(rs));
                 }
                 return orders;
             }
@@ -132,7 +132,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order updateOrder(Order newOrder) {
-        String sql = "update " + TABLE_NAME
+        String sql = "update " + ORDER_TABLE
                 + " set status = ?"
                 + " where order_id = ? and user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
@@ -151,7 +151,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order deleteOrder(Order deleteOrder) {
-        String sql = "delete from " + TABLE_NAME
+        String sql = "delete from " + ORDER_TABLE
                 + " where order_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, deleteOrder.getId());

@@ -20,26 +20,20 @@ import java.util.List;
 public class HomepageView extends HttpServlet {
 
     private static final String HOME_PATH = "index.jsp";
-    private static final CartService cartService = new CartServiceImpl();
-    private static final CategoryService categoryService = new CategoryServiceImpl();
-    private static final CourseService courseService = new CourseServiceImpl();
+    private static final CartService CartService = new CartServiceImpl();
+    private static final CategoryService CategoryService = new CategoryServiceImpl();
+    private static final CourseService CourseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // cartService.updateCartInSession(request.getSession(), request, response);
 
-        List<Category> allCategories = categoryService.getAllCategories();
+        List<Category> allCategories = CategoryService.getAllCategories();
         request.setAttribute("allCategories", allCategories);
-
-        //List<Course> getCourseByCategoryId = CourseService.getCourseByCategoryId();
-        //request.setAttribute("allCourses", allCourses);
-        // Duyệt qua từng category
-        
         for (Category category : allCategories) {
 
             // Lấy danh sách khóa học theo từng category id
-            List<Course> getCourseByCategoryId = courseService.getCourseByCategoryId(category.getId());
+            List<Course> getCourseByCategoryId = CourseService.getCourseByCategoryId(category.getId());
 
             // Gán danh sách khóa học vào attribute của category đó
             category.setCourses(getCourseByCategoryId);

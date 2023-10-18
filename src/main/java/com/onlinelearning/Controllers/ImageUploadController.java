@@ -21,12 +21,14 @@ import java.io.PrintWriter;
 )
 public class ImageUploadController extends HttpServlet {
 
-    private FileUploadService s3FileUploadService = S3FileUploadServiceImpl.load();
+    private final FileUploadService S3FileUploadService = S3FileUploadServiceImpl.load();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
@@ -34,7 +36,7 @@ public class ImageUploadController extends HttpServlet {
         JsonObject result = new JsonObject();
         try {
             Part imagePart = request.getPart("upload");
-            String uploadedUrl = s3FileUploadService.uploadImage(imagePart);
+            String uploadedUrl = S3FileUploadService.uploadImage(imagePart);
             result.addProperty("url", uploadedUrl);
         } catch (Exception e) {
             JsonObject error = new JsonObject();

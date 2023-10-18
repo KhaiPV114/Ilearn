@@ -395,8 +395,8 @@
         $(document).ready(function () {
             $('#pending-order-table').DataTable({
                 "order": [0, 'desc'],
-                "lengthChange": false,
-                "searching": false
+                "lengthChange": false
+//                "searching": false
             });
         });
         $(document).ready(function () {
@@ -459,5 +459,6 @@
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("order-id=" + orderId);
         }
+        
     </script>
 </html>

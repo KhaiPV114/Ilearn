@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 public class OrderItemDAOImpl implements OrderItemDAO {
 
     private final DBContext dbContext = new DBContextImpl();
-    private final String TABLE_NAME = "order_item";
+    private final String ORDER_ITEM_TABLE = "order_item";
 
-    private OrderItem orderItemRowMapper(ResultSet rs) throws SQLException {
+    private OrderItem orderItemResultSetMapper(ResultSet rs) throws SQLException {
         OrderItem orderItem = OrderItem.builder()
                 .orderId(rs.getInt("order_id"))
                 .courseId(rs.getInt("course_id"))
@@ -31,7 +31,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
     @Override
     public OrderItem createOrderItem(OrderItem newOrderItem) {
-        String sql = "insert into " + TABLE_NAME
+        String sql = "insert into " + ORDER_ITEM_TABLE
                 + "(order_id, course_id, coupon_id, original_price, price)"
                 + " values (?, ?, ?, ?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
@@ -56,15 +56,15 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
     @Override
     public List<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
-        String sql = "select order_id, course_id, coupon_id, original_price, price "
-                + " from " + TABLE_NAME
+        String sql = "select *"
+                + " from " + ORDER_ITEM_TABLE
                 + " where order_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, orderId);
-            List<OrderItem> orderItems = new ArrayList<>();
             try ( ResultSet rs = ps.executeQuery()) {
+                List<OrderItem> orderItems = new ArrayList<>();
                 while (rs.next()) {
-                    orderItems.add(orderItemRowMapper(rs));
+                    orderItems.add(orderItemResultSetMapper(rs));
                 }
                 return orderItems;
             }
@@ -76,7 +76,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 
     @Override
     public boolean deleteOrderItem(Integer orderId) {
-        String sql = "delete from " + TABLE_NAME
+        String sql = "delete from " + ORDER_ITEM_TABLE
                 + " where order_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, orderId);

@@ -15,14 +15,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "LearnerWishlistAdd", urlPatterns = {"/add-to-wishlist"})
+@WebServlet(name = "LearnerWishlistAdd", urlPatterns = {"/learner/wishlist/add"})
 public class LearnerWishlistAdd extends HttpServlet {
 
     private final WishlistService wishlistService = new WishlistServiceImpl();
 
     private final AuthService authService = new AuthServiceImpl();
 
-    private final String VIEW_PATH = "/dashboard/learner/wishlist";
+    private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

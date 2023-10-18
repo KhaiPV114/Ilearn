@@ -9,7 +9,7 @@ public interface CartDAO {
     
     boolean deleteCartOfUserId(Integer userId);
     
-    CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId);
+    CartItem getCartItem(Integer userId, Integer courseId);
 
     CartItem createCartItem(CartItem cartItem);
 
