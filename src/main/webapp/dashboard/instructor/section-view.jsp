@@ -174,7 +174,7 @@
                                                                 <c:set var="sectionId" value="${section.id}"/>
 
                                                                 <div class="rbt-accordion-style rbt-accordion-01  accordion">
-                                                                    <ul id="lessons${sectionId}" class="accordion ps-0 list-group">
+                                                                    <ul id="lessons${sectionId}" section-id="${sectionId}" class="accordion ps-0 list-group">
                                                                         <c:set var="lessons" value="${lessonsList[sectionId]}"/>
                                                                         <c:forEach var="lesson" items="${lessons}">
                                                                             <li id="lesson-${lesson.id}" key="${lesson.id}" class="accordion-item card lesson-list-handle-${sectionId} list-group-item my-3">
@@ -183,7 +183,7 @@
                                                                                         <i class="fa-solid fa-arrows-up-down"></i>
                                                                                     </div>
                                                                                     <button class="accordion-button collapsed me-4 text-dark" type="button"
-                                                                                            onclick="document.location.href='${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
+                                                                                            onclick="document.location.href = '${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
                                                                                         ${lesson.name}
                                                                                     </button>
                                                                                     <div class="card-icon ms-3">
@@ -270,6 +270,7 @@
             let item = event.item;
             let previousItem = item.previousElementSibling;
             let nextItem = item.nextElementSibling;
+            let sectionId = item.parentElement.getAttribute("section-id");
             console.log(item);
             console.log(previousItem);
             console.log(nextItem);
@@ -283,7 +284,8 @@
             let result = await postMovingRequest(url, {
             itemKey,
                     previousItemKey,
-                    nextItemKey
+                    nextItemKey,
+                    sectionId
             });
                     if (result?.success) {
             setTimeout(() => {
@@ -312,13 +314,8 @@
 
         async function postMovingRequest(
                 url,
-        { itemKey, previousItemKey, nextItemKey }
+        { itemKey, previousItemKey, nextItemKey, sectionId }
         ) {
-            let data = {
-                currentId: itemKey,
-                ...(previousItemKey && {previousId: previousItemKey}),
-                ...(nextItemKey && {nextId: nextItemKey})
-            };
 
             const postData = new URLSearchParams();
 
@@ -327,6 +324,7 @@
                 postData.append("previousId", previousItemKey);
             if (nextItemKey)
                 postData.append("nextId", nextItemKey);
+            postData.append("sectionId", sectionId);
 
             const response = await fetch(url, {
                 method: "POST",

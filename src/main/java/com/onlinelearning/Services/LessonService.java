@@ -13,7 +13,7 @@ public interface LessonService {
 
     Lesson updateLesson(Lesson lesson) throws Exception;
 
-    Lesson updateLessonOrderNumber(Integer lessonId, Integer previousLessonId, Integer nextLessonId) throws Exception;
+    Lesson updateLessonOrderNumber(Integer lessonId, Integer previousLessonId, Integer nextLessonId, Integer sectionId) throws Exception;
 
     Lesson deleteLesson(Lesson lesson) throws Exception;
 

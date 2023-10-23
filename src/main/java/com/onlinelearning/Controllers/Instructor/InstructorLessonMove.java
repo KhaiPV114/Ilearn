@@ -30,6 +30,7 @@ public class InstructorLessonMove extends HttpServlet {
         String currentLessonIdParam = request.getParameter("currentId");
         String previousLessonIdParam = request.getParameter("previousId");
         String nextLessonParam = request.getParameter("nextId");
+        Integer sectionId = Integer.valueOf(request.getParameter("sectionId"));
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         JsonObject result = new JsonObject();
@@ -48,7 +49,7 @@ public class InstructorLessonMove extends HttpServlet {
         }
         Lesson lesson = null;
         try {
-            lesson = lessonService.updateLessonOrderNumber(currentLessonId, previousLessonId, nextLessonId);
+            lesson = lessonService.updateLessonOrderNumber(currentLessonId, previousLessonId, nextLessonId, sectionId);
             if (lesson == null) {
                 result.addProperty("error", "MOVED_FAILED");
             } else {
