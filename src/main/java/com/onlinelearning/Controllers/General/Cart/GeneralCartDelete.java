@@ -1,30 +1,27 @@
-package com.onlinelearning.Controllers.Cart;
+package com.onlinelearning.Controllers.General.Cart;
 
 import com.onlinelearning.Models.CartItem;
-import com.onlinelearning.Models.Course;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
-import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
-import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-@WebServlet(name = "GeneralCartAdd", urlPatterns = {"/cart/add"})
-public class GeneralCartAdd extends HttpServlet {
+@WebServlet(name = "GeneralCartDelete", urlPatterns = {"/cart/remove"})
+public class GeneralCartDelete extends HttpServlet {
 
     private final String ERROR_404_PATH = "/error/404.jsp";
 
     private final AuthService AuthService = new AuthServiceImpl();
     private final CartService CartService = new CartServiceImpl();
-    private final CourseService CourseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,51 +34,43 @@ public class GeneralCartAdd extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter pw = response.getWriter();
 
-        //Get and validate course need add to cart from request
-        Course course;
+        //Get Cart item need delete from request
+        Integer courseId;
         try {
-            course = CourseService.validateCourse(Integer.parseInt(request.getParameter("course-id")));
-        } catch (Exception e) {
+            courseId = Integer.parseInt(request.getParameter("course-id"));
+        } catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            pw.print(e.getMessage());
             return;
         }
 
-        CartItem cartItemNeedAdd = CartItem.builder()
-                .courseId(course.getId())
-                .build();
+        CartItem cartItemNeedDelete = CartItem.builder().courseId(courseId).build();
 
-        //Add from cart
+        //Delete from cart
         User user = AuthService.getUser(request);
-        boolean addedToCart = true;
+        boolean removedFromCart = true;
         if (user == null) {
             try {
-                CartService.addNewCartItemToCookie(cartItemNeedAdd, request, response);
-            } catch (Exception cartException) {
-                pw.print(cartException.getMessage());
-                addedToCart = false;
+                CartService.removeCartItemFromCookie(cartItemNeedDelete, request, response);
+            } catch (Exception ex) {
+                removedFromCart = false;
+                pw.print(ex.getMessage());
             }
         } else {
-            cartItemNeedAdd.setUserId(user.getId());
-            if (CourseService.isEnrolled(user.getId(), cartItemNeedAdd.getCourseId())) {
-                addedToCart = false;
-            } else {
-                try {
-                    CartService.createCartItem(cartItemNeedAdd);
-                } catch (Exception cartException) {
-                    pw.print(cartException.getMessage());
-                    addedToCart = false;
-                }
+            cartItemNeedDelete.setUserId(user.getId());
+            try {
+                CartService.deleteCartItem(cartItemNeedDelete);
+            } catch (Exception ex) {
+                removedFromCart = false;
+                pw.print(ex.getMessage());
             }
         }
 
         //Response to client 
-        if (addedToCart) {
+        if (removedFromCart) {
             response.setStatus(HttpServletResponse.SC_OK);
-            pw.print("Add to cart successful!");
+            pw.print("Remove from cart successful!");
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
-
     }
 }

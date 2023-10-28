@@ -8,21 +8,24 @@ import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.CourseService;
+import com.onlinelearning.Utils.Encryption;
+import com.onlinelearning.Utils.Impl.AESEncryptionImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CartServiceImpl implements CartService {
 
-    private final CartDAO cartDAO = new CartDAOImpl();
+    private final Encryption AES = new AESEncryptionImpl();
+    private final CartDAO CartDAO = new CartDAOImpl();
     private final CourseService CourseService = new CourseServiceImpl();
     private final AuthService AuthService = new AuthServiceImpl();
-    private final String CookieName = "CART";
+    private final String CartCookieName = "CART-STORE";
     private final String SeperateCharacter = "-";
 
     @Override
@@ -30,7 +33,7 @@ public class CartServiceImpl implements CartService {
         if (userId == null) {
             return null;
         }
-        return cartDAO.getCartByUserId(userId);
+        return CartDAO.getCartByUserId(userId);
     }
 
     @Override
@@ -38,21 +41,21 @@ public class CartServiceImpl implements CartService {
         if (userId == null || courseId == null) {
             return null;
         }
-        return cartDAO.getCartItem(userId, courseId);
+        return CartDAO.getCartItem(userId, courseId);
     }
 
     private void validateCart(Integer userId, Integer courseId) throws Exception {
-        if (cartDAO.getCartItem(userId, courseId) != null) {
-            throw new Exception("This course already in your cart!");
+        if (CartDAO.getCartItem(userId, courseId) != null) {
+            throw new Exception("This course is exist in your cart");
         }
     }
 
     @Override
     public CartItem createCartItem(CartItem cartItem) throws Exception {
         validateCart(cartItem.getUserId(), cartItem.getCourseId());
-        CartItem createdCartItem = cartDAO.createCartItem(cartItem);
+        CartItem createdCartItem = CartDAO.createCartItem(cartItem);
         if (createdCartItem == null) {
-            throw new Exception("Failed to add this course to your cart!");
+            throw new Exception("Failed to add this course to your cart");
         }
         return createdCartItem;
     }
@@ -61,95 +64,109 @@ public class CartServiceImpl implements CartService {
     public CartItem deleteCartItem(CartItem cartItem) throws Exception {
         try {
             validateCart(cartItem.getUserId(), cartItem.getCourseId());
+            throw new Exception("This course is not exist in your cart");
         } catch (Exception cartItemIsExistException) {
-            return cartDAO.deleteCartItem(cartItem);
+            return CartDAO.deleteCartItem(cartItem);
         }
-        throw new Exception("Cart: " + cartItem + "doesn't exist");
     }
 
     @Override
     public void addNewCartItemToCookie(CartItem newCartItem, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<CartItem> cartInCookie = getCartFromCookie(request);
+        List<CartItem> cartInCookie = new ArrayList<>();
+        try {
+            cartInCookie = getCartFromCookie(request);
+        } catch (Exception e) {
+            System.out.println("EXCEPTION at " + CartServiceImpl.class + ": " + e.getMessage());
+        }
         if (newCartItem != null) {
             if (cartInCookie.contains(newCartItem)) {
-                throw new Exception("This course already in your cart");
+                throw new Exception("This course is exist in your cart");
             } else {
                 cartInCookie.add(newCartItem);
                 addCartToCookie(request, response, cartInCookie);
             }
         } else {
-            throw new Exception("Invalid cart item");
+            throw new Exception("Invalid cart item to add");
         }
     }
 
     @Override
     public void removeCartItemFromCookie(CartItem cartItem, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<CartItem> cartInCookie = getCartFromCookie(request);
-        if (cartInCookie.isEmpty()) {
-            throw new Exception("Cart in cookie is empty");
-        }
-        if (cartInCookie.contains(cartItem)) {
-            cartInCookie.remove(cartItem);
-            addCartToCookie(request, response, cartInCookie);
-        } else {
-            throw new Exception("Cart item is not exist");
-        }
-    }
-
-    @Override
-    public void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(CookieName)) {
-//                cookie.setPath("/");
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-                return;
-            }
-        }
-    }
-
-    @Override
-    public List<CartItem> getCartFromCookie(HttpServletRequest request) {
         List<CartItem> cartInCookie = new ArrayList<>();
+        try {
+            cartInCookie = getCartFromCookie(request);
+        } catch (Exception e) {
+            System.out.println("EXCEPTION at " + CartServiceImpl.class + ": " + e.getMessage());
+        }
+        if (cartItem != null) {
+            if (cartInCookie.contains(cartItem)) {
+                cartInCookie.remove(cartItem);
+                addCartToCookie(request, response, cartInCookie);
+            } else {
+                throw new Exception("This course is not exist in your cart");
+            }
+        } else {
+            throw new Exception("Invalid cart item to remove");
+        }
+    }
+
+    //Return a list of cart item, if have error or cart empty throw Exception
+    private List<CartItem> getCartFromCookie(HttpServletRequest request) throws Exception {
+        //Get cookies
         Cookie[] cookies = request.getCookies();
-        List<Course> courses = new ArrayList<>();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(CookieName)) {
-                    String[] coursesId = cookie.getValue().split(SeperateCharacter);
-                    for (String courseId : coursesId) {
+                if (cookie.getName().equals(CartCookieName)) {
+                    //Decrypt data from cookie
+                    String decrypted = AES.decrypt(cookie.getValue());
+                    if (decrypted == null) {
+                        throw new Exception("Cart in cookie is invalid format");
+                    }
+                    //Spilit data encrypted to array of course id
+                    HashSet<Integer> courseIds = new HashSet<>();
+                    for (String data : decrypted.split(SeperateCharacter)) {
                         try {
-                            courses.add(CourseService.validateCourse(Integer.parseInt(courseId)));
-                        } catch (Exception ex) {
-                            Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                            courseIds.add(Integer.parseInt(data));
+                        } catch (NumberFormatException e) {
                         }
                     }
+
+                    //Validate course to set to cart, if have invalid course, skip them
+                    List<CartItem> cartInCookie = new ArrayList<>();
+                    for (Integer courseId : courseIds) {
+                        try {
+                            if (CourseService.validateCourse(courseId) != null) {
+                                cartInCookie.add(CartItem.builder().courseId(courseId).build());
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+                    if (cartInCookie.isEmpty()) {
+                        throw new Exception("Cart in cookie is empty");
+                    }
+                    return cartInCookie;
                 }
             }
         }
-
-        if (!courses.isEmpty()) {
-            for (Course course : courses) {
-                cartInCookie.add(CartItem.builder().courseId(course.getId()).build());
-            }
-        }
-        return cartInCookie;
+        throw new Exception("Cannot found cookie store cart");
     }
 
-    @Override
-    public void addCartToCookie(HttpServletRequest request, HttpServletResponse response, List<CartItem> cart) {
+    //Add cart to cookie, if cart empty, remove cookie
+    private void addCartToCookie(HttpServletRequest request, HttpServletResponse response, List<CartItem> cart) {
         if (!cart.isEmpty()) {
-            String dataStoreInCookie = "";
+            //Convert cart to string data
+            String dataCookie = "";
             for (CartItem cartItem : cart) {
                 if (cartItem.getCourseId() != null) {
-                    dataStoreInCookie += cartItem.getCourseId().toString() + SeperateCharacter;
+                    dataCookie += cartItem.getCourseId().toString() + SeperateCharacter;
                 }
             }
-            if (!dataStoreInCookie.isEmpty()) {
-                dataStoreInCookie = dataStoreInCookie.substring(0, dataStoreInCookie.length() - 1);
+            //Encrypt data
+            if (!dataCookie.isEmpty()) {
+                dataCookie = AES.encrypt(dataCookie.substring(0, dataCookie.length() - 1));
             }
-            Cookie cartCookie = new Cookie(CookieName, dataStoreInCookie);
+            //Add cookie
+            Cookie cartCookie = new Cookie(CartCookieName, dataCookie);
             cartCookie.setPath("/");    //For all pages in website
             cartCookie.setMaxAge(7 * 24 * 60 * 60); //7 days
             response.addCookie(cartCookie);
@@ -158,28 +175,42 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    private void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(CartCookieName)) {
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                return;
+            }
+        }
+    }
+
     @Override
     public List<Course> getCourseInCart(HttpServletRequest request, HttpServletResponse response) {
-       
+
         User user = AuthService.getUser(request);
-        List<CartItem> cart;
+        List<CartItem> cart = new ArrayList<>();
         List<Course> coursesInCart = new ArrayList<>();
 
         if (user == null) {
-            cart = getCartFromCookie(request);
+            try {
+                cart = getCartFromCookie(request);
+            } catch (Exception ex) {
+            }
         } else {
             cart = getCartByUserId(user.getId());
             if (cart.isEmpty()) {
-                if (!(cart = getCartFromCookie(request)).isEmpty()) {
+                try {
+                    cart = getCartFromCookie(request);
                     for (CartItem cartItem : cart) {
-                        try {
+                        if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
                             cartItem.setUserId(user.getId());
-                            if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
-                                cartItem = createCartItem(cartItem);
-                            }
-                        } catch (Exception ex) {
+                            cartItem = createCartItem(cartItem);
                         }
                     }
+                } catch (Exception e) {
                 }
             }
             removeCartFromCookie(request, response);
@@ -194,13 +225,12 @@ public class CartServiceImpl implements CartService {
                 }
             }
         }
-//        request.getSession(true).setAttribute("coursesInCart", coursesInCart);
         return coursesInCart;
     }
 
     @Override
     public boolean deleteCartOfUserId(Integer userId) {
-        return cartDAO.deleteCartOfUserId(userId);
+        return CartDAO.deleteCartOfUserId(userId);
     }
 
 }

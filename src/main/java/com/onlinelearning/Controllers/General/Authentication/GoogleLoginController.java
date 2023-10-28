@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Authentication;
+package com.onlinelearning.Controllers.General.Authentication;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "GoogleLoginController", urlPatterns = {"/authentication/login-with-google"})
 public class GoogleLoginController extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/authentication.jsp";
+    private static final String VIEW_PATH = "/general/authentication.jsp";
     private static final String HOME_PATH = "/homepage";
 
     private final AuthService authService = new AuthServiceImpl();

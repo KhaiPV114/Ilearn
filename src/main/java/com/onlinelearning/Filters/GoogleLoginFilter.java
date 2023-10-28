@@ -1,7 +1,7 @@
 package com.onlinelearning.Filters;
 
-import com.onlinelearning.Controllers.Authentication.GoogleRegisterController;
-import com.onlinelearning.Controllers.Authentication.LoginController;
+import com.onlinelearning.Controllers.General.Authentication.GoogleRegisterController;
+import com.onlinelearning.Controllers.General.Authentication.LoginController;
 import com.onlinelearning.Models.User;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

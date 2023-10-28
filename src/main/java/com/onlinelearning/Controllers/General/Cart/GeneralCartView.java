@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Cart;
+package com.onlinelearning.Controllers.General.Cart;
 
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
@@ -12,8 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "GeneralCartView", urlPatterns = {"/cart"})
 public class GeneralCartView extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/cart.jsp";
-    private final CartService cartService = new CartServiceImpl();
+    private static final String VIEW_PATH = "/general/cart.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

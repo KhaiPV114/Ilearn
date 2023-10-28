@@ -141,10 +141,10 @@ public class CourseServiceImpl implements CourseService {
         if (courseId != null) {
             Course course = courseDAO.getCourseById(courseId);
             if (course != null) {
-                if (course.getStatus().equals(CourseStatus.ARCHIVED) || course.getStatus().equals(CourseStatus.NEW)) {
-                    throw new Exception("Course not available: This course have been archived or unpublished");
-                } else {
+                if (course.getStatus().equals(CourseStatus.PUBLISHED)) {
                     return course;
+                } else {
+                    throw new Exception("Course not available");
                 }
             }
         }

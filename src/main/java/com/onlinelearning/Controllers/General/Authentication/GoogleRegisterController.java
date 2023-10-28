@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Authentication;
+package com.onlinelearning.Controllers.General.Authentication;
 
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
@@ -22,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "GoogleRegisterController", urlPatterns = {"/authentication/register/google"})
 public class GoogleRegisterController extends HttpServlet {
     
-    private static final String FORM_PATH = "/common/google-register.jsp";
+    private static final String FORM_PATH = "/general/google-register.jsp";
     
     private final AuthService authService = new AuthServiceImpl();
     

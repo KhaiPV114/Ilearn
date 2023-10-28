@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Authentication;
+package com.onlinelearning.Controllers.General.Authentication;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
@@ -19,13 +19,12 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginController", urlPatterns = {"/authentication/login"})
 public class LoginController extends HttpServlet {
 
-    private static final String VIEW_PATH = "/common/authentication.jsp";
+    private static final String VIEW_PATH = "/general/authentication.jsp";
     
     private static final String HOME_PATH = "/homepage";
 
     private static final int REMEMBER_ME_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
     
-    private final CartService cartService = new CartServiceImpl();
     private final AuthService authService = new AuthServiceImpl();
 
     @Override

@@ -1,6 +1,3 @@
-/*
- * DuyDuc94
- */
 package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Models.Order;
@@ -21,6 +18,8 @@ import java.util.List;
 public class LearnerOrderHistoryView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/order-history.jsp";
+    private final String HOME_PATH = "/homepage";
+
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
 
@@ -29,7 +28,7 @@ public class LearnerOrderHistoryView extends HttpServlet {
             throws ServletException, IOException {
         User user = AuthService.getUser(request);
         if (user == null) {
-            
+            request.getRequestDispatcher(request.getContextPath() + HOME_PATH).forward(request, response);
         } else {
             List<Order> unfinishOrders = OrderService.getUnfinishOrdersByUserId(user.getId());
             List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
@@ -42,7 +41,5 @@ public class LearnerOrderHistoryView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-
     }
 }

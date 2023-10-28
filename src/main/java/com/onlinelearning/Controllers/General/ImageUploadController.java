@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers;
+package com.onlinelearning.Controllers.General;
 
 import com.google.gson.JsonObject;
 import com.onlinelearning.Services.FileUploadService;

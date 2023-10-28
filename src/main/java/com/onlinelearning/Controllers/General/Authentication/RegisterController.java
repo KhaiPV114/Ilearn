@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Authentication;
+package com.onlinelearning.Controllers.General.Authentication;
 
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "Register", urlPatterns = {"/authentication/register"})
 public class RegisterController extends HttpServlet {
     
-    private static final String VIEW_PATH = "/common/authentication.jsp";
+    private static final String VIEW_PATH = "/general/authentication.jsp";
     
     private static final String HOME_PATH = "/homepage";
     

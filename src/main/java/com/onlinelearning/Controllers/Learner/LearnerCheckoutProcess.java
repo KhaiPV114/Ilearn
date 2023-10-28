@@ -19,21 +19,22 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "LearnerCheckoutProcess", urlPatterns = {"/cart/checkout/process"})
 public class LearnerCheckoutProcess extends HttpServlet {
 
+    private final String VIEW_PATH = "/dashboard/learner/order/history";
+
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
     private final CartService CartService = new CartServiceImpl();
-    private final String VIEW_PATH = "/dashboard/learner/order/history";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        doPost(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
         User user = AuthService.getUser(request);
         if (user != null) {
             String orderId = request.getParameter("order-id");
@@ -42,23 +43,18 @@ public class LearnerCheckoutProcess extends HttpServlet {
                 Order createdOrder = OrderService.getOrderById(Integer.parseInt(orderId));
                 if (createdOrder.getUserId().equals(user.getId())) {
                     if (!noNeedPayment.isEmpty()) {
-                        if(Boolean.parseBoolean(noNeedPayment)){
+                        if (Boolean.parseBoolean(noNeedPayment)) {
                             createdOrder.setStatus(OrderStatus.SUCCESSFUL);
                         }
                     } else {
                         createdOrder.setStatus(OrderStatus.PENDING);
                     }
-                    
+
                     OrderService.updateOrder(createdOrder);
-                    if(createdOrder.getStatus().equals(OrderStatus.SUCCESSFUL)){
-                        
+                    if (createdOrder.getStatus().equals(OrderStatus.SUCCESSFUL)) {
+
                     }
-
-                        System.out.println(CartService.deleteCartOfUserId(user.getId()));
-//                    CartService.deleteCartOfUserId(user.getId());
-//                    if (!CartService.deleteCartOfUserId(user.getId())) {
-//                    }
-
+                    CartService.deleteCartOfUserId(user.getId());
                     response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }
             }

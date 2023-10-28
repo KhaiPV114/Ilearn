@@ -25,27 +25,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor-reviews.html">
-                            <i class="feather-star"></i>
-                            <span>Reviews</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/instructor-my-quiz-attempts.html">
-                            <i class="feather-list"></i>
-                            <span>My Quiz Attempts</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="${pageContext.request.contextPath}/manager/order">
                             <i class="feather-shopping-bag"></i>
                             <span>Manager Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/instructor-quiz-attempts.html">
-                            <i class="feather-message-square"></i>
-                            <span>Question &amp; Answer</span>
                         </a>
                     </li>
                 </ul>
@@ -85,55 +67,19 @@
                 </div>
             </div>
             <ul class="user-list-wrapper">
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-dashboard.html">
-                        <i class="feather-home"></i>
-                        <span>My Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/#">
-                        <i class="feather-bookmark"></i>
-                        <span>Bookmark</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-enrolled-courses.html">
-                        <i class="feather-shopping-bag"></i>
-                        <span>Enrolled Courses</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-wishlist.html">
-                        <i class="feather-heart"></i>
-                        <span>Wishlist</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-reviews.html">
-                        <i class="feather-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-my-quiz-attempts.html">
-                        <i class="feather-list"></i>
-                        <span>My Quiz Attempts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-order-history.html">
-                        <i class="feather-clock"></i>
-                        <span>Order History</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-quiz-attempts.html">
-                        <i class="feather-message-square"></i>
-                        <span>Question &amp; Answer</span>
-                    </a>
-                </li>
-            </ul>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/instructor-dashboard.html">
+                            <i class="feather-home"></i>
+                            <span>My Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/manager/order">
+                            <i class="feather-shopping-bag"></i>
+                            <span>Manager Order</span>
+                        </a>
+                    </li>
+                </ul>
             <hr class="mt--10 mb--10">
             <ul class="user-list-wrapper">
                 <li>
@@ -152,7 +98,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/index.html">
+                    <a href="${pageContext.request.contextPath}/authentication/logout">
                         <i class="feather-log-out"></i>
                         <span>Logout</span>
                     </a>

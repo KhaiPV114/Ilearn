@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers;
+package com.onlinelearning.Controllers.General;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;

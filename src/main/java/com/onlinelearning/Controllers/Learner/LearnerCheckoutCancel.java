@@ -1,5 +1,8 @@
 package com.onlinelearning.Controllers.Learner;
 
+import com.onlinelearning.Models.User;
+import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
 import com.onlinelearning.Services.OrderService;
 import java.io.IOException;
@@ -8,36 +11,49 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "LearnerCheckoutCancel", urlPatterns = {"/cart/checkout/cancel"})
 public class LearnerCheckoutCancel extends HttpServlet {
 
-    private final OrderService orderService = new OrderServiceImpl();
-    private final String HOME_PATH = "/homepage";
     private final String VIEW_PATH = "/dashboard/learner/order/history";
+    private final String ERROR_403_PATH = "/error/403.jsp";
+    private final String HOME_PATH = "/homepage";
+
+    private final AuthService AuthService = new AuthServiceImpl();
+    private final OrderService OrderService = new OrderServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("view-order-history", true);
-        doPost(request, response);
+        User user = AuthService.getUser(request);
+        if (user != null) {
+            request.setAttribute("view-order-history", true);
+            doPost(request, response);
+        } else {
+            request.getRequestDispatcher(ERROR_403_PATH).forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String orderId = request.getParameter("order-id");
-        Boolean viewOrderHistory = (Boolean) request.getAttribute("view-order-history");
         try {
-            orderService.deleteOrder(Integer.parseInt(orderId));
-        } catch (Exception e) {
-            
-        }
+            OrderService.deleteOrder(Integer.parseInt(orderId));
+            if (request.getAttribute("view-order-history") != null) {
+                Boolean viewOrderHistory = Boolean.parseBoolean(request.getAttribute("view-order-history").toString());
+                if (viewOrderHistory) {
+                    response.sendRedirect(request.getContextPath() + VIEW_PATH);
+                } else {
 
-        if (viewOrderHistory) {
-            response.sendRedirect(request.getContextPath() + VIEW_PATH);
-        } else {
-            response.sendRedirect(request.getContextPath() + HOME_PATH);
+                }
+            } else {
+                response.sendRedirect(request.getContextPath() + HOME_PATH);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(LearnerCheckoutCancel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

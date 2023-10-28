@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Authentication;
+package com.onlinelearning.Controllers.General.Authentication;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;

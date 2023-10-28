@@ -18,22 +18,23 @@ import java.util.logging.Logger;
 @WebServlet(name = "LearnerWishlistAdd", urlPatterns = {"/learner/wishlist/add"})
 public class LearnerWishlistAdd extends HttpServlet {
 
-    private final WishlistService wishlistService = new WishlistServiceImpl();
-
-    private final AuthService authService = new AuthServiceImpl();
-
     private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
+    
+    
+    private final WishlistService WishlistService = new WishlistServiceImpl();
+    private final AuthService AuthService = new AuthServiceImpl();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = authService.getUser(request);
+        User user = AuthService.getUser(request);
         if (user != null) {
             int courseId = Integer.parseInt(request.getParameter("course-id"));
             WishlistItem wishlistItem = WishlistItem.builder()
@@ -41,7 +42,7 @@ public class LearnerWishlistAdd extends HttpServlet {
                     .courseId(courseId)
                     .build();
             try {
-                wishlistService.createWishlistItem(wishlistItem);
+                WishlistService.createWishlistItem(wishlistItem);
             } catch (Exception ex) {
                 Logger.getLogger(LearnerWishlistAdd.class.getName()).log(Level.SEVERE, null, ex);
             }

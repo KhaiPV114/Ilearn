@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers;
+package com.onlinelearning.Controllers.General;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
@@ -20,13 +20,13 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "LearnerFindCourse", urlPatterns = {"/search"})
-public class SearchCourse extends HttpServlet {
+public class GeneralSearchCourse extends HttpServlet {
 
     private final CourseService courseService = new CourseServiceImpl();
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
-    private final String VIEW_PATH = "/common/course-search.jsp";
+    private final String VIEW_PATH = "/general/course-search.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
