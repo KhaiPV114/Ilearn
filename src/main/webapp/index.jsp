@@ -212,13 +212,13 @@
                         <!-- Start Category Box Layout  -->
                         <c:forEach items="${allCategories}" var="category">
                             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
+                                <a class="rbt-cat-box rbt-cat-box-1 text-center" href="#">
                                     <div class="inner">
                                         <div class="icons">
                                             <img src="assets/images/category/${category.imageUrl}.png" alt="Images">
                                         </div>
                                         <div class="content">
-                                            <h5 class="title">${category.name}</h5>
+                                            <h5 class="title" style="min-height: 5rem;">${category.name}</h5>
                                             <c:set var="categoryCourseCount" value="0" />
                                                 <c:forEach items="${category.courses}" var="course">
                                                     <c:set var="categoryCourseCount" value="${categoryCourseCount + 1}" />
