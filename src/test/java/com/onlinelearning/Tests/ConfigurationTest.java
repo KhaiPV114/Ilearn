@@ -30,9 +30,9 @@ public class ConfigurationTest {
     @Order(3)
     @Test
     public void testAESPrivateKey() {
-        String originalString = "Chac ai do se ve";
+        String originalString = "iLearn";
         Encryption aes = new AESEncryptionImpl();
-        String encrypted = "rL9W+qfxxiBepJRsMlpmhLa7qneRqNIcfThjnKFMQ2I=";
+        String encrypted = "5b9km23NYfbSoRdkLNE3/A==";
         Assertions.assertEquals(originalString, aes.decrypt(encrypted));
     }
 }
