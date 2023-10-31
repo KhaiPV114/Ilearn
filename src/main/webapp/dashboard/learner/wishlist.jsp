@@ -38,40 +38,22 @@
                                                             </a>
                                                         </div>
                                                         <div class="rbt-card-body">
-                                                            <div class="rbt-card-top">
-                                                                <div class="rbt-review">
-                                                                    <div class="rating">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                    </div>
-                                                                    <span class="rating-count"> (15 Reviews)</span>
-                                                                </div>
-                                                                <div class="rbt-bookmark-btn">
-                                                                    <form action="${pageContext.request.contextPath}/dashboard/learner/wishlist/delete-wishlist" id="wishlist${course.id}" method="post">
-                                                                        <input type="hidden" name="course-id" value="${course.id}">
-                                                                        <a class="rbt-round-btn" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
-                                                                            <i class="fa-solid fa-bookmark"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
                                                             <h4 class="rbt-card-title"><a href="course-details.html">${course.name}</a>
                                                             </h4>
-                                                            <ul class="rbt-meta">
-                                                                <li><i class="feather-book"></i>20 Lessons</li>
-                                                                <li><i class="feather-users"></i>40 Students</li>
-                                                            </ul>
 
                                                             <div class="rbt-card-bottom">
                                                                 <div class="rbt-price">
                                                                     <span class="current-price">$${course.price}</span>
                                                                 </div>
+                                                                <form action="${pageContext.request.contextPath}/dashboard/learner/wishlist/delete-wishlist" id="wishlist${course.id}" method="post">
+                                                                        <input type="hidden" name="course-id" value="${course.id}">
+                                                                        <a class="rbt-round-btn" style="color: yellow" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
+                                                                            <i class="fa-solid fa-bookmark"></i>
+                                                                        </a>
+                                                                </form>
                                                                 <a class="rbt-btn-link" href="course-details.html">
                                                                     Learn More<i class="feather-arrow-right"></i>
-                                                                </a>
+                                                                </a> 
                                                             </div>
                                                         </div>
                                                     </div>
