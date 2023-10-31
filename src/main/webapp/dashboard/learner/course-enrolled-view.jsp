@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" buffer="8192kb" autoFlush="true"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 
@@ -86,11 +87,25 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
-                                                    <c:forEach var="enrolledCourse" items="${enrolledCourses}">
+                                                    <c:forEach var="enrolledCourse" items="${enrolledCourses}" varStatus="loop">
                                                         <tr>
-                                                            <td>${enrolledCourse.id}</td>
-                                                            <td>${enrolledCourse.name}</td>
-                                                            <td>${enrolledCourse.description}</td>
+                                                            <td>${loop.index + 1}</td>
+                                                            <td>
+                                                                <a href="${pageContext.request.contextPath}/course/details?courseId=${enrolledCourse.id}">
+                                                                    ${enrolledCourse.name}
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${fn:length(enrolledCourse.description) <= 120}"> <!-- Điều kiện để kiểm tra độ dài -->
+                                                                        ${enrolledCourse.description}
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        ${fn:substring(enrolledCourse.description, 0, 120)}... <!-- Giới hạn số ký tự -->
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+
                                                             <td>
                                                                 <!-- Hiển thị hình ảnh của khóa học nếu có -->
                                                                 <img src="${pageContext.request.contextPath}${enrolledCourse.imageUrl}" alt="image" />
