@@ -51,7 +51,7 @@
                                                                             <i class="fa-solid fa-bookmark"></i>
                                                                         </a>
                                                                 </form>
-                                                                <a class="rbt-btn-link" href="course-details.html">
+                                                                <a class="rbt-btn-link" href="#">
                                                                     Learn More<i class="feather-arrow-right"></i>
                                                                 </a> 
                                                             </div>
