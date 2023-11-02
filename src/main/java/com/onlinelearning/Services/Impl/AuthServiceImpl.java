@@ -11,6 +11,7 @@ import com.onlinelearning.DAL.Impl.RoleDAOImpl;
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.RoleDAO;
 import com.onlinelearning.DAL.UserDAO;
+import com.onlinelearning.Enums.UserStatus;
 import com.onlinelearning.Models.GoogleUser;
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
@@ -93,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
         }
         String hashedPassword = Password.hash(user.getPassword()).with(bcrypt).getResult();
         user.setPassword(hashedPassword);
+        user.setStatus(UserStatus.ACTIVE);
         User addedUser = userDAO.addUser(user);
         if (addedUser == null) {
             throw new Exception("Register failed. Please try again!");
@@ -253,6 +255,7 @@ public class AuthServiceImpl implements AuthService {
                     .email(loggedInGoogleUser.getEmail())
                     .googleEmail(loggedInGoogleUser.getEmail())
                     .fullName(loggedInGoogleUser.getName())
+                    .status(UserStatus.ACTIVE)
                     .build();
 
             //Add new user to database without role, 

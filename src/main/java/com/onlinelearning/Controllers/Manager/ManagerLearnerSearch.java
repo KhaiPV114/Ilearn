@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerLearnerSearch", urlPatterns = {"/learner/search"})
+@WebServlet(name = "ManagerLearnerSearch", urlPatterns = {"/manager/learner/search"})
 public class ManagerLearnerSearch extends HttpServlet {
 
     private UserService userService = new UserServiceImpl();
@@ -51,7 +51,7 @@ public class ManagerLearnerSearch extends HttpServlet {
         
         
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStatus().equals(UserStatus.ACTIVE)) {
+            if (list.get(i).getStatus() == null || list.get(i).getStatus().equals(UserStatus.ACTIVE)) {
                 learnerListActive.add(list.get(i));
             }
             else{
