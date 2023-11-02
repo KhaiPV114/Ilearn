@@ -2,7 +2,9 @@ package com.onlinelearning.Controllers.General.Authentication;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
+import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
+import com.onlinelearning.Services.Impl.CartServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,6 +20,7 @@ public class GoogleLoginController extends HttpServlet {
     private static final String HOME_PATH = "/homepage";
 
     private final AuthService authService = new AuthServiceImpl();
+    private final CartService CartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,6 +40,7 @@ public class GoogleLoginController extends HttpServlet {
             viewDispatcher.forward(request, response);
             return;
         }
+        CartService.getCourseInCart(request, response);
         response.sendRedirect(request.getContextPath() + HOME_PATH);
     }
 

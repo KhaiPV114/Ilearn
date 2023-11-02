@@ -31,10 +31,10 @@ public class ManagerRejectOrder extends HttpServlet {
         try {
             Order order = OrderService.getOrderById(Integer.parseInt(orderId));
             if (order != null) {
-                order.setStatus(OrderStatus.REJECTED);
+                order.setStatus(OrderStatus.FAILED);
                 OrderService.updateOrder(order);
                 response.setStatus(HttpServletResponse.SC_OK);
-            }else{
+            } else {
                 throw new Exception("Order not found with id: " + orderId);
             }
         } catch (Exception e) {

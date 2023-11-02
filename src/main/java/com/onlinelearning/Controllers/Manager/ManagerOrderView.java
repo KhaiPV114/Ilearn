@@ -16,9 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author duy20
- */
 @WebServlet(name = "ManagerOrderView", urlPatterns = {"/manager/order"})
 public class ManagerOrderView extends HttpServlet {
 
@@ -30,16 +27,12 @@ public class ManagerOrderView extends HttpServlet {
             throws ServletException, IOException {
         List<Order> allOrders = OrderService.getAllOrders();
         List<Order> pendingOrders = new ArrayList<>();
-        List<Order> rejectedOrders = new ArrayList<>();
         List<Order> failedOrders = new ArrayList<>();
         List<Order> successfulOrders = new ArrayList<>();
 
         for (Order order : allOrders) {
-            if (order.getStatus().equals(OrderStatus.PENDING)) {
+            if (order.getStatus().equals(OrderStatus.UNPAID)) {
                 pendingOrders.add(order);
-            }
-            if (order.getStatus().equals(OrderStatus.REJECTED)) {
-                rejectedOrders.add(order);
             }
             if (order.getStatus().equals(OrderStatus.FAILED)) {
                 failedOrders.add(order);
@@ -49,7 +42,6 @@ public class ManagerOrderView extends HttpServlet {
             }
         }
         request.setAttribute("pendingOrders", pendingOrders);
-        request.setAttribute("rejectedOrders", rejectedOrders);
         request.setAttribute("failedOrders", failedOrders);
         request.setAttribute("successfulOrders", successfulOrders);
         request.setAttribute("allOrders", allOrders);

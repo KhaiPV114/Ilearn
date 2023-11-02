@@ -12,21 +12,18 @@ import java.util.HashMap;
 public class JsonUtils {
 
     public static HashMap<String, String> convertJsonToHashMap(String Json) {
+        HashMap<String, String> hashMap = new HashMap<>();
         if (Json != null) {
             Gson gson = new Gson();
             // Using Gson to parse the JSON array to 2d array
             Object[][] array = gson.fromJson(Json, Object[][].class);
 
-            HashMap<String, String> hashMap = new HashMap<>();
-
             // Iterating through the array and adding entries to the HashMap
             for (Object[] entry : array) {
                 hashMap.put((String) entry[0], (String) entry[1]);
             }
-            return hashMap;
-        } else {
-            return null;
         }
+        return hashMap;
     }
 
     //Convert request data from JSON to String

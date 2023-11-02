@@ -175,15 +175,18 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
 
-    public Boolean getUserEnrollCourse(Integer userId, Integer courseId) {
+    @Override
+    public void getUserEnrollCourse(Integer userId, Integer courseId) throws Exception {
         if (userId == null || courseId == null) {
-            return false;
+            throw new Exception("User or Course is invalid");
+        }
+        if (isEnrolled(userId, courseId)) {
+            throw new Exception("User " + userId + " have enrolled this course" + courseId);
+        }
+        if (courseDAO.getUserEnrollCourse(userId, courseId)) {
+                //Success
         } else {
-            if (isEnrolled(userId, courseId)) {
-                return false;
-            } else {
-                return courseDAO.isEnrolled(userId, courseId);
-            }
+            throw new Exception("Get error while get user " + userId + " enrolled course " + courseId);
         }
     }
 

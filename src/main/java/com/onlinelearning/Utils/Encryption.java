@@ -5,7 +5,7 @@ package com.onlinelearning.Utils;
  */
 public interface Encryption {
 
-    String encrypt(String strToEncrypt);
+    String encrypt(final String strToEncrypt);
 
-    String decrypt(String strToDecrypt);
+    String decrypt(final String strToDecrypt);
 }

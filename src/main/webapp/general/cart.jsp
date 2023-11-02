@@ -91,7 +91,7 @@
                                                             Remove this course from your cart?
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <a class="rbt-btn btn-white btn-sm btn-border radius-round-10" href="javascript:void(0);" data-bs-dismiss="modal">Cancel</a>
+                                                            <a class="rbt-btn btn-white btn-sm btn-border" href="javascript:void(0);" data-bs-dismiss="modal">Cancel</a>
                                                             <input type="hidden" name="course-id" value="${course.id}" class="course-id">
                                                             <a class="rbt-btn btn-sm" href="javascript:void(0);" data-bs-dismiss="modal" onclick="removeCart(${course.id})">Remove</a>
                                                         </div>
@@ -208,7 +208,6 @@
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>
-        <%--<jsp:include page="/layout/delayScrollToContent.jsp"/>--%>
     </body>
 
     <script>

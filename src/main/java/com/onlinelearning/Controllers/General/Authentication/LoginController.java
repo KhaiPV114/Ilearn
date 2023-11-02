@@ -20,19 +20,20 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/general/authentication.jsp";
-    
+
     private static final String HOME_PATH = "/homepage";
 
     private static final int REMEMBER_ME_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-    
+
     private final AuthService authService = new AuthServiceImpl();
+    private final CartService CartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect(request.getContextPath() + HOME_PATH);
             return;
         }
         String username = CookieUtils.getCookieValue(request, "username");
@@ -71,6 +72,7 @@ public class LoginController extends HttpServlet {
             CookieUtils.deleteCookieByName(request, response, "username");
             CookieUtils.deleteCookieByName(request, response, "password");
         }
+        CartService.getCourseInCart(request, response);
         response.sendRedirect(request.getContextPath() + HOME_PATH);
     }
 }

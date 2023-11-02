@@ -18,8 +18,7 @@ import java.util.List;
 public class LearnerOrderHistoryView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/order-history.jsp";
-    private final String HOME_PATH = "/homepage";
-
+    private final String ERROR_403_PATH = "/error/403.jsp";
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
 
@@ -28,11 +27,11 @@ public class LearnerOrderHistoryView extends HttpServlet {
             throws ServletException, IOException {
         User user = AuthService.getUser(request);
         if (user == null) {
-            request.getRequestDispatcher(request.getContextPath() + HOME_PATH).forward(request, response);
+            request.getRequestDispatcher(ERROR_403_PATH).forward(request, response);
         } else {
-            List<Order> unfinishOrders = OrderService.getUnfinishOrdersByUserId(user.getId());
+            Order unpaidOrder = OrderService.getUnpaidOrderByUserId(user.getId());
             List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
-            request.setAttribute("unfinishOrders", unfinishOrders);
+            request.setAttribute("unpaidOrder", unpaidOrder);
             request.setAttribute("orders", orders);
             request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         }

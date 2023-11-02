@@ -308,24 +308,24 @@
                             </a>
                         </li>
                         <!-- User Dropdown-->
-                        ${sessionScope['roles']}
-                        <c:choose>
-                            <c:when test="${sessionScope['user']==null}">
-                                <li class="account-access rbt-user-wrapper d-none d-xl-block">
-                                    <a href="${pageContext.request.contextPath}/authentication"><i class="feather-log-in"></i>Login</a> 
-                                </li>
-                            </c:when>
-                            <c:when test="${roles.contains(Role.LEARNER)}">
-                                <jsp:include page="/layout/header/learner-dropdown.jsp" />
-                            </c:when>
-                            <c:when test="${roles.contains(Role.INSTRUCTOR)}">
-                                <jsp:include page="/layout/header/instructor-dropdown.jsp" />
-                            </c:when>
-                            <c:when test="${roles.contains(Role.MANAGER)}">
-                                <jsp:include page="/layout/header/manager-dropdown.jsp" />
-                            </c:when>
-                        </c:choose>
-
+                        <c:if test="${sessionScope['user']==null}">
+                            <li class="account-access rbt-user-wrapper d-none d-xl-block">
+                                <a href="${pageContext.request.contextPath}/authentication"><i class="feather-log-in"></i>Login</a>
+                            </li>
+                        </c:if>
+                        <c:forEach var="role" items="${sessionScope.roles}">
+                            <c:choose>
+                                <c:when test="${role == 'LEARNER'}">
+                                    <jsp:include page="/layout/header/learner-dropdown.jsp" />
+                                </c:when>
+                                <c:when test="${role == 'INSTRUCTOR'}">
+                                    <jsp:include page="/layout/header/instructor-dropdown.jsp" />
+                                </c:when>
+                                <c:when test="${role == 'MANAGER'}">
+                                    <jsp:include page="/layout/header/manager-dropdown.jsp" />
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
                     </ul>
                     <div class="rbt-btn-wrapper d-none d-xl-block">
                         <a class="rbt-btn rbt-marquee-btn marquee-auto btn-border-gradient radius-round btn-sm hover-transform-none"
