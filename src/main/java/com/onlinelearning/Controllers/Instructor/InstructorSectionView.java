@@ -40,9 +40,11 @@ public class InstructorSectionView extends HttpServlet {
         Integer courseId = Integer.valueOf(courseIdParam);
         List<Section> sections = sectionService.getSectionsByCourseId(courseId);
         Map<Integer, List<Lesson>> lessonsList = new HashMap<>();
-        for (Section section : sections) {
-            List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
-            lessonsList.put(section.getId(), lesson);
+        if (sections != null) {
+            for (Section section : sections) {
+                List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
+                lessonsList.put(section.getId(), lesson);
+            }
         }
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
