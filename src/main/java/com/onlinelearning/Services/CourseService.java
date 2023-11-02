@@ -24,7 +24,9 @@ public interface CourseService {
     List<Course> getAllCourseOrderByPriceDesc();
 
     List<Course> getAllCourseOrderByPriceAsc();
-
+    
+    List<Course> get3CourseByNumberOfPurchase();
+ 
     Course validateCourse(Integer courseId) throws Exception;
 
     Boolean isEnrolled(Integer userId, Integer courseId);
@@ -40,4 +42,5 @@ public interface CourseService {
     List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
 
     List<Course> getCourseByCategory(String category);
+
 }

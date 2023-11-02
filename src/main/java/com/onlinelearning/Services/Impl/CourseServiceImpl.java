@@ -39,6 +39,10 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDAO.getCourseByOwnerIdPaging(ownerId, size, page);
     }
+    
+
+    
+    
 
     @Override
     public Integer countNumberOfCourseByOwnerId(Integer ownerId, Integer size) {
@@ -129,6 +133,10 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
         return courses;
     }
+    
+
+    
+    
 
     @Override
     public List<Course> getCourseByCategory(String category) {
@@ -186,5 +194,13 @@ public class CourseServiceImpl implements CourseService {
             }
         }
     }
+
+    @Override
+    public List<Course> get3CourseByNumberOfPurchase() {
+        List<Course> courses = courseDAO.get3CourseByNumberOfPurchase();
+        return courses;       
+    }
+
+
 
 }
