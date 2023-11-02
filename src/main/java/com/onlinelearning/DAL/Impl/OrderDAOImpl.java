@@ -37,7 +37,7 @@ public class OrderDAOImpl implements OrderDAO {
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, newOrder.getUserId());
             ps.setTimestamp(2, Timestamp.valueOf(newOrder.getCreatedAt()));
-            ps.setString(3, newOrder.toString());
+            ps.setString(3, newOrder.getStatus().toString());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 try ( ResultSet rs = ps.getGeneratedKeys()) {

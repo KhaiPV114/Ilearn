@@ -213,7 +213,8 @@
                         <!-- Start Category Box Layout  -->
                         <c:forEach items="${allCategories}" var="category">
                             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                                <a class="rbt-cat-box rbt-cat-box-1 text-center" href="#">
+                                <a class="rbt-cat-box rbt-cat-box-1 text-center" 
+                                   href="${pageContext.request.contextPath}/search?filterCategory=${category.name}">
                                     <div class="inner">
                                         <div class="icons">
                                             <img src="${category.imageUrl}" alt="Images">
@@ -222,7 +223,10 @@
                                             <h5 class="title" style="min-height: 5rem;">${category.name}</h5>
                                             <!--NEED FIX: Get course number of a category-->
                                             <div class="read-more-btn">
-                                                <span class="rbt-btn-link">${categoryService.countNumberOfCourseByCategoryId(category.id)} Courses<i class="feather-arrow-right"></i></span>
+                                                <span class="rbt-btn-link">
+                                                    ${categoryService.countNumberOfCourseByCategoryId(category.id)} Courses
+                                                    <i class="feather-arrow-right"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -230,114 +234,6 @@
                             </div>
                         </c:forEach>
                         <!-- End Category Box Layout  -->   
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/personal.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">Personal Development</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">20 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/server.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">IT and Software</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">15 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/pantone.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">Sales Marketing</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">15 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/paint-palette.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">Art & Humanities</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">15 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/smartphone.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">Mobile Application</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">15 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
-
-                        <!-- Start Category Box Layout  -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <a class="rbt-cat-box rbt-cat-box-1 text-center" href="course-filter-one-toggle.html">
-                                <div class="inner">
-                                    <div class="icons">
-                                        <img src="${pageContext.request.contextPath}/assets/images/category/infographic.png" alt="Icons Images">
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">Finance & Accounting</h5>
-                                        <div class="read-more-btn">
-                                            <span class="rbt-btn-link">15 Courses<i class="feather-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Category Box Layout  -->
                     </div>
                 </div>
             </div>

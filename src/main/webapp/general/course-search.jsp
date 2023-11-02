@@ -155,7 +155,7 @@
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
                                         <a href="#">
-                                            <img style="height: 245px" src="${pageContext.request.contextPath}${course.imageUrl}" alt="Card image">
+                                            <img style="height: 245px" src="${course.imageUrl}" alt="Card image">
                                             <!--                                            <div class="rbt-badge-3 bg-white">
                                                                                             <span>-40%</span>
                                                                                             <span>Off</span>
@@ -293,18 +293,32 @@
     <script>
         function addToCart(courseId) {
             let urlPath = "${pageContext.request.contextPath}/cart/add";
-            const xhttp = new XMLHttpRequest();
-            xhttp.onload = function () {
-                if (xhttp.status === 200) {
+//            const xhttp = new XMLHttpRequest();
+//            xhttp.onload = function () {
+//                if (xhttp.status === 200) {
+//                    location.reload();
+//                } else {
+//                    let errMsg = document.getElementById("message-error"+courseId);
+//                    errMsg.innerHTML = xhttp.responseText;
+//                }
+//            };
+//            xhttp.open("POST", urlPath);
+//            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//            xhttp.send("course-id=" + courseId);
+            const postData = new URLSearchParams();
+            postData.append("course-id", courseId);
+            fetch(urlPath, {
+                method: "POST",
+                body: postData
+            }).then((res) => {
+                if (res.status === 200) {
                     location.reload();
-                } else {
-                    let errMsg = document.getElementById("message-error"+courseId);
-                    errMsg.innerHTML = xhttp.responseText;
                 }
-            };
-            xhttp.open("POST", urlPath);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("course-id=" + courseId);
+            }).catch((error) => {
+                let errMsg = document.getElementById("message-error" + courseId);
+                errMsg.innerHTML = error;
+                console.log(error);
+            });
         }
 
         function addToWishlist(courseId) {
@@ -314,7 +328,7 @@
                 if (xhttp.status === 200) {
                     location.reload();
                 } else {
-                    
+
                 }
             };
             xhttp.open("POST", urlPath);

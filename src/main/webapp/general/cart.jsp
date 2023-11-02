@@ -40,7 +40,7 @@
                                                 <tr id="cart-item-${course.id}">
                                                     <td class="pro-thumbnail">
                                                         <a href="#">
-                                                            <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product">
+                                                            <img src="${course.imageUrl}" alt="Product">
                                                         </a>
                                                     </td>
                                                     <td class="pro-title">

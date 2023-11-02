@@ -66,7 +66,7 @@
                                         <!-- End Title -->
 
                                         <div class="tutor-btn">
-                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/learner/course" >
+                                            <a class="rbt-btn btn-md hover-icon-reverse" href="${pageContext.request.contextPath}/search" >
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Learn a New Course</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -83,7 +83,7 @@
                                                         <th style="width: 25%;">Course Name</th>
                                                         <th style="width: 35%;">Description</th>
                                                         <th>Image</th>
-                                                       
+
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
@@ -91,9 +91,19 @@
                                                         <tr>
                                                             <td>${loop.index + 1}</td>
                                                             <td>
-                                                                <a href="${pageContext.request.contextPath}/course/details?courseId=${enrolledCourse.id}">
+                                                                <a href="${pageContext.request.contextPath}/learn?courseId=${enrolledCourse.id}">
                                                                     ${enrolledCourse.name}
                                                                 </a>
+                                                                <div class="tutor-btn">
+                                                                    <a class="rbt-btn btn-md hover-icon-reverse mt-3" 
+                                                                       href="${pageContext.request.contextPath}/learn?courseId=${enrolledCourse.id}" >
+                                                                        <span class="icon-reverse-wrapper">
+                                                                            <span class="btn-text">Learn</span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <c:choose>
@@ -108,9 +118,9 @@
 
                                                             <td>
                                                                 <!-- Hiển thị hình ảnh của khóa học nếu có -->
-                                                                <img src="${pageContext.request.contextPath}${enrolledCourse.imageUrl}" alt="image" />
+                                                                <img src="${enrolledCourse.imageUrl}" alt="image" />
                                                             </td>
-                                                            
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -120,7 +130,7 @@
 
                                         <div class="d-flex mt-3" id="pageBar"></div>
 
-<!--                                        Delete via post method                                                    -->
+                                        <!--                                        Delete via post method                                                    -->
                                         <form id="deletion-form" action="${pageContext.request.contextPath}/learner/course/delete" method="post">
                                             <input id="deletion-id" name="id" value="" type="hidden">
                                         </form>
@@ -137,6 +147,6 @@
 
         <jsp:include page="/layout/footer.jsp" />
         <jsp:include page="/layout/scripts.jsp" />
-        
+
     </body>
 </html>

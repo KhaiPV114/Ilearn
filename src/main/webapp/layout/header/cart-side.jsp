@@ -22,7 +22,7 @@
                         <input class="course-id-cart-side" type="hidden" value="${course.id}"/>
                         <div class="thumbnail">
                             <a href="#">
-                                <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Product Images">
+                                <img src="${course.imageUrl}" alt="Product Images">
                             </a>
                         </div>
                         <div class="product-content">

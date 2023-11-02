@@ -20,11 +20,16 @@ public class LessonDAOImpl implements LessonDAO {
     private final String LESSON_TABLE = "lessons";
 
     private Lesson lessonResultSetMapper(ResultSet rs) throws SQLException {
+        LessonStatus status = null;
+        String statusString = rs.getString("status");
+        if (statusString != null) {
+            status = LessonStatus.valueOf(statusString);
+        }
         Lesson lesson = Lesson.builder()
                 .id(rs.getInt("lesson_id"))
                 .sectionId(rs.getInt("section_id"))
                 .name(rs.getString("name"))
-                .status(LessonStatus.valueOf(rs.getString("status")))
+                .status(status)
                 .orderNumber(rs.getFloat("order_number"))
                 .content(rs.getString("content"))
                 .build();

@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <li class="account-access rbt-user-wrapper d-none d-xl-block">
-    <a href="${pageContext.request.contextPath}/#"><i class="feather-user"></i>${user.username}</a>
+    <a href="${pageContext.request.contextPath}/#"><i class="feather-user"></i>${user.fullName}</a>
     <div class="rbt-user-menu-list-wrapper">
         <div class="inner">
             <div class="rbt-admin-profile">
