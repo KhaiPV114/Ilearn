@@ -47,6 +47,7 @@
                             <div class="checkout-payment-method">
 
                                 <form action="${pageContext.request.contextPath}/cart/checkout/process" method="post" id="payment-checkout-form">
+                                    <input type="hidden" name="no-need-payment" value="${noNeedPayment}">
                                     <input type="hidden" name="order-id" value="${order.id}">
                                     <div class="single-method">
                                         <input type="radio" id="payment_paypal" value="paypal" name="payment-method" class="payment-method" disabled>

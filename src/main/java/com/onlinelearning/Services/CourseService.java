@@ -18,9 +18,26 @@ public interface CourseService {
     Course updateCourse(Course course) throws Exception;
 
     Course deleteCourse(Course course) throws Exception;
-    
+
     List<Course> getAllCoursesByUserId(Integer userId);
+
+    List<Course> getAllCourseOrderByPriceDesc();
+
+    List<Course> getAllCourseOrderByPriceAsc();
+
+    Course validateCourse(Integer courseId) throws Exception;
+
+    Boolean isEnrolled(Integer userId, Integer courseId);
     
     List<Course> getCourseByCategoryId(Integer categoryId);
 
+    Boolean getUserEnrollCourse(Integer userId, Integer courseId);
+
+    List<Course> getCourseByKeyword(String keyword);
+
+    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
+
+    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+
+    List<Course> getCourseByCategory(String category);
 }

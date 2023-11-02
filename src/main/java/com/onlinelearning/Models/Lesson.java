@@ -1,5 +1,6 @@
 package com.onlinelearning.Models;
 
+import com.onlinelearning.Enums.LessonStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,11 +9,15 @@ import lombok.Data;
 public class Lesson {
 
     private Integer id;
-    
-    private Integer courseId;
-    
+
+    private Integer sectionId;
+
     private String name;
-    
+
     private String content;
-    
+
+    private LessonStatus status;
+
+    private Float orderNumber;
+
 }

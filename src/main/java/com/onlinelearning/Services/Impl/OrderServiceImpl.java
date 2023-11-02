@@ -5,6 +5,7 @@ import com.onlinelearning.DAL.Impl.OrderItemDAOImpl;
 import com.onlinelearning.DAL.OrderDAO;
 import com.onlinelearning.DAL.OrderItemDAO;
 import com.onlinelearning.Models.Order;
+import com.onlinelearning.Models.OrderItem;
 import com.onlinelearning.Services.OrderService;
 import java.util.List;
 
@@ -23,12 +24,25 @@ public class OrderServiceImpl implements OrderService {
         if (userId == null) {
             return null;
         }
-        return orderDAO.getAllOrdersByUserId(userId);
+        return orderDAO.getAllOrdersOfUserId(userId);
+    }
+    
+    @Override
+    public List<Order> getUnfinishOrdersByUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return orderDAO.getUnfinishOrdersOfUserId(userId);
     }
 
     @Override
     public List<Order> getAllOrders() {
         return orderDAO.getAllOrders();
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+        return orderItemDAO.getAllOrderItemsByOrderId(orderId);
     }
 
     @Override

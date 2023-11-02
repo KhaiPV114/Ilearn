@@ -10,7 +10,7 @@ import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
+import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -33,7 +33,7 @@ public class InstructorCourseAdd extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/instructor/course-form.jsp";
 
-    private final FileUploadService fileUploadService = FileUploadServiceImpl.load();
+    private final FileUploadService fileUploadService = S3FileUploadServiceImpl.load();
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
@@ -98,6 +98,8 @@ public class InstructorCourseAdd extends HttpServlet {
         }
 
         if (!check) {
+            List<Category> categories = categoryService.getAllCategories();
+            request.setAttribute("categories", categories);
             request.setAttribute("name", name);
             request.setAttribute("category", categoryId);
             request.setAttribute("price", priceString);

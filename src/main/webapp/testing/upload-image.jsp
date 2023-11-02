@@ -25,7 +25,7 @@
             <br/>
             <input type="submit">
         </form>
-        <a href="${pageContext.request.contextPath}${link}">${link}</a>
+        <a href="${pageContext.request.contextPath}/${link}">${link}</a>
         <p>${message}</p>
         <script>
             let imagePreviewDiv = document.getElementById("image-preview");

@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "LearnerWishlistView", urlPatterns = {"/dashboard/learner/wishlist"})
+@WebServlet(name = "LearnerWishlistView", urlPatterns = {"/learner/wishlist"})
 public class LearnerWishlistView extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";

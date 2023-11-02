@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerCouponSearch", urlPatterns = {"/dashboard/manager/coupon-search"})
+@WebServlet(name = "ManagerCouponSearch", urlPatterns = {"/manager/coupon/search"})
 public class ManagerCouponSearch extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/manager/coupon-search-form.jsp";

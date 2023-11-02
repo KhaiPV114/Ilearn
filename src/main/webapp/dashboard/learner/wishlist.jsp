@@ -38,6 +38,26 @@
                                                             </a>
                                                         </div>
                                                         <div class="rbt-card-body">
+                                                            <div class="rbt-card-top">
+                                                                <div class="rbt-review">
+                                                                    <div class="rating">
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                        <i class="fas fa-star"></i>
+                                                                    </div>
+                                                                    <span class="rating-count"> (15 Reviews)</span>
+                                                                </div>
+                                                                <div class="rbt-bookmark-btn">
+                                                                    <form action="${pageContext.request.contextPath}/learner/wishlist/delete" id="wishlist${course.id}" method="post">
+                                                                        <input type="hidden" name="course-id" value="${course.id}">
+                                                                        <a class="rbt-round-btn" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
+                                                                            <i class="fa-solid fa-bookmark"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                             <h4 class="rbt-card-title"><a href="course-details.html">${course.name}</a>
                                                             </h4>
 

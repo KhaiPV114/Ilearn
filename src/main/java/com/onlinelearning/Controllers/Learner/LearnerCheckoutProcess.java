@@ -15,11 +15,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "LearnerCheckoutProcess", urlPatterns = {"/cart/checkout/process"})
 public class LearnerCheckoutProcess extends HttpServlet {
+
+    private final String VIEW_PATH = "/dashboard/learner/order/history";
 
     private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
@@ -28,36 +28,36 @@ public class LearnerCheckoutProcess extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        doPost(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
         User user = AuthService.getUser(request);
         if (user != null) {
             String orderId = request.getParameter("order-id");
+            String noNeedPayment = request.getParameter("no-need-payment");
             if (orderId != null) {
                 Order createdOrder = OrderService.getOrderById(Integer.parseInt(orderId));
                 if (createdOrder.getUserId().equals(user.getId())) {
-                    createdOrder.setStatus(OrderStatus.PENDING);
-                    createdOrder = OrderService.updateOrder(createdOrder);
-
-                    if (!CartService.deleteCartOfUserId(user.getId())) {
-                        System.out.println("Failed to delete cart");
+                    if (!noNeedPayment.isEmpty()) {
+                        if (Boolean.parseBoolean(noNeedPayment)) {
+                            createdOrder.setStatus(OrderStatus.SUCCESSFUL);
+                        }
+                    } else {
+                        createdOrder.setStatus(OrderStatus.PENDING);
                     }
-                    CartService.updateCartInSession(request.getSession(), request, response);
 
-                    PrintWriter out = response.getWriter();
-                    List<Order> orders = OrderService.getAllOrdersByUserId(user.getId());
-                    for (Order order : orders) {
-                        out.print(order.toString() + "<br/>");
+                    OrderService.updateOrder(createdOrder);
+                    if (createdOrder.getStatus().equals(OrderStatus.SUCCESSFUL)) {
+
                     }
-                    out.print("New added:" + createdOrder.toString());
+                    CartService.deleteCartOfUserId(user.getId());
+                    response.sendRedirect(request.getContextPath() + VIEW_PATH);
                 }
             }
-
         }
     }
 }

@@ -2,8 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="coursesInCart" value="${sessionScope['coursesInCart']}" />
-
 <div class="rbt-cart-side-menu" id="cart-side-menu">
     <div class="inner-wrapper">
         <div class="inner-top">

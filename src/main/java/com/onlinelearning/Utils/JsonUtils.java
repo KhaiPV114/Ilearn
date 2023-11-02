@@ -10,24 +10,23 @@ import java.util.HashMap;
  * @author duy20
  */
 public class JsonUtils {
-    
-    /**
-     * Read JSON String and convert to HashMap<String, String>
-     * @param Json
-     * @return HashMap<String, String>
-     */
+
     public static HashMap<String, String> convertJsonToHashMap(String Json) {
-        Gson gson = new Gson();
-        // Using Gson to parse the JSON array to 2d array
-        Object[][] array = gson.fromJson(Json, Object[][].class);
+        if (Json != null) {
+            Gson gson = new Gson();
+            // Using Gson to parse the JSON array to 2d array
+            Object[][] array = gson.fromJson(Json, Object[][].class);
 
-        HashMap<String, String> hashMap = new HashMap<>();
+            HashMap<String, String> hashMap = new HashMap<>();
 
-        // Iterating through the array and adding entries to the HashMap
-        for (Object[] entry : array) {
-            hashMap.put((String) entry[0], (String) entry[1]);
+            // Iterating through the array and adding entries to the HashMap
+            for (Object[] entry : array) {
+                hashMap.put((String) entry[0], (String) entry[1]);
+            }
+            return hashMap;
+        } else {
+            return null;
         }
-        return hashMap;
     }
 
     //Convert request data from JSON to String

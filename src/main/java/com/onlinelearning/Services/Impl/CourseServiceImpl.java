@@ -2,9 +2,11 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.Impl.CourseDAOImpl;
+import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
@@ -84,7 +86,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course updateCourse(Course course) throws Exception {
-        validateCourse(course);
         Course updatedCourse = courseDAO.updateCourse(course);
         if (updatedCourse == null) {
             throw new Exception("Update course failed!");
@@ -94,30 +95,96 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCoursesByUserId(Integer userId) {
-        if (userId == null){
+        if (userId == null) {
             return null;
-        }    
-        
-        // return 
-        return courseDAO.getAllCoursesByUserId(userId);
+        }
+
+        // return
+        return courseDAO.getEnrolledCourseOfUserId(userId);
     }
-    
-    
-   @Override
+
+    public List<Course> getCourseByKeyword(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeyword(keyword);
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceDesc(keyword);
+        return courses;
+    }
+
+    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
+        return courses;
+    }
+
+    public List<Course> getAllCourseOrderByPriceDesc() {
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getAllCourseOrderByPriceAsc() {
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCourseByCategory(String category) {
+        List<Course> courses = courseDAO.getCourseByCategory(category);
+        return courses;
+    }
+
+    @Override
+    public Course validateCourse(Integer courseId) throws Exception {
+        if (courseId != null) {
+            Course course = courseDAO.getCourseById(courseId);
+            if (course != null) {
+                if (course.getStatus().equals(CourseStatus.PUBLISHED)) {
+                    return course;
+                } else {
+                    throw new Exception("Course not available");
+                }
+            }
+        }
+        throw new Exception("Invalid course");
+    }
+
+    @Override
+    public Boolean isEnrolled(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return false;
+        }
+        return courseDAO.isEnrolled(userId, courseId);
+    }
+
+    @Override
     public List<Course> getCourseByCategoryId(Integer categoryId) {
 
-      if (categoryId == null) {
-        return null;
-      }
+        if (categoryId == null) {
+            return null;
+        }
 
-      List<Course> courses = courseDAO.getCourseByCategoryId(categoryId);
+        List<Course> courses = courseDAO.getCourseByCategoryId(categoryId);
 
-      if (courses == null) {
-        return null; 
-      }
+        if (courses == null) {
+            return null;
+        }
 
-      return courses;
+        return courses;
     }
-      
-   
+
+    public Boolean getUserEnrollCourse(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return false;
+        } else {
+            if (isEnrolled(userId, courseId)) {
+                return false;
+            } else {
+                return courseDAO.isEnrolled(userId, courseId);
+            }
+        }
+    }
+
 }

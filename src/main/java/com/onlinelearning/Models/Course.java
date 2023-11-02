@@ -1,5 +1,6 @@
 package com.onlinelearning.Models;
 
+import com.onlinelearning.Enums.CourseStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,5 +21,7 @@ public class Course {
     private String description;
     
     private Double price;
+    
+    private CourseStatus status;
     
 }

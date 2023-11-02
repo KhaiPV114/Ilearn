@@ -10,7 +10,9 @@ public interface OrderDAO {
     
     Order getOrderById(Integer orderId);
     
-    List<Order> getAllOrdersByUserId(Integer userId);
+    List<Order> getAllOrdersOfUserId(Integer userId);
+    
+    List<Order> getUnfinishOrdersOfUserId(Integer userId);
     
     List<Order> getAllOrders();
 

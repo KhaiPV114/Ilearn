@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface CourseDAO {
 
-    Course getCourseById(Integer id);
+    Course getCourseById(Integer courseId);
 
-    Course getCourseByName(String name);
+    Course getCourseByName(String courseName);
 
     List<Course> getAllCourses();
 
@@ -21,7 +21,23 @@ public interface CourseDAO {
 
     Course deleteCourse(Course course);
     
-    List<Course> getAllCoursesByUserId(Integer userId);
+    List<Course> getEnrolledCourseOfUserId(Integer userId);
+    
+    List<Course> getAllCourseOrderByPriceDesc();
+    
+    List<Course> getAllCourseOrderByPriceAsc();
+    
+    Boolean isEnrolled(Integer userId, Integer courseId);
+    
+    Boolean getUserEnrollCourse(Integer userId, Integer courseId);
+
+    List<Course> getCourseByKeyword(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
+    
+    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
+    
+    List<Course> getCourseByCategory(String category);
     
     List<Course> getCourseByCategoryId(Integer categoryId);
 }

@@ -15,11 +15,11 @@ public class Category {
     private String imageUrl;
 
     private String description;
-    
+
     private List<Course> courses;
 
     public void setCourses(List<Course> courses) {
-    this.courses = courses;
-  }
+        this.courses = courses;
+    }
 
 }
