@@ -24,7 +24,7 @@ public class RoleDAOImpl implements RoleDAO {
                 + "(name)"
                 + " values (?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setNString(1, role.toString());
+            ps.setString(1, role.toString());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return role;
@@ -41,7 +41,7 @@ public class RoleDAOImpl implements RoleDAO {
                 + " from" + ROLE_TABLE
                 + " where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setNString(1, role.toString());
+            ps.setString(1, role.toString());
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("role_id");
@@ -62,7 +62,7 @@ public class RoleDAOImpl implements RoleDAO {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return Role.valueOf(rs.getNString("name"));
+                    return Role.valueOf(rs.getString("name"));
                 }
             }
         } catch (SQLException ex) {

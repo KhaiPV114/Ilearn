@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "TestingController", urlPatterns = {"/testing"})
 public class TestingController extends HttpServlet {
 
-    private static final String VIEW_PATH = "test-page.jsp";
+    private static final String VIEW_PATH = "/testing/test-page.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
