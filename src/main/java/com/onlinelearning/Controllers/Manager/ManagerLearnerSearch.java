@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerActiveLearnerSearch", urlPatterns = {"/learner/search"})
-public class ManagerActiveLearnerSearch extends HttpServlet {
+@WebServlet(name = "ManagerLearnerSearch", urlPatterns = {"/learner/search"})
+public class ManagerLearnerSearch extends HttpServlet {
 
     private UserService userService = new UserServiceImpl();
 
