@@ -17,7 +17,8 @@
 
     const coursePriceCartSide = document.getElementsByClassName("course-price-cart-side");
     const courseTotalCartSide = document.getElementById('course-total-cart-side');
-    courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
+    if (courseTotalCartSide)
+        courseTotalCartSide.innerHTML = '$' + calculateCoursesPriceCartSide().toFixed(2);
     function calculateCoursesPriceCartSide() {
         let total = 0;
         for (let price of coursePriceCartSide) {
@@ -54,6 +55,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/vendor/bootstrap-select.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/vendor/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/vendor/magnify-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/vendor/plyr.js"></script>
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 <!--Font Awesome-->
