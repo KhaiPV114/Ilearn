@@ -92,19 +92,17 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getUnfinishOrdersOfUserId(Integer userId) {
+    public Order getUnpaidOrderOfUserId(Integer userId) {
         String sql = "select *"
                 + " from " + ORDER_TABLE
                 + " where user_id = ? and status = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, userId);
-            ps.setString(2, OrderStatus.NEW.toString());
+            ps.setString(2, OrderStatus.UNPAID.toString());
             try ( ResultSet rs = ps.executeQuery()) {
-                List<Order> orders = new ArrayList<>();
-                while (rs.next()) {
-                    orders.add(orderResultSetMapper(rs));
+                if (rs.next()) {
+                    return orderResultSetMapper(rs);
                 }
-                return orders;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

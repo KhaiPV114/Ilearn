@@ -16,6 +16,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "GeneralGetCoupon", urlPatterns = {"/coupon/get"})
 public class GeneralGetCoupon extends HttpServlet {
@@ -42,12 +44,11 @@ public class GeneralGetCoupon extends HttpServlet {
 
             //Create HashMap<courseId, couponCode> use to track coupon applied to which course
             String requestData = JsonUtils.getJsonDataFromRequest(request);
-            HashMap<String, String> trackerMap = JsonUtils.convertJsonToHashMap(requestData);
-
-            //Get coupon code insert from user
-            Coupon insertedCoupon = couponService.getCouponByCode(trackerMap.get("insertCoupon"));
+            HashMap<String, String> courseCoupons = JsonUtils.convertJsonToHashMap(requestData);
 
             try {
+                //Get coupon code insert from user
+                Coupon insertedCoupon = couponService.getCouponByCode(courseCoupons.get("insertCoupon"));
                 //Check if coupon can apply
                 if (couponService.canApplyCoupon(insertedCoupon)) {
                     Double discount = 0d;
@@ -59,10 +60,12 @@ public class GeneralGetCoupon extends HttpServlet {
                     for (Course course : coursesInCart) {
                         //Get current coupon have applied to this course, if haven't
                         //applied, set percent discount to 0
-                        Coupon currentCoupon = couponService.getCouponByCode(
-                                trackerMap.get(course.getId().toString())
-                        );
-                        if (currentCoupon == null) {
+                        Coupon currentCoupon;
+                        try {
+                            currentCoupon = couponService.getCouponByCode(
+                                    courseCoupons.get(course.getId().toString())
+                            );
+                        } catch (Exception e) {
                             currentCoupon = Coupon.builder()
                                     .percent(0d)
                                     .build();
@@ -70,7 +73,7 @@ public class GeneralGetCoupon extends HttpServlet {
 
                         if (insertedCoupon.getCourseId().equals(course.getId()) || insertedCoupon.getCourseId() == 0) {     //0: coupon for all course
                             if (insertedCoupon.getPercent() > currentCoupon.getPercent()) {
-                                trackerMap.replace(course.getId().toString(), insertedCoupon.getCode());
+                                courseCoupons.replace(course.getId().toString(), insertedCoupon.getCode());
                                 discount += course.getPrice() * (insertedCoupon.getPercent() / 100);
                                 isApplied = true;
                             } else {
@@ -82,34 +85,34 @@ public class GeneralGetCoupon extends HttpServlet {
                         }
 
                         //Add applied coupon to list
-                        if (!trackerMap.get(course.getId().toString()).isEmpty() && !appliedCoupons.contains(trackerMap.get(course.getId().toString()))) {
-                            appliedCoupons.add(trackerMap.get(course.getId().toString()));
+                        if (!courseCoupons.get(course.getId().toString()).isEmpty() && !appliedCoupons.contains(courseCoupons.get(course.getId().toString()))) {
+                            appliedCoupons.add(courseCoupons.get(course.getId().toString()));
                         }
                     }
-                    
+
                     //Add appiled coupons and discount of all coupon to tracker
-                    trackerMap.put("appliedCoupons", appliedCoupons.toString());
-                    trackerMap.put("discount", discount.toString());
+                    courseCoupons.put("appliedCoupons", appliedCoupons.toString());
+                    courseCoupons.put("discount", discount.toString());
 
                     if (isApplied) {    //If coupon have applied
-                        trackerMap.remove("failedMsg");
-                        trackerMap.put("appliedMsg", "Applied <strong>" + insertedCoupon.getCode() + "</strong> to your cart!");
+                        courseCoupons.remove("failedMsg");
+                        courseCoupons.put("appliedMsg", "Applied <strong>" + insertedCoupon.getCode() + "</strong> to your cart!");
                     } else if (!isSuitable) {   //If coupon available, but can't apply
-                        trackerMap.remove("appliedMsg");
-                        trackerMap.put("failedMsg", "You have applied a more valuable coupon code!");
+                        courseCoupons.remove("appliedMsg");
+                        courseCoupons.put("failedMsg", "You have applied a more valuable coupon code!");
                     } else {    //If coupon code can't apply for any course in cart
-                        trackerMap.remove("appliedMsg");
-                        trackerMap.put("failedMsg", "Coupon <strong>" + insertedCoupon.getCode() + "</strong> is not available for these courses!");
+                        courseCoupons.remove("appliedMsg");
+                        courseCoupons.put("failedMsg", "Coupon <strong>" + insertedCoupon.getCode() + "</strong> is not available for these courses!");
                     }
                 }
             } catch (Exception couponException) {
-                trackerMap.remove("appliedMsg");
-                trackerMap.put("failedMsg", couponException.getMessage());
+                courseCoupons.remove("appliedMsg");
+                courseCoupons.put("failedMsg", couponException.getMessage());
             }
-            
+
             //Transfer tracker to Json and send response
             Gson gson = new Gson();
-            String responseData = gson.toJson(trackerMap);
+            String responseData = gson.toJson(courseCoupons);
             response.setStatus(HttpServletResponse.SC_OK);
             pw.print(responseData);
         }

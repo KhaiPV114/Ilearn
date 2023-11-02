@@ -6,16 +6,21 @@ import com.onlinelearning.DAL.OrderDAO;
 import com.onlinelearning.DAL.OrderItemDAO;
 import com.onlinelearning.Models.Order;
 import com.onlinelearning.Models.OrderItem;
+import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.OrderService;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO = new OrderDAOImpl();
+    private final CourseService CourseService = new CourseServiceImpl();
     private final OrderItemDAO orderItemDAO = new OrderItemDAOImpl();
 
     @Override
     public Order getOrderById(Integer orderId) {
+        if (orderId == null) {
+            return null;
+        }
         return orderDAO.getOrderById(orderId);
     }
 
@@ -26,13 +31,13 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDAO.getAllOrdersOfUserId(userId);
     }
-    
+
     @Override
-    public List<Order> getUnfinishOrdersByUserId(Integer userId) {
+    public Order getUnpaidOrderByUserId(Integer userId) {
         if (userId == null) {
             return null;
         }
-        return orderDAO.getUnfinishOrdersOfUserId(userId);
+        return orderDAO.getUnpaidOrderOfUserId(userId);
     }
 
     @Override
@@ -65,9 +70,25 @@ public class OrderServiceImpl implements OrderService {
             if (orderItemDAO.deleteOrderItem(deleteOrder.getId())) {
                 return orderDAO.deleteOrder(deleteOrder);
             }
-            throw new Exception("Error at deleting order item");
+            throw new Exception("Delete Order Item get error.");
         }
-        throw new Exception("Not found order!");
+        throw new Exception("Order not found to delete.");
+    }
+
+    @Override
+    public void getUserEnrollCourseByOrderId(Integer orderId) throws Exception {
+        Order order = getOrderById(orderId);
+        if (order == null) {
+            throw new NullPointerException();
+        }
+        List<OrderItem> orderItems = getOrderItemsByOrderId(orderId);
+        for (OrderItem orderItem : orderItems) {
+            try {
+                CourseService.getUserEnrollCourse(order.getUserId(), orderItem.getCourseId());
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 
 }

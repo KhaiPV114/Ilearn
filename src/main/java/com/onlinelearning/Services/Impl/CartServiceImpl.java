@@ -16,8 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CartServiceImpl implements CartService {
 
@@ -76,8 +74,8 @@ public class CartServiceImpl implements CartService {
         try {
             cartInCookie = getCartFromCookie(request);
         } catch (Exception e) {
-            System.out.println("EXCEPTION at " + CartServiceImpl.class + ": " + e.getMessage());
         }
+
         if (newCartItem != null) {
             if (cartInCookie.contains(newCartItem)) {
                 throw new Exception("This course is exist in your cart");
@@ -96,7 +94,6 @@ public class CartServiceImpl implements CartService {
         try {
             cartInCookie = getCartFromCookie(request);
         } catch (Exception e) {
-            System.out.println("EXCEPTION at " + CartServiceImpl.class + ": " + e.getMessage());
         }
         if (cartItem != null) {
             if (cartInCookie.contains(cartItem)) {
@@ -110,18 +107,20 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    //Return a list of cart item, if have error or cart empty throw Exception
+    //Return a list of validated cart item from cookie (Guest, Learner)
     private List<CartItem> getCartFromCookie(HttpServletRequest request) throws Exception {
         //Get cookies
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CartCookieName)) {
+
                     //Decrypt data from cookie
                     String decrypted = AES.decrypt(cookie.getValue());
                     if (decrypted == null) {
                         throw new Exception("Cart in cookie is invalid format");
                     }
+
                     //Spilit data encrypted to array of course id
                     HashSet<Integer> courseIds = new HashSet<>();
                     for (String data : decrypted.split(SeperateCharacter)) {
@@ -131,19 +130,35 @@ public class CartServiceImpl implements CartService {
                         }
                     }
 
-                    //Validate course to set to cart, if have invalid course, skip them
+                    //Validate course (skip if invalid)
+                    //If is learner, check if they have enroll course
                     List<CartItem> cartInCookie = new ArrayList<>();
-                    for (Integer courseId : courseIds) {
-                        try {
-                            if (CourseService.validateCourse(courseId) != null) {
-                                cartInCookie.add(CartItem.builder().courseId(courseId).build());
+                    User user = AuthService.getUser(request);
+                    if (user == null) {
+                        for (Integer courseId : courseIds) {
+                            try {
+                                if (CourseService.validateCourse(courseId) != null) {
+                                    cartInCookie.add(CartItem.builder().courseId(courseId).build());
+                                }
+                            } catch (Exception e) {
                             }
-                        } catch (Exception e) {
+                        }
+                    } else {
+                        for (Integer courseId : courseIds) {
+                            try {
+                                if (CourseService.validateCourse(courseId) != null
+                                        && !CourseService.isEnrolled(user.getId(), courseId)) {
+                                    cartInCookie.add(CartItem.builder().courseId(courseId).build());
+                                }
+                            } catch (Exception e) {
+                            }
                         }
                     }
+
                     if (cartInCookie.isEmpty()) {
                         throw new Exception("Cart in cookie is empty");
                     }
+
                     return cartInCookie;
                 }
             }
@@ -154,6 +169,7 @@ public class CartServiceImpl implements CartService {
     //Add cart to cookie, if cart empty, remove cookie
     private void addCartToCookie(HttpServletRequest request, HttpServletResponse response, List<CartItem> cart) {
         if (!cart.isEmpty()) {
+
             //Convert cart to string data
             String dataCookie = "";
             for (CartItem cartItem : cart) {
@@ -161,10 +177,12 @@ public class CartServiceImpl implements CartService {
                     dataCookie += cartItem.getCourseId().toString() + SeperateCharacter;
                 }
             }
+
             //Encrypt data
             if (!dataCookie.isEmpty()) {
                 dataCookie = AES.encrypt(dataCookie.substring(0, dataCookie.length() - 1));
             }
+
             //Add cookie
             Cookie cartCookie = new Cookie(CartCookieName, dataCookie);
             cartCookie.setPath("/");    //For all pages in website
@@ -176,6 +194,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Remove cookie cart");
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(CartCookieName)) {
@@ -189,26 +208,25 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Course> getCourseInCart(HttpServletRequest request, HttpServletResponse response) {
-
         User user = AuthService.getUser(request);
         List<CartItem> cart = new ArrayList<>();
         List<Course> coursesInCart = new ArrayList<>();
-
+        
         if (user == null) {
+            System.out.println("Get Cookie Cart");
             try {
                 cart = getCartFromCookie(request);
             } catch (Exception ex) {
             }
         } else {
+            System.out.println("Get User Cart");
             cart = getCartByUserId(user.getId());
             if (cart.isEmpty()) {
                 try {
                     cart = getCartFromCookie(request);
                     for (CartItem cartItem : cart) {
-                        if (!CourseService.isEnrolled(user.getId(), cartItem.getCourseId())) {
-                            cartItem.setUserId(user.getId());
-                            cartItem = createCartItem(cartItem);
-                        }
+                        cartItem.setUserId(user.getId());
+                        cartItem = createCartItem(cartItem);
                     }
                 } catch (Exception e) {
                 }
@@ -221,7 +239,6 @@ public class CartServiceImpl implements CartService {
                 try {
                     coursesInCart.add(CourseService.validateCourse(cartItem.getCourseId()));
                 } catch (Exception ex) {
-                    Logger.getLogger(CartServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -43,7 +43,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
                 ps.setInt(3, newOrderItem.getCouponId());
             }
             ps.setDouble(4, newOrderItem.getOriginalPrice());
-            ps.setDouble(5, newOrderItem.getPrice());
+            ps.setDouble(5, (double) Math.round(newOrderItem.getPrice() * 100) / 100);    //Convert to format xx.xx
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return newOrderItem;

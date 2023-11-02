@@ -3,7 +3,6 @@ package com.onlinelearning.Utils.Impl;
 import com.onlinelearning.Utils.DotEnv;
 import com.onlinelearning.Utils.Encryption;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.logging.Level;
@@ -16,11 +15,13 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AESEncryptionImpl implements Encryption {
 
+    private final String SECRET_KEY = DotEnv.get("AES_PRIVATE_KEY");
+
     @Override
-    public String encrypt(String strToEncrypt) {
+    public String encrypt(final String strToEncrypt) {
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] key = DotEnv.get("AES_PRIVATE_KEY").getBytes("UTF-8");
+            byte[] key = SECRET_KEY.getBytes("UTF-8");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
             SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
@@ -34,10 +35,10 @@ public class AESEncryptionImpl implements Encryption {
     }
 
     @Override
-    public String decrypt(String strToDecrypt) {
+    public String decrypt(final String strToDecrypt) {
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] key = DotEnv.get("AES_PRIVATE_KEY").getBytes("UTF-8");
+            byte[] key = SECRET_KEY.getBytes("UTF-8");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
             SecretKeySpec secretKey = new SecretKeySpec(key, "AES");

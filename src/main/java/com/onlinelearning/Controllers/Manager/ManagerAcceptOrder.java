@@ -5,6 +5,8 @@ package com.onlinelearning.Controllers.Manager;
 
 import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Order;
+import com.onlinelearning.Services.CourseService;
+import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
 import com.onlinelearning.Services.OrderService;
 import java.io.IOException;
@@ -15,13 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-/**
- * @author duy20
- */
 @WebServlet(name = "ManagerAcceptOrder", urlPatterns = {"/manager/order/accept"})
 public class ManagerAcceptOrder extends HttpServlet {
 
     private final OrderService OrderService = new OrderServiceImpl();
+    private final CourseService CourseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,9 +38,17 @@ public class ManagerAcceptOrder extends HttpServlet {
             Order order = OrderService.getOrderById(Integer.parseInt(orderId));
             if (order != null) {
                 order.setStatus(OrderStatus.SUCCESSFUL);
-                OrderService.updateOrder(order);
+                order = OrderService.updateOrder(order);
+
+                //Get user enrolled course
+                try {
+                    OrderService.getUserEnrollCourseByOrderId(order.getId());
+                } catch (NullPointerException e) {
+                    System.out.println("Order " + order.getId() + " is null");
+                }
+
                 response.setStatus(HttpServletResponse.SC_OK);
-            }else{
+            } else {
                 throw new Exception("Order not found with id: " + orderId);
             }
         } catch (Exception e) {

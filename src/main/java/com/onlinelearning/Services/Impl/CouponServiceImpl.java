@@ -4,7 +4,6 @@ import com.onlinelearning.DAL.CouponDAO;
 import com.onlinelearning.DAL.Impl.CouponDAOImpl;
 import com.onlinelearning.Enums.CouponStatus;
 import com.onlinelearning.Models.Coupon;
-import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CouponService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,11 +26,14 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public Coupon getCouponByCode(String code) {
-        if (code.isEmpty()) {
-            return null;
+    public Coupon getCouponByCode(String code) throws Exception {
+        if (!code.isEmpty()) {
+            Coupon coupon = couponDAO.getCouponByCode(code);
+            if (coupon != null) {
+                return coupon;
+            }
         }
-        return couponDAO.getCouponByCode(code);
+        throw new Exception("Coupon not found.");
     }
 
     public void validateCoupon(Coupon coupon) throws Exception {

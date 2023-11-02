@@ -1,8 +1,5 @@
-package com.onlinelearning.Controllers.Learner;
+package com.onlinelearning.Controllers.Learner.Checkout;
 
-import com.onlinelearning.Models.User;
-import com.onlinelearning.Services.AuthService;
-import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
 import com.onlinelearning.Services.OrderService;
 import java.io.IOException;
@@ -17,23 +14,16 @@ import java.util.logging.Logger;
 @WebServlet(name = "LearnerCheckoutCancel", urlPatterns = {"/cart/checkout/cancel"})
 public class LearnerCheckoutCancel extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/order/history";
-    private final String ERROR_403_PATH = "/error/403.jsp";
+    private final String VIEW_PATH = "/learner/order/history";
+    private final String ERROR_404_PATH = "/error/404.jsp";
     private final String HOME_PATH = "/homepage";
 
-    private final AuthService AuthService = new AuthServiceImpl();
     private final OrderService OrderService = new OrderServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = AuthService.getUser(request);
-        if (user != null) {
-            request.setAttribute("view-order-history", true);
-            doPost(request, response);
-        } else {
-            request.getRequestDispatcher(ERROR_403_PATH).forward(request, response);
-        }
+        request.getRequestDispatcher(ERROR_404_PATH).forward(request, response);
     }
 
     @Override
@@ -42,13 +32,8 @@ public class LearnerCheckoutCancel extends HttpServlet {
         String orderId = request.getParameter("order-id");
         try {
             OrderService.deleteOrder(Integer.parseInt(orderId));
-            if (request.getAttribute("view-order-history") != null) {
-                Boolean viewOrderHistory = Boolean.parseBoolean(request.getAttribute("view-order-history").toString());
-                if (viewOrderHistory) {
-                    response.sendRedirect(request.getContextPath() + VIEW_PATH);
-                } else {
-
-                }
+            if (request.getParameter("view-order-history") != null) {
+                response.sendRedirect(request.getContextPath() + VIEW_PATH);
             } else {
                 response.sendRedirect(request.getContextPath() + HOME_PATH);
             }

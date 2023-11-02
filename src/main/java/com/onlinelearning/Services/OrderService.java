@@ -11,7 +11,7 @@ public interface OrderService {
     
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
     
-    List<Order> getUnfinishOrdersByUserId(Integer userId);
+    Order getUnpaidOrderByUserId(Integer userId);
     
     List<Order> getAllOrders();
     
@@ -20,4 +20,6 @@ public interface OrderService {
     Order updateOrder(Order newOrder);
     
     Order deleteOrder(Integer orderId) throws Exception;
+    
+    void getUserEnrollCourseByOrderId(Integer courseId) throws Exception;
 }

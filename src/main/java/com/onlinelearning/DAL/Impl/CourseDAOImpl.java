@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -269,12 +271,25 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public Boolean getUserEnrollCourse(Integer userId, Integer courseId) {
+        String sql = "insert into users_courses"
+                + "(user_id, course_id, joined_time)"
+                + " values(?, ?, ?)";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return false;
     }
 
     @Override
     public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
-
         String sql = "select *"
                 + " from " + COURSE_TABLE
                 + " where name LIKE CONCAT('%', ?, '%')"

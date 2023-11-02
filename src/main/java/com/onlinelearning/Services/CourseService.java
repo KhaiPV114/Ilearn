@@ -33,7 +33,7 @@ public interface CourseService {
     
     List<Course> getCourseByCategoryId(Integer categoryId);
 
-    Boolean getUserEnrollCourse(Integer userId, Integer courseId);
+    void getUserEnrollCourse(Integer userId, Integer courseId) throws Exception;
 
     List<Course> getCourseByKeyword(String keyword);
 
