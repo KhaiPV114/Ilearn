@@ -89,8 +89,8 @@ public class LearnerCheckoutPayment extends HttpServlet {
                 String vnp_CreateDate = formatter.format(cld.getTime());
                 vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-//                cld.add(Calendar.MINUTE, 10);
-                cld.add(Calendar.SECOND, 30);
+                cld.add(Calendar.MINUTE, 10);
+//                cld.add(Calendar.SECOND, 30);
                 String vnp_ExpireDate = formatter.format(cld.getTime());
                 vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 

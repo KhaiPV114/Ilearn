@@ -20,11 +20,15 @@ public class OrderDAOImpl implements OrderDAO {
     private final String ORDER_TABLE = "orders";
 
     private Order orderResultSetMapper(ResultSet rs) throws SQLException {
+        OrderStatus status = null;
+        if (rs.getString("status") != null) {
+            status = OrderStatus.valueOf(rs.getString("status"));
+        }
         Order order = Order.builder()
                 .id(rs.getInt("order_id"))
                 .userId(rs.getInt("user_id"))
                 .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
-                .status(OrderStatus.valueOf(rs.getString("status")))
+                .status(status)
                 .build();
         return order;
     }
