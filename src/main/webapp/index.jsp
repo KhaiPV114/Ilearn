@@ -429,7 +429,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="load-more-btn mt--60 text-center">
-                                <a class="rbt-btn btn-gradient btn-lg hover-icon-reverse" href="#">
+                                <a class="rbt-btn btn-gradient btn-lg hover-icon-reverse" href="${pageContext.request.contextPath}/search">
                                     <span class="icon-reverse-wrapper">
                                         <span class="btn-text">Load More Course (40)</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
