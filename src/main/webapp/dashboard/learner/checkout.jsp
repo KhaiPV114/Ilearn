@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="checkout_area bg-color-white rbt-section-gap" id="content-display">
+        <div class="checkout_area bg-color-white rbt-section-gap" id="content">
             <div class="container">
                 <div class="row g-5 checkout-form">
 
@@ -46,19 +46,29 @@
 
                             <div class="checkout-payment-method">
 
-                                <form action="${pageContext.request.contextPath}/cart/checkout/process" method="post" id="payment-checkout-form">
-                                    <input type="hidden" name="no-need-payment" value="${noNeedPayment}">
+                                <form action="${pageContext.request.contextPath}/cart/checkout/payment" method="post" id="payment-checkout-form">
                                     <input type="hidden" name="order-id" value="${order.id}">
+                                    <input type="hidden" name="no-need-payment" value="${noNeedPayment}">
+                                    <input type="hidden" name="amount" value="${grandTotal}">
                                     <div class="single-method">
-                                        <input type="radio" id="payment_paypal" value="paypal" name="payment-method" class="payment-method" disabled>
-                                        <label for="payment_paypal">Paypal - Unsupported</label>
-                                        <!--<p data-method="paypal">Unsupported</p>-->
+                                        <input type="radio" id="payment_domestic" value="VNBANK" name="payment-method" class="payment-method" ${noNeedPayment?'disabled':''} onclick="disableErrMsg()">
+                                        <label for="payment_domestic">ATM card/Domestic account</label>
+                                        <p data-method="VNBANK">
+                                            <img src="https://sandbox.vnpayment.vn/apis/assets/images/partner_atm_acc.png" style="width: 100%;"/>
+                                        </p>
+                                    </div>
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_international" value="INTCARD" name="payment-method" class="payment-method" ${noNeedPayment?'disabled':''} onclick="disableErrMsg()">
+                                        <label for="payment_international">International card</label>
+                                        <p data-method="INTCARD">
+                                            <img src="https://imageupload.io/ib/LpFcMT0SkLygXoK_1698822819.png" style="width: 100%;"/>
+                                        </p>
                                     </div>
 
                                     <div class="single-method">
-                                        <input type="radio" id="payment_bank" value="bank" name="payment-method" class="payment-method" onclick="getPaymentQR(this.value)" ${noNeedPayment!=null?'disabled':''}>
-                                        <label for="payment_bank">Bank</label>
-                                        <p data-method="bank" class="container text-center" id="qr-display">
+                                        <input type="radio" id="payment_qr" value="VNPAYQR" name="payment-method" class="payment-method" onclick="getPaymentQR(this.value)" ${noNeedPayment?'disabled':''} disabled>
+                                        <label for="payment_qr">Bank QR</label>
+                                        <p data-method="VNPAYQR" class="container text-center" id="qr-display">
                                             <img src="" style="max-height: 400px;" id="qr-image"/>
                                             <span id="qr-loading">
                                                 <i class="fas fa-spinner fa-spin"></i>
@@ -163,9 +173,15 @@
             </div>
         </div>
         <jsp:include page="/layout/footer.jsp"/>
-        <jsp:include page="/layout/delayScrollToContent.jsp"/>
     </body>
+    <jsp:include page="/layout/scripts.jsp"/>
+    <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
     <script>
+        
+        document.getElementById("content").scrollIntoView({behavior: 'instant'});
+        location.hash = '#content';
+        
+        //Diable cart side
         document.getElementById('open-cart-side-menu').style.display = 'none';
         document.getElementById('cart-side-menu').style.display = 'none';
 
@@ -181,6 +197,12 @@
             document.getElementById('qr-message').style.display = 'inline';
         });
 
+        function disableErrMsg() {
+            let message = document.getElementById('payment-message');
+            message.style.display = 'none';
+        };
+
+        //Check if user have choose payment method
         function placeOrder() {
             let radios = document.getElementsByClassName("payment-method");
             let checked = false;
@@ -190,8 +212,26 @@
                     break;
                 }
             }
-            if (checked || ${noNeedPayment!=null?'true':'false'}) {
-                document.getElementById('payment-checkout-form').submit();
+            if (checked || ${noNeedPayment?'true':'false'}) {
+                let urlPath = $("#payment-checkout-form").attr("action");
+                $.ajax({
+                    type: "POST",
+                    url: urlPath,
+                    data: $("#payment-checkout-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded",
+                    success: function (res) {
+                        let response = JSON.parse(res);
+                        if (response.code === '00') {
+                            if (window.vnpay) {
+                                vnpay.open({width: 768, height: 600, url: response.data});
+                            } else {
+                                location.href = response.data;
+                            }
+                        } else {
+                            alert(response.Message);
+                        }
+                    }
+                });
             } else {
                 let message = document.getElementById('payment-message');
                 message.innerHTML = 'You need to choose a payment method to process the order!';
@@ -199,8 +239,9 @@
             }
         }
 
+        //Get image QR
         function getPaymentQR(paymentMethod) {
-            document.getElementById('payment-message').style.display = 'none';
+            disableErrMsg();
             if (paymentMethod === 'bank') {
                 let urlPath = "${pageContext.request.contextPath}/cart/checkout/payment";
                 const xhttp = new XMLHttpRequest();
@@ -221,5 +262,4 @@
             }
         }
     </script>
-    <jsp:include page="/layout/scripts.jsp"/>
 </html>

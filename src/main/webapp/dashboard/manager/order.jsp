@@ -50,11 +50,6 @@
                                                     </a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="#" class="tab-button" id="rejected-tab-4" data-bs-toggle="tab" data-bs-target="#rejected-4" role="tab" aria-controls="rejected-4" aria-selected="false">
-                                                        <span class="title">Rejected</span>
-                                                    </a>
-                                                </li>
-                                                <li role="presentation">
                                                     <a href="#" class="tab-button" id="all-tab-4" data-bs-toggle="tab" data-bs-target="#all-4" role="tab" aria-controls="all-4" aria-selected="false">
                                                         <span class="title">All</span>
                                                     </a>
@@ -92,29 +87,17 @@
                                                                         <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                                                                         <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
                                                                     </td>
-                                                                    <td>$${price}</td>
+                                                                    <td>$${String.format("%.2f", price)}</td>
                                                                     <td>
                                                                         <c:choose>
-                                                                            <c:when test="${order.status=='NEW'}">
-                                                                                <span class="rbt-badge-5 bg-color-warning-opacity color-warning">New</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status =='PENDING'}">
-                                                                                <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
+                                                                            <c:when test="${order.status =='UNPAID'}">
+                                                                                <span class="rbt-badge-5 bg-primary-opacity">Pending</span>
                                                                             </c:when>
                                                                             <c:when test="${order.status == 'SUCCESSFUL'}">
                                                                                 <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
                                                                             </c:when>
-                                                                            <c:when test="${order.status=='DONE'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Done</span>
-                                                                            </c:when>
                                                                             <c:when test="${order.status=='FAILED'}">
                                                                                 <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='REJECTED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Rejected</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='EXPIRED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </td>     
@@ -158,36 +141,22 @@
                                                                         <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                                                                         <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
                                                                     </td>
-                                                                    <td>$${price}</td>
+                                                                    <td>$${String.format("%.2f", price)}</td>
                                                                     <td>
                                                                         <c:choose>
-                                                                            <c:when test="${order.status=='NEW'}">
-                                                                                <span class="rbt-badge-5 bg-color-warning-opacity color-warning">New</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status =='PENDING'}">
-                                                                                <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
+                                                                            <c:when test="${order.status =='UNPAID'}">
+                                                                                <span class="rbt-badge-5 bg-primary-opacity">Pending</span>
                                                                             </c:when>
                                                                             <c:when test="${order.status == 'SUCCESSFUL'}">
                                                                                 <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
                                                                             </c:when>
-                                                                            <c:when test="${order.status=='DONE'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Done</span>
-                                                                            </c:when>
                                                                             <c:when test="${order.status=='FAILED'}">
                                                                                 <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='REJECTED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Rejected</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='EXPIRED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </td>     
                                                                     <td>
-                                                                        <button type="button" class="btn btn-success btn-lg" style="width: 100%;">Accept</button>
-
-                                                                        <button type="button" class="btn btn-danger btn-lg" style="width: 100%; margin-top: 5px;">Reject</button>
+                                                                        <button type="button" class="btn btn-success btn-lg" style="width: 100%;" onclick="acceptOrder(${order.id})">Accept</button>
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>
@@ -224,90 +193,17 @@
                                                                         <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                                                                         <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
                                                                     </td>
-                                                                    <td>$${price}</td>
+                                                                    <td>$${String.format("%.2f", price)}</td>
                                                                     <td>
                                                                         <c:choose>
-                                                                            <c:when test="${order.status=='NEW'}">
-                                                                                <span class="rbt-badge-5 bg-color-warning-opacity color-warning">New</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status =='PENDING'}">
+                                                                            <c:when test="${order.status =='UNPAID'}">
                                                                                 <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
                                                                             </c:when>
                                                                             <c:when test="${order.status == 'SUCCESSFUL'}">
                                                                                 <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
                                                                             </c:when>
-                                                                            <c:when test="${order.status=='DONE'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Done</span>
-                                                                            </c:when>
                                                                             <c:when test="${order.status=='FAILED'}">
                                                                                 <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='REJECTED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Rejected</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='EXPIRED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </td>     
-                                                                </tr>
-                                                            </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </div>                
-                                            </div>
-                                            <div class="tab-pane fade" id="rejected-4" role="tabpanel" aria-labelledby="rejected-tab-4">
-                                                <div class="rbt-dashboard-table table-responsive mobile-table-750">
-                                                    <table class="rbt-table table table-borderless" id="rejected-order-table" data-page-length="10">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Order ID</th>
-                                                                <th>Course Name</th>
-                                                                <th>Date</th>
-                                                                <th>Price</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-
-                                                        <tbody>
-                                                            <c:forEach var="order" items="${rejectedOrders}">
-                                                                <tr>
-                                                                    <th>#${order.id}</th>
-                                                                    <td>
-                                                                        <c:set var="price" value="${0}"/>
-                                                                        <c:forEach var="orderItem" items="${OrderService.getOrderItemsByOrderId(order.id)}">
-                                                                            <span>- ${CourseService.getCourseById(orderItem.courseId).name}</span><br/>
-                                                                            <c:set var="price" value="${price + orderItem.price}"/>
-                                                                        </c:forEach>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                                                        <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
-                                                                    </td>
-                                                                    <td>$${price}</td>
-                                                                    <td>
-                                                                        <c:choose>
-                                                                            <c:when test="${order.status=='NEW'}">
-                                                                                <span class="rbt-badge-5 bg-color-warning-opacity color-warning">New</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status =='PENDING'}">
-                                                                                <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
-                                                                            </c:when>
-                                                                            <c:when test="${order.status == 'SUCCESSFUL'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='DONE'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Done</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='FAILED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='REJECTED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Rejected</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='EXPIRED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </td>     
@@ -346,29 +242,17 @@
                                                                         <fmt:parseDate value="${order.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                                                                         <fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />
                                                                     </td>
-                                                                    <td>$${price}</td>
+                                                                    <td>$${String.format("%.2f", price)}</td>
                                                                     <td>
                                                                         <c:choose>
-                                                                            <c:when test="${order.status=='NEW'}">
-                                                                                <span class="rbt-badge-5 bg-color-warning-opacity color-warning">New</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status =='PENDING'}">
+                                                                            <c:when test="${order.status =='UNPAID'}">
                                                                                 <span class="rbt-badge-5 bg-primary-opacity">Pending</span>  
                                                                             </c:when>
                                                                             <c:when test="${order.status == 'SUCCESSFUL'}">
                                                                                 <span class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
                                                                             </c:when>
-                                                                            <c:when test="${order.status=='DONE'}">
-                                                                                <span class="rbt-badge-5 bg-color-success-opacity color-success">Done</span>
-                                                                            </c:when>
                                                                             <c:when test="${order.status=='FAILED'}">
                                                                                 <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Failed</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='REJECTED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Rejected</span>
-                                                                            </c:when>
-                                                                            <c:when test="${order.status=='EXPIRED'}">
-                                                                                <span class="rbt-badge-5 bg-color-danger-opacity color-danger">Expired</span>
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </td>     
@@ -396,7 +280,7 @@
             $('#pending-order-table').DataTable({
                 "order": [0, 'desc'],
                 "lengthChange": false
-//                "searching": false
+    //                "searching": false
             });
         });
         $(document).ready(function () {
@@ -414,51 +298,43 @@
             });
         });
         $(document).ready(function () {
-            $('#rejected-order-table').DataTable({
-                "order": [0, 'desc'],
-                "lengthChange": false,
-                "searching": false
-            });
-        });
-        $(document).ready(function () {
             $('#all-order-table').DataTable({
                 "order": [0, 'desc'],
                 "lengthChange": false,
                 "searching": false
             });
         });
-        
-        function acceptOrder(orderId){
+
+        function acceptOrder(orderId) {
             let urlPath = "${pageContext.request.contextPath}/manager/order/accept";
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {
                 if (xhttp.status === 200) {
                     location.reload();
                 } else {
-//                    let errMsg = document.getElementById("message-error"+courseId);
-//                    errMsg.innerHTML = xhttp.responseText;
+    //                    let errMsg = document.getElementById("message-error"+courseId);
+    //                    errMsg.innerHTML = xhttp.responseText;
                 }
             };
             xhttp.open("POST", urlPath);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("order-id=" + orderId);
         }
-        
-        function rejectOrder(orderId){
+
+        function rejectOrder(orderId) {
             let urlPath = "${pageContext.request.contextPath}/manager/order/reject";
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {
                 if (xhttp.status === 200) {
                     location.reload();
                 } else {
-//                    let errMsg = document.getElementById("message-error"+courseId);
-//                    errMsg.innerHTML = xhttp.responseText;
+    //                    let errMsg = document.getElementById("message-error"+courseId);
+    //                    errMsg.innerHTML = xhttp.responseText;
                 }
             };
             xhttp.open("POST", urlPath);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("order-id=" + orderId);
         }
-        
     </script>
 </html>
