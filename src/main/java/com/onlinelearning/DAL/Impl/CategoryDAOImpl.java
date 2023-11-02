@@ -139,4 +139,21 @@ public class CategoryDAOImpl implements CategoryDAO {
         return null;
     }
 
+    @Override
+    public Integer countNumberOfCourseByCategoryId(Integer categoryId) {
+        String sql = "select count(course_id) as total from courses where category_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int result = rs.getInt("total");
+                    return result;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
 }

@@ -7,9 +7,9 @@ import com.onlinelearning.Services.CategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
-    
+
     private final CategoryDAO categoryDAO = new CategoryDAOImpl();
-    
+
     @Override
     public Category getCategoryById(Integer id) {
         if (id == null) {
@@ -17,18 +17,18 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryDAO.getCategoryById(id);
     }
-    
+
     @Override
     public List<Category> getAllCategories() {
         return categoryDAO.getAllCategories();
     }
-    
+
     private void validateCategory(Category category) throws Exception {
         if (categoryDAO.getCategoryByName(category.getName()) != null) {
             throw new Exception("Category name is already existed!");
         }
     }
-    
+
     @Override
     public Category createCategory(Category category) throws Exception {
         validateCategory(category);
@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return createdCategory;
     }
-    
+
     @Override
     public Category updateCategory(Category category) throws Exception {
         Category oldCategory = categoryDAO.getCategoryById(category.getId());
@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return updatedCategory;
     }
-    
+
     @Override
     public Category deleteCategory(Category category) throws Exception {
         if (category.getId() == null) {
@@ -74,5 +74,10 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryDAO.getCategoryByName(name);
     }
-    
+
+    public static Integer countNumberOfCourseByCategoryId(Integer categoryId) {
+        CategoryDAO c = new CategoryDAOImpl();
+        return c.countNumberOfCourseByCategoryId(categoryId);
+    }
+
 }

@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<jsp:useBean id="categoryService" class="com.onlinelearning.Services.Impl.CategoryServiceImpl" />
 <!DOCTYPE html>
 
 <html>
@@ -219,12 +220,9 @@
                                         </div>
                                         <div class="content">
                                             <h5 class="title" style="min-height: 5rem;">${category.name}</h5>
-                                            <c:set var="categoryCourseCount" value="0" />
-                                                <c:forEach items="${category.courses}" var="course">
-                                                    <c:set var="categoryCourseCount" value="${categoryCourseCount + 1}" />
-                                                </c:forEach>
+                                            <!--NEED FIX: Get course number of a category-->
                                             <div class="read-more-btn">
-                                                <span class="rbt-btn-link">${categoryCourseCount} Courses<i class="feather-arrow-right"></i></span>
+                                                <span class="rbt-btn-link">${categoryService.countNumberOfCourseByCategoryId(category.id)} Courses<i class="feather-arrow-right"></i></span>
                                             </div>
                                         </div>
                                     </div>

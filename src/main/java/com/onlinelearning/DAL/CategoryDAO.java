@@ -16,5 +16,7 @@ public interface CategoryDAO {
     Category updateCategory(Category category);
 
     Category deleteCategory(Category category);
+    
+    Integer countNumberOfCourseByCategoryId(Integer categoryId);
 
 }
