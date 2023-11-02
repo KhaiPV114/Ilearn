@@ -38,7 +38,7 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Integer getRoleIdByRoleName(Role role) {
         String sql = "select role_id"
-                + " from" + ROLE_TABLE
+                + " from " + ROLE_TABLE
                 + " where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, role.toString());
@@ -56,7 +56,7 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role getRoleById(int id) {
         String sql = "select name"
-                + " from" + ROLE_TABLE
+                + " from " + ROLE_TABLE
                 + " where role_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);

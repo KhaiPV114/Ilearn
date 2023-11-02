@@ -215,7 +215,7 @@
                                 <a class="rbt-cat-box rbt-cat-box-1 text-center" href="#">
                                     <div class="inner">
                                         <div class="icons">
-                                            <img src="${pageContext.request.contextPath}/${category.imageUrl}" alt="Images">
+                                            <img src="${category.imageUrl}" alt="Images">
                                         </div>
                                         <div class="content">
                                             <h5 class="title" style="min-height: 5rem;">${category.name}</h5>
