@@ -40,13 +40,84 @@
             .card-icon-sort {
                 cursor: ns-resize;
             }
+            .ghost {
+                color: #CCC;
+                background-color: #CCC;
+            }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
         <script>
+            async function handleItemMovingOnEnd(url, prefixItemId, event) {
+            let item = event.item;
+            let previousItem = item.previousElementSibling;
+            let nextItem = item.nextElementSibling;
+            console.log(item);
+            console.log(previousItem);
+            console.log(nextItem);
+            let itemKey = item.getAttribute("key"),
+                    previousItemKey = null,
+                    nextItemKey = null;
+            if (previousItem)
+                    previousItemKey = previousItem.getAttribute("key");
+            if (nextItem)
+                    nextItemKey = nextItem.getAttribute("key");
+            let result = await postMovingRequest(url, {
+            itemKey,
+                    previousItemKey,
+                    nextItemKey
+            });
+            if (result?.success) {
+            setTimeout(() => {
+            const div = document.createElement("h6");
+            div.textContent = "Updated successfully!";
+            div.className = "text-success fw-bold m-0 mt-2 ms-1";
+            document
+                    .getElementById(prefixItemId + itemKey)
+                    .insertAdjacentElement("beforeBegin", div);
+            setTimeout(() => div.remove(), 1500);
+            }, 0);
+            }
+            if (result?.error) {
+            setTimeout(() => {
+            const div = document.createElement("h6");
+            div.textContent =
+                    "Updated failed! Please reload this page and try again!";
+            div.className = "text-danger fw-bold m-0 mt-2 ms-1";
+            document
+                    .getElementById(prefixItemId + itemKey)
+                    .insertAdjacentElement("beforeBegin", div);
+            }, 0);
+            }
+            console.log(result);
+            }
+
+            async function postMovingRequest(
+                    url,
+            { itemKey, previousItemKey, nextItemKey }
+            ) {
+            let data = {
+            currentId: itemKey,
+                    ...(previousItemKey && {previousId: previousItemKey}),
+                    ...(nextItemKey && {nextId: nextItemKey})
+            };
+            const postData = new URLSearchParams();
+            postData.append("currentId", itemKey);
+            if (previousItemKey)
+                    postData.append("previousId", previousItemKey);
+            if (nextItemKey)
+                    postData.append("nextId", nextItemKey);
+            const response = await fetch(url, {
+            method: "POST",
+                    body: postData
+            });
+            console.log(response);
+            return response.json();
+            }
+
             async function handleLessonItemMovingOnEnd(event) {
-                let url = "${pageContext.request.contextPath}/instructor/lesson/move";
-                let prefixItemId = "lesson-";
-                return await handleItemMovingOnEnd(url, prefixItemId, event);
+            let url = "${pageContext.request.contextPath}/instructor/lesson/move";
+            let prefixItemId = "lesson-";
+            return await handleItemMovingOnEnd(url, prefixItemId, event);
             }
         </script>
     </head>
@@ -140,7 +211,7 @@
 
                                                                 <!-- Lession -->
 
-                                                                <form id="form-add-lesson-${section.id}" action="${pageContext.request.contextPath}/instructor/lesson/add" method="post">
+                                                                <form class="ignore-elements" id="form-add-lesson-${section.id}" action="${pageContext.request.contextPath}/instructor/lesson/add" method="post">
                                                                     <input type="hidden" name="courseId" value="${courseId}">
                                                                     <input type="hidden" name="sectionId" value="${section.id}">
                                                                     <div class="row">
@@ -174,7 +245,7 @@
                                                                 <c:set var="sectionId" value="${section.id}"/>
 
                                                                 <div class="rbt-accordion-style rbt-accordion-01  accordion">
-                                                                    <ul id="lessons${sectionId}" class="accordion ps-0 list-group">
+                                                                    <ul id="lessons${sectionId}" section-id="${sectionId}" class="accordion ps-0 list-group">
                                                                         <c:set var="lessons" value="${lessonsList[sectionId]}"/>
                                                                         <c:forEach var="lesson" items="${lessons}">
                                                                             <li id="lesson-${lesson.id}" key="${lesson.id}" class="accordion-item card lesson-list-handle-${sectionId} list-group-item my-3">
@@ -183,7 +254,7 @@
                                                                                         <i class="fa-solid fa-arrows-up-down"></i>
                                                                                     </div>
                                                                                     <button class="accordion-button collapsed me-4 text-dark" type="button"
-                                                                                            onclick="document.location.href='${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
+                                                                                            onclick="document.location.href = '${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
                                                                                         ${lesson.name}
                                                                                     </button>
                                                                                     <div class="card-icon ms-3">
@@ -200,10 +271,13 @@
 
                                                                 <script>
                                                                     Sortable.create(lessons${sectionId}, {
-                                                                        group: 'shared1',
-                                                                        animation: 100,
-                                                                        handle: '.lesson-list-handle-${sectionId}',
-                                                                        onEnd: handleLessonItemMovingOnEnd
+                                                                    group: 'shared1',
+                                                                            animation: 100,
+//                                                                        forceFallback: true,
+//                                                                        scroll: true,
+                                                                            //bubbleScroll: true,
+                                                                            handle: '.lesson-list-handle-${sectionId}',
+                                                                            onEnd: handleLessonItemMovingOnEnd
                                                                     });
                                                                 </script>
 
@@ -241,12 +315,12 @@
         const deletionForm = document.getElementById("deletion-form");
         const deletionId = document.getElementById("deletion-id");
         function submitDeletionForm(id) {
-            //                let check = confirm("Are you sure?");
-            if (!confirm("Are you sure?")) {
-                return false;
-            }
-            deletionId.value = id;
-            deletionForm.submit();
+        //                let check = confirm("Are you sure?");
+        if (!confirm("Are you sure?")) {
+        return false;
+        }
+        deletionId.value = id;
+        deletionForm.submit();
         }
 
         document.getElementById("content").scrollIntoView({behavior: 'instant'});
@@ -254,163 +328,98 @@
     </script>
     <script>
         Sortable.create(sectionList, {
-            group: 'shared',
-            animation: 100,
-            handle: '.section-list-handle',
-            onEnd: handleSectionItemMovingOnEnd
+        group: 'shared',
+                animation: 100,
+                forceAutoscrollFallback: true,
+                forceFallback: true,
+                delay: 50,
+//            ghostClass: 'ghost',
+//            filter: ".ignore-elements", // Selectors that do not lead to dragging (String or Function)
+//            preventOnFilter: true,
+//            scroll: true,
+                //bubbleScroll: true,
+                handle: '.section-list-handle',
+                onEnd: handleSectionItemMovingOnEnd
         });
-
         async function handleSectionItemMovingOnEnd(event) {
-            let url = "${pageContext.request.contextPath}/instructor/section/move";
-            let prefixItemId = "section-";
-            return await handleItemMovingOnEnd(url, prefixItemId, event);
+        let url = "${pageContext.request.contextPath}/instructor/section/move";
+        let prefixItemId = "section-";
+        return await handleItemMovingOnEnd(url, prefixItemId, event);
         }
 
         async function handleItemMovingOnEnd(url, prefixItemId, event) {
-            let item = event.item;
-            let previousItem = item.previousElementSibling;
-            let nextItem = item.nextElementSibling;
-            console.log(item);
-            console.log(previousItem);
-            console.log(nextItem);
-            let itemKey = item.getAttribute("key"),
-                    previousItemKey = null,
-                    nextItemKey = null;
-            if (previousItem)
+        let item = event.item;
+        let previousItem = item.previousElementSibling;
+        let nextItem = item.nextElementSibling;
+        let sectionId = item.parentElement.getAttribute("section-id");
+        console.log(item);
+        console.log(previousItem);
+        console.log(nextItem);
+        let itemKey = item.getAttribute("key"),
+                previousItemKey = null,
+                nextItemKey = null;
+        if (previousItem)
                 previousItemKey = previousItem.getAttribute("key");
-            if (nextItem)
+        if (nextItem)
                 nextItemKey = nextItem.getAttribute("key");
-            let result = await postMovingRequest(url, {
-            itemKey,
-                    previousItemKey,
-                    nextItemKey
-            });
-                    if (result?.success) {
-            setTimeout(() => {
-                const div = document.createElement("h6");
-                div.textContent = "Updated successfully!";
-                div.className = "text-success fw-bold m-0 mt-2 ms-1";
-                document
-                        .getElementById(prefixItemId + itemKey)
-                        .insertAdjacentElement("beforeBegin", div);
-                setTimeout(() => div.remove(), 1500);
-            }, 0);
-            }
-            if (result?.error) {
-            setTimeout(() => {
-            const div = document.createElement("h6");
-                    div.textContent =
-                    "Updated failed! Please reload this page and try again!";
-                    div.className = "text-danger fw-bold m-0 mt-2 ms-1";
-                    document
-                    .getElementById(prefixItemId + itemKey)
-                    .insertAdjacentElement("beforeBegin", div);
-            }, 0);
-            }
-            console.log(result);
+        let result = await postMovingRequest(url, {
+        itemKey,
+                previousItemKey,
+                nextItemKey,
+                sectionId
+        });
+        if (result?.success) {
+        setTimeout(() => {
+        const div = document.createElement("h6");
+        div.textContent = "Updated successfully!";
+        div.className = "text-success fw-bold m-0 mt-2 ms-1";
+        document
+                .getElementById(prefixItemId + itemKey)
+                .insertAdjacentElement("beforeBegin", div);
+        setTimeout(() => div.remove(), 1500);
+        }, 0);
+        }
+        if (result?.error) {
+        setTimeout(() => {
+        const div = document.createElement("h6");
+        div.textContent =
+                "Updated failed! Please reload this page and try again!";
+        div.className = "text-danger fw-bold m-0 mt-2 ms-1";
+        document
+                .getElementById(prefixItemId + itemKey)
+                .insertAdjacentElement("beforeBegin", div);
+        }, 0);
+        }
+        console.log(result);
         }
 
         async function postMovingRequest(
                 url,
-        { itemKey, previousItemKey, nextItemKey }
+        { itemKey, previousItemKey, nextItemKey, sectionId }
         ) {
-            let data = {
-                currentId: itemKey,
-                ...(previousItemKey && {previousId: previousItemKey}),
-                ...(nextItemKey && {nextId: nextItemKey})
-            };
 
-            const postData = new URLSearchParams();
-
-            postData.append("currentId", itemKey);
-            if (previousItemKey)
+        const postData = new URLSearchParams();
+        postData.append("currentId", itemKey);
+        if (previousItemKey)
                 postData.append("previousId", previousItemKey);
-            if (nextItemKey)
+        if (nextItemKey)
                 postData.append("nextId", nextItemKey);
-
-            const response = await fetch(url, {
-                method: "POST",
+        postData.append("sectionId", sectionId);
+        const response = await fetch(url, {
+        method: "POST",
                 body: postData
-            });
-
-            console.log(response);
-            return response.json();
+        });
+        console.log(response);
+        return response.json();
         }
-
-
-//        async function handleSectionItemMovingOnEnd(event) {
-//            let item = event.item;
-//            let previousItem = item.previousElementSibling;
-//            let nextItem = item.nextElementSibling;
-//            console.log(item);
-//            console.log(previousItem);
-//            console.log(nextItem);
-//            let itemKey = item.getAttribute("key"),
-//                    previousItemKey = null,
-//                    nextItemKey = null;
-//            if (previousItem)
-//                previousItemKey = previousItem.getAttribute("key");
-//            if (nextItem)
-//                nextItemKey = nextItem.getAttribute("key");
-//            let result = await postHandlingSectionRequest({
-//            itemKey,
-//                    previousItemKey,
-//                    nextItemKey
-//            });
-//                    if (result?.success) {
-//            setTimeout(() => {
-//                const div = document.createElement("h6");
-//                div.textContent = "Updated successfully!";
-//                div.className = "text-success fw-bold m-0 mt-2 ms-1";
-//                document
-//                        .getElementById("section-" + itemKey)
-//                        .insertAdjacentElement("beforeBegin", div);
-//                setTimeout(() => div.remove(), 1500);
-//            }, 0);
-//            }
-//            if (result?.error) {
-//            setTimeout(() => {
-//            const div = document.createElement("h6");
-//                    div.textContent =
-//                    "Updated failed! Please reload this page and try again!";
-//                    div.className = "text-danger fw-bold m-0 mt-2 ms-1";
-//                    document
-//                    .getElementById("section-" + itemKey)
-//                    .insertAdjacentElement("beforeBegin", div);
-//            }, 0);
-//            }
-//            console.log(result);
-//        }
-//
-//        async function postHandlingSectionRequest( {
-//        itemKey,
-//                previousItemKey,
-//                nextItemKey
-//        }) {
-//            let url = "${pageContext.request.contextPath}/instructor/section/move";
-//            let data = {
-//                currentId: itemKey,
-//                ...(previousItemKey && {previousId: previousItemKey}),
-//                ...(nextItemKey && {nextId: nextItemKey})
-//            };
-//
-//            const postData = new URLSearchParams();
-//
-//            postData.append("currentId", itemKey);
-//            if (previousItemKey)
-//                postData.append("previousId", previousItemKey);
-//            if (nextItemKey)
-//                postData.append("nextId", nextItemKey);
-//
-//            const response = await fetch(url, {
-//                method: "POST",
-//                body: postData
-//            });
-//
-//            console.log(response);
-//            return response.json();
-//        }
-
     </script>
+    <c:if test="${not empty currentSection}">
+        <script>
+            let callbackSectionId = "collapse-${currentSection}";
+            let sectionCollapseDiv = document.getElementById(callbackSectionId);
+            sectionCollapseDiv.className += "show";
+            document.location.href = "#" + callbackSectionId;
+        </script>
+    </c:if>
 </body>
 </html>

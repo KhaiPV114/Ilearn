@@ -49,6 +49,12 @@ public class InstructorSectionView extends HttpServlet {
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
         request.setAttribute("courseId", courseId);
+
+        String currentSection = request.getParameter("current-section");
+        if (currentSection != null) {
+            request.setAttribute("currentSection", currentSection);
+        }
+
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 

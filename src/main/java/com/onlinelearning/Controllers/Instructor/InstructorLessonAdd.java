@@ -63,8 +63,11 @@ public class InstructorLessonAdd extends HttpServlet {
 
         request.setAttribute("success", "Created lesson successfully!");
 //        requestDispatcher.forward(request, response);
-//        instructorLessonView.doGet(request, response);
-        response.sendRedirect(request.getContextPath() + "/instructor/section?courseId=" + courseId);
+
+        request.setAttribute("callbankSectionPosition", sectionId);
+
+//        instructorSectionView.doGet(request, response);
+        response.sendRedirect(request.getContextPath() + "/instructor/section?courseId=" + courseId + "&current-section=" + sectionId);
     }
 
 }
