@@ -61,10 +61,6 @@
                                                 <div class="rbt-card-img">
                                                     <a href="course-details.html">
                                                         <img src="${pageContext.request.contextPath}/assets/images/course/course-01.jpg" alt="Card image">
-                                                        <div class="rbt-badge-3 bg-white">
-                                                            <span>-40%</span>
-                                                            <span>Off</span>
-                                                        </div>
                                                     </a>
                                                 </div>
                                                 <div class="rbt-card-body">
@@ -362,7 +358,7 @@
                         <div class="col-lg-12">
                             <div class="section-title text-center">
                                 <span class="subtitle bg-secondary-opacity">Top Popular Course</span>
-                                <h2 class="title">Histudy Course student <br /> can join with us.</h2>
+                                <h2 class="title">iLearn Course student <br /> can join with us.</h2>
                             </div>
                         </div>
                     </div>
@@ -374,10 +370,6 @@
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
                                         <img src="${pageContext.request.contextPath}/assets/images/course/course-01.jpg" alt="Card image">
-                                        <div class="rbt-badge-3 bg-white">
-                                            <span>-50%</span>
-                                            <span>Off</span>
-                                        </div>
                                     </a>
                                 </div>
                                 <div class="rbt-card-body">
@@ -436,10 +428,6 @@
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
                                         <img src="${pageContext.request.contextPath}/assets/images/course/course-02.jpg" alt="Card image">
-                                        <div class="rbt-badge-3 bg-white">
-                                            <span>-40%</span>
-                                            <span>Off</span>
-                                        </div>
                                     </a>
                                 </div>
                                 <div class="rbt-card-body">
@@ -494,10 +482,6 @@
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
                                         <img src="${pageContext.request.contextPath}/assets/images/course/course-03.jpg" alt="Card image">
-                                        <div class="rbt-badge-3 bg-white">
-                                            <span>-40%</span>
-                                            <span>Off</span>
-                                        </div>
                                     </a>
                                 </div>
                                 <div class="rbt-card-body">

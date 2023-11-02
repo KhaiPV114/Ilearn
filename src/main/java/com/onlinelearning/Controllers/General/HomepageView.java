@@ -23,10 +23,15 @@ public class HomepageView extends HttpServlet {
     private static final CartService CartService = new CartServiceImpl();
     private static final CategoryService CategoryService = new CategoryServiceImpl();
     private static final CourseService CourseService = new CourseServiceImpl();
+    private final CourseService courseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        List<Course> courses = courseService.getAllCourses();
+        
+        
 
         List<Category> allCategories = CategoryService.getAllCategories();
         request.setAttribute("allCategories", allCategories);
@@ -39,6 +44,7 @@ public class HomepageView extends HttpServlet {
             category.setCourses(getCourseByCategoryId);
 
         }
+
 
         request.getRequestDispatcher(HOME_PATH).forward(request, response);
     }
