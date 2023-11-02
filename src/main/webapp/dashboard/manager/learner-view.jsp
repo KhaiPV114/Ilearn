@@ -90,7 +90,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <c:forEach items="${learnerListActive}" var="learner">
-                                                            <form action="${pageContext.request.contextPath}/manager/leaner/status/change" method="get">
+                                                            <form action="${pageContext.request.contextPath}/manager/learner/status/change" method="get">
                                                                 <input type="hidden" name="id" value="${learner.id}"/>
                                                                 <input type="hidden" name="status" value="${learner.status}">
                                                                 <tr>
@@ -126,7 +126,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <c:forEach items="${learnerListBan}" var="learner">
-                                                            <form action="${pageContext.request.contextPath}/manager/leaner/status/change" method="get">
+                                                            <form action="${pageContext.request.contextPath}/manager/learner/status/change" method="get">
                                                                 <input type="hidden" name="id" value="${learner.id}"/>
                                                                 <input type="hidden" name="status" value="${learner.status}">
                                                                 <tr>

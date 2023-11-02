@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerLearnerStatusChange", urlPatterns = {"/manager/leaner/status/change"})
+@WebServlet(name = "ManagerLearnerStatusChange", urlPatterns = {"/manager/learner/status/change"})
 public class ManagerLearnerStatusChange extends HttpServlet {
 
     private UserService userService = new UserServiceImpl();
@@ -33,13 +33,13 @@ public class ManagerLearnerStatusChange extends HttpServlet {
             if (status.equals("BANNED")) {
                 User user = userService.getUser(Integer.parseInt(id));
                 User userUpdateStatus = userService.updateUserStatus("ACTIVE", user);
-                response.sendRedirect(request.getContextPath() + "/learner/search");
+                response.sendRedirect(request.getContextPath() + "/manager/learner/search");
                 return;
             }
             if (status.equals("ACTIVE")) {
                 User user = userService.getUser(Integer.parseInt(id));
                 User userUpdateStatus = userService.updateUserStatus("BANNED", user);
-                response.sendRedirect(request.getContextPath() + "/learner/search");
+                response.sendRedirect(request.getContextPath() + "/manager/learner/search");
                 return;
             }
         }
