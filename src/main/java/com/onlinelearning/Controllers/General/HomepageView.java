@@ -29,7 +29,9 @@ public class HomepageView extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<Course> courses = courseService.getAllCourses();
+        List<Course> courses = courseService.get3CourseByNumberOfPurchase();
+        request.setAttribute("courses", courses);
+        
         
         
 

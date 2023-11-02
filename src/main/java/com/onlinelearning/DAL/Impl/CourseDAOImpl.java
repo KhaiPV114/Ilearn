@@ -371,4 +371,19 @@ public class CourseDAOImpl implements CourseDAO {
             return null;
         }
     }
+
+    @Override
+    public List<Course> get3CourseByNumberOfPurchase() {
+        String sql = "SELECT course_id, category_id, owner_id, name, image_url, description, price, status FROM courses JOIN (SELECT course_id AS most_common_value, COUNT(*) AS count FROM order_item GROUP BY course_id ORDER BY count DESC LIMIT 3 ) AS subquery ON course_id = subquery.most_common_value;";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+            List<Course> courses = new ArrayList<>();
+            while (rs.next()) {
+                courses.add(courseResultSetMapper(rs));
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
