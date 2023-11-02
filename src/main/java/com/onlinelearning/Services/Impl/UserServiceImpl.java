@@ -51,4 +51,29 @@ public class UserServiceImpl implements UserService{
         }
         return userDao.getUsersByRole(role);
     }
+
+    @Override
+    public List<User> getUserByKeyword(String keyword) {
+        if(StringUtils.isBlank(keyword)){
+            return null;
+        }
+        return userDao.getUsersByKeyword(keyword);
+    }
+
+    @Override
+    public List<User> getAllActiveUsers() {
+        return userDao.getAllActiveUsers();
+    }
+
+    @Override
+    public List<User> getAllBannedUsers() {
+        return userDao.getAllBannedUsers();
+    }
+
+    @Override
+    public User updateUserStatus(String status, User user) {
+        return userDao.updateUserStatus(status, user);
+    }
+    
+    
 }
