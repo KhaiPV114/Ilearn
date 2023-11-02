@@ -15,4 +15,12 @@ public interface UserService {
     public boolean changePassword(int id, String newPassword);
     
     public List<User> getUsersByRole(String role);
+    
+    public List<User> getUserByKeyword(String keyword);
+    
+    public List<User> getAllActiveUsers();
+    
+    public List<User> getAllBannedUsers();
+    
+    public User updateUserStatus(String status, User user);
 }

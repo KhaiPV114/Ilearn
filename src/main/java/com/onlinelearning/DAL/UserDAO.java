@@ -39,5 +39,11 @@ public interface UserDAO {
     
     List<User> getUsersByRole(String role);
     
-
+    List<User> getUsersByKeyword(String keyword);
+    
+    List<User> getAllActiveUsers();
+    
+    List<User> getAllBannedUsers();
+    
+    User updateUserStatus(String status, User user);
 }

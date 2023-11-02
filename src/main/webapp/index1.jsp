@@ -54,6 +54,8 @@
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/instructor/course">Manager course - Must be logged in as INSTRUCTOR</a>   
         <br>
+        <a target="_blank" href="${pageContext.request.contextPath}/learner/search">Manager search learner</a>   
+        <br>
         <a target="_blank" href="${pageContext.request.contextPath}/dashboard/manager/coupon-search-form.jsp">Search coupon</a>        
         <br>
         <a target="_blank" href="${pageContext.request.contextPath}/authentication">Login/Register</a>        

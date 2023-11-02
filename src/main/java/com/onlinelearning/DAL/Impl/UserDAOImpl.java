@@ -394,19 +394,19 @@ public class UserDAOImpl implements UserDAO {
         }
         return false;
     }
-    
+
     @Override
-    public List<User> getUsersByRole(String role){
+    public List<User> getUsersByRole(String role) {
         List<User> users = new ArrayList<>();
-        
-         String sql = "select * from users u "
-                 + "join user_roles ur on u.user_id = ur.user_id "
-                 + "join roles r on ur.role_id = r.role_id where r.name = ?";
-        
+
+        String sql = "select * from users u "
+                + "join user_roles ur on u.user_id = ur.user_id "
+                + "join roles r on ur.role_id = r.role_id where r.name = ?";
+
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, role.toUpperCase());
             try ( ResultSet rs = ps.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     User user = userRowMapper(rs);
                     users.add(user);
                 }
@@ -417,5 +417,88 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
+
+    @Override
+    public List<User> getUsersByKeyword(String keyword) {
+        List<User> userList = new ArrayList<>();
+
+        String sql = "select * from users where username LIKE CONCAT('%', ?, '%')";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, keyword);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User user = userRowMapper(rs);
+                    userList.add(user);
+                }
+            }
+            return userList;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getAllActiveUsers() {
+        List<User> userList = new ArrayList<>();
+        String sql = "select * from users where status = 'ACTIVE'";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User user = userRowMapper(rs);
+                    userList.add(user);
+                }
+            }
+            return userList;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
+    @Override
+    public List<User> getAllBannedUsers() {
+        List<User> userList = new ArrayList<>();
+        String sql = "select * from users where status = 'BANNED'";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User user = userRowMapper(rs);
+                    userList.add(user);
+                }
+            }
+            return userList;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public User updateUserStatus(String status, User user) {
+        
+        String sql = "update users set status = ? where user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, user.getId());
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                user.setStatus(UserStatus.valueOf(status));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+
+    public static void main(String[] args) {
+        UserDAOImpl  userDAOImpl = new UserDAOImpl();
+        User user = userDAOImpl.getUserById(1);
+        System.out.println(user);
+        User updateU = userDAOImpl.updateUserStatus("ACTIVE", user);
+        System.out.println(updateU);
+    }
 }
