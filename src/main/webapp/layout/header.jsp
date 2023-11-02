@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="CategoryService" scope="request" class="com.onlinelearning.Services.Impl.CategoryServiceImpl"/>
+<jsp:useBean id="CourseService" scope="request" class="com.onlinelearning.Services.Impl.CourseServiceImpl"/>
+
+<c:set var="allCategories" scope="request" value="${CategoryService.getAllCategories()}" />
 
 <header class="rbt-header rbt-header-10">
     <div class="rbt-sticky-placeholder"></div>
