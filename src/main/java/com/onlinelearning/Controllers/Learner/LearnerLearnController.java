@@ -47,6 +47,9 @@ public class LearnerLearnController extends HttpServlet {
             Lesson lesson = lessonService.getLessonById(lessonId);
             request.setAttribute("lesson", lesson);
             request.setAttribute("lessonId", lessonId);
+
+            List<Comment> comments = commentService.getAllCommentsByLessonId(lessonId);
+            request.setAttribute("comments", comments);
         }
 
         //Course handler
@@ -61,9 +64,6 @@ public class LearnerLearnController extends HttpServlet {
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
         request.setAttribute("courseId", courseId);
-
-        List<Comment> comments = commentService.getAllCommentsByLessonId(lessonId);
-        request.setAttribute("comments", comments);
 
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }

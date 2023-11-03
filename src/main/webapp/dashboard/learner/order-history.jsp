@@ -116,7 +116,7 @@
                                                                     <c:set var="price" value="${0.0}"/>
                                                                     <c:forEach var="orderItem" items="${OrderService.getOrderItemsByOrderId(order.id)}">
                                                                         <c:set var="course" value="${CourseService.getCourseById(orderItem.courseId)}"/>
-                                                                        <a href="${pageContext.request.contextPath}/course/${course.id}">${course.name}</a> <br/>
+                                                                        <a href="${pageContext.request.contextPath}/learn?courseId=${course.id}">${course.name}</a> <br/>
                                                                         <c:set var="price" value="${price + orderItem.price}"/>
                                                                     </c:forEach>
                                                                 </td>
