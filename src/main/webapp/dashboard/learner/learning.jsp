@@ -194,101 +194,140 @@
                                         <div class="col-md-12">
 
                                             <!-- Add comment -->
-                                            <div class="d-block mb-5">
-                                                <div class="mb-3 d-flex align-items-center">
-                                                    <img
-                                                        class="comment-img mr-3 rounded-circle"
-                                                        src="https://i.imgur.com/qdiP4DB.jpg"
-                                                        width="38"
-                                                        />
-                                                    <textarea
-                                                        required
-                                                        name="comment"
-                                                        type="text"
-                                                        rows="2"
-                                                        class="form-control me-3"
-                                                        style="font-size: 16px"
-                                                        id="comment"
-                                                        ></textarea>
+                                            <form id="add-comment" action="${pageContext.request.contextPath}/learn/comment/add" method="POST">
+                                                <input type="hidden" name="courseId" value="${courseId}"/>
+                                                <input type="hidden" name="lessonId" value="${lessonId}"/>
+                                                <div class="d-block mb-5">
+                                                    <div class="mb-3 d-flex align-items-center">
+                                                        <img
+                                                            class="comment-img mr-3 rounded-circle"
+                                                            src="https://i.imgur.com/qdiP4DB.jpg"
+                                                            width="38"
+                                                            />
+                                                        <textarea
+                                                            required
+                                                            name="content"
+                                                            type="text"
+                                                            rows="2"
+                                                            class="form-control me-3"
+                                                            style="font-size: 16px"
+                                                            id="comment"
+                                                            ></textarea>
 
-                                                    <div class="tutor-btn">
-                                                        <a class="rbt-btn btn-md hover-icon-reverse w-100" href="#" onclick="document.getElementById('form-add').submit();">
-                                                            <span class="icon-reverse-wrapper">
-                                                                <span class="btn-text">Comment</span>
-                                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="comment-media">
-                                                <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
-                                                <div class="comment-media-body">
-                                                    <div class="row">
-                                                        <div class="d-flex">
-                                                            <h5 class="comment-author me-2">Maria Smantha</h5>
-                                                            <span class="me-5"> - 2 hours ago</span>
-                                                            <a href="#">
-                                                                <span class="d-flex justify-content-end align-items-center">
-                                                                    <i class="fa fa-reply me-2"></i> 
-                                                                    reply
+                                                        <div class="tutor-btn">
+                                                            <a class="rbt-btn btn-md hover-icon-reverse w-100" href="#" onclick="document.getElementById('add-comment').submit();">
+                                                                <span class="icon-reverse-wrapper">
+                                                                    <span class="btn-text">Comment</span>
+                                                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                                                 </span>
                                                             </a>
                                                         </div>
-                                                    </div>		
-
-                                                    It is a long established fact that a reader will be distracted by the readable content of a page.
-
-                                                    <div class="comment-media mt-5">
-                                                        <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
-                                                        <div class="comment-media-body">
-
-                                                            <div class="row">
-                                                                <div class="col-12 d-flex">
-                                                                    <h5 class="comment-author">Simona Disa</h5>
-                                                                    <span class="me-5">- 3 hours ago</span>
-                                                                    <a href="#">
-                                                                        <span class="d-flex justify-content-end align-items-center">
-                                                                            <i class="fa fa-reply me-2"></i> 
-                                                                            reply
-                                                                        </span>
-                                                                    </a>
-                                                                </div>
-
-                                                            </div>
-
-                                                            letters, as opposed to using 'Content here, content here', making it look like readable English.
-                                                        </div>
                                                     </div>
+                                                </div>
+                                            </form>
 
-                                                    <div class="comment-media mt-5">
-                                                        <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/nAcoHRf.jpg" /></a>
-                                                        <div class="comment-media-body">
-                                                            <div class="row">
-                                                                <div class="col-12 d-flex">
-                                                                    <h5 class="comment-author">John Smith</h5>
-                                                                    <span class="me-5">- 4 hours ago</span>
-                                                                    <a href="#">
-                                                                        <span class="d-flex justify-content-end align-items-center">
-                                                                            <i class="fa fa-reply me-2"></i> 
-                                                                            reply
+                                            <c:forEach var="comment" items="${comments}">
+                                                <div class="comment-media mt-5">
+                                                    <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
+                                                    <div class="comment-media-body">
+                                                        <div class="row">
+                                                            <div class="d-flex">
+                                                                <h5 class="comment-author me-2">${comment.user.fullName}</h5>
+                                                                <span class="me-5">${comment.createdAt}</span>
+                                                                <a href="#" onclick="setPid(${comment.id});" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                    <span class="d-flex justify-content-end align-items-center">
+                                                                        <i class="fa fa-reply me-2"></i> 
+                                                                        reply
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>	
+                                                        <span>
+                                                            ${comment.content}
+                                                        </span>
+                                                        <c:if test="${not empty comment.childComments}">
+                                                            <c:forEach var="comment2" items="${comment.childComments}">
+                                                                <div class="comment-media mt-4">
+                                                                    <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
+                                                                    <div class="comment-media-body">
+                                                                        <div class="row">
+                                                                            <div class="d-flex">
+                                                                                <h5 class="comment-author me-2">${comment2.user.fullName}</h5>
+                                                                                <span class="me-5">${comment2.createdAt}</span>
+                                                                                <a href="#" onclick="setPid(${comment.id});" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                                    <span class="d-flex justify-content-end align-items-center">
+                                                                                        <i class="fa fa-reply me-2"></i> 
+                                                                                        reply
+                                                                                    </span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>	
+                                                                        <span>
+                                                                            ${comment2.content}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Reply comment</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form id="reply-comment" action="${pageContext.request.contextPath}/learn/comment/add" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="courseId" value="${courseId}"/>
+                                                                <input type="hidden" name="lessonId" value="${lessonId}"/>
+                                                                <input type="hidden" id="pid" name="pid"/>
+                                                                <div class="d-block">
+                                                                    <div class="mb-3 d-flex align-items-center">
+                                                                        <img
+                                                                            class="comment-img mr-3 rounded-circle"
+                                                                            src="https://i.imgur.com/qdiP4DB.jpg"
+                                                                            width="38"
+                                                                            />
+                                                                        <textarea
+                                                                            required
+                                                                            name="content"
+                                                                            type="text"
+                                                                            rows="2"
+                                                                            class="form-control me-3"
+                                                                            style="font-size: 16px"
+                                                                            id="comment"
+                                                                            ></textarea>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="tutor-btn">
+                                                                    <a class="rbt-btn btn-md hover-icon-reverse w-100" href="#" onclick="document.getElementById('reply-comment').submit();">
+                                                                        <span class="icon-reverse-wrapper">
+                                                                            <span class="btn-text">Reply</span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                                                         </span>
                                                                     </a>
                                                                 </div>
-
-
                                                             </div>
-
-                                                            the majority have suffered alteration in some form, by injected humour, or randomised words.
-
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-
-
+                                            <script>
+                                                function setPid(pid) {
+                                                    let pidInput = document.getElementById("pid");
+                                                    pidInput.value = pid;
+                                                }
+                                            </script>
 
                                         </div>
                                     </div>

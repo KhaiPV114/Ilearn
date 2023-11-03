@@ -1,7 +1,10 @@
 package com.onlinelearning.Controllers.Learner;
 
+import com.onlinelearning.Models.Comment;
 import com.onlinelearning.Models.Lesson;
 import com.onlinelearning.Models.Section;
+import com.onlinelearning.Services.CommentService;
+import com.onlinelearning.Services.Impl.CommentServiceImpl;
 import com.onlinelearning.Services.Impl.LessonServiceImpl;
 import com.onlinelearning.Services.Impl.SectionServiceImpl;
 import com.onlinelearning.Services.LessonService;
@@ -25,6 +28,8 @@ public class LearnerLearnController extends HttpServlet {
     private final SectionService sectionService = new SectionServiceImpl();
 
     private final LessonService lessonService = new LessonServiceImpl();
+
+    private final CommentService commentService = new CommentServiceImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,6 +61,9 @@ public class LearnerLearnController extends HttpServlet {
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
         request.setAttribute("courseId", courseId);
+
+        List<Comment> comments = commentService.getAllCommentsByLessonId(lessonId);
+        request.setAttribute("comments", comments);
 
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
