@@ -21,6 +21,10 @@ public class CourseDAOImpl implements CourseDAO {
     private final String COURSE_TABLE = "courses";
 
     private Course courseResultSetMapper(ResultSet rs) throws SQLException {
+        CourseStatus status = null;
+        if (rs.getString("status") != null) {
+            status = CourseStatus.valueOf(rs.getString("status"));
+        }
         Course course = Course.builder()
                 .id(rs.getInt("course_id"))
                 .categoryId(rs.getInt("category_id"))
@@ -29,7 +33,7 @@ public class CourseDAOImpl implements CourseDAO {
                 .imageUrl(rs.getString("image_url"))
                 .description(rs.getString("description"))
                 .price(rs.getDouble("price"))
-                .status(CourseStatus.valueOf(rs.getString("status")))
+                .status(status)
                 .build();
         return course;
     }

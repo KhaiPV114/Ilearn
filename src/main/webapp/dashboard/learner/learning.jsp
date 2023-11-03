@@ -158,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="inner">
+                    <div class="inner p-5">
                         ${lesson.content}
                     </div>
 
