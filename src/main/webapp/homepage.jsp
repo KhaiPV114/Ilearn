@@ -255,7 +255,7 @@
                             <div class="rbt-card variation-01 rbt-hover">
                                 <div class="rbt-card-img">
                                     <a href="course-details.html">
-                                        <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Card image">
+                                        <img src="${course.imageUrl}" alt="Card image">
                                     </a>
                                 </div>
                                 <div class="rbt-card-body">
