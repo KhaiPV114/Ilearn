@@ -1,7 +1,5 @@
-package com.onlinelearning.Controllers.General.Cart;
+package com.onlinelearning.Controllers.General;
 
-import com.onlinelearning.Services.CartService;
-import com.onlinelearning.Services.Impl.CartServiceImpl;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,9 +18,4 @@ public class GeneralCartView extends HttpServlet {
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
 }

@@ -22,11 +22,11 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "LearnerFindCourse", urlPatterns = {"/search"})
 public class GeneralSearchCourse extends HttpServlet {
 
+    private static final String VIEW_PATH = "/general/course-search.jsp";
+
     private final CourseService courseService = new CourseServiceImpl();
-
+    
     private final CategoryService categoryService = new CategoryServiceImpl();
-
-    private final String VIEW_PATH = "/general/course-search.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -128,9 +128,9 @@ public class GeneralSearchCourse extends HttpServlet {
             }
             //filterPrice is not blank and categories is blank 
             if (StringUtils.isNotBlank(filterPrice) && StringUtils.isBlank(categories)) {
-                
+
                 if (filterPrice.equals("hightolow")) {
-                    
+
                     courses = courseService.getCourseByKeyword(courseKeyword);
                     Collections.sort(courses, new Comparator<Course>() {
                         public int compare(Course a, Course b) {
@@ -156,9 +156,25 @@ public class GeneralSearchCourse extends HttpServlet {
                     }
                 }
             }
-                //filterPrice is blank and categories is not blank
-                if (StringUtils.isBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
-                    List<Course> courses1 = new ArrayList<>();
+            //filterPrice is blank and categories is not blank
+            if (StringUtils.isBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
+                List<Course> courses1 = new ArrayList<>();
+                courses = courseService.getCourseByKeyword(courseKeyword);
+                Category category = categoryService.getCategoryByName(categories);
+
+                for (Course c : courses) {
+                    if (c.getCategoryId().equals(category.getId())) {
+                        courses1.add(c);
+                    }
+                }
+                request.setAttribute("courses", courses1);
+                dispatcher.forward(request, response);
+                return;
+            }
+            //filterPrice and categories are not blank
+            if (StringUtils.isNotBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
+                List<Course> courses1 = new ArrayList<>();
+                if (filterPrice.equals("hightolow")) {
                     courses = courseService.getCourseByKeyword(courseKeyword);
                     Category category = categoryService.getCategoryByName(categories);
 
@@ -167,61 +183,42 @@ public class GeneralSearchCourse extends HttpServlet {
                             courses1.add(c);
                         }
                     }
+                    Collections.sort(courses1, new Comparator<Course>() {
+                        public int compare(Course a, Course b) {
+                            return (int) (b.getPrice() - a.getPrice());
+                        }
+                    });
                     request.setAttribute("courses", courses1);
                     dispatcher.forward(request, response);
                     return;
                 }
-                //filterPrice and categories are not blank
-                if (StringUtils.isNotBlank(filterPrice) && StringUtils.isNotBlank(categories)) {
-                    List<Course> courses1 = new ArrayList<>();
-                    if (filterPrice.equals("hightolow")) {
-                        courses = courseService.getCourseByKeyword(courseKeyword);
-                        Category category = categoryService.getCategoryByName(categories);
+                if (filterPrice.equals("lowtohigh")) {
+                    courses = courseService.getCourseByKeyword(courseKeyword);
+                    Category category = categoryService.getCategoryByName(categories);
 
-                        for (Course c : courses) {
-                            if (c.getCategoryId().equals(category.getId())) {
-                                courses1.add(c);
-                            }
+                    for (Course c : courses) {
+                        if (c.getCategoryId().equals(category.getId())) {
+                            courses1.add(c);
                         }
-                        Collections.sort(courses1, new Comparator<Course>() {
-                            public int compare(Course a, Course b) {
-                                return (int) (b.getPrice() - a.getPrice());
-                            }
-                        });
-                        request.setAttribute("courses", courses1);
-                        dispatcher.forward(request, response);
-                        return;
                     }
-                    if (filterPrice.equals("lowtohigh")) {
-                        courses = courseService.getCourseByKeyword(courseKeyword);
-                        Category category = categoryService.getCategoryByName(categories);
 
-                        for (Course c : courses) {
-                            if (c.getCategoryId().equals(category.getId())) {
-                                courses1.add(c);
-                            }
+                    Collections.sort(courses1, new Comparator<Course>() {
+                        public int compare(Course a, Course b) {
+                            return (int) (a.getPrice() - b.getPrice());
                         }
-                        
-                        Collections.sort(courses1, new Comparator<Course>() {
-                            public int compare(Course a, Course b) {
-                                return (int) (a.getPrice() - b.getPrice());
-                            }
-                        });
-                        request.setAttribute("courses", courses1);
-                        dispatcher.forward(request, response);
-                        return;
-                    }
+                    });
+                    request.setAttribute("courses", courses1);
+                    dispatcher.forward(request, response);
+                    return;
                 }
             }
         }
-
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
-
     }
 
 }

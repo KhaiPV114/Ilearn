@@ -18,26 +18,24 @@ import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "Register", urlPatterns = {"/authentication/register"})
 public class RegisterController extends HttpServlet {
-    
+
     private static final String VIEW_PATH = "/general/authentication.jsp";
-    
-    private static final String HOME_PATH = "/homepage";
-    
+
     private final AuthService authService = new AuthServiceImpl();
-    
+
     private final LoginController loginController = new LoginController();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         loginController.doGet(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(VIEW_PATH);
-        
+
         String username = request.getParameter("r_username");
         String password = request.getParameter("r_password");
         String email = request.getParameter("r_email");
@@ -46,7 +44,7 @@ public class RegisterController extends HttpServlet {
         Date dob = null;
         String phoneNumber = request.getParameter("r_phoneNumber");
         String roleString = request.getParameter("r_role");
-        
+
         boolean formCheck = true;
         //Check username
         if (StringUtils.isBlank(username) || !username.matches(Constants.REGEX_USERNAME_CHECK)) {
@@ -121,7 +119,7 @@ public class RegisterController extends HttpServlet {
                 .phoneNumber(phoneNumber)
                 .roles(roles)
                 .build();
-        
+
         User registedUser;
         try {
             registedUser = authService.register(user);
@@ -136,9 +134,9 @@ public class RegisterController extends HttpServlet {
             requestDispatcher.forward(request, response);
             return;
         }
-        
+
         request.setAttribute("r_success", "Register successfully! Please login to continue!");
-        
+
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 }

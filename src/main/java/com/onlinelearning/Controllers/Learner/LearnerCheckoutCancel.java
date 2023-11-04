@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner.Checkout;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Services.Impl.OrderServiceImpl;
 import com.onlinelearning.Services.OrderService;
@@ -14,11 +14,13 @@ import java.util.logging.Logger;
 @WebServlet(name = "LearnerCheckoutCancel", urlPatterns = {"/cart/checkout/cancel"})
 public class LearnerCheckoutCancel extends HttpServlet {
 
-    private final String VIEW_PATH = "/learner/order/history";
-    private final String ERROR_404_PATH = "/error/404.jsp";
-    private final String HOME_PATH = "/homepage";
+    private static final String VIEW_PATH = "/learner/order/history";
+    
+    private static final String ERROR_404_PATH = "/error/404.jsp";
+    
+    private static final String HOME_PATH = "/homepage";
 
-    private final OrderService OrderService = new OrderServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +33,7 @@ public class LearnerCheckoutCancel extends HttpServlet {
             throws ServletException, IOException {
         String orderId = request.getParameter("order-id");
         try {
-            OrderService.deleteOrder(Integer.parseInt(orderId));
+            orderService.deleteOrder(Integer.parseInt(orderId));
             if (request.getParameter("view-order-history") != null) {
                 response.sendRedirect(request.getContextPath() + VIEW_PATH);
             } else {

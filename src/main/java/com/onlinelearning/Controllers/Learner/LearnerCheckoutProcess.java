@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner.Checkout;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Order;
@@ -17,7 +17,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -28,14 +27,17 @@ import java.util.logging.Logger;
 @WebServlet(name = "LearnerCheckoutProcess", urlPatterns = {"/cart/checkout/process"})
 public class LearnerCheckoutProcess extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/order-process.jsp";
-    private final String ERROR_403_PATH = "/error/403.jsp";
+    private static final String VIEW_PATH = "/dashboard/learner/order-process.jsp";
 
-    private final AuthService AuthService = new AuthServiceImpl();
+    private static final String ERROR_403_PATH = "/error/403.jsp";
+
+    private final AuthService authService = new AuthServiceImpl();
+
     private final PaymentService VNPAY = new VNPaymentServiceImpl();
 
-    private final OrderService OrderService = new OrderServiceImpl();
-    private final CartService CartService = new CartServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
+
+    private final CartService cartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +49,6 @@ public class LearnerCheckoutProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter pw = response.getWriter();
 
         //Get all fields of request from VNPay
         Enumeration params = request.getParameterNames();
@@ -68,32 +69,32 @@ public class LearnerCheckoutProcess extends HttpServlet {
         if (VNPAY.compareChecksum(vnp_Params, vnp_SecureHash)) {
 
             //Process order based on transaction status from vnpay
-            Order paymentedOrder = OrderService.getOrderById(Integer.parseInt(vnp_Params.get("vnp_TxnRef")));
+            Order paymentedOrder = orderService.getOrderById(Integer.parseInt(vnp_Params.get("vnp_TxnRef")));
             String message = "";
             if (paymentedOrder != null) {
                 if (paymentedOrder.getStatus().equals(OrderStatus.UNPAID)) {    //Avoid user reload page
                     switch (vnp_Params.get("vnp_ResponseCode")) {
                         case "00":  //Thanh toán thành công
                             paymentedOrder.setStatus(OrderStatus.SUCCESSFUL);
-                            paymentedOrder = OrderService.updateOrder(paymentedOrder);
-                            CartService.deleteCartOfUserId(paymentedOrder.getUserId());
+                            paymentedOrder = orderService.updateOrder(paymentedOrder);
+                            cartService.deleteCartOfUserId(paymentedOrder.getUserId());
                             try {
-                                OrderService.getUserEnrollCourseByOrderId(paymentedOrder.getId());
+                                orderService.getUserEnrollCourseByOrderId(paymentedOrder.getId());
                             } catch (Exception e) {
                             }
                             message += "<p>Order payment successful!<p>";
                             break;
                         case "24":  //Khách hàng huỷ giao dịch
                             try {
-                            OrderService.deleteOrder(paymentedOrder.getId());
+                            orderService.deleteOrder(paymentedOrder.getId());
                         } catch (Exception ex) {
                             Logger.getLogger(LearnerCheckoutProcess.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
                         default:    //Giao dịch bị lỗi
                             paymentedOrder.setStatus(OrderStatus.FAILED);
-                            paymentedOrder = OrderService.updateOrder(paymentedOrder);
-                            CartService.deleteCartOfUserId(paymentedOrder.getUserId());
+                            paymentedOrder = orderService.updateOrder(paymentedOrder);
+                            cartService.deleteCartOfUserId(paymentedOrder.getUserId());
                             break;
                     }
                 } else {
@@ -103,7 +104,7 @@ public class LearnerCheckoutProcess extends HttpServlet {
             }
 
             //Check user
-            User user = AuthService.getUser(request);
+            User user = authService.getUser(request);
             if (user != null) {
                 //Trả về trang checkout.jsp với status và order
                 if (paymentedOrder.getUserId().equals(user.getId())) {

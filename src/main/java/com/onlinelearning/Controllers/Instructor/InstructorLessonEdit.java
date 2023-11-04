@@ -1,7 +1,5 @@
 package com.onlinelearning.Controllers.Instructor;
 
-import com.onlinelearning.DAL.Impl.LessonDAOImpl;
-import com.onlinelearning.DAL.LessonDAO;
 import com.onlinelearning.Models.Lesson;
 import com.onlinelearning.Models.Section;
 import com.onlinelearning.Services.Impl.LessonServiceImpl;
@@ -14,8 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "InstructorLessonEdit", urlPatterns = {"/instructor/lesson/edit"})
@@ -27,6 +23,7 @@ public class InstructorLessonEdit extends HttpServlet {
 
     private final SectionService sectionService = new SectionServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String lessonIdParam = request.getParameter("id");
@@ -44,6 +41,7 @@ public class InstructorLessonEdit extends HttpServlet {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String lessonIdParam = request.getParameter("id");

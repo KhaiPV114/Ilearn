@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "InstructorLessonMove", urlPatterns = {"/instructor/lesson/move"})
@@ -20,11 +18,7 @@ public class InstructorLessonMove extends HttpServlet {
 
     private final LessonService lessonService = new LessonServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String currentLessonIdParam = request.getParameter("currentId");

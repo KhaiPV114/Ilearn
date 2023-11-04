@@ -18,18 +18,11 @@ import java.util.logging.Logger;
 @WebServlet(name = "LearnerWishlistAdd", urlPatterns = {"/learner/wishlist/add"})
 public class LearnerWishlistAdd extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
-    
-    
+    private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
+
     private final WishlistService WishlistService = new WishlistServiceImpl();
+
     private final AuthService AuthService = new AuthServiceImpl();
-
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

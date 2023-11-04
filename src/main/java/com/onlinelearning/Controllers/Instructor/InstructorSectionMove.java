@@ -11,20 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "InstructorSectionMove", urlPatterns = {"/instructor/section/move"})
 public class InstructorSectionMove extends HttpServlet {
-    
+
     private final SectionService sectionService = new SectionServiceImpl();
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
-    
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String currentSectionIdParam = request.getParameter("currentId");
@@ -59,5 +53,5 @@ public class InstructorSectionMove extends HttpServlet {
         }
         out.write(result.toString());
     }
-    
+
 }

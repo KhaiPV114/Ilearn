@@ -31,6 +31,7 @@ public class LearnerLearnController extends HttpServlet {
 
     private final CommentService commentService = new CommentServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String courseIdParam = request.getParameter("courseId");
@@ -66,11 +67,6 @@ public class LearnerLearnController extends HttpServlet {
         request.setAttribute("courseId", courseId);
 
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
     }
 
 }

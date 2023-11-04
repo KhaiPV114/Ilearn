@@ -39,6 +39,7 @@ public class GoogleRegisterController extends HttpServlet {
         return user;
     }
     
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = getUserFromSession(request, response);
@@ -52,6 +53,7 @@ public class GoogleRegisterController extends HttpServlet {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
     
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = getUserFromSession(request, response);

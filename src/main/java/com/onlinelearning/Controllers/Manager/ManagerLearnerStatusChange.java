@@ -15,10 +15,11 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "ManagerLearnerStatusChange", urlPatterns = {"/manager/learner/status/change"})
 public class ManagerLearnerStatusChange extends HttpServlet {
 
-    private UserService userService = new UserServiceImpl();
+    private static final String VIEW_PATH = "/dashboard/manager/learner-view.jsp";
 
-    private final String VIEW_PATH = "/dashboard/manager/learner-view.jsp";
+    private final UserService userService = new UserServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW_PATH);
@@ -43,11 +44,6 @@ public class ManagerLearnerStatusChange extends HttpServlet {
                 return;
             }
         }
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
     }
 
 }

@@ -24,6 +24,7 @@ public class InstructorCourseView extends HttpServlet {
 
     private final AuthService authService = new AuthServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String sizeString = request.getParameter("size");
@@ -58,11 +59,6 @@ public class InstructorCourseView extends HttpServlet {
         request.setAttribute("size", size);
         request.setAttribute("total", total);
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
     }
 
 }

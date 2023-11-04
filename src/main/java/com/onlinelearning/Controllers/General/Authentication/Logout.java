@@ -8,23 +8,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name="Logout", urlPatterns={"/authentication/logout"})
+@WebServlet(name = "Logout", urlPatterns = {"/authentication/logout"})
 public class Logout extends HttpServlet {
-    
+
     private static final String HOME_PATH = "/homepage";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session != null)
+        if (session != null) {
             session.invalidate();
+        }
         response.sendRedirect(request.getContextPath() + HOME_PATH);
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         doGet(request, response);
     }
 

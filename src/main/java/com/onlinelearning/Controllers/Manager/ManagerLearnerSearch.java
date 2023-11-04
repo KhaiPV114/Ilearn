@@ -18,10 +18,11 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "ManagerLearnerSearch", urlPatterns = {"/manager/learner/search"})
 public class ManagerLearnerSearch extends HttpServlet {
 
-    private UserService userService = new UserServiceImpl();
-
     private final String VIEW_PATH = "/dashboard/manager/learner-view.jsp";
 
+    private final UserService userService = new UserServiceImpl();
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -29,14 +30,13 @@ public class ManagerLearnerSearch extends HttpServlet {
 
         System.out.println("_______");
         System.out.println("Start process:");
-        
+
         String userName = request.getParameter("userName");
         List<User> learnerListActive = new ArrayList<>();
         List<User> learnerListBan = new ArrayList<>();
         List<User> list = new ArrayList<>();
-        
-        
-        if(StringUtils.isBlank(userName)){
+
+        if (StringUtils.isBlank(userName)) {
             learnerListActive = userService.getAllActiveUsers();
             System.out.println("Active: " + learnerListActive);
             learnerListBan = userService.getAllBannedUsers();
@@ -46,24 +46,23 @@ public class ManagerLearnerSearch extends HttpServlet {
             dispatcher.forward(request, response);
             return;
         }
-        
+
         list = userService.getUserByKeyword(userName);
-        
-        
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus() == null || list.get(i).getStatus().equals(UserStatus.ACTIVE)) {
                 learnerListActive.add(list.get(i));
-            }
-            else{
+            } else {
                 learnerListBan.add(list.get(i));
             }
         }
-        
+
         request.setAttribute("learnerListActive", learnerListActive);
         request.setAttribute("learnerListBan", learnerListBan);
         dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);

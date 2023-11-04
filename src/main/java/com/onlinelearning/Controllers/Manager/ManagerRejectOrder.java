@@ -15,13 +15,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "ManagerRejectOrder", urlPatterns = {"/manager/order/reject"})
 public class ManagerRejectOrder extends HttpServlet {
 
-    private final OrderService OrderService = new OrderServiceImpl();
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
+    private final OrderService orderService = new OrderServiceImpl();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,10 +23,10 @@ public class ManagerRejectOrder extends HttpServlet {
         PrintWriter pw = response.getWriter();
         String orderId = request.getParameter("order-id");
         try {
-            Order order = OrderService.getOrderById(Integer.parseInt(orderId));
+            Order order = orderService.getOrderById(Integer.parseInt(orderId));
             if (order != null) {
                 order.setStatus(OrderStatus.FAILED);
-                OrderService.updateOrder(order);
+                orderService.updateOrder(order);
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 throw new Exception("Order not found with id: " + orderId);

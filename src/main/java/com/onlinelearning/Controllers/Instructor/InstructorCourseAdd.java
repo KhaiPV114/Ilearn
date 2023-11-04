@@ -41,6 +41,7 @@ public class InstructorCourseAdd extends HttpServlet {
 
     private final AuthService authService = new AuthServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Category> categories = categoryService.getAllCategories();
@@ -48,6 +49,7 @@ public class InstructorCourseAdd extends HttpServlet {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);

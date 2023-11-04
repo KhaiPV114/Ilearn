@@ -18,10 +18,4 @@ public class TestingController extends HttpServlet {
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
 }

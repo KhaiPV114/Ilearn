@@ -17,11 +17,13 @@ public class LearnerLessonStatusUpdate extends HttpServlet {
     private final CourseDAO courseDAO = new CourseDAOImpl();
     private final LessonDAO lessonDAO = new LessonDAOImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }

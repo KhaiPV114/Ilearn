@@ -2,9 +2,7 @@ package com.onlinelearning.Controllers.Manager;
 
 import com.onlinelearning.Models.Coupon;
 import com.onlinelearning.Services.CouponService;
-import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CouponServiceImpl;
-import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,18 +16,17 @@ import org.apache.commons.lang3.StringUtils;
 @WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/manager/coupon/create"})
 public class ManagerCouponCreate extends HttpServlet {
 
-    private static final CouponService couponService = new CouponServiceImpl();
-
-    private static final CourseService courseService = new CourseServiceImpl();
-
     private static final String FORM_PATH = "/dashboard/manager/coupon-create-form.jsp";
 
+    private static final CouponService couponService = new CouponServiceImpl();
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
-
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

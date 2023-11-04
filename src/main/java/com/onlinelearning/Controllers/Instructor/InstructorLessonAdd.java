@@ -21,11 +21,7 @@ public class InstructorLessonAdd extends HttpServlet {
 
     private final InstructorSectionView instructorSectionView = new InstructorSectionView();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
