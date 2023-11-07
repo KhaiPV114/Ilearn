@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 
 <html>
@@ -175,8 +176,14 @@
                                                 <span class="rating-count"> (15 Reviews)</span>
                                             </div>
                                             <div class="rbt-bookmark-btn">
-                                                <a class="rbt-round-btn" title="Bookmark" href="#"><i
-                                                        class="feather-bookmark"></i></a>
+                                                <!--  <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                      class="feather-bookmark"></i></a>-->
+                                                <form action="${pageContext.request.contextPath}/learner/wishlist/add" id="wishlist-add-${course.id}" method="post">
+                                                    <input type="hidden" name="course-id" value="${course.id}">
+                                                    <a class="rbt-round-btn" title="Bookmark" href="#" onclick="addToWishlist(${course.id})">
+                                                        <i id="bookmark-icon-${course.id}" class="fa-solid fa-bookmark"  ></i>
+                                                    </a>
+                                                </form>
                                             </div>
                                         </div>
 
@@ -334,6 +341,25 @@
             xhttp.open("POST", urlPath);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("course-id=" + courseId);
+        }
+    </script>
+    <script>
+        function addToWishlist(courseId) {
+            // Send an AJAX request to add the course to the wishlist
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/learner/wishlist/add",
+                data: {"course-id": courseId},
+                success: function () {
+                    // Update the icon to be yellow
+                    const icon = document.getElementById(`bookmark-icon-${courseId}`);
+                    icon.classList.remove("fa-bookmark");
+                    icon.classList.add("fa-bookmark-yellow");                     
+                },
+                error: function () {
+                    alert("Failed to add the course to your wishlist.");
+                }
+            });
         }
     </script>
 </html>
