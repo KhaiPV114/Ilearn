@@ -34,7 +34,7 @@
                                                     <div class="rbt-card variation-01 rbt-hover">
                                                         <div class="rbt-card-img">
                                                             <a href="#">
-                                                                <img src="${course.imageUrl}" alt="Card image" style="max-height: 120px">
+                                                                <img src="${course.imageUrl}" alt="Card image" style="max-height: 120px; min-height: 120px">
                                                             </a>
                                                         </div>
                                                         <div class="rbt-card-body">
