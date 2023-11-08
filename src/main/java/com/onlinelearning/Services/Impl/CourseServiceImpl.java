@@ -100,31 +100,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceDesc(keyword);
-        return courses;
-    }
-
-    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
-        return courses;
-    }
-    
-    public List<Course> getAllCourseOrderByPriceDesc() {
-        List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
-        return courses;
-    }
-
-    @Override
-    public List<Course> getAllCourseOrderByPriceAsc() {
-         List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
-        return courses;
-    }
-
-    @Override
     public List<Course> getCourseByCategory(String category) {
         List<Course> courses = courseDAO.getCourseByCategory(category);
         return courses;
+    }
+
+    @Override
+    public List<Course> findAll(String sqlQuery) {
+        return courseDAO.findAll(sqlQuery);
     }
     
     

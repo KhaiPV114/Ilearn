@@ -96,9 +96,8 @@
                                             <span class="select-label d-block">Short By</span>  
                                             <select name="filterPrice" id="filterPrice">
                                                 <option value="">------------</option>
-                                                <option value="latest">Latest</option>
-                                                <option value="lowtohigh">Price: low to high</option>
-                                                <option value="hightolow">Price: high to low</option>
+                                                <option value="asc">Price: low to high</option>
+                                                <option value="desc">Price: high to low</option>
                                             </select>
                                         </div>
                                     </div>
@@ -109,7 +108,10 @@
                                             <select data-live-search="true" name="filterCategories" id="filterCategories">
                                                 <option value="">--------------</option>
                                                 <c:forEach items="${categorys}" var="categorys">
-                                                    <option value="${categorys.name}">${categorys.name}</option>
+                                                    <option value="${categorys.name.contains('&') ? 
+                                                                     categorys.name.replace('&','%26') : 
+                                                                     categorys.name}">${categorys.name}</option>
+
                                                 </c:forEach>
                                             </select>
                                         </div>
