@@ -2,6 +2,7 @@ package com.onlinelearning.Services;
 
 import com.onlinelearning.Models.Course;
 import java.util.List;
+import java.util.Map;
 
 public interface CourseService {
 
@@ -43,4 +44,8 @@ public interface CourseService {
 
     List<Course> getCourseByCategory(String category);
 
+    List<Course> getCourseByOwnerId(Integer ownerId);
+    
+    Integer getTotalLearnerOfAllCourse(Integer ownerId);
+    public Map<String, List<Double>> getTotalProfit(Integer ownerId);
 }

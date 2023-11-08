@@ -4,6 +4,7 @@ import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
+import com.onlinelearning.Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -405,4 +408,64 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
+
+    @Override
+    public List<Course> getCourseByOwnerId(Integer ownerId) {
+        String sql = "select * from courses where owner_id = ? ";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            ResultSet rs = ps.executeQuery();
+            List<Course> courses = new ArrayList<>();
+            while (rs.next()) {
+                Course course = courseResultSetMapper(rs);
+                courses.add(course);
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getTotalLearnerOfAllCourse(Integer ownerId) {
+        String sql = "select count( distinct uc.user_id ) as 'totalLearner' from courses c join users_courses uc on c.course_id = uc.course_id where c.owner_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    return rs.getInt("totalLearner");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
+    }
+
+    @Override
+    public Map<String, List<Double>> getTotalProfit(Integer ownerId) {
+        Map<String, List<Double>> map = new HashMap<>();
+        List<Double> totalCourse = new ArrayList<>();
+        List<Double> totalPrice = new ArrayList<>();
+        String sql = "select c.course_id , count(c.course_id) as 'totalCourse'  ,  count(c.course_id) * c.price as 'totalPrice' from courses c join users_courses uc on c.course_id = uc.course_id where owner_id = ? \n"
+                + "group by c.course_id";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    totalCourse.add(Double.valueOf(rs.getInt("totalCourse")));
+                    totalPrice.add(rs.getDouble("totalPrice"));
+                }
+                map.put("totalCourse", totalCourse);
+                map.put("totalPrice", totalPrice);
+                return map;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

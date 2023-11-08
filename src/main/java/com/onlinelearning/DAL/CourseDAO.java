@@ -1,7 +1,9 @@
 package com.onlinelearning.DAL;
 
 import com.onlinelearning.Models.Course;
+import com.onlinelearning.Models.User;
 import java.util.List;
+import java.util.Map;
 
 public interface CourseDAO {
 
@@ -42,4 +44,11 @@ public interface CourseDAO {
     List<Course> getCourseByCategory(String category);
     
     List<Course> getCourseByCategoryId(Integer categoryId);
+    
+    List<Course> getCourseByOwnerId(Integer ownerId);
+    
+    Integer getTotalLearnerOfAllCourse(Integer ownerId);
+    
+    Map<String,List<Double>> getTotalProfit(Integer ownerId);
+    
 }

@@ -1,6 +1,5 @@
 package com.onlinelearning.Controllers.General.Authentication;
 
-import com.onlinelearning.Utils.Constants;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "Logout", urlPatterns = {"/authentication/logout"})
 public class Logout extends HttpServlet {
 
-    private static final String HOME_PATH = Constants.HOME_PATH;
+    private static final String HOME_PATH = "/homepage";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

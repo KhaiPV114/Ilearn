@@ -5,7 +5,6 @@ import com.onlinelearning.Models.Coupon;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CouponService;
 import com.onlinelearning.Services.Impl.CouponServiceImpl;
-import com.onlinelearning.Utils.Constants;
 import com.onlinelearning.Utils.JsonUtils;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -21,7 +20,7 @@ import java.util.List;
 @WebServlet(name = "GeneralGetCoupon", urlPatterns = {"/coupon/get"})
 public class GeneralGetCoupon extends HttpServlet {
 
-    private static final String HOME_PATH = Constants.HOME_PATH;
+    private static final String HOME_PATH = "/homepage";
 
     private final CouponService couponService = new CouponServiceImpl();
 

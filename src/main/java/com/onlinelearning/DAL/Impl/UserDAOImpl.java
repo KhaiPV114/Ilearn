@@ -509,4 +509,28 @@ public class UserDAOImpl implements UserDAO {
         User updateU = userDAOImpl.updateUserStatus("ACTIVE", user);
         System.out.println(updateU);
     }
+    
+        @Override
+    public List<User> getLearnerOfAllCourse(Integer ownerId) {
+        
+        List<User> users = new ArrayList<>();
+        
+        String sql = "select distinct u.* from users u\n"
+                + "    join users_courses uc on u.user_id = uc.user_id\n"
+                + "    join courses c on c.course_id = uc.course_id\n"
+                + "    where c.owner_id = ?";
+        
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = userRowMapper(rs);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

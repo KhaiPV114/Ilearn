@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService{
     public User updateUserStatus(String status, User user) {
         return userDao.updateUserStatus(status, user);
     }
-    
+
+    @Override
+    public List<User> getLearnerOfAllCourse(Integer ownerId) {
+        return userDao.getLearnerOfAllCourse(ownerId);
+    }
+       
     
 }

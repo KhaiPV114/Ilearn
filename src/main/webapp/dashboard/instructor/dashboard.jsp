@@ -37,7 +37,16 @@
                                                             <i class="feather-book-open"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-primary"><span class="odometer odometer-auto-theme" data-count="30"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">3</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-primary">
+                                                                <span class="odometer odometer-auto-theme" >
+                                                                    <div class="odometer-inside">
+                                                                        <span class="odometer-digit">
+                                                                            <span class="odometer-digit-spacer">8</span>
+                                                                            <span class="odometer-digit-inner">
+                                                                                <span class="odometer-ribbon">
+                                                                                    <span class="odometer-ribbon-inner">
+                                                                                        <span class="odometer-value">${totalCourse}
+                                                                                        </span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value"></span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Enrolled Courses</span>
                                                         </div>
@@ -54,9 +63,17 @@
                                                             <i class="feather-monitor"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-secondary"><span class="odometer odometer-auto-theme" data-count="10"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">1</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-secondary">
+                                                                <span class="odometer odometer-auto-theme">
+                                                                    <div class="odometer-inside">
+                                                                        <span class="odometer-digit">
+                                                                            <span class="odometer-digit-spacer">8</span>
+                                                                            <span class="odometer-digit-inner">
+                                                                                <span class="odometer-ribbon">
+                                                                                    <span class="odometer-ribbon-inner">
+                                                                                        <span class="odometer-value">${coursesP}</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value"></span></span></span></span></span></div></span>
                                                             </h3>
-                                                            <span class="rbt-title-style-2 d-block">ACTIVE COURSES</span>
+                                                            <span class="rbt-title-style-2 d-block">PUBLISHED COURSES</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -72,9 +89,9 @@
                                                             <i class="feather-award"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-violet"><span class="odometer odometer-auto-theme" data-count="7"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">7</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-violet"><span class="odometer odometer-auto-theme"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">${coursesNew}</span></span></span></span></span></div></span>
                                                             </h3>
-                                                            <span class="rbt-title-style-2 d-block">Completed Courses</span>
+                                                            <span class="rbt-title-style-2 d-block">NEW COURSES</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +106,13 @@
                                                             <i class="feather-users"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-pink"><span class="odometer odometer-auto-theme" data-count="160"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-pink">
+                                                                <span class="odometer odometer-auto-theme">
+                                                                    <div class="odometer-inside">
+                                                                        <span class="odometer-digit">
+                                                                            <span class="odometer-digit-spacer">8</span>
+                                                                            <span class="odometer-digit-inner">
+                                                                                <span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">${totalLearner}</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Total Students</span>
                                                         </div>
@@ -106,7 +129,7 @@
                                                             <i class="feather-gift"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-coral"><span class="odometer odometer-auto-theme" data-count="20"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-coral"><span class="odometer odometer-auto-theme"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">${coursesNew + coursesP}</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Total Courses</span>
                                                         </div>
@@ -123,7 +146,7 @@
                                                             <i class="feather-dollar-sign"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter color-warning"><span class="odometer odometer-auto-theme" data-count="25000"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter color-warning"><span class="odometer odometer-auto-theme"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">${totalPrice}</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Total Earnings</span>
                                                         </div>
@@ -220,7 +243,7 @@
 
                                     </div>
                                 </div>
-                                
+
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
                                     <div class="content">
                                         <div class="row">
@@ -237,41 +260,23 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Name</th>
-                                                                <th>Course Enrolled</th>
                                                                 <th>Email</th>
                                                                 <th>Phone Number</th>
                                                                 <th>Joined Time</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <th><a href="#">Phan Van Khai</a></th>
-                                                                <td>Marketing</td>
-                                                                <td>phankhai1142003@gmail.com</td>
-                                                                <td>09347875823</td>
-                                                                <td>LocalDateTime</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><a href="#">Do Dinh Nam</a></th>
-                                                                <td>Web Design</td>
-                                                                <td>dinhthangdo@gmail.com</td>
-                                                                <td>09384785738</td>
-                                                                <td>LocalDateTime</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><a href="#">Justin Bieber</a></th>
-                                                                <td>Graphic</td>
-                                                                <td>justinbieber@gmail.com</td>
-                                                                <td>03548594945</td>
-                                                                <td>LocalDateTime</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th><a href="#">Luong Duy</a></th>
-                                                                <td>Marketing</td>
-                                                                <td>duylon@gmail.com</td>
-                                                                <td>01384385733</td>
-                                                                <td>LocalDateTime</td>
-                                                            </tr>
+                                                            <c:forEach items="${users}" var="user" varStatus="i">
+                                                                <c:if test="${i.count < 2}">
+                                                                    <tr >
+                                                                        <th>${user.fullName}</th>
+                                                                        <td>${user.email == null ? user.googleEmail : user.email}</td>
+                                                                        <td>${user.phoneNumber}</td>
+                                                                        <td>${user.createdAt.toString().replace('T',' - ')}</td>
+                                                                    </tr>
+                                                                </c:if>
+
+                                                            </c:forEach>
                                                         </tbody>
                                                     </table>
                                                 </div>
