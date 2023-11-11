@@ -42,7 +42,7 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="${pageContext.request.contextPath}/search-learner" method="post">
+                                        <form action="${pageContext.request.contextPath}/instructor/learner/search" method="get">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
@@ -68,11 +68,6 @@
                                                             Learner
                                                         </a>
                                                     </li>
-                                                    <li class="breadcrumb-item active" aria-current="page">
-                                                        <a class="color-primary" href="#">
-                                                            Active
-                                                        </a>
-                                                    </li>
                                                 </ol>
                                             </nav>
                                         </div>
@@ -80,6 +75,43 @@
                                         <div class="row gy-5">
                                             <div class="col-lg-12">
                                                 <div class="rbt-dashboard-table table-responsive" >
+                                                    <p style="margin-bottom: 5px; color: blue">ACTIVE: </p>
+                                                    <table class="rbt-table table table-borderless ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Username</th>
+                                                                <th>Course Enrolled</th>
+                                                                <th>Email</th>
+                                                                <th>Phone Number</th>
+                                                                <th>Joined Time</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach items="${learnerListActive}" var="learner">
+                                                            <form action="${pageContext.request.contextPath}/instructor/learner/status/change" method="get">
+                                                                <input type="hidden" name="id" value="${learner.id}"/>
+                                                                <input type="hidden" name="status" value="${learner.status}">
+                                                                <tr>
+                                                                    <th>${learner.username}</th>
+                                                                    <td>${learner.id}</td>
+                                                                    <td>${learner.email}</td>
+                                                                    <td>${learner.phoneNumber}</td>
+                                                                    <td>${learner.createdAt}</td>
+                                                                    <td><button class="btn btn-info" type="submit">${learner.status}</button></td>
+                                                                </tr>
+                                                            </form>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Title -->
+                                        <div class="row gy-5">
+                                            <div class="col-lg-12">
+                                                <div class="rbt-dashboard-table table-responsive" style="margin-top: 20px">
+                                                    <p style="margin-bottom: 5px; color: blue">BANNED: </p>
                                                     <table class="rbt-table table table-borderless ">
                                                         <thead>
                                                             <tr>
@@ -92,70 +124,20 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <c:forEach items="${learnerList}" var="learner">
-                                                            <form action="#" id="learner-${learner.id}">
+                                                            <c:forEach items="${learnerListBan}" var="learner">
+                                                            <form action="${pageContext.request.contextPath}/instructor/learner/status/change" method="get">
+                                                                <input type="hidden" name="id" value="${learner.id}"/>
+                                                                <input type="hidden" name="status" value="${learner.status}">
                                                                 <tr>
-                                                                    <th>${learner.fullName}</th>
+                                                                    <th>${learner.username}</th>
                                                                     <td>${learner.id}</td>
                                                                     <td>${learner.email}</td>
                                                                     <td>${learner.phoneNumber}</td>
                                                                     <td>${learner.createdAt}</td>
-                                                                    <td><input class="btn btn-success" type="button" onclick="document.getElementById('learner-${learner.id}').submit()" name="ban" value="${learner.status}"/></td>
+                                                                    <td><button class="btn btn-danger" type="submit">${learner.status}</button></td>
                                                                 </tr>
                                                             </form>
                                                         </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rbt-dashboard-content bg-color-white rbt-shadow-box" style="margin-top: 30px">
-                                    <div class="content">
-                                        <!-- Start Title -->
-                                        <div class="section-title">
-                                            <nav class="rbt-title-style-3 h4 pb-0" aria-label="breadcrumb">
-                                                <ol class="breadcrumb">
-                                                    <li class="breadcrumb-item">
-                                                        <a href="#">
-                                                            Learner
-                                                        </a>
-                                                    </li>
-                                                    <li class="breadcrumb-item active" aria-current="page">
-                                                        <a class="color-primary" href="#">
-                                                            Banned
-                                                        </a>
-                                                    </li>
-                                                </ol>
-                                            </nav>
-                                        </div>
-                                        <!-- End Title -->
-                                        <div class="row gy-5">
-                                            <div class="col-lg-12">
-                                                <div class="rbt-dashboard-table table-responsive">
-                                                    <table class="rbt-table table table-borderless">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Course Enrolled</th>
-                                                                <th>Email</th>
-                                                                <th>Phone Number</th>
-                                                                <th>Joined Time</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <form action="#" id="user-${user.id}">
-                                                            <tr>
-                                                                <th><a href="#">Justin Bieber</a></th>
-                                                                <td>Graphic</td>
-                                                                <td>justinbieber@gmail.com</td>
-                                                                <td>03548594945</td>
-                                                                <td>LocalDateTime</td>
-                                                                <td><input class="btn btn-danger" type="button" onclick="document.getElementById('user-${user.id}').submit()" name="ban" value="BANNED"/></td>
-                                                            </tr>
-                                                        </form>
                                                         </tbody>
                                                     </table>
                                                 </div>

@@ -79,6 +79,9 @@ public class UserServiceImpl implements UserService{
     public List<User> getLearnerOfAllCourse(Integer ownerId) {
         return userDao.getLearnerOfAllCourse(ownerId);
     }
-       
     
+    @Override
+    public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status) {
+        return userDao.getLearnerOfAllCourseWithStatus(ownerId, status);
+    }
 }

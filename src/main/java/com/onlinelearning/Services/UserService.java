@@ -24,4 +24,6 @@ public interface UserService {
     public User updateUserStatus(String status, User user);
 
     public List<User> getLearnerOfAllCourse(Integer ownerId);
+    
+    public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
 }

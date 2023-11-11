@@ -48,5 +48,7 @@ public interface UserDAO {
     User updateUserStatus(String status, User user);
 
     List<User> getLearnerOfAllCourse(Integer ownerId);
+    
+    List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
 
 }

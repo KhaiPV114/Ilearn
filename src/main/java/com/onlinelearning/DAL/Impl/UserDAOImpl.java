@@ -501,14 +501,6 @@ public class UserDAOImpl implements UserDAO {
     }
     
     
-
-    public static void main(String[] args) {
-        UserDAOImpl  userDAOImpl = new UserDAOImpl();
-        User user = userDAOImpl.getUserById(1);
-        System.out.println(user);
-        User updateU = userDAOImpl.updateUserStatus("ACTIVE", user);
-        System.out.println(updateU);
-    }
     
         @Override
     public List<User> getLearnerOfAllCourse(Integer ownerId) {
@@ -522,6 +514,31 @@ public class UserDAOImpl implements UserDAO {
         
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, ownerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = userRowMapper(rs);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status) {
+        
+        List<User> users = new ArrayList<>();
+        
+        String sql = "select distinct u.* from users u\n"
+                + "    join users_courses uc on u.user_id = uc.user_id\n"
+                + "    join courses c on c.course_id = uc.course_id\n"
+                + "    where c.owner_id = ? and u.status = ?";
+        
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            ps.setString(2, status);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = userRowMapper(rs);
