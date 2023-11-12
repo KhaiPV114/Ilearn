@@ -46,4 +46,7 @@ public interface UserDAO {
     List<User> getAllBannedUsers();
     
     User updateUserStatus(String status, User user);
+    
+    Integer getNumberOfUserAtRole(Role role);
+
 }

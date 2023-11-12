@@ -109,9 +109,9 @@
                             </a>
                         </li>
                         <!-- User Dropdown-->
-                        <li class="mx-2">
+<!--                        <li class="mx-2">
                             ${sessionScope['roles']}
-                        </li>
+                        </li>-->
                         <c:choose>
                             <c:when test="${sessionScope['user'] == null}">
                                 <li class="account-access rbt-user-wrapper d-none d-xl-block">

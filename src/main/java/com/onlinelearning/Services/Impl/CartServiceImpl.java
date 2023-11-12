@@ -194,7 +194,6 @@ public class CartServiceImpl implements CartService {
     }
 
     private void removeCartFromCookie(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Remove cookie cart");
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(CartCookieName)) {
@@ -213,13 +212,11 @@ public class CartServiceImpl implements CartService {
         List<Course> coursesInCart = new ArrayList<>();
         
         if (user == null) {
-            System.out.println("Get Cookie Cart");
             try {
                 cart = getCartFromCookie(request);
             } catch (Exception ex) {
             }
         } else {
-            System.out.println("Get User Cart");
             cart = getCartByUserId(user.getId());
             if (cart.isEmpty()) {
                 try {

@@ -27,8 +27,6 @@ public class ManagerLearnerStatusChange extends HttpServlet {
         String status = request.getParameter("status");
         String id = request.getParameter("id");
         String username = request.getParameter("userName");
-        System.out.println("Status: " + status);
-        System.out.println("ID: " + id);
 
         if (!StringUtils.isBlank(status)) {
             if (status.equals("BANNED")) {

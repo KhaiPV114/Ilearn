@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
+import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.UserService;
 import java.util.List;
@@ -74,6 +75,12 @@ public class UserServiceImpl implements UserService{
     public User updateUserStatus(String status, User user) {
         return userDao.updateUserStatus(status, user);
     }
-    
-    
+
+    @Override
+    public Integer getNumberOfUserAtRole(Role role) {
+        if(role == null){
+            return 0;
+        }
+        return userDao.getNumberOfUserAtRole(role);
+    }
 }
