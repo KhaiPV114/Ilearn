@@ -46,6 +46,8 @@ public class UserDAOImpl implements UserDAO {
                 .dob(rs.getDate("dob"))
                 .phoneNumber(rs.getString("phone_number"))
                 .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
+                .imageUrl(rs.getString("image_url"))
+                .description(rs.getString("description"))
                 .status(status)
                 .build();
         return user;
@@ -109,8 +111,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserById(int id) {
-        String sql = "select user_id, username, password, email, google_email, "
-                + "full_name, dob, phone_number, created_at, status from users "
+        String sql = "select *"
+                + " from users "
                 + "where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -127,8 +129,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByUsername(String username) {
-        String sql = "select user_id, username, password, email, google_email, "
-                + "full_name, dob, phone_number, created_at, status from users "
+        String sql = "select *"
+                + " from users "
                 + "where username = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, username);
@@ -145,8 +147,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByEmail(String email) {
-        String sql = "select user_id, username, password, email, google_email, "
-                + "full_name, dob, phone_number, created_at, status from users "
+        String sql = "select * "
+                + " from users "
                 + "where email = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, email);
@@ -216,7 +218,7 @@ public class UserDAOImpl implements UserDAO {
     public User updateUser(User user) {
         String sql = "update users set username = ?, password = ?, email = ?,  "
                 + "google_email = ?, full_name = ?, dob = ?, phone_number = ?, "
-                + "status = ? where user_id = ?";
+                + "status = ?, imageUrl = ?, description = ? where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
@@ -250,16 +252,38 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 ps.setString(8, user.getStatus().toString());
             }
-            ps.setInt(9, user.getId());
+            
+            ps.setString(9, user.getImageUrl());
+            ps.setString(10,user.getDescription());
+            ps.setInt(11, user.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return user;
             }
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+    
+    /*
+    public User updateInfoUser(User user) {
+        try {
+            String sql = "update users set full_name = ? where user_id = ?";
+            try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, user.getFullName());
+            ps.setInt(2, user.getId());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return null;
+    }
+    */
+    
 
     @Override
     public User deleteUser(User user) {

@@ -42,7 +42,7 @@
                                         <!-- Start Profile Row  -->
                                         <div class="rbt-profile-row row row--15 mt--15">
                                             <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">First Name</div>
+                                                <div class="rbt-profile-content b2">Full Name</div>
                                             </div>
                                             <div class="col-lg-8 col-md-8">
                                                 <div class="rbt-profile-content b2">John</div>
@@ -50,16 +50,6 @@
                                         </div>
                                         <!-- End Profile Row  -->
 
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Last Name</div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">Doe</div>
-                                            </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
 
                                         <!-- Start Profile Row  -->
                                         <div class="rbt-profile-row row row--15 mt--15">

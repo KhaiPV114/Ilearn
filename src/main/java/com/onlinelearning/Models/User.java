@@ -30,6 +30,10 @@ public class User {
     private String phoneNumber;
 
     private LocalDateTime createdAt;
+    
+    private String imageUrl;
+    
+    private String description;
 
     private UserStatus status;
     

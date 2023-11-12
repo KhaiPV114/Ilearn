@@ -18,9 +18,8 @@ public class UserServiceImpl implements UserService{
     }
     
     @Override
-    public User updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+    public User updateUser (User user) {
+        return userDao.updateUser(user);
     }
 
     @Override
