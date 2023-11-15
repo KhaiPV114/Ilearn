@@ -119,8 +119,8 @@ public class TrackingDAOImpl implements TrackingDAO {
     public List<Tracking> getTrackingsByUserIdAndCourseId(Integer userId, Integer courseId) {
         String sql = "select tracking.user_id as user_id, tracking.lesson_id as lesson_id, tracking.status as status \n"
                 + "from courses \n"
-                + "join sections on courses.course_id = sections.course_id and courses.course_id = ? \n"
-                + "join lessons on sections.section_id = lessons.section_id \n"
+                + "join sections on courses.course_id = sections.course_id and courses.course_id = ? and (sections.status is null or sections.status = 'ACTIVE') \n"
+                + "join lessons on sections.section_id = lessons.section_id and (lessons.status is null or lessons.status = 'ACTIVE') \n"
                 + "join tracking on lessons.lesson_id = tracking.lesson_id and tracking.user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, courseId);

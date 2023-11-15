@@ -72,10 +72,10 @@ public class LearnerLearnController extends HttpServlet {
         //Course handler
         int numberOfLessons = 0; //for calculating progress
         Integer courseId = Integer.valueOf(courseIdParam);
-        List<Section> sections = sectionService.getSectionsByCourseId(courseId);
+        List<Section> sections = sectionService.getActiveSectionByCourseId(courseId);
         Map<Integer, List<Lesson>> lessonsList = new HashMap<>();
         for (Section section : sections) {
-            List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
+            List<Lesson> lesson = lessonService.getActiveLessonsBySectionId(section.getId());
             lessonsList.put(section.getId(), lesson);
             numberOfLessons += lesson.size();
         }

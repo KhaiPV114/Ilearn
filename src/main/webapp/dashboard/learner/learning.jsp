@@ -140,17 +140,17 @@
                                                                     <i class="feather-play-circle"></i> <span class="text">${lesson.name}</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="min-lable">30 min</span>
-                                                                    <span class="rbt-check">
-                                                                        <c:choose>
-                                                                            <c:when test="${trackings[lesson.id] eq 'FINISHED'}">
-                                                                                <i class="feather-check"></i>
-                                                                            </c:when>
-                                                                            <c:otherwise>
-                                                                                <i class="feather-loader"></i>
-                                                                            </c:otherwise>
-                                                                        </c:choose>
-                                                                    </span>
+                                                                    <span class="min-lable"></span>
+                                                                    <!--<span class="rbt-check">-->
+                                                                    <c:choose>
+                                                                        <c:when test="${trackings[lesson.id] eq 'FINISHED'}">
+                                                                            <i style="color: var(--color-primary);" class="fa-solid fa-circle-check"></i>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <i style="color: var(--color-primary);" class="fa-regular fa-circle"></i>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                    <!--</span>-->
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -427,7 +427,7 @@
         <script src="${pageContext.request.contextPath}/assets/js/vendor/plyr.js"></script>
         <!-- Main JS -->
         <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-
+        <script src="https://kit.fontawesome.com/81fcade62e.js" crossorigin="anonymous"></script>
         <%--<jsp:include page="/layout/scripts.jsp"/>--%>
     </body>
 </html>

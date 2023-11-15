@@ -15,9 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SectionDAOImpl implements SectionDAO {
-
+    
     private final DBContext dbContext = new DBContextImpl();
-
+    
     private Section sectionResultSetMapper(ResultSet rs) throws SQLException {
         String statusString = rs.getString("status");
         SectionStatus status = null;
@@ -33,7 +33,7 @@ public class SectionDAOImpl implements SectionDAO {
                 .build();
         return section;
     }
-
+    
     @Override
     public Float getNewOrderNumberByCourseId(Integer courseId) {
         String sql = "select max(order_number) as max_order_number from sections where course_id = ?";
@@ -50,7 +50,7 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return 10f;
     }
-
+    
     @Override
     public Section createSection(Section section) {
         String sql = "insert into sections(course_id, name, status, order_number) VALUES (?, ?, ?, ?)";
@@ -78,7 +78,7 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return null;
     }
-
+    
     @Override
     public Section getSection(Integer id) {
         String sql = "select * from sections where section_id = ?";
@@ -94,7 +94,7 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return null;
     }
-
+    
     @Override
     public List<Section> getSectionsByCourseId(Integer courseId) {
         String sql = "select * from sections where course_id = ? order by order_number";
@@ -112,7 +112,29 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return null;
     }
-
+    
+    @Override
+    public List<Section> getSectionsByCourseIdAndStatus(Integer courseId, SectionStatus status) {
+        String sql = "select * from sections where course_id = ? and status = ? order by order_number";
+        if (status == SectionStatus.ACTIVE) {
+            sql = "select * from sections where course_id = ? and (status = ? or status is null) order by order_number";
+        }
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, courseId);
+            ps.setString(2, status.toString());
+            try ( ResultSet rs = ps.executeQuery()) {
+                List<Section> sections = new ArrayList<>();
+                while (rs.next()) {
+                    sections.add(sectionResultSetMapper(rs));
+                }
+                return sections;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     @Override
     public Section updateSection(Section section) {
         String sql = "update sections set course_id = ?, name = ?, status = ?, order_number = ? where section_id = ?";
@@ -135,7 +157,7 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return null;
     }
-
+    
     @Override
     public Section deleteSection(Section section) {
         String sql = "delete from sections where section_id = ?";
@@ -150,5 +172,5 @@ public class SectionDAOImpl implements SectionDAO {
         }
         return null;
     }
-
+    
 }
