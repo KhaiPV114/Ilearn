@@ -276,7 +276,10 @@
                                                         <div class="row">
                                                             <div class="d-flex">
                                                                 <h5 class="comment-author me-2">${comment.user.fullName}</h5>
-                                                                <span class="me-5">${comment.createdAt}</span>
+                                                                <fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                <span class="me-5">
+                                                                    <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${ parsedDateTime }" />
+                                                                </span>
                                                                 <a href="#" onclick="setPid(${comment.id});" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                                     <span class="d-flex justify-content-end align-items-center">
                                                                         <i class="fa fa-reply me-2"></i> 
@@ -296,7 +299,10 @@
                                                                         <div class="row">
                                                                             <div class="d-flex">
                                                                                 <h5 class="comment-author me-2">${comment2.user.fullName}</h5>
-                                                                                <span class="me-5">${comment2.createdAt}</span>
+                                                                                <fmt:parseDate value="${comment2.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                                <span class="me-5">
+                                                                                    <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${ parsedDateTime }" />
+                                                                                </span>
                                                                                 <a href="#" onclick="setPid(${comment.id});" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                                                     <span class="d-flex justify-content-end align-items-center">
                                                                                         <i class="fa fa-reply me-2"></i> 
