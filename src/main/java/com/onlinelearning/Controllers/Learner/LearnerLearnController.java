@@ -70,12 +70,14 @@ public class LearnerLearnController extends HttpServlet {
         }
 
         //Course handler
+        int numberOfLessons = 0; //for calculating progress
         Integer courseId = Integer.valueOf(courseIdParam);
         List<Section> sections = sectionService.getSectionsByCourseId(courseId);
         Map<Integer, List<Lesson>> lessonsList = new HashMap<>();
         for (Section section : sections) {
             List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
             lessonsList.put(section.getId(), lesson);
+            numberOfLessons += lesson.size();
         }
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
@@ -85,7 +87,6 @@ public class LearnerLearnController extends HttpServlet {
         request.setAttribute("trackings", trackings);
 
         //Calculate progress
-        int numberOfLessons = lessonsList.size();
         if (numberOfLessons == 0) {
             request.setAttribute("progress", 0);
         } else {
