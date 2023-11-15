@@ -9,6 +9,10 @@ public interface SectionService {
 
     List<Section> getSectionsByCourseId(Integer courseId);
 
+    List<Section> getActiveSectionByCourseId(Integer courseId);
+
+    List<Section> getHiddenSectionByCourseId(Integer courseId);
+
     Section createSection(Section section) throws Exception;
 
     Section updateSection(Section section) throws Exception;

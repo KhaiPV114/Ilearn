@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
+import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.UserService;
 import java.util.List;
@@ -18,9 +19,8 @@ public class UserServiceImpl implements UserService{
     }
     
     @Override
-    public User updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+    public User updateUser (User user) {
+        return userDao.updateUser(user);
     }
 
     @Override
@@ -91,4 +91,10 @@ public class UserServiceImpl implements UserService{
     }
     
     
+    public Integer getNumberOfUserAtRole(Role role) {
+        if(role == null){
+            return 0;
+        }
+        return userDao.getNumberOfUserAtRole(role);
+    }
 }

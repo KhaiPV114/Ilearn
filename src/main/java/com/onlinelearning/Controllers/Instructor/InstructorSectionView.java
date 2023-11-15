@@ -35,7 +35,10 @@ public class InstructorSectionView extends HttpServlet {
             return;
         }
         Integer courseId = Integer.valueOf(courseIdParam);
-        List<Section> sections = sectionService.getSectionsByCourseId(courseId);
+        request.setAttribute("courseId", courseId);
+
+        //Active sections
+        List<Section> sections = sectionService.getActiveSectionByCourseId(courseId);
         Map<Integer, List<Lesson>> lessonsList = new HashMap<>();
         if (sections != null) {
             for (Section section : sections) {
@@ -45,7 +48,18 @@ public class InstructorSectionView extends HttpServlet {
         }
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
-        request.setAttribute("courseId", courseId);
+
+        //Hidden sections
+        List<Section> sections2 = sectionService.getHiddenSectionByCourseId(courseId);
+        Map<Integer, List<Lesson>> lessonsList2 = new HashMap<>();
+        if (sections2 != null) {
+            for (Section section : sections2) {
+                List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
+                lessonsList2.put(section.getId(), lesson);
+            }
+        }
+        request.setAttribute("sections2", sections2);
+        request.setAttribute("lessonsList2", lessonsList2);
 
         String currentSection = request.getParameter("current-section");
         if (currentSection != null) {

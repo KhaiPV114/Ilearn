@@ -178,8 +178,9 @@
                                                 <span class="rating-count"> (15 Reviews)</span>
                                             </div>
                                             <div class="rbt-bookmark-btn">
-                                                <a class="rbt-round-btn" title="Bookmark" href="#"><i
-                                                        class="feather-bookmark"></i></a>
+                                                <a class="rbt-round-btn" title="Bookmark" href="javascript:void(0)" onclick="addToWishlist(${course.id})">
+                                                    <i class="feather-bookmark"></i>
+                                                </a>
                                             </div>
                                         </div>
 

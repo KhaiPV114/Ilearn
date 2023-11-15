@@ -1,5 +1,6 @@
 package com.onlinelearning.Services;
 
+import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface UserService {
     public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
     
     public List<User> getLearnerOfAllCourseByKeyword(String keyword);
+    
+    Integer getNumberOfUserAtRole(Role role);
 }

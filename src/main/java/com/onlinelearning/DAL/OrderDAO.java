@@ -21,4 +21,6 @@ public interface OrderDAO {
     Order updateOrder(Order newOrder);
 
     Order deleteOrder(Order deleteOrder);
+
+    List<Order> getPaidOrdersByMonth(int month, int year);
 }

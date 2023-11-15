@@ -52,5 +52,7 @@ public interface UserDAO {
     List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
     
     List<User> getLearnerOfAllCourseByKeyword(String keyword);
+    
+    Integer getNumberOfUserAtRole(Role role);
 
 }

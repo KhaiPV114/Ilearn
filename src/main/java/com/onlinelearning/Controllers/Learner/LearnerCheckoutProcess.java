@@ -86,11 +86,11 @@ public class LearnerCheckoutProcess extends HttpServlet {
                             break;
                         case "24":  //Khách hàng huỷ giao dịch
                             try {
-                            orderService.deleteOrder(paymentedOrder.getId());
-                        } catch (Exception ex) {
-                            Logger.getLogger(LearnerCheckoutProcess.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        break;
+                                orderService.deleteOrder(paymentedOrder.getId());
+                            } catch (Exception ex) {
+                                Logger.getLogger(LearnerCheckoutProcess.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            break;
                         default:    //Giao dịch bị lỗi
                             paymentedOrder.setStatus(OrderStatus.FAILED);
                             paymentedOrder = orderService.updateOrder(paymentedOrder);
