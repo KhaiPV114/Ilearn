@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Dashboard</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
     <body>
@@ -36,7 +36,7 @@
                                                             <i class="feather-book-open"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-primary"><span class="odometer odometer-auto-theme" data-count="30"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">3</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-primary"><span class="odometer odometer-auto-theme" data-count="${enrolledCourses.size()}"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">5</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">8</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Enrolled Courses</span>
                                                         </div>
@@ -53,9 +53,9 @@
                                                             <i class="feather-monitor"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-secondary"><span class="odometer odometer-auto-theme" data-count="10"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">1</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-secondary"><span class="odometer odometer-auto-theme" data-count="10"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">5</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
                                                             </h3>
-                                                            <span class="rbt-title-style-2 d-block">ACTIVE COURSES</span>
+                                                            <span class="rbt-title-style-2 d-block">LEARNING COURSES</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,7 +71,7 @@
                                                             <i class="feather-award"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-violet"><span class="odometer odometer-auto-theme" data-count="7"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">7</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-violet"><span class="odometer odometer-auto-theme" data-count="7"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">5</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">Completed Courses</span>
                                                         </div>

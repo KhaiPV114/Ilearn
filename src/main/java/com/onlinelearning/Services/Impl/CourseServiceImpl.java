@@ -204,6 +204,15 @@ public class CourseServiceImpl implements CourseService {
         return courses;       
     }
 
+    @Override
+    public List<Course> getEnrolledCourseOfUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+
+        return courseDAO.getEnrolledCourseOfUserId(userId);
+    }
+
 
 
 }
