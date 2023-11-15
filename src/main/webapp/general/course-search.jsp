@@ -165,17 +165,8 @@
                                     </div>
                                     <div class="rbt-card-body">
                                         <div class="rbt-card-top">
-                                            <div class="rbt-review">
-                                                <div class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                                <span class="rating-count"> (15 Reviews)</span>
-                                            </div>
                                             <div class="rbt-bookmark-btn">
+                                                
                                                 <!--  <a class="rbt-round-btn" title="Bookmark" href="#"><i
                                                       class="feather-bookmark"></i></a>-->
                                                 <form action="${pageContext.request.contextPath}/learner/wishlist/add" id="wishlist-add-${course.id}" method="post">
@@ -186,13 +177,14 @@
                                                 </form>
                                             </div>
                                         </div>
-
+                                                       
                                         <h4 class="rbt-card-title"><a href="#">${course.name}</a>
                                         </h4>
 
                                         <ul class="rbt-meta">
                                             <li><i class="feather-book"></i>12 Lessons</li>
                                             <li><i class="feather-users"></i>50 Students</li>
+                                            
                                         </ul>
 
                                         <p class="rbt-card-text text-truncate">${course.description}</p>
@@ -211,6 +203,7 @@
                                                 <span class="current-price">$${course.price}</span>
                                                 <!--<span class="off-price">${course.price}</span>-->
                                             </div>
+                                            
                                             <c:if test="${coursesInCart.contains(course)}">
                                                 <div>
                                                     <a class="rbt-btn-link" href="javascript:void(0);">

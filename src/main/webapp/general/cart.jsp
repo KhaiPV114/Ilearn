@@ -56,18 +56,7 @@
                                                             <li>
                                                                 <i class="feather-book"></i>${"8 lessons"}&nbsp;&nbsp;&nbsp;<i class="feather-users"></i>${"3 members"}
                                                             </li>
-                                                            <li>
-                                                                <div class="rbt-review">
-                                                                    <div class="rating">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                    </div>
-                                                                    <span class="rating-count"> (${"numOfReview"})</span>
-                                                                </div>
-                                                            </li>
+                                                           
                                                         </ul>
                                                     </td>
                                                     <td class="pro-subtotal">
