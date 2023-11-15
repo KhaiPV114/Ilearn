@@ -14,15 +14,15 @@
         <title>iLearn | Dashboard</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
-    <body class="rbt-header-sticky">
+    <body>
         <jsp:include page="/layout/header.jsp"/>
         <jsp:include page="/layout/dashboard-header.jsp"/>
         <div class="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom" >
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12" id="content">
+                    <div class="col-lg-12" >
                         <jsp:include page="/layout/dashboard-manager-card.jsp"/>
-                        <div class="row g-5" >
+                        <div class="row g-5" id="content">
                             <jsp:include page="/layout/dashboard-manager-sidebar.jsp"/>
                             <!-- Start Content  -->
                             <div class="col-lg-9" >

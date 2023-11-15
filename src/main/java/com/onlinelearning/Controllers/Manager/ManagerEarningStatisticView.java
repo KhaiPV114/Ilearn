@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -53,6 +54,7 @@ public class ManagerEarningStatisticView extends HttpServlet {
         String month = request.getParameter("month");
 
         int chooseYear = LocalDate.now().getYear(), chooseMonth = LocalDate.now().getMonthValue();
+        boolean isCurrent = true;
         List<Order> allOrders = orderService.getAllOrders();
         Set<Integer> years = new HashSet<>();
         for (Order order : allOrders) {
@@ -61,12 +63,22 @@ public class ManagerEarningStatisticView extends HttpServlet {
             }
         }
 
+        if (years.isEmpty()) {
+            years.add(chooseYear);
+        }
+
         if (month != null && year != null) {
             try {
                 //Can't access future time
                 if ((chooseYear == Integer.parseInt(year) && chooseMonth > Integer.parseInt(month)) || chooseYear > Integer.parseInt(year)) {
                     chooseYear = Integer.parseInt(year);
+                    System.out.println(chooseYear);
                     chooseMonth = Integer.parseInt(month);
+                    if (LocalDate.now().getYear() == chooseYear && LocalDate.now().getMonthValue() == chooseMonth) {
+
+                    } else {
+                        isCurrent = false;
+                    }
                 }
             } catch (Exception e) {
             }
@@ -84,7 +96,6 @@ public class ManagerEarningStatisticView extends HttpServlet {
                     earningOfMonth = new Double[dayOfMonth];
                     Arrays.fill(earningOfMonth, 0d);
                     for (Order order : orders) {
-
                         double earn = orderService.getTotalOfOrder(order);
                         earningOfMonth[order.getCreatedAt().getDayOfMonth() - 1] = earn;
                         totalEarningOfMonth += earn;
@@ -101,6 +112,15 @@ public class ManagerEarningStatisticView extends HttpServlet {
                     }
                 }
             }
+
+            if (dayOfMonth == 0) {
+                if (isCurrent) {
+                    dayOfMonth = LocalDate.now().getDayOfMonth();
+                } else {
+                    dayOfMonth = LocalDate.of(chooseYear, Month.of(chooseMonth), 1).lengthOfMonth();
+                }
+            }
+
             request.setAttribute("earningOfMonth", earningOfMonth);
             request.setAttribute("choosedMonth", chooseMonth);
             request.setAttribute("choosedYear", chooseYear);

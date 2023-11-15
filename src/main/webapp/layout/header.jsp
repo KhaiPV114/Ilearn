@@ -20,10 +20,10 @@
                 <div class="header-left rbt-header-content">
                     <!-- Logo -->
                     <div class="header-info">
-                        <div class="logo">
-                            <a href="${pageContext.request.contextPath}/">
+                        <div class="logo mx-3" >
+                            <a href="${pageContext.request.contextPath}/" style="width: 100px">
                                 <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png"
-                                     alt="Education Logo Images"/>
+                                     alt="Education Logo Images" />
                             </a>
                         </div>
                     </div>
