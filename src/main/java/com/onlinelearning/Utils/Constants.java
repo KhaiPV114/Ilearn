@@ -2,6 +2,8 @@ package com.onlinelearning.Utils;
 
 public class Constants {
 
+    public static final String HOME_PATH = "/";
+
     public static final String PROFILE = DotEnv.get("PROFILE");
 
     public static final String UPLOAD_DIRECTORY = DotEnv.get("UPLOAD_DIRECTORY");
