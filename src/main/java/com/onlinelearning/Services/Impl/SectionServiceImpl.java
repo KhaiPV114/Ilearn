@@ -29,6 +29,22 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
+    public List<Section> getActiveSectionByCourseId(Integer courseId) {
+        if (courseId == null) {
+            return null;
+        }
+        return sectionDAO.getSectionsByCourseIdAndStatus(courseId, SectionStatus.ACTIVE);
+    }
+
+    @Override
+    public List<Section> getHiddenSectionByCourseId(Integer courseId) {
+        if (courseId == null) {
+            return null;
+        }
+        return sectionDAO.getSectionsByCourseIdAndStatus(courseId, SectionStatus.HIDDEN);
+    }
+
+    @Override
     public Section createSection(Section section) throws Exception {
         if (section == null) {
             throw new Exception("Section can not be null");
@@ -77,7 +93,8 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Section deleteSection(Section section) throws Exception {
-        Section deletedSection = sectionDAO.deleteSection(section);
+        section.setStatus(SectionStatus.DELETED);
+        Section deletedSection = sectionDAO.updateSection(section);
         if (deletedSection == null) {
             throw new Exception("Deleted section failed!");
         }
