@@ -13,36 +13,43 @@
                     </div>
                     <div class="admin-info">
                         <span class="name">${user.username}</span>
-                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/profile.html">View
-                            Profile</a>
+                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/manager/profile">
+                            View Profile
+                        </a>
                     </div>
                 </div>
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/manager/learner/search">
+                        <a href="${pageContext.request.contextPath}/manager/dashboard">
                             <i class="feather-home"></i>
                             <span>My Dashboard</span>
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/manager/learner/search">
-                            <i class="feather-home"></i>
+                            <i class="feather-users"></i>
                             <span>Manage learner</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/manager/category">
+                            <i class="feather-book-open"></i>
+                            <span>Manage Category</span>
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/manager/order">
                             <i class="feather-shopping-bag"></i>
-                            <span>Manager Order</span>
+                            <span>Manage Order</span>
                         </a>
                     </li>
                 </ul>
                 <hr class="mt--10 mb--10">
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor-settings.html">
+                        <a href="${pageContext.request.contextPath}/manager/change-password">
                             <i class="feather-settings"></i>
-                            <span>Settings</span>
+                            <span>Change Password</span>
                         </a>
                     </li>
                     <li>

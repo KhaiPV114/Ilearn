@@ -8,6 +8,7 @@ import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CourseServiceImpl implements CourseService {
 
@@ -39,10 +40,6 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDAO.getCourseByOwnerIdPaging(ownerId, size, page);
     }
-    
-
-    
-    
 
     @Override
     public Integer countNumberOfCourseByOwnerId(Integer ownerId, Integer size) {
@@ -112,17 +109,6 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
 
-    @Override
-    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceDesc(keyword);
-        return courses;
-    }
-
-    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
-        return courses;
-    }
-
     public List<Course> getAllCourseOrderByPriceDesc() {
         List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
         return courses;
@@ -133,10 +119,6 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
         return courses;
     }
-    
-
-    
-    
 
     @Override
     public List<Course> getCourseByCategory(String category) {
@@ -192,7 +174,7 @@ public class CourseServiceImpl implements CourseService {
             throw new Exception("User " + userId + " have enrolled this course" + courseId);
         }
         if (courseDAO.getUserEnrollCourse(userId, courseId)) {
-                //Success
+            // Success
         } else {
             throw new Exception("Get error while get user " + userId + " enrolled course " + courseId);
         }
@@ -201,7 +183,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> get3CourseByNumberOfPurchase() {
         List<Course> courses = courseDAO.get3CourseByNumberOfPurchase();
-        return courses;       
+        return courses;
     }
 
     @Override
@@ -213,6 +195,27 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.getEnrolledCourseOfUserId(userId);
     }
 
+    public List<Course> getCourseByOwnerId(Integer ownerId) {
+        return courseDAO.getCourseByOwnerId(ownerId);
+    }
 
+    @Override
+    public Integer getTotalLearnerOfAllCourse(Integer ownerId) {
+        return courseDAO.getTotalLearnerOfAllCourse(ownerId);
+    }
+
+    @Override
+    public Map<String, List<Double>> getTotalProfit(Integer ownerId) {
+        return courseDAO.getTotalProfit(ownerId);
+    }
+
+    public List<Course> findAll(String sqlQuery) {
+        return courseDAO.findAll(sqlQuery);
+    }
+
+    @Override
+    public List<Integer> getAllEnrolledCourseId(int id) {
+        return courseDAO.getAllEnrolledCourseId(id);
+    }
 
 }

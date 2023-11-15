@@ -59,7 +59,7 @@ public class ManagerCouponSearch extends HttpServlet {
         }
 
         if (!StringUtils.isBlank(courseName) && StringUtils.isBlank(code)) {
-
+            
         }
 
     }

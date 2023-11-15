@@ -112,16 +112,16 @@ public class InstructorCourseEdit extends HttpServlet {
             }
         }
 
-//        if (!check) {
-        List<Category> categories = categoryService.getAllCategories();
-        request.setAttribute("categories", categories);
-        request.setAttribute("name", name);
-        request.setAttribute("category", categoryId);
-        request.setAttribute("price", priceString);
-        request.setAttribute("description", description);
-        requestDispatcher.forward(request, response);
-//        return;
-//        }
+        if (!check) {
+            List<Category> categories = categoryService.getAllCategories();
+            request.setAttribute("categories", categories);
+            request.setAttribute("name", name);
+            request.setAttribute("category", categoryId);
+            request.setAttribute("price", priceString);
+            request.setAttribute("description", description);
+            requestDispatcher.forward(request, response);
+            return;
+        }
 
         Course currentCourse = courseService.getCourseById(id);
 

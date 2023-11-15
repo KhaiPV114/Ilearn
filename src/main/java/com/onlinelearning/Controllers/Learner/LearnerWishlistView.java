@@ -9,7 +9,6 @@ import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import com.onlinelearning.Services.Impl.WishlistServiceImpl;
 import com.onlinelearning.Services.WishlistService;
-import com.onlinelearning.Utils.Constants;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ public class LearnerWishlistView extends HttpServlet {
 
     private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
 
-    private static final String HOME_PATH = Constants.HOME_PATH;
+    private static final String HOME_PATH = "/index.jsp";
 
     private final WishlistService wishlistService = new WishlistServiceImpl();
 

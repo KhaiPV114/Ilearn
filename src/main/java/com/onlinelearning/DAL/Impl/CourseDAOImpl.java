@@ -4,6 +4,7 @@ import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.DBContext;
 import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
+import com.onlinelearning.Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -236,26 +239,6 @@ public class CourseDAOImpl implements CourseDAO {
         return null;
     }
 
-    @Override
-    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
-        String sql = "select *"
-                + " from " + COURSE_TABLE
-                + " where name LIKE CONCAT('%', ?, '%')"
-                + " order by price desc";
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, keyword);
-            try ( ResultSet rs = ps.executeQuery()) {
-                List<Course> courses = new ArrayList<>();
-                while (rs.next()) {
-                    courses.add(courseResultSetMapper(rs));
-                }
-                return courses;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
     @Override
     public Boolean isEnrolled(Integer userId, Integer courseId) {
@@ -292,26 +275,6 @@ public class CourseDAOImpl implements CourseDAO {
         return false;
     }
 
-    @Override
-    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
-        String sql = "select *"
-                + " from " + COURSE_TABLE
-                + " where name LIKE CONCAT('%', ?, '%')"
-                + " order by price asc";
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, keyword);
-            try ( ResultSet rs = ps.executeQuery()) {
-                List<Course> courses = new ArrayList<>();
-                while (rs.next()) {
-                    courses.add(courseResultSetMapper(rs));
-                }
-                return courses;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
     @Override
     public List<Course> getAllCourseOrderByPriceDesc() {
@@ -405,4 +368,113 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return null;
     }
+
+    @Override
+    public List<Course> getCourseByOwnerId(Integer ownerId) {
+        String sql = "select * from courses where owner_id = ? ";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            ResultSet rs = ps.executeQuery();
+            List<Course> courses = new ArrayList<>();
+            while (rs.next()) {
+                Course course = courseResultSetMapper(rs);
+                courses.add(course);
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getTotalLearnerOfAllCourse(Integer ownerId) {
+        String sql = "select count( distinct uc.user_id ) as 'totalLearner' from courses c join users_courses uc on c.course_id = uc.course_id where c.owner_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                if (rs.next()) {
+                    return rs.getInt("totalLearner");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public List<Course> findAll(String sqlQuery) {
+        List<Course> courses = new ArrayList<>();
+        
+        String sql = sqlQuery;
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                Course course = courseResultSetMapper(rs);
+                courses.add(course);
+            }
+            }
+            return courses;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+    
+    
+    
+    public static void main(String[] args) {
+        CourseDAO courseDAO = new CourseDAOImpl();
+        List<Course> course = courseDAO.getCourseByCategory("James");
+        System.out.println(course);
+    }
+
+    @Override
+    public Map<String, List<Double>> getTotalProfit(Integer ownerId) {
+        Map<String, List<Double>> map = new HashMap<>();
+        List<Double> totalCourse = new ArrayList<>();
+        List<Double> totalPrice = new ArrayList<>();
+        String sql = "select c.course_id , count(c.course_id) as 'totalCourse'  ,  count(c.course_id) * c.price as 'totalPrice' from courses c join users_courses uc on c.course_id = uc.course_id where owner_id = ? \n"
+                + "group by c.course_id";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
+            ps.setInt(1, ownerId);
+            try ( ResultSet rs = ps.executeQuery();) {
+                while (rs.next()) {
+                    totalCourse.add(Double.valueOf(rs.getInt("totalCourse")));
+                    totalPrice.add(rs.getDouble("totalPrice"));
+                }
+                map.put("totalCourse", totalCourse);
+                map.put("totalPrice", totalPrice);
+                return map;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Integer> getAllEnrolledCourseId(int id) {
+        List<Integer> coursesId = new ArrayList<>();
+        
+        String sql = "select uc.course_id as 'id' from users_courses uc "
+                + "join users u on u.user_id = uc.user_id "
+                + "where u.user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                coursesId.add(rs.getInt("id"));
+            }
+            }
+            return coursesId;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
 }

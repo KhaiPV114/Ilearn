@@ -1,16 +1,18 @@
 package com.onlinelearning.Models;
 
-
 import com.onlinelearning.Enums.UserStatus;
 import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.HashSet;
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Builder
+@Getter
+@Setter
 public class User {
 
     private Integer id;
@@ -32,8 +34,7 @@ public class User {
     private LocalDateTime createdAt;
 
     private UserStatus status;
-    
+
     private HashSet<Role> roles;
-    
 
 }

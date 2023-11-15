@@ -17,7 +17,7 @@ import java.util.List;
 @WebServlet(name = "HomepageView", urlPatterns = {""})
 public class HomepageView extends HttpServlet {
 
-    private static final String VIEW_PATH = "homepage.jsp";
+    private static final String HOME_PATH = "homepage.jsp";
 
     private final CategoryService categoryService = new CategoryServiceImpl();
     
@@ -41,7 +41,7 @@ public class HomepageView extends HttpServlet {
 
         }
 
-        request.getRequestDispatcher(VIEW_PATH).forward(request, response);
+        request.getRequestDispatcher(HOME_PATH).forward(request, response);
     }
 
 }

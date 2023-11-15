@@ -9,6 +9,10 @@ public interface LessonService {
 
     List<Lesson> getLessonsBySectionId(Integer sectionId);
 
+    List<Lesson> getActiveLessonsBySectionId(Integer sectionId);
+
+    List<Lesson> getHiddenLessonsBySectionId(Integer sectionId);
+
     Lesson createLesson(Lesson lesson) throws Exception;
 
     Lesson updateLesson(Lesson lesson) throws Exception;

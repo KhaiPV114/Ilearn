@@ -5,7 +5,6 @@ import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CartService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CartServiceImpl;
-import com.onlinelearning.Utils.Constants;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,7 +18,7 @@ public class GoogleLoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/general/authentication.jsp";
     
-    private static final String HOME_PATH = Constants.HOME_PATH;
+    private static final String HOME_PATH = "/homepage";
 
     private final AuthService authService = new AuthServiceImpl();
     

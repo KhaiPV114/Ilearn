@@ -111,10 +111,32 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lesson> getLessonsBySectionId(Integer sectionId) {
         String sql = "select *"
                 + " from " + LESSON_TABLE
-                + " where section_id = ?"
+                + " where section_id = ? and (status <> 'DELETED' or status is null)"
                 + " order by order_number";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, sectionId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                List<Lesson> lessons = new ArrayList<>();
+                while (rs.next()) {
+                    lessons.add(lessonResultSetMapper(rs));
+                }
+                return lessons;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Lesson> getLessonsBySectionIdAndStatus(Integer sectionId, LessonStatus status) {
+        String sql = "select * from " + LESSON_TABLE + " where section_id = ? and status = ? order by order_number";
+        if (status == LessonStatus.ACTIVE) {
+            sql = "select * from " + LESSON_TABLE + " where section_id = ? and (status = ? or status is null) order by order_number";
+        }
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, sectionId);
+            ps.setString(2, status.toString());
             try ( ResultSet rs = ps.executeQuery()) {
                 List<Lesson> lessons = new ArrayList<>();
                 while (rs.next()) {

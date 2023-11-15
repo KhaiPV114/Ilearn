@@ -17,9 +17,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
+                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-instructor-sidebar.jsp" />
                             <!-- Start Content  -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -86,14 +86,14 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="price" class="form-label">Course price <i>(0 for free course)</i></label>
-                                                        <input value="${price}" name="price" type="number" min="0" max="10000000" class="form-control" id="price" required>
+                                                        <input value="${price}" name="price" type="number" step="0.01" min="0" max="10000000" class="form-control" id="price" required>
                                                         <c:if test="${not empty priceError}">
                                                             <div class="form-text text-danger">${priceError}</div>
                                                         </c:if>
                                                     </div>
                                                 </div>
                                                 <div class="col d-inline-flex">
-                                                    <img class="mt-4" src="
+                                                    <img src="
                                                          <c:choose>
                                                              <c:when test="${not empty imageUrl}">
                                                                  ${imageUrl}
@@ -102,7 +102,7 @@
                                                                  ${pageContext.request.contextPath}/assets/images/others/thumbnail-placeholder.svg
                                                              </c:otherwise>
                                                          </c:choose>
-                                                         " alt="Preview image" class="rounded img-fluid" id="image-preview">
+                                                         " alt="Preview image" class="mt-4 rounded img-fluid" id="image-preview">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="description" class="form-label">Description</label>

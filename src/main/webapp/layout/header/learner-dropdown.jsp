@@ -13,7 +13,7 @@
                 </div>
                 <div class="admin-info">
                     <span class="name">${user.username}</span>
-                    <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/profile.html">View
+                    <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/learner/profile">View
                         Profile</a>
                 </div>
             </div>
@@ -37,43 +37,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/instructor-reviews.html">
-                        <i class="feather-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-my-quiz-attempts.html">
-                        <i class="feather-list"></i>
-                        <span>My Quiz Attempts</span>
-                    </a>
-                </li>
-                <li>
                     <a href="${pageContext.request.contextPath}/learner/order/history">
                         <i class="feather-clock"></i>
                         <span>Order History</span>
                     </a>
                 </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-quiz-attempts.html">
-                        <i class="feather-message-square"></i>
-                        <span>Question &amp; Answer</span>
-                    </a>
-                </li>
             </ul>
             <hr class="mt--10 mb--10">
             <ul class="user-list-wrapper">
                 <li>
-                    <a href="${pageContext.request.contextPath}/#">
-                        <i class="feather-book-open"></i>
-                        <span>Getting Started</span>
-                    </a>
-                </li>
-            </ul>
-            <hr class="mt--10 mb--10">
-            <ul class="user-list-wrapper">
-                <li>
-                    <a href="${pageContext.request.contextPath}/instructor-settings.html">
+                    <a href="${pageContext.request.contextPath}/learner/settings">
                         <i class="feather-settings"></i>
                         <span>Settings</span>
                     </a>
