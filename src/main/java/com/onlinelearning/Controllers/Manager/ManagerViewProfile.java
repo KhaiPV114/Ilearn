@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Instructor;
+package com.onlinelearning.Controllers.Manager;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "InstructorViewProfile", urlPatterns = {"/instructor/profile"})
-public class InstructorViewProfile extends HttpServlet {
+@WebServlet(name = "ManagerViewProfile", urlPatterns = {"/manager/profile"})
+public class ManagerViewProfile extends HttpServlet {
 
     private static final String VIEW_PATH = "/dashboard/learner/profile.jsp";
     private static final String ERROR_403_PATH = "/error/403.jsp";

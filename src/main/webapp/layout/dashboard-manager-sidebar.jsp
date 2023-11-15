@@ -21,7 +21,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-profile.html">
+                                <a href="${pageContext.request.contextPath}/manager/profile">
                                     <i class="feather-user"></i><span>My Profile</span>
                                 </a>
                             </li>

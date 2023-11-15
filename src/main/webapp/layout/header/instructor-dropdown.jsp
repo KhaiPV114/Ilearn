@@ -13,7 +13,7 @@
                     </div>
                     <div class="admin-info">
                         <span class="name">${user.username}</span>
-                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/profile.html">View
+                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/instructor/profile">View
                             Profile</a>
                     </div>
                 </div>

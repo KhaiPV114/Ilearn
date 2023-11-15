@@ -5,7 +5,6 @@ import com.onlinelearning.Enums.UserStatus;
 import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.HashSet;
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,10 +29,6 @@ public class User {
     private String phoneNumber;
 
     private LocalDateTime createdAt;
-    
-    private String imageUrl;
-    
-    private String description;
 
     private UserStatus status;
     

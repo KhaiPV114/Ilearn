@@ -21,7 +21,7 @@
                     <!-- Logo -->
                     <div class="header-info">
                         <div class="logo">
-                            <a href="${pageContext.request.contextPath}/homepage">
+                            <a href="${pageContext.request.contextPath}/">
                                 <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png"
                                      alt="Education Logo Images">
                             </a>
@@ -128,7 +128,6 @@
                                 <jsp:include page="/layout/header/manager-dropdown.jsp" />
                             </c:when>
                         </c:choose>
-
                     </ul>
                     <div class="rbt-btn-wrapper d-none d-xl-block ms-5">
                         <a class="rbt-btn rbt-marquee-btn marquee-auto btn-border-gradient radius-round btn-sm hover-transform-none"

@@ -46,8 +46,6 @@ public class UserDAOImpl implements UserDAO {
                 .dob(rs.getDate("dob"))
                 .phoneNumber(rs.getString("phone_number"))
                 .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
-                .imageUrl(rs.getString("image_url"))
-                .description(rs.getString("description"))
                 .status(status)
                 .build();
         return user;
@@ -216,74 +214,35 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User updateUser(User user) {
-        String sql = "update users set username = ?, password = ?, email = ?,  "
-                + "google_email = ?, full_name = ?, dob = ?, phone_number = ?, "
-                + "status = ?, imageUrl = ?, description = ? where user_id = ?";
+        String sql = "update users set"
+                + " full_name = ?, dob = ?, phone_number = ?"
+                + " where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
-            if (user.getEmail() == null) {
-                ps.setNull(3, Types.VARCHAR);
-            } else {
-                ps.setString(3, user.getEmail());
-            }
-            if (user.getGoogleEmail() == null) {
-                ps.setNull(4, Types.VARCHAR);
-            } else {
-                ps.setString(4, user.getGoogleEmail());
-            }
             if (user.getFullName() == null) {
-                ps.setNull(5, Types.VARCHAR);
+                ps.setNull(1, Types.VARCHAR);
             } else {
-                ps.setString(5, user.getFullName());
+                ps.setString(1, user.getFullName());
             }
             if (user.getDob() == null) {
-                ps.setNull(6, Types.DATE);
+                ps.setNull(2, Types.DATE);
             } else {
-                ps.setDate(6, user.getDob());
+                ps.setDate(2, user.getDob());
             }
             if (user.getPhoneNumber() == null) {
-                ps.setNull(7, Types.VARCHAR);
+                ps.setNull(3, Types.VARCHAR);
             } else {
-                ps.setString(7, user.getPhoneNumber());
+                ps.setString(3, user.getPhoneNumber());
             }
-            if (user.getStatus() == null) {
-                ps.setNull(8, Types.VARCHAR);
-            } else {
-                ps.setString(8, user.getStatus().toString());
-            }
-            
-            ps.setString(9, user.getImageUrl());
-            ps.setString(10,user.getDescription());
-            ps.setInt(11, user.getId());
+            ps.setInt(4, user.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return user;
             }
-            
-            
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-    /*
-    public User updateInfoUser(User user) {
-        try {
-            String sql = "update users set full_name = ? where user_id = ?";
-            try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, user.getFullName());
-            ps.setInt(2, user.getId());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
-        return null;
-    }
-    */
-    
 
     @Override
     public User deleteUser(User user) {

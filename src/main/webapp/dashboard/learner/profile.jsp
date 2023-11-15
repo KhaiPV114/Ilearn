@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -7,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>iLearn | My Profile</title>
         <jsp:include page="/layout/links.jsp"/>
     </head>
     <body>
@@ -17,108 +16,84 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-learner-card.jsp"/>
-                        <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-learner-sidebar.jsp"/>
+                        <jsp:include page="/layout/dashboard-instructor-card.jsp"/>
+                        <div class="row g-5" id="content">
+                            <c:choose>
+                                <c:when test="${roleService.isLearner(pageContext.request)}">
+                                    <jsp:include page="/layout/dashboard-learner-sidebar.jsp" />
+                                </c:when>
+                                <c:when test="${roleService.isInstructor(pageContext.request)}">
+                                    <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp"/>
+                                </c:when>
+                                <c:when test="${roleService.isManager(pageContext.request)}">
+                                    <jsp:include page="/layout/dashboard-manager-sidebar.jsp"/>
+                                </c:when>
+                            </c:choose>
+
                             <!-- Start Content  -->
                             <div class="col-lg-9">
+
+
                                 <!-- Start Instructor Profile  -->
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
                                     <div class="content">
                                         <div class="section-title">
                                             <h4 class="rbt-title-style-3">My Profile</h4>
                                         </div>
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Registration Date</div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">February 25, 2025 6:01 am</div>
-                                            </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
 
                                         <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">First Name</div>
+                                        <form action="${pageContext.request.contextPath}/learner/profile" class="rbt-profile-row rbt-default-form row row--15" method="post">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="username">Username</label>
+                                                    <input id="username" type="text" value="${requestScope.user.username}" readonly>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">Emily</div>
-                                            </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="createAt">Registration Date</label>
+                                                    <fmt:parseDate value="${requestScope.user.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
 
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Last Name</div>
+                                                    <input id="createAt" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy 'at' HH:mm" value="${parsedDateTime}" />" readonly>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">Hannah</div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="fullname">Full Name <span style="color: red">(*)</span></label>
+                                                    <input id="fullname" name="fullname" type="text" value="${requestScope.user.fullName}" required>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
-
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Username</div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="phoneNumber">Phone Number <span style="color: red">(*)</span></label>
+                                                    <input id="phoneNumber" name="phoneNumber" type="number" value="${requestScope.user.phoneNumber}" required/>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">instructor</div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="dob">Date Of Birth <span style="color: red">(*)</span></label>
+                                                    <input id="dob" name="dob" type="date" value="${requestScope.user.dob}" required/>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
-
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Email</div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="rbt-form-group">
+                                                    <label for="email">Email</label>
+                                                    <input id="email" type="email" value="${requestScope.user.email != null ? requestScope.user.email : requestScope.user.googleEmail}" readonly>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">example@gmail.com</div>
+                                            <div class="color-success">
+                                                ${message}
                                             </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
-
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Phone Number</div>
+                                            <div class="col-12 mt--20">
+                                                <div class="rbt-form-group">
+                                                    <button class="rbt-btn btn-gradient" type="submit">Update Info</button>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">+1-202-555-0174</div>
-                                            </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
-
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Skill/Occupation</div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">Application Developer</div>
-                                            </div>
-                                        </div>
-                                        <!-- End Profile Row  -->
-
-                                        <!-- Start Profile Row  -->
-                                        <div class="rbt-profile-row row row--15 mt--15">
-                                            <div class="col-lg-4 col-md-4">
-                                                <div class="rbt-profile-content b2">Biography</div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8">
-                                                <div class="rbt-profile-content b2">I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.</div>
-                                            </div>
-                                        </div>
+                                        </form>
                                         <!-- End Profile Row  -->
                                     </div>
                                 </div>
                                 <!-- End Instructor Profile  -->
-
                             </div>
                             <!-- End Content  -->
                         </div>
@@ -128,5 +103,9 @@
         </div>
         <jsp:include page="/layout/footer.jsp"/>
         <jsp:include page="/layout/scripts.jsp"/>
+        <script>
+            document.getElementById("content").scrollIntoView({behavior: 'instant'});
+            location.hash = '#content';
+        </script>
     </body>
 </html>

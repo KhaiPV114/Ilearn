@@ -21,7 +21,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="student-profile.html">
+                                <a href="${pageContext.request.contextPath}/learner/profile">
                                     <i class="feather-user"></i>
                                     <span>My Profile</span></a>
                             </li>
