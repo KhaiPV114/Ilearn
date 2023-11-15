@@ -276,7 +276,7 @@
                                                         <div class="row">
                                                             <div class="d-flex">
                                                                 <h5 class="comment-author me-2">${comment.user.fullName}</h5>
-                                                                <fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                <fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" type="both" />
                                                                 <span class="me-5">
                                                                     <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${ parsedDateTime }" />
                                                                 </span>
@@ -299,7 +299,7 @@
                                                                         <div class="row">
                                                                             <div class="d-flex">
                                                                                 <h5 class="comment-author me-2">${comment2.user.fullName}</h5>
-                                                                                <fmt:parseDate value="${comment2.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                                                                <fmt:parseDate value="${comment2.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" type="both" />
                                                                                 <span class="me-5">
                                                                                     <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${ parsedDateTime }" />
                                                                                 </span>
