@@ -29,26 +29,36 @@
                                             <nav class="rbt-title-style-3 h4 pb-0" aria-label="breadcrumb">
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
-                                                        <a href="#">
+                                                        <a href="${pageContext.request.contextPath}/manager/coupon/search">
                                                             Coupon
                                                         </a>
                                                     </li>
                                                     <li class="breadcrumb-item active" aria-current="page">
                                                         <a class="color-primary" href="#">
-                                                            Create
+                                                            Edit
                                                         </a>
                                                     </li>
                                                 </ol>
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="${pageContext.request.contextPath}/manager/coupon/create" method="post">
-                                            <input type="hidden" name="status" value="ACTIVE">
+                                        <form action="${pageContext.request.contextPath}/manager/coupon/edit" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
+                                                        <label for="id">For Coupon ID:</label>
+<!--                                                        <span id="code">${couponId}</span>-->
+                                                        <input type="text" name="id" id="id" value="${couponId}" placeholder="Coupon ID"/>
+                                                        <c:if test="${not empty couponIdError}">
+                                                            <div class="form-text text-danger">${couponIdError}</div>
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-7 col-lg-8">
+                                                    <div class="mb-3">
                                                         <label for="code">Coupon code:</label>
-                                                        <input type="text" name="code" id="code" class="form-control" placeholder="Coupon code"/>
+                                                        <input type="text" name="code" id="code" class="form-control" placeholder="Coupon code" value="${couponEdit.code}"/>
                                                         <c:if test="${not empty codeError}">
                                                             <div class="form-text text-danger">${codeError}</div>
                                                         </c:if>
@@ -75,7 +85,7 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="percent">Percent:</label>
-                                                        <input type="text" name="percent" id="percent" class="form-control" placeholder="Percent"/>
+                                                        <input type="text" name="percent" id="percent" class="form-control" placeholder="Percent" value="${couponEdit.percent}"/>
                                                         <c:if test="${not empty percentError}">
                                                             <div class="form-text text-danger">${percentError}</div>
                                                         </c:if>
@@ -86,7 +96,7 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="quantity">Quantity:</label>
-                                                        <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Quantity"/>
+                                                        <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Quantity" value="${couponEdit.quantity}"/>
                                                         <c:if test="${not empty quantityError}">
                                                             <div class="form-text text-danger">${quantityError}</div>
                                                         </c:if>
@@ -97,7 +107,7 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="started">Start at:</label>
-                                                        <input type="datetime-local" name="started" id="started" class="form-control"/>
+                                                        <input type="datetime-local" name="started" id="started" class="form-control" value="${couponEdit.startTime}"/>
                                                         <c:if test="${not empty startedError}">
                                                             <div class="form-text text-danger">${startedError}</div>
                                                         </c:if>
@@ -108,19 +118,30 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="ended">End at:</label>
-                                                        <input type="datetime-local" name="ended" id="ended" class="form-control"/>
+                                                        <input type="datetime-local" name="ended" id="ended" class="form-control" value="${couponEdit.endTime}"/>
                                                         <c:if test="${not empty endedError}">
                                                             <div class="form-text text-danger">${endedError}</div>
                                                         </c:if>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="rbt-btn btn-md mt-3">Create</button>
+                                            <div class="row">
+                                                <div class="col-md-7 col-lg-8">
+                                                    <div class="mb-3">
+                                                        <label for="status">Status:</label>
+                                                        <select name="status" id="status">
+                                                            <option value="ACTIVE">ACTIVE</option>
+                                                            <option value="DISABLE">DISABLE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="rbt-btn btn-md mt-3">Submit</button>
                                         </form>
                                         <c:if test="${not empty success}">
                                             <div class="form-text text-success fw-bold mt-3">${success}</div>
                                         </c:if>
-                                            <c:if test="${not empty fail}">
+                                        <c:if test="${not empty fail}">
                                             <div class="form-text text-success fw-bold mt-3">${fail}</div>
                                         </c:if>
                                     </div>

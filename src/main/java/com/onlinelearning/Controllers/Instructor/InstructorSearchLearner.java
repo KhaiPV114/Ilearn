@@ -50,7 +50,7 @@ public class InstructorSearchLearner extends HttpServlet {
             return;
         }
 
-        list = userService.getUserByKeyword(userName);
+        list = userService.getLearnerOfAllCourseByKeyword(userName);
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus() == null || list.get(i).getStatus().equals(UserStatus.ACTIVE)) {

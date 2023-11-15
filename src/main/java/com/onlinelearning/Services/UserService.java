@@ -26,4 +26,6 @@ public interface UserService {
     public List<User> getLearnerOfAllCourse(Integer ownerId);
     
     public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
+    
+    public List<User> getLearnerOfAllCourseByKeyword(String keyword);
 }

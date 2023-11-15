@@ -550,4 +550,28 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
+
+    @Override
+    public List<User> getLearnerOfAllCourseByKeyword(String keyword) {
+         List<User> userList = new ArrayList<>();
+
+        String sql = "select distinct u.* from users u\n" +
+"                join users_courses uc on u.user_id = uc.user_id\n" +
+"                join courses c on c.course_id = uc.course_id\n" +
+"                where c.owner_id = 6 and u.username LIKE CONCAT('%',?,'%')";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, keyword);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User user = userRowMapper(rs);
+                    userList.add(user);
+                }
+            }
+            return userList;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+       
 }

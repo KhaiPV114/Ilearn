@@ -36,10 +36,6 @@ public interface CourseService {
 
     void getUserEnrollCourse(Integer userId, Integer courseId) throws Exception;
 
-    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
-
-    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
-
     List<Course> getCourseByOwnerId(Integer ownerId);
     
     Integer getTotalLearnerOfAllCourse(Integer ownerId);
@@ -52,4 +48,6 @@ public interface CourseService {
     List<Course> getCourseByCategory(String category);
     
     List<Course> findAll(String sqlQuery);
+    
+    List<Integer> getAllEnrolledCourseId(int id); 
 }

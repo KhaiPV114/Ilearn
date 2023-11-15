@@ -1,6 +1,5 @@
 package com.onlinelearning.Controllers.Manager;
 
-import com.onlinelearning.Enums.CouponStatus;
 import com.onlinelearning.Models.Coupon;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CouponService;
@@ -18,10 +17,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
-@WebServlet(name = "ManagerCouponCreate", urlPatterns = {"/manager/coupon/create"})
-public class ManagerCouponCreate extends HttpServlet {
+@WebServlet(name = "ManagerCouponEdit", urlPatterns = {"/manager/coupon/edit"})
+public class ManagerCouponEdit extends HttpServlet {
 
-    private static final String FORM_PATH = "/dashboard/manager/coupon-create-form.jsp";
+    private static final String FORM_PATH = "/dashboard/manager/coupon-edit-form.jsp";
 
     private static final CouponService couponService = new CouponServiceImpl();
     
@@ -30,6 +29,15 @@ public class ManagerCouponCreate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String couponId = request.getParameter("couponId");
+        
+        
+        int editCouponId = Integer.valueOf(couponId);
+        Coupon editCoupon = couponService.getCouponById(editCouponId);
+        request.setAttribute("couponId", couponId);
+        request.setAttribute("couponEdit", editCoupon);
+        
         List<Course> courses = courseService.getAllCourses();
         System.out.println(courses);
         request.setAttribute("courses", courses);
@@ -45,6 +53,13 @@ public class ManagerCouponCreate extends HttpServlet {
 
         List<Course> courses = courseService.getAllCourses();
         request.setAttribute("courses", courses);
+        
+        String couponId = request.getParameter("id");
+        if (StringUtils.isBlank(couponId)) {
+            request.setAttribute("couponIdError", "Coupon ID must not be empty!");
+            requestDispatcher.forward(request, response);
+            return;
+        }
         
         String code = request.getParameter("code");
         if (StringUtils.isBlank(code)) {
@@ -87,26 +102,32 @@ public class ManagerCouponCreate extends HttpServlet {
             requestDispatcher.forward(request, response);
             return;
         }
+        
         String status = request.getParameter("status");
+        if (StringUtils.isBlank(status)) {
+            request.setAttribute("statuserror", "Status must not be empty!");
+            requestDispatcher.forward(request, response);
+            return;
+        }
 
         LocalDateTime createdAt = LocalDateTime.now();
 
-//        Course course = courseService.getCourseById(courseId);
         Coupon coupon = Coupon.builder()
+                .id(Integer.valueOf(couponId))
                 .code(code)
-                .courseId(Integer.parseInt(courseId))
+                .courseId(Integer.valueOf(courseId))
                 .createdAt(createdAt)
                 .endTime(LocalDateTime.parse(endedAt))
-                .percent(Double.parseDouble(percent))
+                .percent(Double.valueOf(percent))
                 .quantity(Integer.parseInt(quantity))
                 .startTime(LocalDateTime.parse(startAt))
-                .status(CouponStatus.ACTIVE)
                 .build();
+        System.out.println("EDit coupon : " + coupon);
 
-        System.out.println("Coupon:" + coupon);
         try {
-            Coupon newCoupon = couponService.createCoupon(coupon);
-            request.setAttribute("success", "Create coupon successfully!");
+            Coupon editCoupon = couponService.updateCoupon(coupon);
+            System.out.println(editCoupon);
+            request.setAttribute("success", "Edit coupon successfully!");
         } catch (Exception ex) {
             request.setAttribute("fail", ex.getMessage());
         }

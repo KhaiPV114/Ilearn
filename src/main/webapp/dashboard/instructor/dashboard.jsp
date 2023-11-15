@@ -182,11 +182,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <c:forEach items="${users}" var="user" varStatus="i">
-<<<<<<< Updated upstream
                                                                 <c:if test="${i.count < 4}">
-=======
-                                                                <c:if test="${i.count < 5}">
->>>>>>> Stashed changes
                                                                     <tr >
                                                                         <th>${user.fullName}</th>
                                                                         <td>${user.email == null ? user.googleEmail : user.email}</td>
@@ -194,7 +190,6 @@
                                                                         <td>${user.createdAt.toString().replace('T',' - ')}</td>
                                                                     </tr>
                                                                 </c:if>
-
                                                             </c:forEach>
                                                         </tbody>
                                                     </table>

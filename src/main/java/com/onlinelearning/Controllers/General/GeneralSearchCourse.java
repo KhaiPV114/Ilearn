@@ -2,6 +2,7 @@ package com.onlinelearning.Controllers.General;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
+import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
@@ -13,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,7 +28,7 @@ public class GeneralSearchCourse extends HttpServlet {
     private static final String VIEW_PATH = "/general/course-search.jsp";
 
     private final CourseService courseService = new CourseServiceImpl();
-    
+
     private final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
@@ -35,8 +37,20 @@ public class GeneralSearchCourse extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW_PATH);
         double priceFrom = 0;
-        double priceTo = 500;
+        double priceTo = 500; 
+        final int pageSize = 2;
+        List<Integer> enrolledCourseId = new ArrayList<>(0);
+        
+        HttpSession session = request.getSession();
+        User user =  (User)  session.getAttribute("user");
 
+       System.out.println(user);
+        if(user != null){
+            enrolledCourseId = courseService.getAllEnrolledCourseId(user.getId());
+        }
+                 System.out.println("========");
+         System.out.println(enrolledCourseId.contains(1));
+         System.out.println(enrolledCourseId.contains(3));
 //        C1:----------------------
         System.out.println("");
         System.out.println("Start process: ");
@@ -53,6 +67,12 @@ public class GeneralSearchCourse extends HttpServlet {
         String categories = request.getParameter("filterCategory") == null ? "" : request.getParameter("filterCategory");
         System.out.println("FilterCategory: " + categories);
 
+        
+        
+        String page = request.getParameter("page");
+
+        Integer pageNumber = page == null ? 1 : Integer.parseInt(page);
+
         String priceRange = request.getParameter("priceRange");
         if (priceRange != null) {
             String[] priceRanges = priceRange.split("\\D+");
@@ -68,14 +88,25 @@ public class GeneralSearchCourse extends HttpServlet {
         sql.append(" c.price between ").append(priceFrom).append(" and ").append(priceTo);
         if ("desc".equals(filterPrice)) {
             sql.append("order by c.price desc");
+            request.setAttribute("sort", "desc");
         }
         if ("asc".equals(filterPrice)) {
             sql.append("order by c.price asc");
+             request.setAttribute("sort", "asc");
         }
+        int size = courseService.findAll(sql.toString()).size();
+        sql.append(" limit ").append(pageSize).append(" offset ").append((pageNumber - 1) * pageSize);
         System.out.println(sql.toString());
         List<Course> courses = courseService.findAll(sql.toString());
         request.setAttribute("courses", courses);
-
+        request.setAttribute("fromPrice", priceFrom);
+        request.setAttribute("toPrice", priceTo);
+        request.setAttribute("size", size);//in ra
+            request.setAttribute("number", courses.size());//
+             request.setAttribute("pageNumber", pageNumber);//
+        request.setAttribute("maxPage", Math.ceil((double) size / pageSize)); // in dong nayd ra a xem nó tính dc bao nhieu
+        request.setAttribute("enrolledCourseId", enrolledCourseId);
+        request.setAttribute("filterCategory", categories);
         dispatcher.forward(request, response);
     }
 

@@ -50,5 +50,7 @@ public interface UserDAO {
     List<User> getLearnerOfAllCourse(Integer ownerId);
     
     List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
+    
+    List<User> getLearnerOfAllCourseByKeyword(String keyword);
 
 }

@@ -48,4 +48,6 @@ public interface CourseDAO {
     Map<String,List<Double>> getTotalProfit(Integer ownerId);
     
     List<Course> findAll(String sqlQuery);
+    
+    List<Integer> getAllEnrolledCourseId(int id);
 }

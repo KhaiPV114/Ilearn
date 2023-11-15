@@ -30,7 +30,7 @@
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
                                                         <a href="#">
-                                                            Learner
+                                                            User
                                                         </a>
                                                     </li>
                                                     <li class="breadcrumb-item active" aria-current="page">
@@ -66,7 +66,7 @@
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
                                                         <a href="#">
-                                                            Learner
+                                                            User
                                                         </a>
                                                     </li>
                                                 </ol>
@@ -117,7 +117,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Name</th>
-                                                                <th>Course Enrolled</th>
+                                                                <th>User ID</th>
                                                                 <th>Email</th>
                                                                 <th>Phone Number</th>
                                                                 <th>Joined Time</th>

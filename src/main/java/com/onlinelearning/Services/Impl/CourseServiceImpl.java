@@ -109,16 +109,6 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
 
-    @Override
-    public List<Course> getCourseByKeywordOrderByPriceDesc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceDesc(keyword);
-        return courses;
-    }
-
-    public List<Course> getCourseByKeywordOrderByPriceAsc(String keyword) {
-        List<Course> courses = courseDAO.getCourseByKeywordOrderByPriceAsc(keyword);
-        return courses;
-    }
 
     public List<Course> getAllCourseOrderByPriceDesc() {
         List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
@@ -215,7 +205,10 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findAll(String sqlQuery) {
         return courseDAO.findAll(sqlQuery);
     }
-    
-    
+
+    @Override
+    public List<Integer> getAllEnrolledCourseId(int id) {
+        return courseDAO.getAllEnrolledCourseId(id);
+    }
     
 }
