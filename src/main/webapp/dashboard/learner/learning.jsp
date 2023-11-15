@@ -76,6 +76,21 @@
                         <div class="section-title">
                             <h4 class="rbt-title-style-3">Course Content</h4>
                         </div>
+                        <div class="rbt-progress-style-1 p-4">
+                            <div class="single-progress">
+                                <h6 class="title">Learning progress</h6>
+                                <div class="progress">
+                                    <div class="progress-bar wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" 
+                                         style="width: ${progress}%; visibility: visible; animation-duration: 0.5s; animation-delay: 0.3s; animation-name: fadeInLeft;" 
+                                         aria-valuenow="${progress}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                    </div>
+                                    <span class="progress-number">${progress}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
 
                         <div class="lesson-search-wrapper">
                             <form action="#" class="rbt-search-style-1">
@@ -126,7 +141,16 @@
                                                                 </div>
                                                                 <div class="course-content-right">
                                                                     <span class="min-lable">30 min</span>
-                                                                    <span class="rbt-check"><i class="feather-check"></i></span>
+                                                                    <span class="rbt-check">
+                                                                        <c:choose>
+                                                                            <c:when test="${trackings[lesson.id] eq 'FINISHED'}">
+                                                                                <i class="feather-check"></i>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <i class="feather-loader"></i>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -162,7 +186,7 @@
                         ${lesson.content}
                     </div>
 
-                    <div class="bg-color-extra2 ptb--15 overflow-hidden">
+                    <div id="change-status" class="bg-color-extra2 ptb--15 overflow-hidden">
                         <div class="rbt-button-group">
                             <c:if test="${not empty previousLessonId}">
                                 <a class="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity" 
@@ -171,7 +195,25 @@
                                     <span class="btn-text">Previous</span>
                                 </a>
                             </c:if>
-
+                            <form id="change-lesson-status" action="${pageContext.request.contextPath}/learn/status" method="POST">
+                                <input type="hidden" name="lessonId" value="${lesson.id}">
+                                <input type="hidden" name="courseId" value="${courseId}">
+                            </form>
+                            <a class="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity" 
+                               href="#"
+                               onclick="document.getElementById('change-lesson-status').submit()"
+                               >
+                                <c:choose>
+                                    <c:when test="${tracking.status eq 'FINISHED'}">
+                                        <span class="btn-icon"><i class="feather-loader"></i></span>
+                                        <span class="btn-text">Mark as learning</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="btn-icon"><i class="feather-check"></i></span>
+                                        <span class="btn-text">Mark as completed</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </a>
                             <c:if test="${not empty nextLessonId}">
                                 <a class="rbt-btn icon-hover btn-md" 
                                    href="${pageContext.request.contextPath}/learn?courseId=${courseId}&lessonId=${nextLessonId}">

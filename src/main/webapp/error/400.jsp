@@ -17,9 +17,9 @@
                 <div class="container">
                     <div class="row justify-content-center text-center">
                         <div class="col-10">
-                            <h1 class="title text-warning">400</h1>
-                            <h3 class="sub-title text-warning">Bad request</h3>
-                            <p>Please try again. Thank you!</p>
+                            <h1 class="title text-warning">403</h1>
+                            <h3 class="sub-title text-warning">Unauthorized</h3>
+                            <p>You do not have permission to access this resource.</p>
                             <a class="rbt-btn btn-gradient icon-hover" href="${pageContext.request.contextPath}/homepage">
                                 <span class="btn-text">Back To Home</span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
