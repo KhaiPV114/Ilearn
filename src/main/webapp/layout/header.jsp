@@ -23,7 +23,7 @@
                         <div class="logo">
                             <a href="${pageContext.request.contextPath}/">
                                 <img src="${pageContext.request.contextPath}/assets/images/logo/logo.png"
-                                     alt="Education Logo Images">
+                                     alt="Education Logo Images"/>
                             </a>
                         </div>
                     </div>
@@ -36,55 +36,55 @@
                 <div class="rbt-main-navigation d-none d-xl-block">
                     <nav class="mainmenu-nav">
                         <ul class="mainmenu">
-                            
+
                             <!-- Home Dropdown -->
                             <%--<jsp:include page="/layout/header/home-dropdown.jsp" />--%>
                             <!-- Course Dropdown -->
                             <%--<jsp:include page="/layout/header/course-dropdown.jsp" />--%>
                             <!-- Dashboard Dropdown -->
-                            <li class="has-dropdown has-menu-child-item">
-                                <a href="#">Dashboard
-                                    <i class="feather-chevron-down"></i>
-                                </a>
-
-                                <ul class="submenu">
-                                    <li class="has-dropdown"><a href="#">Instructor Dashboard</a>
-                                        <ul class="submenu">
-                                            <li><a href="instructor-dashboard.html">Dashboard</a></li>
-                                            <li><a href="instructor-profile.html">Profile</a></li>
-                                            <li><a href="instructor-enrolled-courses.html">Enrolled
-                                                    Courses</a></li>
-                                            <li><a href="instructor-wishlist.html">Wishlist</a></li>
-                                            <li><a href="instructor-reviews.html">Reviews</a></li>
-                                            <li><a href="instructor-my-quiz-attempts.html">My Quiz
-                                                    Attempts</a></li>
-                                            <li><a href="instructor-order-history.html">Order History</a>
-                                            </li>
-                                            <li><a href="instructor-course.html">My Course</a></li>
-                                            <li><a href="instructor-announcements.html">Announcements</a>
-                                            </li>
-                                            <li><a href="instructor-quiz-attempts.html">Quiz Attempts</a>
-                                            </li>
-                                            <li><a href="instructor-assignments.html">Assignments</a></li>
-                                            <li><a href="instructor-settings.html">Settings</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="has-dropdown"><a href="#">Student Dashboard</a>
-                                        <ul class="submenu">
-                                            <li><a href="student-dashboard.html">Dashboard</a></li>
-                                            <li><a href="student-profile.html">Profile</a></li>
-                                            <li><a href="student-enrolled-courses.html">Enrolled Courses</a>
-                                            </li>
-                                            <li><a href="student-wishlist.html">Wishlist</a></li>
-                                            <li><a href="student-reviews.html">Reviews</a></li>
-                                            <li><a href="student-my-quiz-attempts.html">My Quiz Attempts</a>
-                                            </li>
-                                            <li><a href="student-order-history.html">Order History</a></li>
-                                            <li><a href="student-settings.html">Settings</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                            <!--                            <li class="has-dropdown has-menu-child-item">
+                                                            <a href="#">
+                                                                Dashboard<i class="feather-chevron-down"></i>
+                                                            </a>
+                            
+                                                            <ul class="submenu">
+                                                                <li class="has-dropdown"><a href="#">Instructor Dashboard</a>
+                                                                    <ul class="submenu">
+                                                                        <li><a href="instructor-dashboard.html">Dashboard</a></li>
+                                                                        <li><a href="instructor-profile.html">Profile</a></li>
+                                                                        <li><a href="instructor-enrolled-courses.html">Enrolled
+                                                                                Courses</a></li>
+                                                                        <li><a href="instructor-wishlist.html">Wishlist</a></li>
+                                                                        <li><a href="instructor-reviews.html">Reviews</a></li>
+                                                                        <li><a href="instructor-my-quiz-attempts.html">My Quiz
+                                                                                Attempts</a></li>
+                                                                        <li><a href="instructor-order-history.html">Order History</a>
+                                                                        </li>
+                                                                        <li><a href="instructor-course.html">My Course</a></li>
+                                                                        <li><a href="instructor-announcements.html">Announcements</a>
+                                                                        </li>
+                                                                        <li><a href="instructor-quiz-attempts.html">Quiz Attempts</a>
+                                                                        </li>
+                                                                        <li><a href="instructor-assignments.html">Assignments</a></li>
+                                                                        <li><a href="instructor-settings.html">Settings</a></li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="has-dropdown"><a href="#">Student Dashboard</a>
+                                                                    <ul class="submenu">
+                                                                        <li><a href="student-dashboard.html">Dashboard</a></li>
+                                                                        <li><a href="student-profile.html">Profile</a></li>
+                                                                        <li><a href="student-enrolled-courses.html">Enrolled Courses</a>
+                                                                        </li>
+                                                                        <li><a href="student-wishlist.html">Wishlist</a></li>
+                                                                        <li><a href="student-reviews.html">Reviews</a></li>
+                                                                        <li><a href="student-my-quiz-attempts.html">My Quiz Attempts</a>
+                                                                        </li>
+                                                                        <li><a href="student-order-history.html">Order History</a></li>
+                                                                        <li><a href="student-settings.html">Settings</a></li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>-->
                             <!-- Pages Dropdown -->
                         </ul>
                     </nav>
@@ -94,23 +94,26 @@
                     <!-- Navbar Icons -->
                     <ul class="quick-access">
                         <!-- Search -->
-                        <li class="access-icon">
-                            <a class="search-trigger-active rbt-round-btn" href="#">
-                                <i class="feather-search"></i>
-                            </a>
-                        </li>
+                        <!--                        <li class="access-icon">
+                                                    <a class="search-trigger-active rbt-round-btn" href="#">
+                                                        <i class="feather-search"></i>
+                                                    </a>
+                                                </li>-->
                         <!-- Cart -->
-                        <li class="access-icon rbt-mini-cart">
-                            <a class="rbt-cart-sidenav-activation rbt-round-btn" href="javascript:void(0);" id="open-cart-side-menu">
-                                <i class="feather-shopping-cart"></i>
-                                <c:if test="${coursesInCart.size()>0}">
-                                    <span class="rbt-cart-count" id="cart-side-quantity">${coursesInCart.size()}</span>
-                                </c:if>
-                            </a>
-                        </li>
+                        <c:if test="${roleService.isLearner(pageContext.request)}">
+                            <li class="access-icon rbt-mini-cart">
+                                <a class="rbt-cart-sidenav-activation rbt-round-btn" href="javascript:void(0);" id="open-cart-side-menu">
+                                    <i class="feather-shopping-cart"></i>
+                                    <c:if test="${coursesInCart.size()>0}">
+                                        <span class="rbt-cart-count" id="cart-side-quantity">${coursesInCart.size()}</span>
+                                    </c:if>
+                                </a>
+                            </li>
+                        </c:if>
+
                         <!-- User Dropdown-->
-<!--                        <li class="mx-2">
-                            ${sessionScope['roles']}
+                        <!--<li class="mx-2">
+                        ${sessionScope['roles']}
                         </li>-->
                         <c:choose>
                             <c:when test="${sessionScope['user'] == null}">

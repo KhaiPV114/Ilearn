@@ -128,9 +128,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
+                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-instructor-sidebar.jsp" />
                             <!-- Start Content  -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">

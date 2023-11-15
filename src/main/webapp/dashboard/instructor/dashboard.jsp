@@ -19,7 +19,7 @@
                     <div class="col-lg-12">
                         <jsp:include page="/layout/dashboard-instructor-card.jsp"/>
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp"/>
+                            <jsp:include page="/layout/dashboard-instructor-sidebar.jsp"/>
                             <!-- Start Content  -->
                             <div class="col-lg-9">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">

@@ -26,25 +26,19 @@
                                     <span>My Profile</span></a>
                             </li>
                             <li>
-                                <a href="student-enrolled-courses.html">
+                                <a href="${pageContext.request.contextPath}/learner/courses/enrolled">
                                     <i class="feather-book-open"></i>
                                     <span>Enrolled Courses</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="student-wishlist.html">
+                                <a href="${pageContext.request.contextPath}/learner/wishlist">
                                     <i class="feather-bookmark"></i>
                                     <span>Wishlist</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="student-reviews.html">
-                                    <i class="feather-star"></i>
-                                    <span>Reviews</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/dashboard/learner/order/history">
+                                <a href="${pageContext.request.contextPath}/learner/order/history">
                                     <i class="feather-shopping-bag"></i>
                                     <span>Order History</span>
                                 </a>
@@ -53,7 +47,7 @@
                     </nav>
 
                     <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">User</h6>
+                        <h6 class="rbt-title-style-2">Others</h6>
                     </div>
 
                     <nav class="mainmenu-nav">

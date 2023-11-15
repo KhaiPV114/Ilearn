@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner;
+package com.onlinelearning.Controllers.Instructor;
 
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.AuthService;
@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "LearnerChangePassword", urlPatterns = {"/learner/change-password"})
-public class LearnerChangePassword extends HttpServlet {
+@WebServlet(name = "InstructorChangePassword", urlPatterns = {"/instructor/change-password"})
+public class InstructorChangePassword extends HttpServlet {
 
     private static final String VIEW_PATH = "/general/change-password.jsp";
     private static final AuthService authService = new AuthServiceImpl();

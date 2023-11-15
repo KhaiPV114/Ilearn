@@ -16,7 +16,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-instructor-card.jsp"/>
+                        <c:choose>
+                            <c:when test="${roleService.isLearner(pageContext.request)}">
+                                <jsp:include page="/layout/dashboard-learner-card.jsp" />
+                            </c:when>
+                            <c:when test="${roleService.isInstructor(pageContext.request)}">
+                                <jsp:include page="/layout/dashboard-instructor-card.jsp"/>
+                            </c:when>
+                            <c:when test="${roleService.isManager(pageContext.request)}">
+                                <jsp:include page="/layout/dashboard-manager-card.jsp"/>
+                            </c:when>
+                        </c:choose>
                         <div class="row g-5" id="content">
                             <c:choose>
                                 <c:when test="${roleService.isLearner(pageContext.request)}">

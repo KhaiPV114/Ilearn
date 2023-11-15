@@ -54,13 +54,21 @@
                     </nav>
 
                     <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">User</h6>
+                        <h6 class="rbt-title-style-2">Others</h6>
                     </div>
 
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li><a href="instructor-settings.html"><i class="feather-settings"></i><span>Settings</span></a></li>
-                            <li><a href="index.html"><i class="feather-log-out"></i><span>Logout</span></a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/manager/change-password">
+                                    <i class="feather-settings"></i><span>Change Password</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/authentication/logout">
+                                    <i class="feather-log-out"></i><span>Logout</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
