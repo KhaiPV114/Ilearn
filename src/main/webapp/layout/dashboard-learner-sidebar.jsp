@@ -15,7 +15,7 @@
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             <li>
-                                <a href="student-dashboard.html" class="active">
+                                <a href="${pageContext.request.contextPath}/learner/dashboard" class="active">
                                     <i class="feather-home"></i>
                                     <span>Dashboard</span>
                                 </a>

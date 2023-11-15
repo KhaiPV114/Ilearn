@@ -19,7 +19,7 @@
             </div>
             <ul class="user-list-wrapper">
                 <li>
-                    <a href="${pageContext.request.contextPath}/instructor-dashboard.html">
+                    <a href="${pageContext.request.contextPath}/learner/dashboard">
                         <i class="feather-home"></i>
                         <span>My Dashboard</span>
                     </a>
@@ -45,12 +45,12 @@
             </ul>
             <hr class="mt--10 mb--10">
             <ul class="user-list-wrapper">
-                <li>
+<!--                <li>
                     <a href="${pageContext.request.contextPath}/learner/settings">
                         <i class="feather-settings"></i>
                         <span>Settings</span>
                     </a>
-                </li>
+                </li>-->
                 <li>
                     <a href="${pageContext.request.contextPath}/authentication/logout">
                         <i class="feather-log-out"></i>
