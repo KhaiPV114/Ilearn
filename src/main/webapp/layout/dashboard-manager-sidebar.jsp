@@ -16,7 +16,7 @@
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             <li>
-                                <a href="instructor-dashboard.html" class="active">
+                                <a href="${pageContext.request.contextPath}/manager/dashboard" class="active">
                                     <i class="feather-home"></i><span>Dashboard</span>
                                 </a>
                             </li>
@@ -26,34 +26,30 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-reviews.html">
-                                    <i class="feather-star"></i><span>Reviews</span>
+                                <a href="${pageContext.request.contextPath}/manager/category">
+                                    <i class="feather-grid"></i><span>Manage Category</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-my-quiz-attempts.html">
-                                    <i class="feather-help-circle"></i><span>My Quiz Attempts</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-order-history.html">
+                                <a href="${pageContext.request.contextPath}/manager/order">
                                     <i class="feather-shopping-bag"></i><span>Manager Order</span>
                                 </a>
                             </li>
-                        </ul>
-                    </nav>
-
-                    <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">Instructor</h6>
-                    </div>
-
-                    <nav class="mainmenu-nav">
-                        <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li><a href="${pageContext.request.contextPath}/manager/category"><i class="feather-monitor"></i><span>Course category</span></a></li>
-                            <li><a href="instructor-course.html"><i class="feather-monitor"></i><span>My Courses</span></a></li>
-                            <li><a href="instructor-announcements.html"><i class="feather-volume-2"></i><span>Announcements</span></a></li>
-                            <li><a href="instructor-quiz-attempts.html"><i class="feather-message-square"></i><span>Quiz Attempts</span></a></li>
-                            <li><a href="instructor-assignments.html"><i class="feather-list"></i><span>Assignments</span></a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/manager/earning">
+                                    <i class="feather-dollar-sign"></i><span>Total Earnings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-quiz-attempts.html">
+                                    <i class="feather-message-square"></i><span>Quiz Attempts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="instructor-assignments.html">
+                                    <i class="feather-list"></i><span>Assignments</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
 

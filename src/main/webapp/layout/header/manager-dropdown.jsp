@@ -19,7 +19,7 @@
                 </div>
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/manager/learner/search">
+                        <a href="${pageContext.request.contextPath}/manager/dashboard">
                             <i class="feather-home"></i>
                             <span>My Dashboard</span>
                         </a>

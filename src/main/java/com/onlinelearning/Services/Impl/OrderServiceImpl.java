@@ -4,6 +4,7 @@ import com.onlinelearning.DAL.Impl.OrderDAOImpl;
 import com.onlinelearning.DAL.Impl.OrderItemDAOImpl;
 import com.onlinelearning.DAL.OrderDAO;
 import com.onlinelearning.DAL.OrderItemDAO;
+import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Order;
 import com.onlinelearning.Models.OrderItem;
 import com.onlinelearning.Services.CourseService;
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getAllOrders() {
         return orderDAO.getAllOrders();
     }
-
+    
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
         return orderItemDAO.getAllOrderItemsByOrderId(orderId);
@@ -90,5 +91,25 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
+    
+    @Override
+    public List<Order> getPaidOrdersByMonth(Integer month, Integer year) throws Exception{
+        if(month == null || year == null){
+            throw new Exception("Invalid month and year");
+        }
+        return orderDAO.getPaidOrdersByMonth(month, year);
+    }
 
+    @Override
+    public Double getTotalOfOrder(Order order) {
+        if(order == null){
+            return 0d;
+        }
+        List<OrderItem> orderItems = orderItemDAO.getAllOrderItemsByOrderId(order.getId());
+        Double total = 0d;
+        for (OrderItem orderItem : orderItems) {
+            total += orderItem.getPrice();
+        }
+        return total;
+    }
 }

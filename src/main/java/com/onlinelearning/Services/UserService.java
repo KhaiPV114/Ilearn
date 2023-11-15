@@ -1,5 +1,6 @@
 package com.onlinelearning.Services;
 
+import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface UserService {
     public List<User> getAllBannedUsers();
     
     public User updateUserStatus(String status, User user);
+    
+    Integer getNumberOfUserAtRole(Role role);
 }

@@ -447,7 +447,7 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
-    
+
     @Override
     public List<User> getAllBannedUsers() {
         List<User> userList = new ArrayList<>();
@@ -468,7 +468,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User updateUserStatus(String status, User user) {
-        
+
         String sql = "update users set status = ? where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, status);
@@ -483,14 +483,24 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
-    
-    
 
-    public static void main(String[] args) {
-        UserDAOImpl  userDAOImpl = new UserDAOImpl();
-        User user = userDAOImpl.getUserById(1);
-        System.out.println(user);
-        User updateU = userDAOImpl.updateUserStatus("ACTIVE", user);
-        System.out.println(updateU);
+    @Override
+    public Integer getNumberOfUserAtRole(Role role) {
+        String sql = "SELECT COUNT(*)"
+                + " FROM users u"
+                + " join user_roles ur on u.user_id = ur.user_id"
+                + " join roles r on ur.role_id = r.role_id"
+                + " where r.name = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, role.toString());
+            try ( ResultSet rs = ps.executeQuery()) {
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

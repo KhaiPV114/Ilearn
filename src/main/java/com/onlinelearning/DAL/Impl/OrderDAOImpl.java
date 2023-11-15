@@ -117,7 +117,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getAllOrders() {
         String sql = "select *"
-                + " from " + ORDER_TABLE;
+                + " from " + ORDER_TABLE + " order by created_at desc";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             try ( ResultSet rs = ps.executeQuery()) {
                 List<Order> orders = new ArrayList<>();
@@ -160,6 +160,29 @@ public class OrderDAOImpl implements OrderDAO {
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return deleteOrder;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Order> getPaidOrdersByMonth(int month, int year) {
+        String sql = "select *"
+                + " from " + ORDER_TABLE
+                + " where YEAR(created_at) = ? and MONTH(created_at) = ?"
+                + " and status = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, year);
+            ps.setInt(2, month);
+            ps.setString(3, OrderStatus.SUCCESSFUL.toString());
+            try ( ResultSet rs = ps.executeQuery()) {
+                List<Order> orders = new ArrayList<>();
+                while (rs.next()) {
+                    orders.add(orderResultSetMapper(rs));
+                }
+                return orders;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

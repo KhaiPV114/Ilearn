@@ -28,8 +28,6 @@ public class ManagerLearnerSearch extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW_PATH);
 
-        System.out.println("_______");
-        System.out.println("Start process:");
 
         String userName = request.getParameter("userName");
         List<User> learnerListActive = new ArrayList<>();
@@ -38,9 +36,7 @@ public class ManagerLearnerSearch extends HttpServlet {
 
         if (StringUtils.isBlank(userName)) {
             learnerListActive = userService.getAllActiveUsers();
-            System.out.println("Active: " + learnerListActive);
             learnerListBan = userService.getAllBannedUsers();
-            System.out.println("Banned: " + learnerListBan);
             request.setAttribute("learnerListActive", learnerListActive);
             request.setAttribute("learnerListBan", learnerListBan);
             dispatcher.forward(request, response);
