@@ -39,18 +39,14 @@
                                                         </div>
                                                         <div class="rbt-card-body">
 
-                                                            <h4 class="rbt-card-title" style="min-height: 70px"><a href="course-details.html">${course.name}</a>
+                                                            <h4 class="rbt-card-title" style="min-height: 50px"><a href="course-details.html">${course.name}</a>
                                                             </h4>
-                                                            <div class="rbt-card-top">
-                                                                <div class="rbt-review">
-                                                                    <div class="rating">
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                        <i class="fas fa-star"></i>
-                                                                    </div>
-                                                                    <span class="rating-count"> (15 Reviews)</span>
+                                                            <ul class="rbt-meta">
+                                                                <li><i class="feather-book"></i>20 Lessons</li>
+                                                            </ul>
+                                                            <div class="rbt-card-bottom">
+                                                                <div class="rbt-price">
+                                                                    <span class="current-price">$${course.price}</span>
                                                                 </div>
                                                                 <div class="rbt-bookmark-btn">
                                                                     <form action="${pageContext.request.contextPath}/learner/wishlist/delete" id="wishlist${course.id}" method="post">
@@ -59,14 +55,6 @@
                                                                             <i class="fa-solid fa-bookmark"></i>
                                                                         </a>
                                                                     </form>
-                                                                </div>
-                                                            </div>
-                                                            <ul class="rbt-meta">
-                                                                <li><i class="feather-book"></i>20 Lessons</li>
-                                                            </ul>
-                                                            <div class="rbt-card-bottom">
-                                                                <div class="rbt-price">
-                                                                    <span class="current-price">$${course.price}</span>
                                                                 </div>
                                                                 <a class="rbt-btn-link" href="#">
                                                                     Add to Cart<i class="feather-shopping-cart"></i>
