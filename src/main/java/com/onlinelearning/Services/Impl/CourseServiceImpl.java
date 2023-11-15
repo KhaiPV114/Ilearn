@@ -212,4 +212,10 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.getTotalProfit(ownerId);
     }
 
+    public List<Course> findAll(String sqlQuery) {
+        return courseDAO.findAll(sqlQuery);
+    }
+    
+    
+    
 }

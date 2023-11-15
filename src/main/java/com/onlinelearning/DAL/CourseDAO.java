@@ -37,10 +37,6 @@ public interface CourseDAO {
 
     List<Course> getCourseByKeyword(String keyword);
     
-    List<Course> getCourseByKeywordOrderByPriceDesc(String keyword);
-    
-    List<Course> getCourseByKeywordOrderByPriceAsc(String keyword);
-    
     List<Course> getCourseByCategory(String category);
     
     List<Course> getCourseByCategoryId(Integer categoryId);
@@ -51,4 +47,5 @@ public interface CourseDAO {
     
     Map<String,List<Double>> getTotalProfit(Integer ownerId);
     
+    List<Course> findAll(String sqlQuery);
 }
