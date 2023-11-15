@@ -53,7 +53,7 @@
                                                             <i class="feather-monitor"></i>
                                                         </div>
                                                         <div class="content">
-                                                            <h3 class="counter without-icon color-secondary"><span class="odometer odometer-auto-theme" data-count="10"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">5</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
+                                                            <h3 class="counter without-icon color-secondary"><span class="odometer odometer-auto-theme" data-count="${enrolledCourses.size()}"><div class="odometer-inside"><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">5</span></span></span></span></span><span class="odometer-digit"><span class="odometer-digit-spacer">8</span><span class="odometer-digit-inner"><span class="odometer-ribbon"><span class="odometer-ribbon-inner"><span class="odometer-value">0</span></span></span></span></span></div></span>
                                                             </h3>
                                                             <span class="rbt-title-style-2 d-block">LEARNING COURSES</span>
                                                         </div>
@@ -64,7 +64,7 @@
                                             <!-- End Single Card  -->
 
                                             <!-- Start Single Card  -->
-                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+<!--                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                                                 <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
                                                     <div class="inner">
                                                         <div class="rbt-round-icon bg-violet-opacity">
@@ -77,7 +77,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <!-- End Single Card  -->
                                         </div>
                                     </div>
