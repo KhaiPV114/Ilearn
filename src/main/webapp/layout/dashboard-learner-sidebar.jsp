@@ -43,12 +43,6 @@
                                     <span>Reviews</span>
                                 </a>
                             </li>
-<!--                            <li>
-                                <a href="student-my-quiz-attempts.html">
-                                    <i class="feather-help-circle"></i>
-                                    <span>My Quiz Attempts</span>
-                                </a>
-                            </li>-->
                             <li>
                                 <a href="${pageContext.request.contextPath}/dashboard/learner/order/history">
                                     <i class="feather-shopping-bag"></i>
@@ -65,9 +59,9 @@
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             <li>
-                                <a href="student-settings.html">
+                                <a href="${pageContext.request.contextPath}/learner/change-password">
                                     <i class="feather-settings"></i>
-                                    <span>Settings</span>
+                                    <span>Change Password</span>
                                 </a>
                             </li>
                             <li>

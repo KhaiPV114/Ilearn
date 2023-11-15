@@ -215,7 +215,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User updateUser(User user) {
         String sql = "update users set"
-                + " full_name = ?, dob = ?, phone_number = ?"
+                + " full_name = ?, dob = ?, phone_number = ?, password = ?"
                 + " where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             if (user.getFullName() == null) {
@@ -233,7 +233,8 @@ public class UserDAOImpl implements UserDAO {
             } else {
                 ps.setString(3, user.getPhoneNumber());
             }
-            ps.setInt(4, user.getId());
+            ps.setString(4, user.getPassword());
+            ps.setInt(5, user.getId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return user;

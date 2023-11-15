@@ -16,7 +16,7 @@ import java.sql.Date;
 @WebServlet(name = "LearnerUpdateProfile", urlPatterns = {"/learner/profile"})
 public class LearnerUpdateProfile extends HttpServlet {
 
-    private static final String VIEW_PATH = "/dashboard/learner/profile.jsp";
+    private static final String VIEW_PATH = "/general/profile.jsp";
     private static final String ERROR_403_PATH = "/error/403.jsp";
     private static final AuthService authService = new AuthServiceImpl();
     private static final UserService userService = new UserServiceImpl();
