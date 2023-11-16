@@ -3,7 +3,6 @@ package com.onlinelearning.Services;
 import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
 

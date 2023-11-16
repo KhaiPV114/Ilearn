@@ -1,7 +1,7 @@
 package com.onlinelearning.Filters;
 
-import com.onlinelearning.Controllers.Authentication.GoogleRegisterController;
-import com.onlinelearning.Controllers.Authentication.LoginController;
+import com.onlinelearning.Controllers.General.Authentication.GoogleRegisterController;
+import com.onlinelearning.Controllers.General.Authentication.LoginController;
 import com.onlinelearning.Models.User;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -33,8 +33,6 @@ public class GoogleLoginFilter implements Filter {
                 && session.getAttribute("roles") == null) {
             String googleRegisterPath = request.getContextPath() + "/authentication/register/google";
             String logoutPath = request.getContextPath() + "/authentication/logout";
-            System.out.println(googleRegisterPath);
-            System.out.println(request.getRequestURI());
             //If request url is not equal to logout or google register url, continue to register form
             if (request.getRequestURI().equals(googleRegisterPath)
                     || request.getRequestURI().equals(logoutPath)) {

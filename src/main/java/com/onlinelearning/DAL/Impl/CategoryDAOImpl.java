@@ -15,21 +15,28 @@ import java.util.logging.Logger;
 public class CategoryDAOImpl implements CategoryDAO {
 
     private final DBContext dbContext = new DBContextImpl();
+    private final String CATEGORY_TABLE = "categories";
+
+    private Category categoryResultSetMapper(ResultSet rs) throws SQLException {
+        Category category = Category.builder()
+                .id(rs.getInt("category_id"))
+                .name(rs.getString("name"))
+                .imageUrl(rs.getString("image_url"))
+                .description(rs.getString("description"))
+                .build();
+        return category;
+    }
 
     @Override
-    public Category getCategoryById(Integer id) {
-        String sql = "select category_id, name, image_url, description from categories where category_id = ?";
+    public Category getCategoryById(Integer categoryId) {
+        String sql = "select *"
+                + " from " + CATEGORY_TABLE
+                + " where category_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1, categoryId);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Category category = Category.builder()
-                            .id(rs.getInt("category_id"))
-                            .name(rs.getString("name"))
-                            .imageUrl(rs.getString("image_url"))
-                            .description(rs.getString("description"))
-                            .build();
-                    return category;
+                    return categoryResultSetMapper(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -39,19 +46,15 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public Category getCategoryByName(String name) {
-        String sql = "select category_id, name, image_url, description from categories where name = ?";
+    public Category getCategoryByName(String categoryName) {
+        String sql = "select *"
+                + " from " + CATEGORY_TABLE
+                + " where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, name);
+            ps.setString(1, categoryName);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Category category = Category.builder()
-                            .id(rs.getInt("category_id"))
-                            .name(rs.getString("name"))
-                            .imageUrl(rs.getString("image_url"))
-                            .description(rs.getString("description"))
-                            .build();
-                    return category;
+                    return categoryResultSetMapper(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -62,17 +65,12 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public List<Category> getAllCategories() {
-        String sql = "select category_id, name, image_url, description from categories";
+        String sql = "select *"
+                + " from " + CATEGORY_TABLE;
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
             List<Category> categories = new ArrayList<>();
             while (rs.next()) {
-                Category category = Category.builder()
-                        .id(rs.getInt("category_id"))
-                        .name(rs.getString("name"))
-                        .imageUrl(rs.getString("image_url"))
-                        .description(rs.getString("description"))
-                        .build();
-                categories.add(category);
+                categories.add(categoryResultSetMapper(rs));
             }
             return categories;
         } catch (SQLException ex) {
@@ -83,7 +81,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Category createCategory(Category category) {
-        String sql = "insert into categories(name, image_url, description) values (?, ?, ?)";
+        String sql = "insert into " + CATEGORY_TABLE
+                + "(name, image_url, description)"
+                + " values (?, ?, ?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, category.getName());
             ps.setString(2, category.getImageUrl());
@@ -105,7 +105,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Category updateCategory(Category category) {
-        String sql = "update categories set name = ?, image_url = ?, description = ? where category_id = ?";
+        String sql = "update " + CATEGORY_TABLE
+                + " set name = ?, image_url = ?, description = ?"
+                + " where category_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, category.getName());
             ps.setString(2, category.getImageUrl());
@@ -123,7 +125,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Category deleteCategory(Category category) {
-        String sql = "delete from categories where category_id = ?";
+        String sql = "delete from " + CATEGORY_TABLE
+                + " where category_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, category.getId());
             int affectedRow = ps.executeUpdate();
@@ -134,6 +137,23 @@ public class CategoryDAOImpl implements CategoryDAO {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public Integer countNumberOfCourseByCategoryId(Integer categoryId) {
+        String sql = "select count(course_id) as total from courses where category_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int result = rs.getInt("total");
+                    return result;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }

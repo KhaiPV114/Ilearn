@@ -2,11 +2,19 @@ package com.onlinelearning.Models;
 
 import com.onlinelearning.Enums.CouponStatus;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Builder
+@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Coupon {
 
     private Integer id;
@@ -15,7 +23,7 @@ public class Coupon {
     
     private String code;
     
-    private Float percent;
+    private Double percent;
     
     private Integer quantity;
     

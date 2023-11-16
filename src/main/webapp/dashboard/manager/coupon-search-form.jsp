@@ -23,9 +23,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
+                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
                             <!-- Start content -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -48,7 +48,7 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="${pageContext.request.contextPath}/dashboard/manager/coupon-search" method="post">
+                                        <form action="${pageContext.request.contextPath}/manager/coupon/search" method="post">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
@@ -64,41 +64,52 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="rbt-btn btn-md mt-3">Search</button>
-                                            <a class="rbt-btn btn-md hover-icon-reverse mt-3" href="./coupon-create-form.jsp">Create new coupon</a>
+                                            <a class="rbt-btn btn-md hover-icon-reverse mt-3" href="${pageContext.request.contextPath}/manager/coupon/create">Create new coupon</a>
                                         </form>
 
                                     </div>
                                 </div>
-                                <div class="result rbt-dashboard-content bg-color-white rbt-shadow-box" style=" margin: 10px">
-                                    <table class="resultTable rbt-table table table-borderless" >
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Course ID</th>
-                                            <th>Code</th>
-                                            <th>Percent</th>
-                                            <th>Quantity</th>
-                                            <th>Remain Quantity</th>
-                                            <th>Time created</th>
-                                            <th>Time start</th>
-                                            <th>Time end</th>
-                                            <th>Status</th>
-
-                                        </tr>
-                                        <c:forEach items="${coupons}" var = "coupon">
-                                            <tr>
-                                                <td>${coupon.id}</td>
-                                                <td>${coupon.courseId}</td>
-                                                <td>${coupon.code}</td>
-                                                <td>${coupon.percent}</td>
-                                                <td>${coupon.quantity}</td>
-                                                <td>${coupon.remainQuantity}</td>
-                                                <td>${coupon.createdAt}</td>
-                                                <td>${coupon.startTime}</td>
-                                                <td>${coupon.endTime}</td>
-                                                <td>${coupon.status}</td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
+                                <div class="row gy-5">
+                                    <div class="col-lg-12">
+                                        <div class="rbt-dashboard-table table-responsive" >
+                                            <p style="margin-bottom: 5px; color: blue">ACTIVE: </p>
+                                            <table class="rbt-table table table-borderless ">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Course ID</th>
+                                                    <th>Code</th>
+                                                    <th>Percent</th>
+                                                    <th>Quantity</th>
+                                                    <th>Remain Quantity</th>
+                                                    <th>Time created</th>
+                                                    <th>Time start</th>
+                                                    <th>Time end</th>
+                                                    <th>Status</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <c:forEach items="${coupons}" var = "coupon">
+                                                    <form action="${pageContext.request.contextPath}/manager/coupon/edit" method="get">
+                                                        <input type="hidden" name="couponId" value="${coupon.id}">
+                                                        <tr>
+                                                            <td>${coupon.id}</td>
+                                                            <td>${coupon.courseId}</td>
+                                                            <td>${coupon.code}</td>
+                                                            <td>${coupon.percent}</td>
+                                                            <td>${coupon.quantity}</td>
+                                                            <td>${coupon.remainQuantity}</td>
+                                                            <td>${coupon.createdAt}</td>
+                                                            <td>${coupon.startTime}</td>
+                                                            <td>${coupon.endTime}</td>
+                                                            <td>${coupon.status}</td>
+                                                            <td><button class="btn btn-info" type="submit">Edit</button></td>
+                                                        </tr>
+                                                    </form>
+                                                </c:forEach>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- End Content -->

@@ -10,7 +10,7 @@ import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
+import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -33,7 +33,7 @@ public class InstructorCourseAdd extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/instructor/course-form.jsp";
 
-    private final FileUploadService fileUploadService = FileUploadServiceImpl.load();
+    private final FileUploadService fileUploadService = S3FileUploadServiceImpl.load();
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
@@ -41,6 +41,7 @@ public class InstructorCourseAdd extends HttpServlet {
 
     private final AuthService authService = new AuthServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Category> categories = categoryService.getAllCategories();
@@ -48,6 +49,7 @@ public class InstructorCourseAdd extends HttpServlet {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
@@ -98,6 +100,8 @@ public class InstructorCourseAdd extends HttpServlet {
         }
 
         if (!check) {
+            List<Category> categories = categoryService.getAllCategories();
+            request.setAttribute("categories", categories);
             request.setAttribute("name", name);
             request.setAttribute("category", categoryId);
             request.setAttribute("price", priceString);

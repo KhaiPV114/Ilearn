@@ -37,4 +37,22 @@ public interface UserDAO {
 
     boolean changePassword(int id, String newPassword);
 
+    List<User> getUsersByRole(String role);
+
+    List<User> getUsersByKeyword(String keyword);
+
+    List<User> getAllActiveUsers();
+
+    List<User> getAllBannedUsers();
+
+    User updateUserStatus(String status, User user);
+
+    List<User> getLearnerOfAllCourse(Integer ownerId);
+    
+    List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status);
+    
+    List<User> getLearnerOfAllCourseByKeyword(String keyword);
+    
+    Integer getNumberOfUserAtRole(Role role);
+
 }

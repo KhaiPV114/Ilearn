@@ -22,20 +22,19 @@
                             <jsp:include page="/layout/dashboard-learner-sidebar.jsp"/>
                             <!-- Start Content  -->
                             <div class="col-lg-9">
-                                <!-- Start Wishlist Courses -->
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
                                     <div class="content">
                                         <div class="section-title">
                                             <h4 class="rbt-title-style-3">Wishlist</h4>
                                         </div>
                                         <div class="row g-5">
-                                            <!-- Iterate through the learner's wishlist and display each course -->
-                                            <c:forEach items="${coursesInWishlist}" var="course">
+                                            <!-- Start Single Course  -->
+                                            <c:forEach var="course" items="${coursesInWishlist}">
                                                 <div class="col-lg-4 col-md-6 col-12">
-                                                    <div class="rbt-card variation-01 rbt-hover">
-                                                        <div class="rbt-card-img">
-                                                            <a href="">
-                                                            <img src="${pageContext.request.contextPath}${course.imageUrl}" alt="Course: ${course.name}"/>
+                                                    <div class="rbt-card variation-01 rbt-hover d-flex flex-column justify-content-between">
+                                                        <div class="rbt-card-img h-100 d-flex align-items-center">
+                                                            <a href="course-details.html">
+                                                                <img src="${course.imageUrl}" alt="Card image">
                                                             </a>
                                                         </div>
                                                         <div class="rbt-card-body">
@@ -48,34 +47,42 @@
                                                                         <i class="fas fa-star"></i>
                                                                         <i class="fas fa-star"></i>
                                                                     </div>
-                                                                    <!-- Display the number of reviews -->
-                                                                    <span class="rating-count">(${course.reviews} Reviews)</span>
+                                                                    <span class="rating-count"> (15 Reviews)</span>
                                                                 </div>
-                                                                <!-- Other course card elements -->
+                                                                <div class="rbt-bookmark-btn">
+                                                                    <form action="${pageContext.request.contextPath}/learner/wishlist/delete" id="wishlist${course.id}" method="post">
+                                                                        <input type="hidden" name="course-id" value="${course.id}">
+                                                                        <a class="rbt-round-btn" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
+                                                                            <i class="fa-solid fa-bookmark"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
                                                             </div>
-                                                            <h4 class="rbt-card-title">
-                                                                <a href="">${course.name}</a>
+                                                            <h4 class="rbt-card-title"><a href="course-details.html">${course.name}</a>
                                                             </h4>
-                                                            <ul class="rbt-meta">
-                                                                <!-- Display the number of lessons -->
-                                                                <li><i class="feather-book"></i>${course.numLessons} Lessons</li>
-                                                                <!-- Display the number of students enrolled -->
-                                                                <li><i class="feather-users"></i>${course.numStudents} Students</li>
-                                                            </ul>
+
                                                             <div class="rbt-card-bottom">
                                                                 <div class="rbt-price">
-                                                                    <span class="current-price"><c:out value="${course.price}"/></span>
+                                                                    <span class="current-price">$${course.price}</span>
                                                                 </div>
-                                                                <a class="rbt-btn-link" href="<c:out value="#"/>">Learn More<i class="feather-arrow-right"></i></a>
+                                                                <form action="${pageContext.request.contextPath}/dashboard/learner/wishlist/delete-wishlist" id="wishlist${course.id}" method="post">
+                                                                    <input type="hidden" name="course-id" value="${course.id}">
+                                                                    <a class="rbt-round-btn" style="color: yellow" title="Bookmark" href="#" onclick="document.getElementById('wishlist${course.id}').submit()">
+                                                                        <i class="fa-solid fa-bookmark"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <a class="rbt-btn-link" href="#">
+                                                                    Learn More<i class="feather-arrow-right"></i>
+                                                                </a> 
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
+                                            <!-- End Single Course  -->
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Wishlist Courses -->
                             </div>
                             <!-- End Content  -->
                         </div>

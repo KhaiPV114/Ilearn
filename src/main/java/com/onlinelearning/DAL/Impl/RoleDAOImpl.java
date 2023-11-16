@@ -13,15 +13,18 @@ import java.util.logging.Logger;
 public class RoleDAOImpl implements RoleDAO {
 
     private final DBContext dbContext = new DBContextImpl();
+    private final String ROLE_TABLE = "roles";
 
     public RoleDAOImpl() {
     }
 
     @Override
     public Role addRole(Role role) {
-        String sql = "insert into roles(name) values (?)";
+        String sql = "insert into " + ROLE_TABLE
+                + "(name)"
+                + " values (?)";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setNString(1, role.toString());
+            ps.setString(1, role.toString());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return role;
@@ -34,9 +37,11 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Integer getRoleIdByRoleName(Role role) {
-        String sql = "select role_id from roles where name = ?";
+        String sql = "select role_id"
+                + " from " + ROLE_TABLE
+                + " where name = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setNString(1, role.toString());
+            ps.setString(1, role.toString());
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("role_id");
@@ -50,12 +55,14 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role getRoleById(int id) {
-        String sql = "select name from roles where role_id = ?";
+        String sql = "select name"
+                + " from " + ROLE_TABLE
+                + " where role_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return Role.valueOf(rs.getNString("name"));
+                    return Role.valueOf(rs.getString("name"));
                 }
             }
         } catch (SQLException ex) {

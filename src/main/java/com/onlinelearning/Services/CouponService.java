@@ -16,4 +16,8 @@ public interface CouponService {
     Coupon updateCoupon(Coupon coupon) throws Exception;
     
     Coupon deleteCoupon(Coupon coupon) throws Exception;
+    
+    boolean canApplyCoupon(Coupon coupon) throws Exception;
+    
+    Coupon minusCouponRemain(Coupon coupon);
 }

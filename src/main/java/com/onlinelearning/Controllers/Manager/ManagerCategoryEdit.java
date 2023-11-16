@@ -4,7 +4,7 @@ import com.onlinelearning.Models.Category;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
+import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -26,10 +26,11 @@ public class ManagerCategoryEdit extends HttpServlet {
 
     private static final String FORM_PATH = "/dashboard/manager/course-category-form.jsp";
 
-    private final FileUploadService fileUploadService = FileUploadServiceImpl.load();
+    private final FileUploadService fileUploadService = S3FileUploadServiceImpl.load();
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
@@ -47,10 +48,11 @@ public class ManagerCategoryEdit extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/manager/category");
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
-        
+
         Integer id = Integer.parseInt(request.getParameter("id"));
 
         //Get name

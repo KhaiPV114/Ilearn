@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebFilter(
         filterName = "InstructorRoleFilter",
         urlPatterns = {
-            "/instructor/course/*"
+            "/instructor/*"
         }
 )
 public class InstructorRoleFilter implements Filter {
@@ -27,7 +27,7 @@ public class InstructorRoleFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        if (!authService.isInstructor(request)) {
+        if (!(authService.isInstructor(request) || authService.isManager(request))) {
             response.sendRedirect(request.getContextPath() + "/error/403.jsp");
             return;
         }

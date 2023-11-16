@@ -2,10 +2,13 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.CourseDAO;
 import com.onlinelearning.DAL.Impl.CourseDAOImpl;
+import com.onlinelearning.Enums.CourseStatus;
 import com.onlinelearning.Models.Course;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Utils.Constants;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CourseServiceImpl implements CourseService {
 
@@ -84,12 +87,135 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course updateCourse(Course course) throws Exception {
-        validateCourse(course);
         Course updatedCourse = courseDAO.updateCourse(course);
         if (updatedCourse == null) {
             throw new Exception("Update course failed!");
         }
         return updatedCourse;
+    }
+
+    @Override
+    public List<Course> getAllCoursesByUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+
+        // return
+        return courseDAO.getEnrolledCourseOfUserId(userId);
+    }
+
+    public List<Course> getCourseByKeyword(String keyword) {
+        List<Course> courses = courseDAO.getCourseByKeyword(keyword);
+        return courses;
+    }
+
+    public List<Course> getAllCourseOrderByPriceDesc() {
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceDesc();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getAllCourseOrderByPriceAsc() {
+        List<Course> courses = courseDAO.getAllCourseOrderByPriceAsc();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCourseByCategory(String category) {
+        List<Course> courses = courseDAO.getCourseByCategory(category);
+        return courses;
+    }
+
+    @Override
+    public Course validateCourse(Integer courseId) throws Exception {
+        if (courseId != null) {
+            Course course = courseDAO.getCourseById(courseId);
+            if (course != null) {
+                if (course.getStatus().equals(CourseStatus.PUBLISHED)) {
+                    return course;
+                } else {
+                    throw new Exception("Course not available");
+                }
+            }
+        }
+        throw new Exception("Invalid course");
+    }
+
+    @Override
+    public Boolean isEnrolled(Integer userId, Integer courseId) {
+        if (userId == null || courseId == null) {
+            return false;
+        }
+        return courseDAO.isEnrolled(userId, courseId);
+    }
+
+    @Override
+    public List<Course> getCourseByCategoryId(Integer categoryId) {
+
+        if (categoryId == null) {
+            return null;
+        }
+
+        List<Course> courses = courseDAO.getCourseByCategoryId(categoryId);
+
+        if (courses == null) {
+            return null;
+        }
+
+        return courses;
+    }
+
+    @Override
+    public void getUserEnrollCourse(Integer userId, Integer courseId) throws Exception {
+        if (userId == null || courseId == null) {
+            throw new Exception("User or Course is invalid");
+        }
+        if (isEnrolled(userId, courseId)) {
+            throw new Exception("User " + userId + " have enrolled this course" + courseId);
+        }
+        if (courseDAO.getUserEnrollCourse(userId, courseId)) {
+            // Success
+        } else {
+            throw new Exception("Get error while get user " + userId + " enrolled course " + courseId);
+        }
+    }
+
+    @Override
+    public List<Course> get3CourseByNumberOfPurchase() {
+        List<Course> courses = courseDAO.get3CourseByNumberOfPurchase();
+        return courses;
+    }
+
+    @Override
+    public List<Course> getEnrolledCourseOfUserId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+
+        return courseDAO.getEnrolledCourseOfUserId(userId);
+    }
+
+    public List<Course> getCourseByOwnerId(Integer ownerId) {
+        return courseDAO.getCourseByOwnerId(ownerId);
+    }
+
+    @Override
+    public Integer getTotalLearnerOfAllCourse(Integer ownerId) {
+        return courseDAO.getTotalLearnerOfAllCourse(ownerId);
+    }
+
+    @Override
+    public Map<String, List<Double>> getTotalProfit(Integer ownerId) {
+        return courseDAO.getTotalProfit(ownerId);
+    }
+
+    public List<Course> findAll(String sqlQuery) {
+        return courseDAO.findAll(sqlQuery);
+    }
+
+    @Override
+    public List<Integer> getAllEnrolledCourseId(int id) {
+        return courseDAO.getAllEnrolledCourseId(id);
     }
 
 }

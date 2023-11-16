@@ -15,49 +15,63 @@ import java.util.logging.Logger;
 public class CartDAOImpl implements CartDAO {
 
     private final DBContext dbContext = new DBContextImpl();
-    private final String TABLE_NAME = "carts";
+    private final String CART_TABLE = "carts";
+
+    private CartItem cartResultSetMapper(ResultSet rs) throws SQLException {
+        CartItem cartItem = CartItem.builder()
+                .userId(rs.getInt("user_id"))
+                .courseId(rs.getInt("course_id"))
+                .build();
+        return cartItem;
+    }
 
     @Override
     public List<CartItem> getCartByUserId(Integer userId) {
-        String sql = "select cart_id, user_id, course_id"
-                + " from " + TABLE_NAME
+        String sql = "select *"
+                + " from " + CART_TABLE
                 + " where user_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, userId);
             try ( ResultSet rs = ps.executeQuery()) {
                 List<CartItem> cart = new ArrayList<>();
                 while (rs.next()) {
-                    CartItem cartItem = CartItem.builder()
-                            .id(rs.getInt("cart_id"))
-                            .userId(rs.getInt("user_id"))
-                            .courseId(rs.getInt("course_id"))
-                            .build();
-                    cart.add(cartItem);
+                    cart.add(cartResultSetMapper(rs));
                 }
                 return cart;
             }
         } catch (Exception ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
         }
+        return null;
     }
 
     @Override
-    public CartItem getCartByUserIdAndCourseId(Integer userId, Integer courseId) {
-        String sql = "select cart_id, user_id, course_id"
-                + " from " + TABLE_NAME
+    public boolean deleteCartOfUserId(Integer userId) {
+        String sql = "delete from " + CART_TABLE
+                + " where user_id = ?";
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public CartItem getCartItem(Integer userId, Integer courseId) {
+        String sql = "select *"
+                + " from " + CART_TABLE
                 + " where user_id = ? and course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql);) {
             ps.setInt(1, userId);
             ps.setInt(2, courseId);
             try ( ResultSet rs = ps.executeQuery();) {
                 if (rs.next()) {
-                    CartItem cartItem = CartItem.builder()
-                            .id(rs.getInt("cart_id"))
-                            .userId(rs.getInt("user_id"))
-                            .courseId(rs.getInt("course_id"))
-                            .build();
-                    return cartItem;
+                    return cartResultSetMapper(rs);
                 }
             }
         } catch (Exception ex) {
@@ -67,24 +81,16 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public CartItem createCart(Integer userId, Integer courseId) {
-        String sql = "insert into " + TABLE_NAME
+    public CartItem createCartItem(CartItem cartItem) {
+        String sql = "insert into " + CART_TABLE
                 + "(user_id, course_id)"
                 + " values (?, ?)";
-        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userId);
-            ps.setInt(2, courseId);
+        try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, cartItem.getUserId());
+            ps.setInt(2, cartItem.getCourseId());
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
-                try ( ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        return CartItem.builder()
-                                .id(rs.getInt(1))
-                                .userId(userId)
-                                .courseId(courseId)
-                                .build();
-                    }
-                }
+                return cartItem;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,8 +99,8 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public CartItem deleteCart(CartItem cartItem) {
-        String sql = "delete from " + TABLE_NAME
+    public CartItem deleteCartItem(CartItem cartItem) {
+        String sql = "delete from " + CART_TABLE
                 + " where user_id = ? and course_id = ?";
         try ( Connection cn = dbContext.getConnection();  PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, cartItem.getUserId());
