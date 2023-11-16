@@ -57,9 +57,11 @@ public class ManagerEarningStatisticView extends HttpServlet {
         boolean isCurrent = true;
         List<Order> allOrders = orderService.getAllOrders();
         Set<Integer> years = new HashSet<>();
-        for (Order order : allOrders) {
-            if (order.getStatus() == OrderStatus.SUCCESSFUL) {
-                years.add(order.getCreatedAt().getYear());
+        if (allOrders != null) {
+            for (Order order : allOrders) {
+                if (order.getStatus() == OrderStatus.SUCCESSFUL) {
+                    years.add(order.getCreatedAt().getYear());
+                }
             }
         }
 
@@ -129,7 +131,7 @@ public class ManagerEarningStatisticView extends HttpServlet {
             request.setAttribute("totalEarningOfMonth", totalEarningOfMonth);
             request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
 
     }

@@ -14,12 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebFilter(
-        filterName = "InstructorRoleFilter",
+        filterName = "LearnerRoleFilter",
         urlPatterns = {
-            "/instructor/*"
+            "/learner/*"
         }
 )
-public class InstructorRoleFilter implements Filter {
+public class LearnerRoleFilter implements Filter {
 
     private final AuthService authService = new AuthServiceImpl();
 
@@ -27,7 +27,7 @@ public class InstructorRoleFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        if (!(authService.isInstructor(request) || authService.isManager(request))) {
+        if (!(authService.isLearner(request) || authService.isManager(request))) {
             response.sendRedirect(request.getContextPath() + "/error/403.jsp");
             return;
         }

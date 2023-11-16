@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@WebServlet(name = "InstructorStatisticView", urlPatterns = {"/instructor/statistic/view"})
+@WebServlet(name = "InstructorStatisticView", urlPatterns = {"/instructor/dashboard"})
 public class InstructorStatisticView extends HttpServlet {
 
     private final UserService userService = new UserServiceImpl();

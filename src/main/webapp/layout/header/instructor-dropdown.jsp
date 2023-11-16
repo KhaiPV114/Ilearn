@@ -20,7 +20,7 @@
                 </div>
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor/course">
+                        <a href="${pageContext.request.contextPath}/instructor/dashboard">
                             <i class="feather-home"></i>
                             <span>My Dashboard</span>
                         </a>
@@ -31,7 +31,6 @@
                             <span>My Courses</span>
                         </a>
                     </li>
-                    
                 </ul>
                 <hr class="mt--10 mb--10">
                 <ul class="user-list-wrapper">

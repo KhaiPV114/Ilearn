@@ -342,7 +342,7 @@
         }
 
         function addToWishlist(courseId) {
-            let urlPath = "${pageContext.request.contextPath}/wishlist/add";
+            let urlPath = "${pageContext.request.contextPath}/learner/wishlist/add";
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {
                 if (xhttp.status === 200) {

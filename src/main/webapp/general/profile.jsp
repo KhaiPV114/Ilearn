@@ -33,7 +33,7 @@
                                     <jsp:include page="/layout/dashboard-learner-sidebar.jsp" />
                                 </c:when>
                                 <c:when test="${roleService.isInstructor(pageContext.request)}">
-                                    <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp"/>
+                                    <jsp:include page="/layout/dashboard-instructor-sidebar.jsp"/>
                                 </c:when>
                                 <c:when test="${roleService.isManager(pageContext.request)}">
                                     <jsp:include page="/layout/dashboard-manager-sidebar.jsp"/>

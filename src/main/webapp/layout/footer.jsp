@@ -3,9 +3,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<footer class="rbt-footer footer-style-1 bg-color-white overflow-hidden">
-    <jsp:include page="../layout/footer/footer-with-newsletter.jsp" />
-</footer>
+<!--<footer class="rbt-footer footer-style-1 bg-color-white overflow-hidden">
+    <%--<jsp:include page="../layout/footer/footer-with-newsletter.jsp" />--%>
+</footer>-->
 
 <div class="rbt-separator-mid">
     <div class="container">

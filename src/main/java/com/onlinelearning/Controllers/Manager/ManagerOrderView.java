@@ -28,17 +28,20 @@ public class ManagerOrderView extends HttpServlet {
         List<Order> failedOrders = new ArrayList<>();
         List<Order> successfulOrders = new ArrayList<>();
 
-        for (Order order : allOrders) {
-            if (order.getStatus() == OrderStatus.UNPAID) {
-                pendingOrders.add(order);
-            }
-            if (order.getStatus() == OrderStatus.FAILED) {
-                failedOrders.add(order);
-            }
-            if (order.getStatus() == OrderStatus.SUCCESSFUL) {
-                successfulOrders.add(order);
+        if (allOrders != null) {
+            for (Order order : allOrders) {
+                if (order.getStatus() == OrderStatus.UNPAID) {
+                    pendingOrders.add(order);
+                }
+                if (order.getStatus() == OrderStatus.FAILED) {
+                    failedOrders.add(order);
+                }
+                if (order.getStatus() == OrderStatus.SUCCESSFUL) {
+                    successfulOrders.add(order);
+                }
             }
         }
+
         request.setAttribute("pendingOrders", pendingOrders);
         request.setAttribute("failedOrders", failedOrders);
         request.setAttribute("successfulOrders", successfulOrders);

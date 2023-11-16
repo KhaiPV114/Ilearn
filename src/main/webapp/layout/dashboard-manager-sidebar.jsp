@@ -40,21 +40,11 @@
                                     <i class="feather-dollar-sign"></i><span>Total Earnings</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="instructor-quiz-attempts.html">
-                                    <i class="feather-message-square"></i><span>Quiz Attempts</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-assignments.html">
-                                    <i class="feather-list"></i><span>Assignments</span>
-                                </a>
-                            </li>
                         </ul>
                     </nav>
 
                     <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">Others</h6>
+                        <h6 class="rbt-title-style-2">Users</h6>
                     </div>
 
                     <nav class="mainmenu-nav">
