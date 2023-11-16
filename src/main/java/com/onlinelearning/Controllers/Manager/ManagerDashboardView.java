@@ -24,11 +24,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @WebServlet(name = "ManagerDashboardView", urlPatterns = {"/manager/dashboard"})
 public class ManagerDashboardView extends HttpServlet {
@@ -47,21 +44,25 @@ public class ManagerDashboardView extends HttpServlet {
         int totalCategories = categoryService.getAllCategories().size();
         List<Course> allCourses = courseService.getAllCourses();
         int totalCourses = allCourses.size();
+        List<Course> tempCourses = new ArrayList<>();
         for (Course course : allCourses) {
-            if (!course.getStatus().equals(CourseStatus.PUBLISHED)) {
-                allCourses.remove(course);
+            if (course.getStatus() != CourseStatus.PUBLISHED) {
+                tempCourses.add(course);
             }
         }
+        allCourses.removeAll(tempCourses);
         int publishCourses = allCourses.size();
         int totalInstructor = userService.getNumberOfUserAtRole(Role.INSTRUCTOR);
         int totalLearner = userService.getNumberOfUserAtRole(Role.LEARNER);
 
         List<Order> orders = orderService.getAllOrders();
         Double totalEarnings = 0d;
-        
-        for (Order order : orders) {
-            if (order.getStatus().equals(OrderStatus.SUCCESSFUL)) {
-                totalEarnings += orderService.getTotalOfOrder(order);
+
+        if (orders != null) {
+            for (Order order : orders) {
+                if (order.getStatus().equals(OrderStatus.SUCCESSFUL)) {
+                    totalEarnings += orderService.getTotalOfOrder(order);
+                }
             }
         }
 
@@ -77,6 +78,6 @@ public class ManagerDashboardView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 }
