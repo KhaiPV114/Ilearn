@@ -129,7 +129,7 @@
                                                 <div class="slider__range--output">
                                                     <div class="price__output--wrap">
                                                         <div class="price--output">
-                                                            <span>Price :</span><input type="text" id="amount" name="priceRange" value="${priceRange}">
+                                                            <span>Price</span><input type="text" id="amount" name="priceRange" value="${priceRange}">
                                                         </div>
                                                     </div>                                                        <div class="price--filter">
                                                         <button type="submit" class="rbt-btn btn-gradient btn-sm">Filter</button>
@@ -174,14 +174,14 @@
                                                 </a>
                                             </div>
                                         </div>
-                                                       
+
                                         <h4 class="rbt-card-title"><a href="#">${course.name}</a>
                                         </h4>
 
                                         <ul class="rbt-meta">
                                             <li><i class="feather-book"></i>12 Lessons</li>
                                             <li><i class="feather-users"></i>50 Students</li>
-                                            
+
                                         </ul>
 
                                         <p class="rbt-card-text text-truncate">${course.description}</p>
@@ -335,6 +335,9 @@
 
         function addToWishlist(courseId) {
             let urlPath = "${pageContext.request.contextPath}/learner/wishlist/add";
+//            console.log(urlPath);
+//            urlPath = urlPath.replace('http://', 'https://');
+//            console.log(urlPath);
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {
                 if (xhttp.status === 200) {
@@ -349,23 +352,26 @@
         }
     </script>
     <script>
-        function addToWishlist(courseId) {
-            // Send an AJAX request to add the course to the wishlist
-            $.ajax({
-                type: "POST",
-                url: "${pageContext.request.contextPath}/learner/wishlist/add",
-                data: {"course-id": courseId},
-                success: function () {
-                    // Update the icon to be yellow
-                    const icon = document.getElementById(`bookmark-icon-${courseId}`);
-                    icon.classList.remove("fa-bookmark");
-                    icon.classList.add("fa-bookmark-yellow");                     
-                },
-                error: function () {
-                    alert("Failed to add the course to your wishlist.");
-                }
-            });
-        }
+//        function addToWishlist(courseId) {
+//            // Send an AJAX request to add the course to the wishlist
+//            let urlPath = "${pageContext.request.contextPath}/learner/wishlist/add";
+//            console.log(urlPath);
+//            urlPath = urlPath.replace('http://', 'https://');
+//            $.ajax({
+//                type: "POST",
+//                url: urlPath,
+//                data: {"course-id": courseId},
+//                success: function () {
+//                    // Update the icon to be yellow
+//                    //const icon = document.getElementById('bookmark-icon-' + courseID);
+//                    //icon.classList.remove("fa-bookmark");
+//                    //icon.classList.add("fa-bookmark-yellow");                     
+//                },
+//                error: function () {
+//                    alert("Failed to add the course to your wishlist.");
+//                }
+//            });
+//        }
         $(document).ready(function () {
             let fromPrice = $("#slider-range span:nth-child(2)");
             let range = $("#slider-range div");
