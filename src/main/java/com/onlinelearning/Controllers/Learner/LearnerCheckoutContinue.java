@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner.Checkout;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Order;
@@ -21,12 +21,14 @@ import java.util.List;
 public class LearnerCheckoutContinue extends HttpServlet {
 
     private final String VIEW_PATH = "/dashboard/learner/checkout.jsp";
+    
     private final String ERROR_404_PATH = "/error/404.jsp";
+    
     private final String ERROR_403_PATH = "/error/403.jsp";
-    private final String HOME_PATH = "/homepage";
 
-    private final OrderService OrderService = new OrderServiceImpl();
-    private final AuthService AuthService = new AuthServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
+    
+    private final AuthService authService = new AuthServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +40,7 @@ public class LearnerCheckoutContinue extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User user = AuthService.getUser(request);
+        User user = authService.getUser(request);
         String orderId = request.getParameter("order-id");
         if (user == null) {
             request.getRequestDispatcher(ERROR_403_PATH).forward(request, response);
@@ -46,14 +48,14 @@ public class LearnerCheckoutContinue extends HttpServlet {
 
         Order createdOrder = (Order) request.getAttribute("order");     //Continue unpaid order
         if (orderId != null) {
-            createdOrder = OrderService.getOrderById(Integer.parseInt(orderId));
+            createdOrder = orderService.getOrderById(Integer.parseInt(orderId));
         }
 
         if (createdOrder != null && createdOrder.getStatus().equals(OrderStatus.UNPAID)) {
             double subTotal = 0;
             double grandTotal = 0;
 
-            List<OrderItem> orderItems = OrderService.getOrderItemsByOrderId(createdOrder.getId());
+            List<OrderItem> orderItems = orderService.getOrderItemsByOrderId(createdOrder.getId());
             for (OrderItem orderItem : orderItems) {
                 subTotal += orderItem.getOriginalPrice();
                 grandTotal += orderItem.getPrice();

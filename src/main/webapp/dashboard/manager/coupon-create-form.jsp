@@ -17,9 +17,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
+                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
                             <!-- Start content -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -42,7 +42,8 @@
                                             </nav>
                                         </div>
                                         <!-- End Title -->
-                                        <form action="coupon-create" method="post">
+                                        <form action="${pageContext.request.contextPath}/manager/coupon/create" method="post">
+                                            <input type="hidden" name="status" value="ACTIVE">
                                             <div class="row">
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
@@ -58,7 +59,12 @@
                                                 <div class="col-md-7 col-lg-8">
                                                     <div class="mb-3">
                                                         <label for="courseId">For Course:</label>
-                                                        <input type="text" name="courseId" id="courseId" class="form-control" placeholder="Course ID"/>
+                                                        <select name="courseId">
+                                                            <option selected>Course Name</option>
+                                                            <c:forEach items="${courses}" var = "course">
+                                                                <option class="form-control" value="${course.id}">${course.name}</option>
+                                                            </c:forEach>
+                                                        </select>
                                                         <c:if test="${not empty coureIdError}">
                                                             <div class="form-text text-danger">${coureIdError}</div>
                                                         </c:if>

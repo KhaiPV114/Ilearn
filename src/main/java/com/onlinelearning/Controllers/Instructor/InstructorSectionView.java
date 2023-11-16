@@ -1,7 +1,5 @@
 package com.onlinelearning.Controllers.Instructor;
 
-import com.onlinelearning.DAL.Impl.SectionDAOImpl;
-import com.onlinelearning.DAL.SectionDAO;
 import com.onlinelearning.Models.Lesson;
 import com.onlinelearning.Models.Section;
 import com.onlinelearning.Services.Impl.LessonServiceImpl;
@@ -24,12 +22,11 @@ public class InstructorSectionView extends HttpServlet {
 
     private static final String VIEW_PATH = "/dashboard/instructor/section-view.jsp";
 
-    private final SectionDAO sectionDAO = new SectionDAOImpl();
-
     private final SectionService sectionService = new SectionServiceImpl();
 
     private final LessonService lessonService = new LessonServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String courseIdParam = request.getParameter("courseId");
@@ -38,7 +35,10 @@ public class InstructorSectionView extends HttpServlet {
             return;
         }
         Integer courseId = Integer.valueOf(courseIdParam);
-        List<Section> sections = sectionService.getSectionsByCourseId(courseId);
+        request.setAttribute("courseId", courseId);
+
+        //Active sections
+        List<Section> sections = sectionService.getActiveSectionByCourseId(courseId);
         Map<Integer, List<Lesson>> lessonsList = new HashMap<>();
         if (sections != null) {
             for (Section section : sections) {
@@ -48,7 +48,18 @@ public class InstructorSectionView extends HttpServlet {
         }
         request.setAttribute("sections", sections);
         request.setAttribute("lessonsList", lessonsList);
-        request.setAttribute("courseId", courseId);
+
+        //Hidden sections
+        List<Section> sections2 = sectionService.getHiddenSectionByCourseId(courseId);
+        Map<Integer, List<Lesson>> lessonsList2 = new HashMap<>();
+        if (sections2 != null) {
+            for (Section section : sections2) {
+                List<Lesson> lesson = lessonService.getLessonsBySectionId(section.getId());
+                lessonsList2.put(section.getId(), lesson);
+            }
+        }
+        request.setAttribute("sections2", sections2);
+        request.setAttribute("lessonsList2", lessonsList2);
 
         String currentSection = request.getParameter("current-section");
         if (currentSection != null) {
@@ -56,11 +67,6 @@ public class InstructorSectionView extends HttpServlet {
         }
 
         request.getRequestDispatcher(VIEW_PATH).forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
     }
 
 }

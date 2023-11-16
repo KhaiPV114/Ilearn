@@ -16,13 +16,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "GeneralGetCoupon", urlPatterns = {"/coupon/get"})
 public class GeneralGetCoupon extends HttpServlet {
 
-    private final String HOME_PATH = "/homepage";
+    private static final String HOME_PATH = "/homepage";
 
     private final CouponService couponService = new CouponServiceImpl();
 

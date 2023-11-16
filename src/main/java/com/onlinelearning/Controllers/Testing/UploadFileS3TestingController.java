@@ -24,11 +24,13 @@ public class UploadFileS3TestingController extends HttpServlet {
 
     private final FileUploadService fileUploadService = S3FileUploadServiceImpl.load();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);

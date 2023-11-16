@@ -17,10 +17,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GoogleLoginController extends HttpServlet {
 
     private static final String VIEW_PATH = "/general/authentication.jsp";
+    
     private static final String HOME_PATH = "/homepage";
 
     private final AuthService authService = new AuthServiceImpl();
-    private final CartService CartService = new CartServiceImpl();
+    
+    private final CartService cartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,15 +34,14 @@ public class GoogleLoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher viewDispatcher = request.getRequestDispatcher(VIEW_PATH);
-        User user;
         try {
-            user = authService.googleLogin(request);
+            User user = authService.googleLogin(request);
         } catch (Exception ex) {
             request.setAttribute("g_error", ex.getMessage());
             viewDispatcher.forward(request, response);
             return;
         }
-        CartService.getCourseInCart(request, response);
+        cartService.getCourseInCart(request, response);
         response.sendRedirect(request.getContextPath() + HOME_PATH);
     }
 

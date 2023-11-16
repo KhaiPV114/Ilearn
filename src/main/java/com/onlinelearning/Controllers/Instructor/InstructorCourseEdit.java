@@ -2,11 +2,9 @@ package com.onlinelearning.Controllers.Instructor;
 
 import com.onlinelearning.Models.Category;
 import com.onlinelearning.Models.Course;
-import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.CourseService;
 import com.onlinelearning.Services.FileUploadService;
-import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
 import com.onlinelearning.Services.Impl.CourseServiceImpl;
 import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
@@ -38,8 +36,7 @@ public class InstructorCourseEdit extends HttpServlet {
 
     private final CourseService courseService = new CourseServiceImpl();
 
-    private final AuthService authService = new AuthServiceImpl();
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Category> categories = categoryService.getAllCategories();
@@ -63,6 +60,7 @@ public class InstructorCourseEdit extends HttpServlet {
         request.getRequestDispatcher(FORM_PATH).forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
@@ -114,16 +112,16 @@ public class InstructorCourseEdit extends HttpServlet {
             }
         }
 
-//        if (!check) {
-        List<Category> categories = categoryService.getAllCategories();
-        request.setAttribute("categories", categories);
-        request.setAttribute("name", name);
-        request.setAttribute("category", categoryId);
-        request.setAttribute("price", priceString);
-        request.setAttribute("description", description);
-        requestDispatcher.forward(request, response);
-//        return;
-//        }
+        if (!check) {
+            List<Category> categories = categoryService.getAllCategories();
+            request.setAttribute("categories", categories);
+            request.setAttribute("name", name);
+            request.setAttribute("category", categoryId);
+            request.setAttribute("price", priceString);
+            request.setAttribute("description", description);
+            requestDispatcher.forward(request, response);
+            return;
+        }
 
         Course currentCourse = courseService.getCourseById(id);
 

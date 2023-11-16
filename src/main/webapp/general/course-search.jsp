@@ -62,7 +62,7 @@
                                         </ul>
                                     </div>
                                     <div class="rbt-short-item">
-                                        <span class="course-index">Showing 1-9 of 19 results</span>
+                                        <span class="course-index">Showing ${number} of ${size} results</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,10 +96,10 @@
                                         <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By</span>  
                                             <select name="filterPrice" id="filterPrice">
-                                                <option value="">------------</option>
-                                                <option value="latest">Latest</option>
-                                                <option value="lowtohigh">Price: low to high</option>
-                                                <option value="hightolow">Price: high to low</option>
+                                                <option selected value="">------------</option>
+                                                <option ${sort == 'asc' ? 'selected' : ''} value="asc">Price: low to high</option>
+                                                <option ${sort == 'desc' ? 'selected' : ''}
+                                                    value="desc">Price: high to low</option>
                                             </select>
                                         </div>
                                     </div>
@@ -108,9 +108,12 @@
                                         <div class="filter-select rbt-modern-select">
                                             <span class="select-label d-block">Short By Category</span>
                                             <select data-live-search="true" name="filterCategories" id="filterCategories">
-                                                <option value="">--------------</option>
+                                                <option selected  value="">--------------</option>
                                                 <c:forEach items="${categorys}" var="categorys">
-                                                    <option value="${categorys.name}">${categorys.name}</option>
+                                                    <option ${categorys.name == filterCategory ? 'selected' : ''} value="${categorys.name.contains('&') ? 
+                                                              categorys.name.replace('&','%26') : 
+                                                              categorys.name}">${categorys.name}</option>
+
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -122,7 +125,7 @@
 
                                             <div class="price_filter s-filter clear">
 
-                                                <div id="slider-range"></div>
+                                                <div id="slider-range" class="range"></div>
                                                 <div class="slider__range--output">
                                                     <div class="price__output--wrap">
                                                         <div class="price--output">
@@ -166,15 +169,9 @@
                                     <div class="rbt-card-body">
                                         <div class="rbt-card-top">
                                             <div class="rbt-bookmark-btn">
-                                                
-                                                <!--  <a class="rbt-round-btn" title="Bookmark" href="#"><i
-                                                      class="feather-bookmark"></i></a>-->
-                                                <form action="${pageContext.request.contextPath}/learner/wishlist/add" id="wishlist-add-${course.id}" method="post">
-                                                    <input type="hidden" name="course-id" value="${course.id}">
-                                                    <a class="rbt-round-btn" title="Bookmark" href="#" onclick="addToWishlist(${course.id})">
-                                                        <i id="bookmark-icon-${course.id}" class="fa-solid fa-bookmark"  ></i>
-                                                    </a>
-                                                </form>
+                                                <a class="rbt-round-btn" title="Bookmark" href="javascript:void(0)" onclick="addToWishlist(${course.id})">
+                                                    <i class="feather-bookmark"></i>
+                                                </a>
                                             </div>
                                         </div>
                                                        
@@ -203,16 +200,16 @@
                                                 <span class="current-price">$${course.price}</span>
                                                 <!--<span class="off-price">${course.price}</span>-->
                                             </div>
-                                            
-                                            <c:if test="${coursesInCart.contains(course)}">
+                                            <c:if test="${coursesInCart.contains(course) || enrolledCourseId.contains(course.id)}">
                                                 <div>
                                                     <a class="rbt-btn-link" href="javascript:void(0);">
                                                         Learn More<i class="feather-arrow-right"></i>
                                                     </a>
                                                 </div>
                                             </c:if>
-                                            <c:if test="${!coursesInCart.contains(course)}">
+                                            <c:if test="${!coursesInCart.contains(course) && !enrolledCourseId.contains(course.id)}">
                                                 <div id="add-to-cart-btn${course.id}">
+
                                                     <a class="rbt-btn-link left-icon" href="javascript:void(0);" onclick="addToCart(${course.id})">
                                                         <i class="feather-shopping-cart"></i> Add To Cart
                                                     </a>
@@ -230,21 +227,35 @@
                         <div class="col-lg-12 mt--60">
                             <nav>
                                 <ul class="rbt-pagination">
-                                    <li><a href="#" aria-label="Previous"><i class="feather-chevron-left"></i></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li class="active"><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#" aria-label="Next"><i class="feather-chevron-right"></i></a></li>
+                                    <li><a href="#" onclick="formSubmit(1)">F</a></li>
+                                    <li><a href="#" aria-label="Previous" onclick="formSubmit(${pageNumber > 1 ? pageNumber -1 : 1})"><i class="feather-chevron-left"></i></a></li>
+
+                                    <c:forEach begin="0" end="${maxPage-1}" var="page" varStatus="i">
+
+                                        <li><a href="#"
+                                               class="${pageNumber == i.count ? 'bg-primary text-white' : ''}"
+                                               onclick="formSubmit(${i.count})">${i.count}</a></li>
+
+                                    </c:forEach>
+
+                                    <li><a href="#" aria-label="Next" onclick="formSubmit(${pageNumber<maxPage ? pageNumber +1 : maxPage})"><i class="feather-chevron-right"></i></a></li>
+                                    <li><a href="#" onclick="formSubmit(${maxPage})">L</a></li>
                                 </ul>
                             </nav>
+
+                            <input type="hidden" id="fromPrice" value="${fromPrice}">
+                            <input type="hidden" id="toPrice" value="${toPrice}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <jsp:include page="/layout/footer.jsp"/>
         <script type="text/javascript">
-            function formSubmit() {
+            function formSubmit(id) {
+                let page = id === undefined ? 1 : id;
+                console.log(id);
                 let courseKeyword = document.getElementById("courseKeyword").value;
                 let filterPrice = document.getElementById("filterPrice").value;
                 let priceRange = document.getElementById("amount").value;
@@ -283,6 +294,7 @@
                         url = url + "&" + "priceRange=" + priceRange;
                     }
                 }
+                url = url + "&page=" + page;
                 window.location.href = url;
                 console.log("form submited");
                 console.log("${pageContext.request.contextPath}/course/find");
@@ -322,7 +334,7 @@
         }
 
         function addToWishlist(courseId) {
-            let urlPath = "${pageContext.request.contextPath}/wishlist/add";
+            let urlPath = "${pageContext.request.contextPath}/learner/wishlist/add";
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {
                 if (xhttp.status === 200) {
@@ -354,5 +366,21 @@
                 }
             });
         }
+        $(document).ready(function () {
+            let fromPrice = $("#slider-range span:nth-child(2)");
+            let range = $("#slider-range div");
+            let toPrice = $("#slider-range span:nth-child(3)");
+            let from = $("#fromPrice").val().split(".", 1);
+            let to = $("#toPrice").val().split(".", 1);
+            let price = "$" + from + " - $" + to;
+            // chuy?n from vs to sang int nó dang ? double nen loi c
+            console.log(price);
+            $("#amount").val(price);
+            let width = ((to / 500 * 100) - (from / 500 * 100)) + "%";
+            console.log(fromPrice.css("left", (from / 500 * 100) + "%"));
+            console.log(range.css("left", (from / 500 * 100) + "%"));
+            console.log(range.css("width", width));
+            console.log(toPrice.css("left", (to / 500 * 100) + "%"));
+        });
     </script>
 </html>

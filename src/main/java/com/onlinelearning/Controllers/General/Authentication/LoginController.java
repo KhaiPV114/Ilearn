@@ -26,6 +26,7 @@ public class LoginController extends HttpServlet {
     private static final int REMEMBER_ME_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 
     private final AuthService authService = new AuthServiceImpl();
+    
     private final CartService CartService = new CartServiceImpl();
 
     @Override

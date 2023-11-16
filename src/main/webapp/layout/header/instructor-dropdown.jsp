@@ -13,42 +13,31 @@
                     </div>
                     <div class="admin-info">
                         <span class="name">${user.username}</span>
-                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/profile.html">View
-                            Profile</a>
+                        <a class="rbt-btn-link color-primary" href="${pageContext.request.contextPath}/instructor/profile">
+                            View Profile
+                        </a>
                     </div>
                 </div>
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor/course">
+                        <a href="${pageContext.request.contextPath}/instructor/dashboard">
                             <i class="feather-home"></i>
                             <span>My Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor-reviews.html">
+                        <a href="${pageContext.request.contextPath}/instructor/course">
                             <i class="feather-star"></i>
-                            <span>Reviews</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/instructor-my-quiz-attempts.html">
-                            <i class="feather-list"></i>
-                            <span>My Quiz Attempts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/instructor-quiz-attempts.html">
-                            <i class="feather-message-square"></i>
-                            <span>Question &amp; Answer</span>
+                            <span>My Courses</span>
                         </a>
                     </li>
                 </ul>
                 <hr class="mt--10 mb--10">
                 <ul class="user-list-wrapper">
                     <li>
-                        <a href="${pageContext.request.contextPath}/instructor-settings.html">
+                        <a href="${pageContext.request.contextPath}/instructor/change-password">
                             <i class="feather-settings"></i>
-                            <span>Settings</span>
+                            <span>Change Password</span>
                         </a>
                     </li>
                     <li>
@@ -63,7 +52,7 @@
 </li>
 
 <!--Use for mobile-->
-<li class="access-icon rbt-user-wrapper d-block d-xl-none">
+<!--<li class="access-icon rbt-user-wrapper d-block d-xl-none">
     <a class="rbt-round-btn" href="${pageContext.request.contextPath}/#"><i class="feather-user"></i></a>
     <div class="rbt-user-menu-list-wrapper">
         <div class="inner">
@@ -130,4 +119,4 @@
             </ul>
         </div>
     </div>
-</li>
+</li>-->

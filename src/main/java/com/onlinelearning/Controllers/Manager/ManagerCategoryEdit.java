@@ -4,7 +4,6 @@ import com.onlinelearning.Models.Category;
 import com.onlinelearning.Services.CategoryService;
 import com.onlinelearning.Services.FileUploadService;
 import com.onlinelearning.Services.Impl.CategoryServiceImpl;
-import com.onlinelearning.Services.Impl.FileUploadServiceImpl;
 import com.onlinelearning.Services.Impl.S3FileUploadServiceImpl;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -31,6 +30,7 @@ public class ManagerCategoryEdit extends HttpServlet {
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
@@ -48,10 +48,11 @@ public class ManagerCategoryEdit extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/manager/category");
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORM_PATH);
-        
+
         Integer id = Integer.parseInt(request.getParameter("id"));
 
         //Get name

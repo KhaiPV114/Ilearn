@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner.Checkout;
+package com.onlinelearning.Controllers.Learner;
 
 import com.onlinelearning.Enums.OrderStatus;
 import com.onlinelearning.Models.Coupon;
@@ -29,14 +29,20 @@ import java.util.List;
 @WebServlet(name = "LearnerCheckoutView", urlPatterns = {"/cart/checkout"})
 public class LearnerCheckoutView extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/checkout.jsp";
-    private final String ERROR_404_PATH = "/error/404.jsp";
-    private final String HOME_PATH = "/homepage";
+    private static final String VIEW_PATH = "/dashboard/learner/checkout.jsp";
 
-    private final OrderService OrderService = new OrderServiceImpl();
-    private final OrderItemService OrderItemService = new OrderItemServiceImpl();
-    private final CouponService CouponService = new CouponServiceImpl();
-    private final AuthService AuthService = new AuthServiceImpl();
+    private static final String ERROR_404_PATH = "/error/404.jsp";
+
+    private static final String HOME_PATH = "/homepage";
+
+    private final OrderService orderService = new OrderServiceImpl();
+
+    private final OrderItemService orderItemService = new OrderItemServiceImpl();
+
+    private final CouponService couponService = new CouponServiceImpl();
+
+    private final AuthService authService = new AuthServiceImpl();
+
     private final LearnerCheckoutContinue continueOrder = new LearnerCheckoutContinue();
 
     @Override
@@ -50,7 +56,7 @@ public class LearnerCheckoutView extends HttpServlet {
             throws ServletException, IOException {
 
         //Authorize
-        User user = AuthService.getUser(request);
+        User user = authService.getUser(request);
         List<Course> coursesInCart = (List<Course>) request.getSession().getAttribute("coursesInCart");
         if (user == null || coursesInCart.isEmpty()) {
             response.sendRedirect(request.getContextPath() + HOME_PATH);
@@ -58,7 +64,7 @@ public class LearnerCheckoutView extends HttpServlet {
         }
 
         //Check if user still have unpaid order
-        Order order = OrderService.getUnpaidOrderByUserId(user.getId());
+        Order order = orderService.getUnpaidOrderByUserId(user.getId());
         if (order != null) {
             request.setAttribute("order", order);
             continueOrder.doPost(request, response);
@@ -69,7 +75,7 @@ public class LearnerCheckoutView extends HttpServlet {
         HashMap<String, String> courseCouponMap = JsonUtils.convertJsonToHashMap(request.getParameter("data"));
 
         //Create new order
-        Order newOrder = OrderService.createOrder(Order.builder()
+        Order newOrder = orderService.createOrder(Order.builder()
                 .userId(user.getId())
                 .createdAt(LocalDateTime.now())
                 .status(OrderStatus.UNPAID)
@@ -95,18 +101,18 @@ public class LearnerCheckoutView extends HttpServlet {
             //Validate coupon and applied it to get new price
             if (!courseCouponMap.get(course.getId().toString()).isEmpty()) {
                 try {
-                    Coupon currentCoupon = CouponService.getCouponByCode(courseCouponMap.get(course.getId().toString()));
+                    Coupon currentCoupon = couponService.getCouponByCode(courseCouponMap.get(course.getId().toString()));
                     if (currentCoupon.getCourseId() == 0) {
                         mightyCoupon = currentCoupon;
                     }
                     //Validated and applied success
-                    if (CouponService.canApplyCoupon(currentCoupon)) {
+                    if (couponService.canApplyCoupon(currentCoupon)) {
                         newOrderItem.setCouponId(currentCoupon.getId());
                         newOrderItem.setPrice(
                                 course.getPrice() - (course.getPrice() * (currentCoupon.getPercent() / 100))
                         );
                         if (!currentCoupon.equals(mightyCoupon)) {
-                            CouponService.minusCouponRemain(currentCoupon);
+                            couponService.minusCouponRemain(currentCoupon);
                         }
                     }
                 } catch (Exception couponException) {
@@ -117,13 +123,13 @@ public class LearnerCheckoutView extends HttpServlet {
                 newOrderItem.setPrice(course.getPrice());
             }
 
-            orderItems.add(OrderItemService.createOrderITem(newOrderItem));
+            orderItems.add(orderItemService.createOrderITem(newOrderItem));
             subTotal += newOrderItem.getOriginalPrice();
             grandTotal += newOrderItem.getPrice();
         }
 
         if (mightyCoupon != null) {
-            CouponService.minusCouponRemain(mightyCoupon);
+            couponService.minusCouponRemain(mightyCoupon);
         }
 
         request.setAttribute("order", newOrder);

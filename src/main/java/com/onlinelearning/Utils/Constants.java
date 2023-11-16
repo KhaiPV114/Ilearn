@@ -2,6 +2,8 @@ package com.onlinelearning.Utils;
 
 public class Constants {
 
+    public static final String HOME_PATH = "/";
+
     public static final String PROFILE = DotEnv.get("PROFILE");
 
     public static final String UPLOAD_DIRECTORY = DotEnv.get("UPLOAD_DIRECTORY");
@@ -26,6 +28,6 @@ public class Constants {
 
     public static final Integer PAGINATION_MAX_PAGE_SIZE = 50;
 
-    public static final Integer PAGINATION_DEFAULT_PAGE_SIZE = 2;
+    public static final Integer PAGINATION_DEFAULT_PAGE_SIZE = 6;
 
 }

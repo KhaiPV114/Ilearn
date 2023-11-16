@@ -28,6 +28,22 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
+    public List<Lesson> getActiveLessonsBySectionId(Integer sectionId) {
+        if (sectionId == null) {
+            return null;
+        }
+        return lessonDAO.getLessonsBySectionIdAndStatus(sectionId, LessonStatus.ACTIVE);
+    }
+
+    @Override
+    public List<Lesson> getHiddenLessonsBySectionId(Integer sectionId) {
+        if (sectionId == null) {
+            return null;
+        }
+        return lessonDAO.getLessonsBySectionIdAndStatus(sectionId, LessonStatus.HIDDEN);
+    }
+
+    @Override
     public Lesson createLesson(Lesson lesson) throws Exception {
         if (lesson == null) {
             throw new Exception("Lesson can not be null");
@@ -119,7 +135,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Lesson deleteLesson(Lesson lesson) throws Exception {
-        Lesson deletedLesson = lessonDAO.deleteLesson(lesson);
+        lesson.setStatus(LessonStatus.DELETED);
+        Lesson deletedLesson = lessonDAO.updateLesson(lesson);
         if (deletedLesson == null) {
             throw new Exception("Deleted lesson failed!");
         }

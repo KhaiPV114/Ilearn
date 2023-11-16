@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.General.Cart;
+package com.onlinelearning.Controllers.General;
 
 import com.onlinelearning.Models.CartItem;
 import com.onlinelearning.Models.Course;
@@ -20,11 +20,13 @@ import java.io.PrintWriter;
 @WebServlet(name = "GeneralCartAdd", urlPatterns = {"/cart/add"})
 public class GeneralCartAdd extends HttpServlet {
 
-    private final String ERROR_404_PATH = "/error/404.jsp";
+    private static final String ERROR_404_PATH = "/error/404.jsp";
 
-    private final AuthService AuthService = new AuthServiceImpl();
-    private final CartService CartService = new CartServiceImpl();
-    private final CourseService CourseService = new CourseServiceImpl();
+    private final AuthService authService = new AuthServiceImpl();
+    
+    private final CartService cartService = new CartServiceImpl();
+    
+    private final CourseService courseService = new CourseServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +42,7 @@ public class GeneralCartAdd extends HttpServlet {
         //Get and validate course need add to cart from request
         Course course;
         try {
-            course = CourseService.validateCourse(Integer.parseInt(request.getParameter("course-id")));
+            course = courseService.validateCourse(Integer.parseInt(request.getParameter("course-id")));
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             pw.print("ADD TO CART: " + e.getMessage());
@@ -50,22 +52,22 @@ public class GeneralCartAdd extends HttpServlet {
         CartItem cartItemNeedAdd = CartItem.builder().courseId(course.getId()).build();
 
         //Add from cart
-        User user = AuthService.getUser(request);
+        User user = authService.getUser(request);
         boolean addedToCart = true;
         if (user == null) {
             try {
-                CartService.addNewCartItemToCookie(cartItemNeedAdd, request, response);
+                cartService.addNewCartItemToCookie(cartItemNeedAdd, request, response);
             } catch (Exception cartException) {
                 pw.print(cartException.getMessage());
                 addedToCart = false;
             }
         } else {
             cartItemNeedAdd.setUserId(user.getId());
-            if (CourseService.isEnrolled(user.getId(), cartItemNeedAdd.getCourseId())) {
+            if (courseService.isEnrolled(user.getId(), cartItemNeedAdd.getCourseId())) {
                 addedToCart = false;
             } else {
                 try {
-                    CartService.createCartItem(cartItemNeedAdd);
+                    cartService.createCartItem(cartItemNeedAdd);
                 } catch (Exception cartException) {
                     pw.print(cartException.getMessage());
                     addedToCart = false;

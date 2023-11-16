@@ -2,6 +2,7 @@ package com.onlinelearning.Services.Impl;
 
 import com.onlinelearning.DAL.Impl.UserDAOImpl;
 import com.onlinelearning.DAL.UserDAO;
+import com.onlinelearning.Models.Role;
 import com.onlinelearning.Models.User;
 import com.onlinelearning.Services.UserService;
 import java.util.List;
@@ -18,9 +19,8 @@ public class UserServiceImpl implements UserService{
     }
     
     @Override
-    public User updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+    public User updateUser (User user) {
+        return userDao.updateUser(user);
     }
 
     @Override
@@ -74,6 +74,27 @@ public class UserServiceImpl implements UserService{
     public User updateUserStatus(String status, User user) {
         return userDao.updateUserStatus(status, user);
     }
+
+    @Override
+    public List<User> getLearnerOfAllCourse(Integer ownerId) {
+        return userDao.getLearnerOfAllCourse(ownerId);
+    }
+    
+    @Override
+    public List<User> getLearnerOfAllCourseWithStatus(Integer ownerId, String status) {
+        return userDao.getLearnerOfAllCourseWithStatus(ownerId, status);
+    }
+
+    @Override
+    public List<User> getLearnerOfAllCourseByKeyword(String keyword) {
+        return userDao.getLearnerOfAllCourseByKeyword(keyword);
+    }
     
     
+    public Integer getNumberOfUserAtRole(Role role) {
+        if(role == null){
+            return 0;
+        }
+        return userDao.getNumberOfUserAtRole(role);
+    }
 }

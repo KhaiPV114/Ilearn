@@ -1,4 +1,4 @@
-package com.onlinelearning.Controllers.Learner.Checkout;
+package com.onlinelearning.Controllers.Learner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -24,12 +24,14 @@ import java.util.TimeZone;
 public class LearnerCheckoutPayment extends HttpServlet {
 
     private final String ERROR_404_PATH = "/error/404.jsp";
+    
     private final String ERROR_403_PATH = "/error/403.jsp";
 
     private final PaymentService VNPay = new VNPaymentServiceImpl();
-    private final String ReturnUrl = "http://localhost:8686/iLearn/cart/checkout/process";
+    
+    private final String returnUrl = "http://localhost:8686/iLearn/cart/checkout/process";
 
-    private final AuthService AuthService = new AuthServiceImpl();
+    private final AuthService authService = new AuthServiceImpl();
 //    private final String VIETQR_BASE_LINK = "https://api.vietqr.io/image/";
 //    private final String BANK_ID = "970418";    //BIDV
 //    private final String ACCOUNT_NO = "2112359999"; //LUONG HUU DUC DUY
@@ -46,7 +48,7 @@ public class LearnerCheckoutPayment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = AuthService.getUser(request);
+        User user = authService.getUser(request);
         if (user != null) {
             try ( PrintWriter pw = response.getWriter()) {
 //            String orderId = request.getParameter("order-id");
@@ -81,7 +83,7 @@ public class LearnerCheckoutPayment extends HttpServlet {
                 vnp_Params.put("vnp_CurrCode", "VND");
                 vnp_Params.put("vnp_OrderType", "other");
                 vnp_Params.put("vnp_Amount", String.valueOf(amount));
-                vnp_Params.put("vnp_ReturnUrl", ReturnUrl);
+                vnp_Params.put("vnp_ReturnUrl", returnUrl);
                 vnp_Params.put("vnp_IpAddr", VNPaymentServiceImpl.getIpAddress(request));
 
                 Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));

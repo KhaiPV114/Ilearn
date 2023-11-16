@@ -16,55 +16,49 @@
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             <li>
-                                <a href="instructor-dashboard.html" class="active">
+                                <a href="${pageContext.request.contextPath}/manager/dashboard" class="active">
                                     <i class="feather-home"></i><span>Dashboard</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-profile.html">
+                                <a href="${pageContext.request.contextPath}/manager/profile">
                                     <i class="feather-user"></i><span>My Profile</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-reviews.html">
-                                    <i class="feather-star"></i><span>Reviews</span>
+                                <a href="${pageContext.request.contextPath}/manager/category">
+                                    <i class="feather-grid"></i><span>Manage Category</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="instructor-my-quiz-attempts.html">
-                                    <i class="feather-help-circle"></i><span>My Quiz Attempts</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-order-history.html">
+                                <a href="${pageContext.request.contextPath}/manager/order">
                                     <i class="feather-shopping-bag"></i><span>Manager Order</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/manager/earning">
+                                    <i class="feather-dollar-sign"></i><span>Total Earnings</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
 
                     <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">Instructor</h6>
+                        <h6 class="rbt-title-style-2">Users</h6>
                     </div>
 
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li><a href="${pageContext.request.contextPath}/manager/category"><i class="feather-monitor"></i><span>Course category</span></a></li>
-                            <li><a href="instructor-course.html"><i class="feather-monitor"></i><span>My Courses</span></a></li>
-                            <li><a href="instructor-announcements.html"><i class="feather-volume-2"></i><span>Announcements</span></a></li>
-                            <li><a href="instructor-quiz-attempts.html"><i class="feather-message-square"></i><span>Quiz Attempts</span></a></li>
-                            <li><a href="instructor-assignments.html"><i class="feather-list"></i><span>Assignments</span></a></li>
-                        </ul>
-                    </nav>
-
-                    <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">User</h6>
-                    </div>
-
-                    <nav class="mainmenu-nav">
-                        <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li><a href="instructor-settings.html"><i class="feather-settings"></i><span>Settings</span></a></li>
-                            <li><a href="index.html"><i class="feather-log-out"></i><span>Logout</span></a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/manager/change-password">
+                                    <i class="feather-settings"></i><span>Change Password</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/authentication/logout">
+                                    <i class="feather-log-out"></i><span>Logout</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

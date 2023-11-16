@@ -128,9 +128,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
+                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-instructor-sidebar.jsp" />
                             <!-- Start Content  -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -161,7 +161,7 @@
                                                 <div class="col-md-10">
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Section name</label>
-                                                        <input value="${name}" name="name" type="text" class="form-control" id="name" required>
+                                                        <input value="${name}" name="name" type="text" placeholder="Enter section name" class="form-control" id="name" required>
                                                         <c:if test="${not empty nameError}">
                                                             <div class="form-text text-danger">${nameError}</div>
                                                         </c:if>
@@ -197,12 +197,21 @@
                                                                 <i class="fa-solid fa-arrows-up-down"></i>
                                                             </div>
                                                             <button class="accordion-button collapsed me-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${section.id}" aria-expanded="false" aria-controls="collapse-${section.id}">
-                                                                ${section.name}
+                                                                <span id="name-${section.id}" oninput="handleSectionEdit(${section.id})">${section.name}<span>
                                                             </button>
-                                                            <div class="card-icon ms-3">
-                                                                <i class="fa-solid fa-eye-slash"></i>
+                                                            <div class="card-icon ms-3" 
+                                                                 onclick="submitSectionStatusChangingForm(${section.id})">
+                                                                <c:choose>
+                                                                    <c:when test="${empty section.status or section.status == 'ACTIVE'}">
+                                                                        <i class="fa-solid fa-eye"></i>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <i class="fa-solid fa-eye-slash"></i>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </div>
-                                                            <div class="card-icon ms-3">
+                                                            <div class="card-icon ms-3"
+                                                                 onclick="submitSectionDeletingForm(${section.id})">
                                                                 <i class="fa-solid fa-trash"></i>
                                                             </div>
                                                         </h2>
@@ -217,8 +226,8 @@
                                                                     <div class="row">
                                                                         <div class="col-md-10">
                                                                             <div class="mb-3">
-                                                                                <label for="name" class="form-label">Lession name</label>
-                                                                                <input value="${name}" name="name" type="text" class="form-control" id="name" required>
+                                                                                <label class="form-label">Lesson name</label>
+                                                                                <input value="${name}" name="name" type="text" class="form-control" placeholder="Enter lesson name" required>
                                                                                 <c:if test="${not empty nameError}">
                                                                                     <div class="form-text text-danger">${nameError}</div>
                                                                                 </c:if>
@@ -255,12 +264,144 @@
                                                                                     </div>
                                                                                     <button class="accordion-button collapsed me-4 text-dark" type="button"
                                                                                             onclick="document.location.href = '${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
+                                                                                        <span>${lesson.name}</span>
+                                                                                    </button>
+                                                                                    <div class="card-icon ms-3"
+                                                                                         onclick="submitLessonStatusChangingForm(${lesson.id})">
+                                                                                        <c:choose>
+                                                                                            <c:when test="${empty lesson.status or lesson.status == 'ACTIVE'}">
+                                                                                                <i class="fa-solid fa-eye"></i>
+                                                                                            </c:when>
+                                                                                            <c:otherwise>
+                                                                                                <i class="fa-solid fa-eye-slash"></i>
+                                                                                            </c:otherwise>
+                                                                                        </c:choose>
+                                                                                    </div>
+                                                                                    <div class="card-icon ms-3"
+                                                                                         onclick="submitLessonDeletingForm(${lesson.id})">
+                                                                                        <i class="fa-solid fa-trash"></i>
+                                                                                    </div>
+                                                                                </h2>
+                                                                            </li>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </div>
+
+                                                                <script>
+                                                                    Sortable.create(lessons${sectionId}, {
+                                                                    group: 'shared1',
+                                                                            animation: 100,
+//                                                                        forceFallback: true,
+//                                                                        scroll: true,
+                                                                            //bubbleScroll: true,
+                                                                            handle: '.lesson-list-handle-${sectionId}',
+                                                                            onEnd: handleLessonItemMovingOnEnd
+                                                                    });
+                                                                </script>
+
+                                                                <!-- End lesson -->
+
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+
+                                        <div class="section-title text-center mt-4 mb-2">
+                                            <span class="subtitle bg-secondary-opacity">Hidden sections</span>
+                                        </div>
+                                        <div class="rbt-accordion-style rbt-accordion-01  accordion">
+                                            <ul class="accordion ps-0 list-group">
+                                                <c:forEach var="section" items="${sections2}">
+                                                    <li id="section-${section.id}" key="${section.id}" class="accordion-item card section-list-handle list-group-item my-3">
+                                                        <h2 class="accordion-header card-header card-header-custom d-flex align-baseline" id="headingTwo">
+                                                            <div class="card-icon card-icon-sort me-3">
+                                                                <i class="fa-solid fa-lock"></i>
+                                                            </div>
+                                                            <button class="accordion-button collapsed me-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${section.id}" aria-expanded="false" aria-controls="collapse-${section.id}">
+                                                                ${section.name}
+                                                            </button>
+                                                            <div class="card-icon ms-3" 
+                                                                 onclick="submitSectionStatusChangingForm(${section.id})">
+                                                                <c:choose>
+                                                                    <c:when test="${empty section.status or section.status == 'ACTIVE'}">
+                                                                        <i class="fa-solid fa-eye"></i>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <i class="fa-solid fa-eye-slash"></i>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </div>
+                                                            <div class="card-icon ms-3"
+                                                                 onclick="submitSectionDeletingForm(${section.id})">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                            </div>
+                                                        </h2>
+                                                        <div id="collapse-${section.id}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#section-${section.id}">
+                                                            <div class="accordion-body card-body bg-color-white">
+
+                                                                <!-- Lession -->
+
+                                                                <form class="ignore-elements" id="form-add-lesson-${section.id}" action="${pageContext.request.contextPath}/instructor/lesson/add" method="post">
+                                                                    <input type="hidden" name="courseId" value="${courseId}">
+                                                                    <input type="hidden" name="sectionId" value="${section.id}">
+                                                                    <div class="row">
+                                                                        <div class="col-md-10">
+                                                                            <div class="mb-3">
+                                                                                <label for="name2" class="form-label">Lesson name</label>
+                                                                                <input value="${name}" name="name" type="text" class="form-control" id="name2" required>
+                                                                                <c:if test="${not empty nameError}">
+                                                                                    <div class="form-text text-danger">${nameError}</div>
+                                                                                </c:if>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            <div class="mb-3">
+                                                                                <label for="name" class="form-label"></label>
+                                                                                <div class="tutor-btn" style="padding: 0.375rem;">
+                                                                                    <a class="rbt-btn btn-md hover-icon-reverse w-100" href="#" onclick="document.getElementById('form-add-lesson-${section.id}').submit();">
+                                                                                        <span class="icon-reverse-wrapper">
+                                                                                            <span class="btn-text">Add</span>
+                                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>  
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+
+                                                                <c:set var="sectionId" value="${section.id}"/>
+
+                                                                <div class="rbt-accordion-style rbt-accordion-01  accordion">
+                                                                    <ul id="lessons${sectionId}" section-id="${sectionId}" class="accordion ps-0 list-group">
+                                                                        <c:set var="lessons" value="${lessonsList2[sectionId]}"/>
+                                                                        <c:forEach var="lesson" items="${lessons}">
+                                                                            <li id="lesson-${lesson.id}" key="${lesson.id}" class="accordion-item card lesson-list-handle-${sectionId} list-group-item my-3">
+                                                                                <h2 class="accordion-header card-header card-header-custom d-flex align-baseline" id="headingTwo">
+                                                                                    <div class="card-icon card-icon-sort me-3">
+                                                                                        <i class="fa-solid fa-arrows-up-down"></i>
+                                                                                    </div>
+                                                                                    <button class="accordion-button collapsed me-4 text-dark" type="button"
+                                                                                            onclick="document.location.href = '${pageContext.request.contextPath}/instructor/lesson/edit?id=${lesson.id}'">
                                                                                         ${lesson.name}
                                                                                     </button>
-                                                                                    <div class="card-icon ms-3">
-                                                                                        <i class="fa-solid fa-eye-slash"></i>
+                                                                                    <div class="card-icon ms-3"
+                                                                                         onclick="submitLessonStatusChangingForm(${lesson.id})">
+                                                                                        <c:choose>
+                                                                                            <c:when test="${empty lesson.status or lesson.status == 'ACTIVE'}">
+                                                                                                <i class="fa-solid fa-eye"></i>
+                                                                                            </c:when>
+                                                                                            <c:otherwise>
+                                                                                                <i class="fa-solid fa-eye-slash"></i>
+                                                                                            </c:otherwise>
+                                                                                        </c:choose>
                                                                                     </div>
-                                                                                    <div class="card-icon ms-3">
+                                                                                    <div class="card-icon ms-3"
+                                                                                         onclick="submitLessonDeletingForm(${lesson.id})">
                                                                                         <i class="fa-solid fa-trash"></i>
                                                                                     </div>
                                                                                 </h2>
@@ -295,36 +436,88 @@
                                     <div class="d-flex mt-3" id="pageBar"></div>
 
                                     <!--Delete via post method-->                                                    
-                                    <form id="deletion-form" action="${pageContext.request.contextPath}/instructor/course/delete" method="post">
-                                        <input id="deletion-id" name="id" value="" type="hidden">
+                                    <form id="change-status-section" action="${pageContext.request.contextPath}/instructor/section/change-status" method="post">
+                                        <input type="hidden" name="courseId" value="${courseId}">
+                                        <input id="change-status-section-id" name="sectionId" value="" type="hidden">
+                                    </form>
+
+                                    <form id="change-status-lesson" action="${pageContext.request.contextPath}/instructor/lesson/change-status" method="post">
+                                        <input type="hidden" name="courseId" value="${courseId}">
+                                        <input id="change-status-lesson-id" name="lessonId" value="" type="hidden">
+                                    </form>
+
+                                    <form id="delete-section" action="${pageContext.request.contextPath}/instructor/section/delete" method="post">
+                                        <input type="hidden" name="courseId" value="${courseId}">
+                                        <input id="delete-section-id" name="sectionId" value="" type="hidden">
+                                    </form>
+
+                                    <form id="delete-lesson" action="${pageContext.request.contextPath}/instructor/lesson/delete" method="post">
+                                        <input type="hidden" name="courseId" value="${courseId}">
+                                        <input id="delete-lesson-id" name="lessonId" value="" type="hidden">
                                     </form>
 
                                 </div>
                             </div>
                         </div>
                         <!-- End Content  -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+                                        </div>
 
+                                        </div>
+</div>
+
+    
     <jsp:include page="/layout/footer.jsp" />
     <jsp:include page="/layout/scripts.jsp" />
     <script>
-        const deletionForm = document.getElementById("deletion-form");
-        const deletionId = document.getElementById("deletion-id");
-        function submitDeletionForm(id) {
-        //                let check = confirm("Are you sure?");
-        if (!confirm("Are you sure?")) {
+
+        function handleSectionEdit(id) {
+            var div = document.getElementById('name-' + id);
+            console.log('Content changed:', div.innerHTML);
+        }                        
+        
+        const sectionStatusChangingForm = document.getElementById("change-status-section");
+        const sectionStatusChangingFormId = document.getElementById("change-status-section-id");
+        function submitSectionStatusChangingForm(id) {
+        if (!confirm("Are you sure to hide/unhide this section?")) {
         return false;
         }
-        deletionId.value = id;
-        deletionForm.submit();
+        sectionStatusChangingFormId.value = id;
+        sectionStatusChangingForm.submit();
         }
 
-        document.getElementById("content").scrollIntoView({behavior: 'instant'});
-        location.hash = '#content';
+        const lessonStatusChangingForm = document.getElementById("change-status-lesson");
+        const lessonStatusChangingFormId = document.getElementById("change-status-lesson-id");
+        function submitLessonStatusChangingForm(id) {
+        if (!confirm("Are you sure to hide/unhide this lesson?")) {
+        return false;
+        }
+        lessonStatusChangingFormId.value = id;
+        lessonStatusChangingForm.submit();
+        }
+
+        const sectionDeletingForm = document.getElementById("delete-section");
+        const sectionDeletingFormId = document.getElementById("delete-section-id");
+        function submitSectionDeletingForm(id) {
+        if (!confirm("Are you sure to delete this section?")) {
+        return false;
+        }
+        sectionDeletingFormId.value = id;
+        sectionDeletingForm.submit();
+        }
+
+        const lessonDeletingForm = document.getElementById("delete-lesson");
+        const lessonDeletingFormId = document.getElementById("delete-lesson-id");
+        function submitLessonDeletingForm(id) {
+        if (!confirm("Are you sure to delete this lesson?")) {
+        return false;
+        }
+        lessonDeletingFormId.value = id;
+        lessonDeletingForm.submit();
+        }
+
+        document.getElementById("content").scrollIntoView({ behavior: "instant" });
+        location.hash = "#content";
     </script>
     <script>
         Sortable.create(sectionList, {

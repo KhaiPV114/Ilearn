@@ -17,9 +17,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <jsp:include page="/layout/dashboard-instructor-card.jsp" />
+                        <jsp:include page="/layout/dashboard-manager-card.jsp" />
                         <div class="row g-5">
-                            <jsp:include page="/layout/dashboard-instrutor-sidebar.jsp" />
+                            <jsp:include page="/layout/dashboard-manager-sidebar.jsp" />
                             <!-- Start content -->
                             <div class="col-lg-9" id="content">
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -30,7 +30,7 @@
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
                                                         <a href="#">
-                                                            Learner
+                                                            User
                                                         </a>
                                                     </li>
                                                     <li class="breadcrumb-item active" aria-current="page">
@@ -66,7 +66,7 @@
                                                 <ol class="breadcrumb">
                                                     <li class="breadcrumb-item">
                                                         <a href="#">
-                                                            Learner
+                                                            User
                                                         </a>
                                                     </li>
                                                 </ol>
@@ -117,7 +117,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Name</th>
-                                                                <th>Course Enrolled</th>
+                                                                <th>User ID</th>
                                                                 <th>Email</th>
                                                                 <th>Phone Number</th>
                                                                 <th>Joined Time</th>

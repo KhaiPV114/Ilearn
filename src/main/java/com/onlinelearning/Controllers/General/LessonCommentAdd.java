@@ -6,7 +6,6 @@ import com.onlinelearning.Services.AuthService;
 import com.onlinelearning.Services.CommentService;
 import com.onlinelearning.Services.Impl.AuthServiceImpl;
 import com.onlinelearning.Services.Impl.CommentServiceImpl;
-import com.onlinelearning.Services.UserService;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,11 +21,7 @@ public class LessonCommentAdd extends HttpServlet {
 
     private final CommentService commentService = new CommentServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer courseId = Integer.valueOf(request.getParameter("courseId"));
@@ -50,7 +45,6 @@ public class LessonCommentAdd extends HttpServlet {
         Comment addedComment = commentService.createComment(comment);
 
         response.sendRedirect(request.getContextPath() + "/learn?courseId=" + courseId + "&lessonId=" + lessonId);
-
     }
 
 }

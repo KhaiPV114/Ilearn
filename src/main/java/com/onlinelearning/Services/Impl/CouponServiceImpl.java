@@ -54,7 +54,6 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public Coupon updateCoupon(Coupon coupon) throws Exception {
-        validateCoupon(coupon);
         Coupon updateCoupon = couponDAO.updateCoupon(coupon);
         if (updateCoupon == null) {
             throw new Exception("Update coupon failed!");

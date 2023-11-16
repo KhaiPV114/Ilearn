@@ -18,11 +18,7 @@ public class ManagerCategoryDelete extends HttpServlet {
 
     private final CategoryService categoryService = new CategoryServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(VIEW_PATH);

@@ -21,9 +21,9 @@ import java.util.List;
 @WebServlet(name = "LearnerWishlistView", urlPatterns = {"/learner/wishlist"})
 public class LearnerWishlistView extends HttpServlet {
 
-    private final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
-    
-    private final String HOME_PATH = "/index.jsp";
+    private static final String VIEW_PATH = "/dashboard/learner/wishlist.jsp";
+
+    private static final String HOME_PATH = "/index.jsp";
 
     private final WishlistService wishlistService = new WishlistServiceImpl();
 
@@ -46,12 +46,6 @@ public class LearnerWishlistView extends HttpServlet {
             request.setAttribute("coursesInWishlist", courses);
             request.getRequestDispatcher(VIEW_PATH).forward(request, response);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
     }
 
 }
