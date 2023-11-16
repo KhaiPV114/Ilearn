@@ -45,7 +45,7 @@
 
                                         </ul>
                                         <div class="read-more-btn">
-                                            <a class="rbt-btn-link" href="#">Learn More<i class="feather-arrow-right"></i></a>
+                                            <a class="rbt-btn-link" href="${pageContext.request.contextPath}/search?filterCategory=${category.name}">Learn More<i class="feather-arrow-right"></i></a>
                                         </div>
                                     </div>
                                 </div>

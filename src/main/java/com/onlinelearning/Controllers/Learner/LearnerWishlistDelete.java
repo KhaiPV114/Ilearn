@@ -39,7 +39,14 @@ public class LearnerWishlistDelete extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(LearnerWishlistDelete.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect(request.getContextPath() + VIEW_PATH);
+            
+            String referringPage = request.getHeader("referer");
+            if (referringPage != null) {
+                response.sendRedirect(referringPage);
+            } else {
+                response.sendRedirect(request.getContextPath() + VIEW_PATH);
+            }
         }
     }
 }
+

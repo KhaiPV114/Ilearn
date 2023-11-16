@@ -80,10 +80,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th style="width: 25%;">Course Name</th>
-                                                        <th style="width: 35%;">Description</th>
+                                                        <th style="width: 20%;">Course Name</th>
+                                                        <th style="width: 25%;">Description</th>
                                                         <th>Image</th>
-
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
@@ -91,19 +91,10 @@
                                                         <tr>
                                                             <td>${loop.index + 1}</td>
                                                             <td>
-                                                                <a href="${pageContext.request.contextPath}/learn?courseId=${enrolledCourse.id}">
+                                                                <a style="font-weight: bolder; color: black">
                                                                     ${enrolledCourse.name}
                                                                 </a>
-                                                                <div class="tutor-btn">
-                                                                    <a class="rbt-btn btn-md hover-icon-reverse mt-3" 
-                                                                       href="${pageContext.request.contextPath}/learn?courseId=${enrolledCourse.id}" >
-                                                                        <span class="icon-reverse-wrapper">
-                                                                            <span class="btn-text">Learn</span>
-                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                                        </span>
-                                                                    </a>
-                                                                </div>
+                                                                
                                                             </td>
                                                             <td>
                                                                 <c:choose>
@@ -118,9 +109,22 @@
 
                                                             <td>
                                                                 <!-- Hiển thị hình ảnh của khóa học nếu có -->
-                                                                <img src="${enrolledCourse.imageUrl}" alt="image" />
+                                                                <img src="${enrolledCourse.imageUrl}" alt="image"/>
                                                             </td>
-
+                                                            
+                                                            <td>
+                                                                <div class="tutor-btn">
+                                                                    <a class="rbt-btn btn-md hover-icon-reverse mt-3"
+                                                                       href="${pageContext.request.contextPath}/learn?courseId=${enrolledCourse.id}" >
+                                                                        <span class="icon-reverse-wrapper">
+                                                                            <span class="btn-text">Learn</span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
