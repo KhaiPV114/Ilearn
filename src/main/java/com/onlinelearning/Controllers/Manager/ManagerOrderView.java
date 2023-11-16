@@ -29,13 +29,13 @@ public class ManagerOrderView extends HttpServlet {
         List<Order> successfulOrders = new ArrayList<>();
 
         for (Order order : allOrders) {
-            if (order.getStatus().equals(OrderStatus.UNPAID)) {
+            if (order.getStatus() == OrderStatus.UNPAID) {
                 pendingOrders.add(order);
             }
-            if (order.getStatus().equals(OrderStatus.FAILED)) {
+            if (order.getStatus() == OrderStatus.FAILED) {
                 failedOrders.add(order);
             }
-            if (order.getStatus().equals(OrderStatus.SUCCESSFUL)) {
+            if (order.getStatus() == OrderStatus.SUCCESSFUL) {
                 successfulOrders.add(order);
             }
         }

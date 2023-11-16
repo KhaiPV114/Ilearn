@@ -58,7 +58,7 @@ public class ManagerEarningStatisticView extends HttpServlet {
         List<Order> allOrders = orderService.getAllOrders();
         Set<Integer> years = new HashSet<>();
         for (Order order : allOrders) {
-            if (order.getStatus().equals(OrderStatus.SUCCESSFUL)) {
+            if (order.getStatus() == OrderStatus.SUCCESSFUL) {
                 years.add(order.getCreatedAt().getYear());
             }
         }
