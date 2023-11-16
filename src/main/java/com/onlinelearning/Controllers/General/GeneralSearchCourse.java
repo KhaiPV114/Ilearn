@@ -38,7 +38,7 @@ public class GeneralSearchCourse extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW_PATH);
         double priceFrom = 0;
         double priceTo = 500; 
-        final int pageSize = 2;
+        final int pageSize = 6;
         List<Integer> enrolledCourseId = new ArrayList<>(0);
         
         HttpSession session = request.getSession();

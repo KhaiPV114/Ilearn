@@ -16,42 +16,18 @@
                     <nav class="mainmenu-nav">
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             <li>
-                                <a href="instructor-dashboard.html" class="active">
+                                <a href="${pageContext.request.contextPath}/instructor/dashboard" class="active">
                                     <i class="feather-home"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/instructor/course">
+                                    <i class="feather-book"></i><span>Courses</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="${pageContext.request.contextPath}/instructor/profile">
                                     <i class="feather-user"></i><span>My Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <div class="section-title mt--40 mb--20">
-                        <h6 class="rbt-title-style-2">Instructor</h6>
-                    </div>
-
-                    <nav class="mainmenu-nav">
-                        <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                            <li>
-                                <a href="instructor-course.html">
-                                    <i class="feather-monitor"></i><span>My Courses</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-announcements.html">
-                                    <i class="feather-volume-2"></i><span>Announcements</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-quiz-attempts.html">
-                                    <i class="feather-message-square"></i><span>Quiz Attempts</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="instructor-assignments.html">
-                                    <i class="feather-list"></i><span>Assignments</span>
                                 </a>
                             </li>
                         </ul>
