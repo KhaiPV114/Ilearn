@@ -65,7 +65,7 @@
                                         </p>
                                     </div>
 
-                                    <div class="single-method">
+<!--                                    <div class="single-method">
                                         <input type="radio" id="payment_qr" value="VNPAYQR" name="payment-method" class="payment-method" onclick="getPaymentQR(this.value)" ${noNeedPayment?'disabled':''} disabled>
                                         <label for="payment_qr">Bank QR</label>
                                         <p data-method="VNPAYQR" class="container text-center" id="qr-display">
@@ -78,7 +78,7 @@
                                                 Thank you for choosing us! iLearn with luv <3
                                             </span>
                                         </p>
-                                    </div>
+                                    </div>-->
                                 </form>
                             </div>
                             <br/>

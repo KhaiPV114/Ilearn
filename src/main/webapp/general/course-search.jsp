@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 
 <html>
@@ -167,29 +168,20 @@
                                     </div>
                                     <div class="rbt-card-body">
                                         <div class="rbt-card-top">
-                                            <div class="rbt-review">
-                                                <div class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                                <span class="rating-count"> (15 Reviews)</span>
-                                            </div>
                                             <div class="rbt-bookmark-btn">
                                                 <a class="rbt-round-btn" title="Bookmark" href="javascript:void(0)" onclick="addToWishlist(${course.id})">
                                                     <i class="feather-bookmark"></i>
                                                 </a>
                                             </div>
                                         </div>
-
+                                                       
                                         <h4 class="rbt-card-title"><a href="#">${course.name}</a>
                                         </h4>
 
                                         <ul class="rbt-meta">
                                             <li><i class="feather-book"></i>12 Lessons</li>
                                             <li><i class="feather-users"></i>50 Students</li>
+                                            
                                         </ul>
 
                                         <p class="rbt-card-text text-truncate">${course.description}</p>
@@ -357,6 +349,23 @@
         }
     </script>
     <script>
+        function addToWishlist(courseId) {
+            // Send an AJAX request to add the course to the wishlist
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/learner/wishlist/add",
+                data: {"course-id": courseId},
+                success: function () {
+                    // Update the icon to be yellow
+                    const icon = document.getElementById(`bookmark-icon-${courseId}`);
+                    icon.classList.remove("fa-bookmark");
+                    icon.classList.add("fa-bookmark-yellow");                     
+                },
+                error: function () {
+                    alert("Failed to add the course to your wishlist.");
+                }
+            });
+        }
         $(document).ready(function () {
             let fromPrice = $("#slider-range span:nth-child(2)");
             let range = $("#slider-range div");

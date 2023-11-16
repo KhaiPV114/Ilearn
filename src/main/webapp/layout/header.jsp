@@ -100,7 +100,7 @@
                                                     </a>
                                                 </li>-->
                         <!-- Cart -->
-                        <c:if test="${roleService.isLearner(pageContext.request)}">
+                        <c:if test="${roleService.isLearner(pageContext.request) || sessionScope['user'] == null}">
                             <li class="access-icon rbt-mini-cart">
                                 <a class="rbt-cart-sidenav-activation rbt-round-btn" href="javascript:void(0);" id="open-cart-side-menu">
                                     <i class="feather-shopping-cart"></i>
