@@ -9,6 +9,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
+    environment:
+      - TZ=Asia/Bangkok
   webserver:
     build:
       context: ./nginx
@@ -17,5 +19,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - TZ=Asia/Bangkok
     depends_on:
       - ilearn
